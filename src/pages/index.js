@@ -1,31 +1,31 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
-import { HoverBannerOne } from "../../components/Banner";
-import { CountdownTimerFour } from "../../components/Countdown";
-import { ImageCtaTwo } from "../../components/Cta";
-import { HeroSliderFive } from "../../components/HeroSlider";
-import { LayoutTwo } from "../../components/Layout";
-import { ProductGridWrapper } from "../../components/ProductThumb";
-import { SectionTitleOne } from "../../components/SectionTitle";
-import { TestimonialOne } from "../../components/Testimonial";
-import { getProducts } from "../../lib/product";
+import { HoverBannerOne } from "../components/Banner";
+import { BlogPostSlider } from "../components/Blog";
+import { CountdownTimerSix } from "../components/Countdown";
+import { HeroSliderFive } from "../components/HeroSlider";
+import { LayoutEight } from "../components/Layout";
+import { ProductTabThree } from "../components/ProductTab";
+import blogData from "../data/blog-posts/blog-post-one.json";
+import heroSliderData from "../data/hero-sliders/hero-slider-five.json";
+import { getProducts } from "../lib/product";
 
-import heroSliderData from "../../data/hero-sliders/hero-slider-five.json";
-import testimonialOneData from "../../data/testimonials/testimonial-one.json";
-
-const Furniture = ({ products }) => {
+const Perfumes = ({ newProducts, popularProducts, saleProducts }) => {
   return (
-    <LayoutTwo aboutOverlay={false}>
-      {/* hero slider */}
-      <HeroSliderFive
-        sliderData={heroSliderData}
-        spaceBottomClass="space-mb--50"
-      />
+    <LayoutEight>
+      {/* hero slider with banner */}
+      <div className="hero-slider-area space-mb--r100">
+        <Container className="wide">
+          <HeroSliderFive
+            sliderData={heroSliderData}
+            spaceBottomClass="space-mb--50"
+          />
 
-      {/* hover banner */}
-      <HoverBannerOne spaceBottomClass="space-mb--r100" />
-
-      {/* product grid */}
+          {/* hover banner */}
+          <HoverBannerOne spaceBottomClass="space-mb--r100" />
+        </Container>
+      </div>
+      {/* countdown timer */}
       <div className="section-title-container">
         <Container>
           <Row className="space-mb--50">
@@ -44,53 +44,37 @@ const Furniture = ({ products }) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <div className="col-lg-12">
-              <SectionTitleOne title="Clever & unique ideas" />
-            </div>
-          </Row>
         </Container>
       </div>
-
-      <div className="product-grid-container space-mb--r100">
-        <Container>
-          <Row className="space-mb--rm50">
-            <ProductGridWrapper
-              products={products}
-              bottomSpace="space-mb--r50"
-              column={4}
-            />
-          </Row>
-        </Container>
-      </div>
-
-      {/* countdown timer */}
-      <CountdownTimerFour
+      <CountdownTimerSix
         title="Deal of the day"
-        image="/assets/images/countdown/countdown-4.png"
+        image="/assets/images/esme-images/dashboard_4.png"
         dateTime="July 07, 2020 12:12:00"
         url="/shop/left-sidebar"
         buttonText="Only $39"
-        backgroundColorClass="bg-color--grey-two"
-      />
-
-      {/* testimonial */}
-      <TestimonialOne
-        testimonialData={testimonialOneData}
         spaceBottomClass="space-mb--r100"
       />
 
-      {/* image cta */}
-      <ImageCtaTwo spaceBottomClass="space-mb--r100" />
-    </LayoutTwo>
+      {/* product tab */}
+      <ProductTabThree
+        newProducts={newProducts}
+        popularProducts={popularProducts}
+        saleProducts={saleProducts}
+      />
+
+      {/* blog post slider */}
+      <BlogPostSlider blogData={blogData} spaceBottomClass="space-mb--r100" />
+    </LayoutEight>
   );
 };
 
 const mapStateToProps = (state) => {
   const products = state.productData;
   return {
-    products: getProducts(products, "furniture", "popular", 8)
+    newProducts: getProducts(products, "perfumes", "new", 10),
+    popularProducts: getProducts(products, "perfumes", "popular", 10),
+    saleProducts: getProducts(products, "perfumes", "sale", 10)
   };
 };
 
-export default connect(mapStateToProps)(Furniture);
+export default connect(mapStateToProps)(Perfumes);

@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 const HoverBannerOne = ({ spaceBottomClass }) => {
   return (
     <div
-      className={`hover-banner-area ${
-        spaceBottomClass ? spaceBottomClass : ""
-      }`}
+      className={`hover-banner-area ${spaceBottomClass ? spaceBottomClass : ""
+        }`}
     >
       <Container className="wide">
         <Row className="space-mb--m30">
@@ -16,7 +15,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                 <img
                   src={
                     process.env.PUBLIC_URL +
-                    "/assets/images/banners/banner-furniture-1.jpg"
+                    "/assets/images/esme-images/dashboard_1.png"
                   }
                   className="img-fluid"
                   alt=""
@@ -56,7 +55,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                 <img
                   src={
                     process.env.PUBLIC_URL +
-                    "/assets/images/banners/banner-furniture-2.jpg"
+                    "/assets/images/esme-images/dashboard_2.png"
                   }
                   className="img-fluid"
                   alt=""
@@ -96,7 +95,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                 <img
                   src={
                     process.env.PUBLIC_URL +
-                    "/assets/images/banners/banner-furniture-3.jpg"
+                    "/assets/images/esme-images/dashboard_3.png"
                   }
                   className="img-fluid"
                   alt=""

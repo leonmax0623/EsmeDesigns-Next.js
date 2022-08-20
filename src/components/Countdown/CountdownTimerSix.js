@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Countdown from "react-countdown";
 import { IoIosCart } from "react-icons/io";
 import Renderer from "./Renderer";
@@ -14,9 +14,8 @@ const CountdownTimerSix = ({
 }) => {
   return (
     <div
-      className={`countdown-timer-wrapper ${
-        spaceBottomClass ? spaceBottomClass : ""
-      }`}
+      className={`countdown-timer-wrapper ${spaceBottomClass ? spaceBottomClass : ""
+        }`}
     >
       <Container>
         <Row>
@@ -29,6 +28,7 @@ const CountdownTimerSix = ({
                       src={process.env.PUBLIC_URL + image}
                       className="img-fluid"
                       alt=""
+                      style={{ width: "100%" }}
                     />
                   </div>
                 </Col>

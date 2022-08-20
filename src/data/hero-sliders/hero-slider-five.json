@@ -4,20 +4,20 @@
     "subtitle": "Free delivery from $30",
     "title": "Innovative design",
     "url": "/shop/left-sidebar",
-    "bgImage": "/assets/images/hero-slider/hero-slider-five/bg1.png"
+    "bgImage": "/assets/images/esme-images/banner_2.png"
   },
   {
     "id": "2",
     "subtitle": "Free delivery from $30",
     "title": "Beautiful interior",
     "url": "/shop/left-sidebar",
-    "bgImage": "/assets/images/hero-slider/hero-slider-five/bg2.png"
+    "bgImage": "/assets/images/esme-images/banner_1.png"
   },
   {
     "id": "3",
     "subtitle": "Summer sale up to 30%",
     "title": "Beautiful interior",
     "url": "/shop/left-sidebar",
-    "bgImage": "/assets/images/hero-slider/hero-slider-five/bg3.png"
+    "bgImage": "/assets/images/esme-images/banner_3.png"
   }
 ]
