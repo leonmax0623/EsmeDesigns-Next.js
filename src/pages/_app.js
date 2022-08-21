@@ -1,15 +1,15 @@
-import { Fragment } from "react";
 import App from "next/app";
 import Head from "next/head";
-import withReduxStore from "../lib/with-redux-store";
+import { Fragment } from "react";
 import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import fetchProducts from "../redux/actions/productActions";
-import products from "../data/products.json";
 import "../assets/scss/styles.scss";
 import Preloader from "../components/Preloader";
+import products from "../data/products.json";
+import withReduxStore from "../lib/with-redux-store";
+import fetchProducts from "../redux/actions/productActions";
 
 class MyApp extends App {
   constructor(props) {
@@ -24,7 +24,7 @@ class MyApp extends App {
     return (
       <Fragment>
         <Head>
-          <title>Lezada | React Next JS Multipurpose eCommerce Template</title>
+          <title>Esme Designs</title>
           <link rel="icon" href={process.env.PUBLIC_URL + "/favicon.ico"} />
           <link
             href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
