@@ -1,13 +1,10 @@
-import { Fragment } from "react";
 import Link from "next/link";
+import { Fragment } from "react";
 import { IoIosSearch } from "react-icons/io";
 import {
-  getIndividualCategories,
+  getDiscountPrice, getIndividualCategories,
   getIndividualColors,
-  getIndividualTags,
-  setActiveSort,
-  getProducts,
-  getDiscountPrice
+  getIndividualTags, getProducts, setActiveSort
 } from "../../lib/product";
 import { ProductRating } from "../Product";
 
@@ -15,7 +12,8 @@ const ShopSidebar = ({ products, getSortParams }) => {
   const categories = getIndividualCategories(products);
   const colors = getIndividualColors(products);
   const tags = getIndividualTags(products);
-  const popularProducts = getProducts(products, "decor", "popular", 3);
+  const popularProducts = getProducts(products, "perfumes", "popular", 3);
+  console.log("popularProducts", popularProducts)
 
   return (
     <div className="shop-sidebar">

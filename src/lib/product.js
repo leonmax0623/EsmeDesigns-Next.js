@@ -2,8 +2,8 @@
 export const getProducts = (products, category, type, limit) => {
   const finalProducts = category
     ? products.filter(
-        (product) => product.category.filter((single) => single === category)[0]
-      )
+      (product) => product.category.filter((single) => single === category)[0]
+    )
     : products;
 
   if (type && type === "new") {
@@ -75,27 +75,31 @@ export const getProductCartQuantity = (cartItems, product, color, size) => {
 
 //get products based on category
 export const getSortedProducts = (products, sortType, sortValue) => {
+  console.log("getSortedProducts", products)
+  console.log("sortType", sortType)
+  console.log("sortValue", sortValue)
+  const perfume_products = products.filter((product) => product.category[0] === 'perfumes')
   if (products && sortType && sortValue) {
     if (sortType === "category") {
-      return products.filter(
+      return perfume_products.filter(
         (product) =>
           product.category.filter((single) => single === sortValue)[0]
       );
     }
     if (sortType === "tag") {
-      return products.filter(
+      return perfume_products.filter(
         (product) => product.tag.filter((single) => single === sortValue)[0]
       );
     }
     if (sortType === "color") {
-      return products.filter(
+      return perfume_products.filter(
         (product) =>
           product.variation &&
           product.variation.filter((single) => single.color === sortValue)[0]
       );
     }
     if (sortType === "size") {
-      return products.filter(
+      return perfume_products.filter(
         (product) =>
           product.variation &&
           product.variation.filter(
@@ -105,12 +109,12 @@ export const getSortedProducts = (products, sortType, sortValue) => {
       );
     }
     if (sortType === "filterSort") {
-      let sortProducts = [...products];
+      let perfume_products = [...products];
       if (sortValue === "default") {
-        return sortProducts;
+        return perfume_products;
       }
       if (sortValue === "priceHighToLow") {
-        return sortProducts.sort((a, b) => {
+        return perfume_products.sort((a, b) => {
           return b.price - a.price;
         });
       }
@@ -121,7 +125,7 @@ export const getSortedProducts = (products, sortType, sortValue) => {
       }
     }
   }
-  return products;
+  return perfume_products;
 };
 
 // get individual element

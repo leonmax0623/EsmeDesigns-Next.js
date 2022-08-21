@@ -1,26 +1,26 @@
-import { useEffect } from "react";
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
+import { useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
-import { LayoutTwo } from "../../../components/Layout";
-import { getDiscountPrice } from "../../../lib/product";
 import { BreadcrumbOne } from "../../../components/Breadcrumb";
+import { LayoutTwo } from "../../../components/Layout";
 import {
   ImageGalleryBottomThumb,
   ProductDescription,
   ProductDescriptionTab
 } from "../../../components/ProductDetails";
+import products from "../../../data/products.json";
+import { getDiscountPrice } from "../../../lib/product";
 import { addToCart } from "../../../redux/actions/cartActions";
-import {
-  addToWishlist,
-  deleteFromWishlist
-} from "../../../redux/actions/wishlistActions";
 import {
   addToCompare,
   deleteFromCompare
 } from "../../../redux/actions/compareActions";
-import products from "../../../data/products.json";
+import {
+  addToWishlist,
+  deleteFromWishlist
+} from "../../../redux/actions/wishlistActions";
 
 const ProductBasic = ({
   product,
@@ -59,7 +59,7 @@ const ProductBasic = ({
       {/* breadcrumb */}
       <BreadcrumbOne
         pageTitle={product.name}
-        backgroundImage="/assets/images/backgrounds/breadcrumb-bg-1.png"
+        backgroundImage="/assets/images/esme-images/products_banner.png"
       >
         <ul className="breadcrumb__list">
           <li>

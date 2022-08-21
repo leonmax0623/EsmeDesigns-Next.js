@@ -1,18 +1,15 @@
-import { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import Paginator from "react-hooks-paginator";
+import { connect } from "react-redux";
 import { SlideDown } from "react-slidedown";
-import { LayoutTwo } from "../../components/Layout";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
-import { getSortedProducts } from "../../lib/product";
+import { LayoutTwo } from "../../components/Layout";
 import {
-  ShopHeader,
-  ShopFilter,
-  ShopSidebar,
-  ShopProducts
+  ShopFilter, ShopHeader, ShopProducts, ShopSidebar
 } from "../../components/Shop";
+import { getSortedProducts } from "../../lib/product";
 
 const LeftSidebar = ({ products }) => {
   const [layout, setLayout] = useState("grid four-column");
@@ -59,7 +56,7 @@ const LeftSidebar = ({ products }) => {
       {/* breadcrumb */}
       <BreadcrumbOne
         pageTitle="Shop Left Sidebar"
-        backgroundImage="/assets/images/backgrounds/breadcrumb-bg-1.png"
+        backgroundImage="/assets/images/esme-images/products_banner.png"
       >
         <ul className="breadcrumb__list">
           <li>

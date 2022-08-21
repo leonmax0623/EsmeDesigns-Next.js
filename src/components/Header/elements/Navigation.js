@@ -228,32 +228,32 @@ const Navigation = () => {
             </li>
             <li>
               <Link
-                href="/other/about-two"
-                as={process.env.PUBLIC_URL + "/other/about-two"}
+                href="/other/terms"
+                as={process.env.PUBLIC_URL + "/other/terms"}
               >
                 <a>Terms and conditions</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/contact"
-                as={process.env.PUBLIC_URL + "/other/contact"}
+                href="/other/privacy"
+                as={process.env.PUBLIC_URL + "/other/privacy"}
               >
                 <a>Privacy policy</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/faq"
-                as={process.env.PUBLIC_URL + "/other/faq"}
+                href="/"
+                as={process.env.PUBLIC_URL + "/"}
               >
                 <a>Shipping</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/coming-soon"
-                as={process.env.PUBLIC_URL + "/other/coming-soon"}
+                href="/"
+                as={process.env.PUBLIC_URL + "/"}
               >
                 <a>Returns</a>
               </Link>
