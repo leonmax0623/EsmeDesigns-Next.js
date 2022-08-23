@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { animateScroll } from "react-scroll";
 import { SubscribeEmailTwo } from "../Newsletter";
@@ -26,9 +27,8 @@ const FooterTwo = ({ footerBgClass }) => {
   };
   return (
     <footer
-      className={`space-pt--100 space-pb--50 ${
-        footerBgClass ? footerBgClass : "bg-color--grey"
-      }`}
+      className={`space-pt--100 space-pb--50 ${footerBgClass ? footerBgClass : "bg-color--grey"
+        }`}
     >
       <Container className="wide">
         <Row>
@@ -38,7 +38,7 @@ const FooterTwo = ({ footerBgClass }) => {
               <img
                 src={
                   process.env.PUBLIC_URL + footerBgClass ===
-                  "bg-color--blue-two"
+                    "bg-color--blue-two"
                     ? "/assets/images/logo-alt.png"
                     : "/assets/images/logo.png"
                 }
@@ -51,7 +51,7 @@ const FooterTwo = ({ footerBgClass }) => {
             <div className="footer-single-widget__copyright">
               &copy; {new Date().getFullYear() + " "}
               <a href="https://www.hasthemes.com" target="_blank">
-                lezada
+                Esme Designs
               </a>
               <span>All Rights Reserved</span>
             </div>
@@ -62,16 +62,44 @@ const FooterTwo = ({ footerBgClass }) => {
             <nav className="footer-single-widget__nav">
               <ul>
                 <li>
-                  <a href="#">About us</a>
+                  <Link
+                    href="/other/about"
+                    as={process.env.PUBLIC_URL + "/other/about"}
+                  >
+                    <a>About Us</a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">Store location</a>
+                  <Link
+                    href="/other/terms"
+                    as={process.env.PUBLIC_URL + "/other/terms"}
+                  >
+                    <a>Terms and conditions</a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">Contact</a>
+                  <Link
+                    href="/other/privacy"
+                    as={process.env.PUBLIC_URL + "/other/privacy"}
+                  >
+                    <a>Privacy policy</a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">Orders tracking</a>
+                  <Link
+                    href="/"
+                    as={process.env.PUBLIC_URL + "/"}
+                  >
+                    <a>Shipping</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/"
+                    as={process.env.PUBLIC_URL + "/"}
+                  >
+                    <a>Returns</a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -82,16 +110,36 @@ const FooterTwo = ({ footerBgClass }) => {
             <nav className="footer-single-widget__nav">
               <ul>
                 <li>
-                  <a href="#">Returns</a>
+                  <Link
+                    href="/shop/left-sidebar"
+                    as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                  >
+                    <a>Accessories</a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">Support Policy</a>
+                  <Link
+                    href="/shop/left-sidebar"
+                    as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                  >
+                    <a>Bridal Collection</a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">Size guide</a>
+                  <Link
+                    href="/shop/left-sidebar"
+                    as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                  >
+                    <a>Bridal Plus</a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">FAQs</a>
+                  <Link
+                    href="/shop/left-sidebar"
+                    as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                  >
+                    <a>Bridesmaids Collection</a>
+                  </Link>
                 </li>
               </ul>
             </nav>

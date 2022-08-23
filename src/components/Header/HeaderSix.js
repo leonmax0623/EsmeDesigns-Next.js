@@ -1,21 +1,17 @@
-import { useState, useEffect, Fragment } from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import Link from "next/link";
-import { connect } from "react-redux";
+import { Fragment, useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import {
-  IoIosSearch,
-  IoMdPerson,
-  IoIosHeartEmpty,
-  IoIosCart,
-  IoIosMenu,
-  IoIosArrowDown
+  IoIosArrowDown, IoIosCart, IoIosHeartEmpty, IoIosMenu, IoIosSearch,
+  IoMdPerson
 } from "react-icons/io";
-import Navigation from "./elements/Navigation";
+import { connect } from "react-redux";
 import AboutOverlay from "./elements/AboutOverlay";
-import SearchOverlay from "./elements/SearchOverlay";
 import CartOverlay from "./elements/CartOverlay";
-import WishlistOverlay from "./elements/WishlistOverlay";
 import MobileMenu from "./elements/MobileMenu";
+import Navigation from "./elements/Navigation";
+import SearchOverlay from "./elements/SearchOverlay";
+import WishlistOverlay from "./elements/WishlistOverlay";
 
 const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
   const [scroll, setScroll] = useState(0);
@@ -112,8 +108,8 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                     </li>
                     <li>
                       <Link
-                        href="/other/login-register"
-                        as={process.env.PUBLIC_URL + "/other/login-register"}
+                        href="/other/login"
+                        as={process.env.PUBLIC_URL + "/other/login"}
                       >
                         <a>
                           <IoMdPerson />

@@ -2309,6 +2309,16 @@
       "perfumes"
     ],
     "stock": 40,
+    "alteration": [
+      "3' Extra Length for Bridal(+$20.00)",
+      "Raise Back Neckline 1'(+$10.00)"
+    ],
+    "lining": [
+      "Cashmere",
+      "Champagne",
+      "Ivory",
+      "Rose Gold"
+    ],
     "variation": [
       {
         "color": "black",
@@ -2316,15 +2326,75 @@
         "image": "/assets/images/product/wearables/1.jpg",
         "size": [
           {
-            "name": "x",
+            "name": "0",
             "stock": 3
           },
           {
-            "name": "m",
+            "name": "2",
             "stock": 2
           },
           {
-            "name": "xl",
+            "name": "4",
+            "stock": 5
+          },
+          {
+            "name": "6",
+            "stock": 3
+          },
+          {
+            "name": "8",
+            "stock": 2
+          },
+          {
+            "name": "10",
+            "stock": 5
+          },
+          {
+            "name": "12",
+            "stock": 3
+          },
+          {
+            "name": "14",
+            "stock": 2
+          },
+          {
+            "name": "16",
+            "stock": 5
+          },
+          {
+            "name": "18",
+            "stock": 3
+          },
+          {
+            "name": "18(+$25.00)",
+            "stock": 2
+          },
+          {
+            "name": "20(+$25.00)",
+            "stock": 5
+          },
+          {
+            "name": "22(+$25.00)",
+            "stock": 2
+          },
+          {
+            "name": "24(+$25.00)",
+            "stock": 5
+          },
+          {
+            "name": "26(+$25.00)",
+            "stock": 2
+          },
+          {
+            "name": "28(+$25.00)",
+            "stock": 5
+          },
+          {
+            "name": "30(+$25.00)",
+            "stock": 2
+          },
+          {
+            "name": "32(+$25.00)",
             "stock": 5
           }
         ]

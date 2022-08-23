@@ -5,15 +5,15 @@ const Navigation = () => {
     <nav className="header-content__navigation space-pr--15 space-pl--15 d-none d-lg-block">
       <ul>
         <li className="position-relative">
-          <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+          <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
             <a>Accessories</a>
           </Link>
           <IoIosArrowDown />
           <ul className="sub-menu sub-menu--one-column">
             <li>
               <Link
-                href="/other/about"
-                as={process.env.PUBLIC_URL + "/other/about"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Bridal Soft Tulle</a>
               </Link>
@@ -21,95 +21,95 @@ const Navigation = () => {
           </ul>
         </li>
         <li className="position-relative">
-          <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+          <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
             <a>Bridal Collection</a>
           </Link>
           <IoIosArrowDown />
           <ul className="sub-menu sub-menu--one-column">
             <li>
               <Link
-                href="/other/about"
-                as={process.env.PUBLIC_URL + "/other/about"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Alencon Lace</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/about-two"
-                as={process.env.PUBLIC_URL + "/other/about-two"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Bridal Crepe</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/contact"
-                as={process.env.PUBLIC_URL + "/other/contact"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Bridal English Net</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/faq"
-                as={process.env.PUBLIC_URL + "/other/faq"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Bridal Luxe Chiffon</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/coming-soon"
-                as={process.env.PUBLIC_URL + "/other/coming-soon"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Bridal Soft Tulle</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/not-found"
-                as={process.env.PUBLIC_URL + "/other/not-found"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Bridal Stretch Lace</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/not-found"
-                as={process.env.PUBLIC_URL + "/other/not-found"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Chantilly Lace</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/not-found"
-                as={process.env.PUBLIC_URL + "/other/not-found"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Lace Embroidered</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/not-found"
-                as={process.env.PUBLIC_URL + "/other/not-found"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Poly Mikado</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/not-found"
-                as={process.env.PUBLIC_URL + "/other/not-found"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Poly Satin</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/not-found"
-                as={process.env.PUBLIC_URL + "/other/not-found"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Sequins Embroidery</a>
               </Link>
@@ -117,39 +117,39 @@ const Navigation = () => {
           </ul>
         </li>
         <li className="position-relative">
-          <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+          <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
             <a>Bridal Plus</a>
           </Link>
           <IoIosArrowDown />
           <ul className="sub-menu sub-menu--one-column">
             <li>
               <Link
-                href="/other/about"
-                as={process.env.PUBLIC_URL + "/other/about"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Bridal English Net</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/about-two"
-                as={process.env.PUBLIC_URL + "/other/about-two"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Bridal Soft Tulle</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/contact"
-                as={process.env.PUBLIC_URL + "/other/contact"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Chantilly Lace</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/faq"
-                as={process.env.PUBLIC_URL + "/other/faq"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Lace Embroidered</a>
               </Link>
@@ -157,55 +157,55 @@ const Navigation = () => {
           </ul>
         </li>
         <li className="position-relative">
-          <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+          <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
             <a>Bridesmaids Collection</a>
           </Link>
           <IoIosArrowDown />
           <ul className="sub-menu sub-menu--one-column">
             <li>
               <Link
-                href="/other/about"
-                as={process.env.PUBLIC_URL + "/other/about"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Charmeuse Satin</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/about-two"
-                as={process.env.PUBLIC_URL + "/other/about-two"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>English Net</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/contact"
-                as={process.env.PUBLIC_URL + "/other/contact"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Lace Softly Corded</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/faq"
-                as={process.env.PUBLIC_URL + "/other/faq"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Luxe Chiffon</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/coming-soon"
-                as={process.env.PUBLIC_URL + "/other/coming-soon"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Sequin Tulle</a>
               </Link>
             </li>
             <li>
               <Link
-                href="/other/not-found"
-                as={process.env.PUBLIC_URL + "/other/not-found"}
+                href="/shop/left-sidebar"
+                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
               >
                 <a>Stretch Crepe</a>
               </Link>
@@ -213,7 +213,7 @@ const Navigation = () => {
           </ul>
         </li>
         <li className="position-relative">
-          <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+          <Link href="/other/about" as={process.env.PUBLIC_URL + "/other/about"}>
             <a>About</a>
           </Link>
           <IoIosArrowDown />

@@ -1,9 +1,9 @@
-import { useState, Fragment } from "react";
-import { IoIosHeartEmpty, IoIosShuffle } from "react-icons/io";
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
-import { ProductRating } from "../Product";
+import { Fragment, useState } from "react";
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { IoIosHeartEmpty, IoIosShuffle } from "react-icons/io";
 import { getProductCartQuantity } from "../../lib/product";
+import { ProductRating } from "../Product";
 
 const ProductDescription = ({
   product,
@@ -19,6 +19,7 @@ const ProductDescription = ({
   addToCompare,
   deleteFromCompare
 }) => {
+  console.log("Maximus", product)
   const [selectedProductColor, setSelectedProductColor] = useState(
     product.variation ? product.variation[0].color : ""
   );
@@ -71,35 +72,29 @@ const ProductDescription = ({
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Size</div>
             <div className="product-content__size__content">
-              {product.variation &&
-                product.variation.map((single) => {
-                  return single.color === selectedProductColor
-                    ? single.size.map((singleSize, i) => {
+              <select
+                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                onChange={(event) => {
+                  let size = event.target.value.split(":")[0]
+                  let stock = event.target.value.split(":")[1]
+                  console.log("size", size)
+                  console.log("stock", stock)
+                  setSelectedProductSize(size);
+                  setProductStock(stock);
+                  setQuantityCount(1);
+                }}
+              >
+                {product.variation &&
+                  product.variation.map((single) => {
+                    return single.color === selectedProductColor
+                      ? single.size.map((singleSize, i) => {
                         return (
-                          <Fragment key={i}>
-                            <input
-                              type="radio"
-                              value={singleSize.name}
-                              checked={
-                                singleSize.name === selectedProductSize
-                                  ? "checked"
-                                  : ""
-                              }
-                              id={singleSize.name}
-                              onChange={() => {
-                                setSelectedProductSize(singleSize.name);
-                                setProductStock(singleSize.stock);
-                                setQuantityCount(1);
-                              }}
-                            />
-                            <label htmlFor={singleSize.name}>
-                              {singleSize.name}
-                            </label>
-                          </Fragment>
+                          <option key={i} value={singleSize.name + ':' + singleSize.stock}>{singleSize.name}</option>
                         );
                       })
-                    : "";
-                })}
+                      : "";
+                  })}
+              </select>
             </div>
           </div>
           <div className="product-content__color space-mb--20">
@@ -130,6 +125,56 @@ const ProductDescription = ({
                   </Fragment>
                 );
               })}
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {product.alteration ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Alteration</div>
+            <div className="product-content__size__content">
+              <select
+                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                onChange={(event) => {
+                  console.log("event", event.target.value)
+                }}
+              >
+                {product.alteration &&
+                  product.alteration.map((single, i) => {
+                    return (
+                      <option key={i} value={single}>{single}</option>
+                    );
+                  })
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {product.lining ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Lining</div>
+            <div className="product-content__size__content">
+              <select
+                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                onChange={(event) => {
+                  console.log("event", event.target.value)
+                }}
+              >
+                {product.lining &&
+                  product.lining.map((single, i) => {
+                    return (
+                      <option key={i} value={single}>{single}</option>
+                    );
+                  })
+                }
+              </select>
             </div>
           </div>
         </div>
@@ -210,9 +255,8 @@ const ProductDescription = ({
             )}
 
             <button
-              className={`product-content__wishlist space-mr--10 ${
-                wishlistItem !== undefined ? "active" : ""
-              }`}
+              className={`product-content__wishlist space-mr--10 ${wishlistItem !== undefined ? "active" : ""
+                }`}
               title={
                 wishlistItem !== undefined
                   ? "Added to wishlist"
@@ -228,9 +272,8 @@ const ProductDescription = ({
             </button>
 
             <button
-              className={`product-content__compare space-mr--10 ${
-                compareItem !== undefined ? "active" : ""
-              }`}
+              className={`product-content__compare space-mr--10 ${compareItem !== undefined ? "active" : ""
+                }`}
               title={
                 compareItem !== undefined
                   ? "Added to compare"
