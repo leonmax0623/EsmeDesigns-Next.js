@@ -10,8 +10,7 @@ import {
   ProductDescription,
   ProductDescriptionTab
 } from "../../../components/ProductDetails";
-import products from "../../../data/products.json";
-import { getDiscountPrice } from "../../../lib/product";
+import products from "../../../data/real_products.json";
 import { addToCart } from "../../../redux/actions/cartActions";
 import {
   addToCompare,
@@ -38,12 +37,14 @@ const ProductBasic = ({
   });
 
   const { addToast } = useToasts();
-  const discountedPrice = getDiscountPrice(
-    product.price,
-    product.discount
-  ).toFixed(2);
+  // const discountedPrice = getDiscountPrice(
+  //   product.price,
+  //   product.discount
+  // ).toFixed(2);
 
-  const productPrice = product.price.toFixed(2);
+  // const productPrice = product.price.toFixed(2);
+  const discountedPrice = product.discountedPrice;
+  const productPrice = product.standardPrice;
   const cartItem = cartItems.filter(
     (cartItem) => cartItem.id === product.id
   )[0];
@@ -58,7 +59,7 @@ const ProductBasic = ({
     <LayoutTwo>
       {/* breadcrumb */}
       <BreadcrumbOne
-        pageTitle={product.name}
+        pageTitle={product.productName}
         backgroundImage="/assets/images/esme-images/products_banner.png"
       >
         <ul className="breadcrumb__list">
@@ -75,7 +76,7 @@ const ProductBasic = ({
               <a>Shop</a>
             </Link>
           </li>
-          <li>{product.name}</li>
+          <li>{product.productName}</li>
         </ul>
       </BreadcrumbOne>
 
@@ -172,7 +173,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ProductBasic);
 export async function getStaticPaths() {
   // get the paths we want to pre render based on products
   const paths = products.map((product) => ({
-    params: { slug: product.slug }
+    params: { slug: product.productName }
   }));
 
   return { paths, fallback: false };
@@ -180,7 +181,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   // get product data based on slug
-  const product = products.filter((single) => single.slug === params.slug)[0];
+  const product = products.filter((single) => single.productName === params.slug)[0];
 
   return { props: { product } };
 }

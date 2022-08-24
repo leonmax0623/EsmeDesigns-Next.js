@@ -26,6 +26,40 @@ const ProductDescription = ({
   const [selectedProductSize, setSelectedProductSize] = useState(
     product.variation ? product.variation[0].size[0].name : ""
   );
+
+  //custom 
+  const [selectedLining, setSelectedLining] = useState(
+    product.lining ? product.lining[0].fabricsName : ""
+  );
+
+  const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState(
+    product.lining ? product.lining[0].fabricsColors[0].fabricsColorName : ""
+  );
+
+  const [selectedFabrics, setSelectedFabrics] = useState(
+    product.fabrics ? product.fabrics[0].fabricsName : ""
+  );
+
+  const [selectedFabricsColor, setSelectedFabricsColor] = useState(
+    product.fabrics ? product.fabrics[0].fabricsColors[0].fabricsColorName : ""
+  );
+
+  const [selectedSize, setSelectedSize] = useState(
+    product.sizeCategories ? product.sizeCategories[0].sizes[0].sizeCode : ""
+  );
+
+  const [selectedComboFabric, setSelectedComboFabric] = useState(
+    product.combos.map((combo, i) => {
+      return { combo: i, fabric: 0, color: 0 }
+    })
+  );
+
+  const [selectedComboFabricsColor, setSelectedComboFabricsColor] = useState(
+    ""
+  );
+
+  const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
+  //custom
   const [productStock, setProductStock] = useState(
     product.variation ? product.variation[0].size[0].stock : product.stock
   );
@@ -40,21 +74,21 @@ const ProductDescription = ({
 
   return (
     <div className="product-content">
-      {product.rating && product.rating > 0 ? (
+      {product.reviewsList && product.reviewsList.length > 0 ? (
         <div className="product-content__rating-wrap d-block d-sm-flex space-mb--20">
           <div className="product-content__rating space-mr--20">
-            <ProductRating ratingValue={product.rating} />
+            <ProductRating ratingValue={product.reviewsList.reduce((ac, a) => parseInt(a.rating) + ac, 0) / product.reviewsList.length} />
           </div>
           <div className="product-content__rating-count">
-            <a href="#">( {product.ratingCount} customer reviews )</a>
+            <a href="#">( {product.reviewsList.length} customer reviews )</a>
           </div>
         </div>
       ) : (
         ""
       )}
-      <h2 className="product-content__title space-mb--20">{product.name}</h2>
+      <h2 className="product-content__title space-mb--20">{product.productName}</h2>
       <div className="product-content__price space-mb--20">
-        {product.discount > 0 ? (
+        {parseInt(product.discountedPrice) > 0 ? (
           <Fragment>
             <span className="main-price discounted">${productPrice}</span>
             <span className="main-price">${discountedPrice}</span>
@@ -64,10 +98,10 @@ const ProductDescription = ({
         )}
       </div>
       <div className="product-content__description space-mb--30">
-        <p>{product.shortDescription}</p>
+        <p>{product.description}</p>
       </div>
 
-      {product.variation ? (
+      {product.sizeCategories ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Size</div>
@@ -75,63 +109,116 @@ const ProductDescription = ({
               <select
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 onChange={(event) => {
-                  let size = event.target.value.split(":")[0]
-                  let stock = event.target.value.split(":")[1]
-                  console.log("size", size)
-                  console.log("stock", stock)
-                  setSelectedProductSize(size);
-                  setProductStock(stock);
-                  setQuantityCount(1);
+                  console.log("event", event.target.value)
+                  setSelectedSize(event.target.value)
                 }}
               >
-                {product.variation &&
-                  product.variation.map((single) => {
-                    return single.color === selectedProductColor
-                      ? single.size.map((singleSize, i) => {
-                        return (
-                          <option key={i} value={singleSize.name + ':' + singleSize.stock}>{singleSize.name}</option>
-                        );
-                      })
-                      : "";
-                  })}
+                {product.sizeCategories &&
+                  product.sizeCategories[0].sizes.map((size, i) => {
+                    return (
+                      <option key={i} value={size.sizeCode}>{size.sizeName}</option>
+                    );
+                  })
+                }
               </select>
-            </div>
-          </div>
-          <div className="product-content__color space-mb--20">
-            <div className="product-content__color__title">Color</div>
-            <div className="product-content__color__content">
-              {product.variation.map((single, i) => {
-                return (
-                  <Fragment key={i}>
-                    <input
-                      type="radio"
-                      value={single.color}
-                      name="product-color"
-                      id={single.color}
-                      checked={
-                        single.color === selectedProductColor ? "checked" : ""
-                      }
-                      onChange={() => {
-                        setSelectedProductColor(single.color);
-                        setSelectedProductSize(single.size[0].name);
-                        setProductStock(single.size[0].stock);
-                        setQuantityCount(1);
-                      }}
-                    />
-                    <label
-                      htmlFor={single.color}
-                      style={{ backgroundColor: single.colorCode }}
-                    ></label>
-                  </Fragment>
-                );
-              })}
             </div>
           </div>
         </div>
       ) : (
         ""
       )}
-      {product.alteration ? (
+      {product.combos ?
+        product.combos.map((combo, comboIndex) => {
+          return (
+            <>
+              <div className="product-content__size-color">
+                <div className="product-content__size space-mb--20">
+                  <div className="product-content__size__title">{combo.combosName}</div>
+                  <div className="product-content__size__content">
+                    <select
+                      style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                      onChange={(event) => {
+                        console.log(event.target)
+                        console.log("event", event.target.value)
+                        var index = event.target.selectedIndex
+                        var optionElement = event.target.childNodes[index]
+                        var comboId = optionElement.getAttribute('data-combo-index')
+                        var fabricId = optionElement.getAttribute('data-fabric-index')
+                        console.log(comboId, fabricId)
+                        var tempArr = selectedComboFabric
+                        tempArr[comboId].combo = comboId;
+                        tempArr[comboId].fabric = fabricId;
+                        setSelectedComboFabric(tempArr)
+                        setSelectedFabric({ combo: comboId, fabric: fabricId })
+                      }}
+                    >
+                      {combo.fabric &&
+                        combo.fabric.map((item, i) => {
+                          return (
+                            <option data-combo-index={comboIndex} data-fabric-index={i} value={item.fabricsName}>{item.fabricsName}</option>
+                          );
+                        })
+                      }
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="product-content__size-color">
+                <div className="product-content__size space-mb--20">
+                  <div className="product-content__size__title"></div>
+                  <div className="product-content__size__content">
+                    <div className="product-content__color__content">
+                      {combo.fabric.map((single, fabricIndex) => ((fabricIndex == selectedComboFabric[comboIndex].fabric && selectedFabric.fabric != null) ? single.fabricsColors.map((color, i) => {
+                        return (
+                          <Fragment key={i}>
+                            <input
+                              type="radio"
+                              value={color.fabricsColorName}
+                              name={`color-${selectedComboFabric[comboIndex].combo}`}
+                              id={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
+                              data-combo-index={comboIndex}
+                              data-fabric-index={fabricIndex}
+                              data-color-index={i}
+                              checked={
+                                color.fabricsColorName === product.combos[selectedComboFabric[comboIndex].combo].fabric[selectedComboFabric[comboIndex].fabric].fabricsColors[selectedComboFabric[comboIndex].color].fabricsColorName ? "checked" : ""
+                              }
+                              onClick={() => {
+                                console.log('aaaaaaaaaa')
+                              }}
+                              onChange={(event) => {
+                                console.log("Combo", color.fabricsColorName)
+                                console.log(event.target)
+                                var optionElement = event.target
+                                var comboId = optionElement.getAttribute('data-combo-index')
+                                var fabricId = optionElement.getAttribute('data-fabric-index')
+                                var colorId = optionElement.getAttribute('data-color-index')
+                                var tempArr = selectedComboFabric
+                                tempArr[comboId].combo = comboId;
+                                tempArr[comboId].fabric = fabricId;
+                                tempArr[comboId].color = colorId;
+                                setSelectedComboFabric(tempArr)
+                                setSelectedFabric({ combo: comboId, fabric: fabricId, color: colorId })
+                                setQuantityCount(1);
+                              }}
+                            />
+                            <label
+                              htmlFor={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
+                              style={{ backgroundColor: color.fabricsColorName }}
+                            ></label>
+                          </Fragment>
+                        );
+                      }) : ""))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          );
+        }) : (
+          ""
+        )}
+
+      {product.styleAlterations ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Alteration</div>
@@ -142,10 +229,10 @@ const ProductDescription = ({
                   console.log("event", event.target.value)
                 }}
               >
-                {product.alteration &&
-                  product.alteration.map((single, i) => {
+                {product.styleAlterations &&
+                  product.styleAlterations.map((single, i) => {
                     return (
-                      <option key={i} value={single}>{single}</option>
+                      <option key={i} value={single.styleAlterationName}>{single.styleAlterationName}</option>
                     );
                   })
                 }
@@ -165,12 +252,159 @@ const ProductDescription = ({
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 onChange={(event) => {
                   console.log("event", event.target.value)
+                  setSelectedLining(event.target.value.split("/")[0])
+                  setSelectedLiningFabricsColor(event.target.value.split("/")[1])
                 }}
               >
                 {product.lining &&
                   product.lining.map((single, i) => {
                     return (
-                      <option key={i} value={single}>{single}</option>
+                      <option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
+                    );
+                  })
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {selectedLiningFabricsColor && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title"></div>
+            <div className="product-content__size__content">
+              <div className="product-content__color__content">
+                {product.lining.map((single, i) => single.fabricsName === selectedLining ? single.fabricsColors.map((color, i) => {
+                  return (
+                    <Fragment key={i}>
+                      <input
+                        type="radio"
+                        value={color.fabricsColorName}
+                        name="lining-color"
+                        id={`lining-${color.fabricsColorName}`}
+                        checked={
+                          color.fabricsColorName === selectedLiningFabricsColor ? "checked" : ""
+                        }
+                        onChange={() => {
+                          console.log("LiningColor", color.fabricsColorName)
+                          setSelectedLiningFabricsColor(color.fabricsColorName);
+                          setQuantityCount(1);
+                        }}
+                      />
+                      <label
+                        htmlFor={`lining-${color.fabricsColorName}`}
+                        style={{ backgroundColor: color.fabricsColorName }}
+                      ></label>
+                    </Fragment>
+                  );
+                }) : "")}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {product.fabrics ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Fabrics</div>
+            <div className="product-content__size__content">
+              <select
+                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                onChange={(event) => {
+                  console.log("event", event.target.value)
+                  setSelectedFabrics(event.target.value.split("/")[0])
+                  setSelectedFabricsColor(event.target.value.split("/")[1])
+                }}
+              >
+                {product.fabrics &&
+                  product.fabrics.map((single, i) => {
+                    return (
+                      <option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
+                    );
+                  })
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {selectedFabricsColor && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title"></div>
+            <div className="product-content__size__content">
+              <div className="product-content__color__content">
+                {product.fabrics.map((single, i) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
+                  return (
+                    <Fragment key={i}>
+                      <input
+                        type="radio"
+                        value={color.fabricsColorName}
+                        name="fabrics-color"
+                        id={`fabrics-${color.fabricsColorName}`}
+                        checked={
+                          color.fabricsColorName === selectedFabricsColor ? "checked" : ""
+                        }
+                        onChange={() => {
+                          console.log("FabricsColor", event.target)
+                          setSelectedFabricsColor(color.fabricsColorName);
+                          setQuantityCount(1);
+                        }}
+                      />
+                      <label
+                        htmlFor={`fabrics-${color.fabricsColorName}`}
+                        style={{ backgroundColor: color.fabricsColorName }}
+                      ></label>
+                    </Fragment>
+                  );
+                }) : "")}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* {product.styleAttributes ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Attributes</div>
+            <div className="product-content__size__content">
+              {product.styleAttributes.map((attr, i) => {
+                <div className="product-content__size-color">
+                  <div className="product-content__size space-mb--20">
+                    <div className="product-content__size__title">{attr.styleAttrybutesName}</div>
+                    <div className="product-content__size__content">
+                      ываываыва
+                    </div>
+                  </div>
+                </div>
+              })}
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )} */}
+      {product.styleOptions ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Options</div>
+            <div className="product-content__size__content">
+              <select
+                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                onChange={(event) => {
+                  // console.log("event", event.target.value)
+                  // setSelectedLining(event.target.value.split("/")[0])
+                  // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                }}
+              >
+                {product.styleOptions &&
+                  product.styleOptions.map((single, i) => {
+                    return (
+                      <option key={i} value={single.styleOptionName}>{single.styleOptionName}</option>
                     );
                   })
                 }
@@ -293,45 +527,39 @@ const ProductDescription = ({
             <table>
               <tbody>
                 <tr className="single-info">
-                  <td className="title">SKU: </td>
-                  <td className="value">{product.sku}</td>
+                  <td className="title">Product Code: </td>
+                  <td className="value">{product.productCode}</td>
                 </tr>
                 <tr className="single-info">
-                  <td className="title">Categories: </td>
+                  <td className="title">Product Type: </td>
                   <td className="value">
-                    {product.category &&
-                      product.category.map((item, index, arr) => {
-                        return (
-                          <Link
-                            href="/shop/left-sidebar"
-                            as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-                            key={index}
-                          >
-                            <a>
-                              {item + (index !== arr.length - 1 ? ", " : "")}
-                            </a>
-                          </Link>
-                        );
-                      })}
+                    {product.productType &&
+                      (
+                        <Link
+                          href="/shop/left-sidebar"
+                          as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                        >
+                          <a>
+                            {product.productType}
+                          </a>
+                        </Link>
+                      )}
                   </td>
                 </tr>
                 <tr className="single-info">
-                  <td className="title">Tags: </td>
+                  <td className="title">Short Tag: </td>
                   <td className="value">
-                    {product.tag &&
-                      product.tag.map((item, index, arr) => {
-                        return (
-                          <Link
-                            href="/shop/left-sidebar"
-                            as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-                            key={index}
-                          >
-                            <a>
-                              {item + (index !== arr.length - 1 ? ", " : "")}
-                            </a>
-                          </Link>
-                        );
-                      })}
+                    {product.shortTag &&
+                      (
+                        <Link
+                          href="/shop/left-sidebar"
+                          as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                        >
+                          <a>
+                            {product.shortTag}
+                          </a>
+                        </Link>
+                      )}
                   </td>
                 </tr>
                 <tr className="single-info">

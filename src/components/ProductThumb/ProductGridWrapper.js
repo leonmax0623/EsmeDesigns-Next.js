@@ -2,16 +2,15 @@ import { Fragment } from "react";
 
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
-import { getDiscountPrice } from "../../lib/product";
 import { addToCart } from "../../redux/actions/cartActions";
-import {
-  addToWishlist,
-  deleteFromWishlist
-} from "../../redux/actions/wishlistActions";
 import {
   addToCompare,
   deleteFromCompare
 } from "../../redux/actions/compareActions";
+import {
+  addToWishlist,
+  deleteFromWishlist
+} from "../../redux/actions/wishlistActions";
 import ProductGrid from "./ProductGrid";
 
 const ProductGridWrapper = ({
@@ -32,11 +31,13 @@ const ProductGridWrapper = ({
     <Fragment>
       {products &&
         products.map((product) => {
-          const discountedPrice = getDiscountPrice(
-            product.price,
-            product.discount
-          ).toFixed(2);
-          const productPrice = product.price.toFixed(2);
+          // const discountedPrice = getDiscountPrice(
+          //   product.standardPrice,
+          //   product.discountedPrice
+          // ).toFixed(2);
+          const discountedPrice = product.discountedPrice;
+          // const productPrice = product.price.toFixed(2);
+          const productPrice = product.standardPrice;
           const cartItem = cartItems.filter(
             (cartItem) => cartItem.id === product.id
           )[0];
@@ -49,7 +50,7 @@ const ProductGridWrapper = ({
 
           return (
             <ProductGrid
-              key={product.id}
+              key={product.productId}
               product={product}
               discountedPrice={discountedPrice}
               productPrice={productPrice}

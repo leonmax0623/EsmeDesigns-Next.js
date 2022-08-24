@@ -42,6 +42,12 @@ export const getProducts = (products, category, type, limit) => {
   );
 };
 
+export const getRealProducts = (products, type, limit) => {
+  const newProducts = products.filter((product) => product.shortTag === type);
+  console.log("newProducts", type, newProducts)
+  return newProducts.slice(0, limit ? limit : newProducts.length);
+};
+
 // get product discount price
 export const getDiscountPrice = (price, discount) => {
   return discount && discount > 0 ? price - price * (discount / 100) : price;

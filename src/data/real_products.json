@@ -1,0 +1,4637 @@
+[
+    {
+        "productId": "1",
+        "productType": "Dress",
+        "productCode": "111",
+        "productName": "AAA",
+        "description": "AAAAA",
+        "collection": "All bridesmaids",
+        "season": "AAA 2023",
+        "isActive": "True",
+        "standardPrice": "110.00",
+        "discountedPrice": "101.00",
+        "shortTag": "new",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/1/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/1/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/1/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/1/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/1/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/1/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "2",
+        "productType": "Dress",
+        "productCode": "222",
+        "productName": "BBB",
+        "description": "BBBBB",
+        "collection": "All bridesmaids",
+        "season": "BBB 2023",
+        "isActive": "True",
+        "standardPrice": "120.00",
+        "discountedPrice": "102.00",
+        "shortTag": "popular",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/2/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/2/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/2/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/2/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/2/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/2/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "3",
+        "productType": "Dress",
+        "productCode": "333",
+        "productName": "CCC",
+        "description": "CCCCC",
+        "collection": "All bridesmaids",
+        "season": "CCC 2023",
+        "isActive": "True",
+        "standardPrice": "130.00",
+        "discountedPrice": "103.00",
+        "shortTag": "sale",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/3/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/3/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/3/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/3/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/3/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/3/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "4",
+        "productType": "Dress",
+        "productCode": "444",
+        "productName": "DDD",
+        "description": "DDDDD",
+        "collection": "All bridesmaids",
+        "season": "DDD 2023",
+        "isActive": "True",
+        "standardPrice": "140.00",
+        "discountedPrice": "104.00",
+        "shortTag": "new",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/4/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/4/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/4/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/4/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/4/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/4/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "5",
+        "productType": "Dress",
+        "productCode": "555",
+        "productName": "EEE",
+        "description": "EEEEE",
+        "collection": "All bridesmaids",
+        "season": "EEE 2023",
+        "isActive": "True",
+        "standardPrice": "150.00",
+        "discountedPrice": "105.00",
+        "shortTag": "popular",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/5/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/5/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/5/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/5/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/5/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/5/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "6",
+        "productType": "Dress",
+        "productCode": "666",
+        "productName": "FFF",
+        "description": "FFFFF",
+        "collection": "All bridesmaids",
+        "season": "FFF 2023",
+        "isActive": "True",
+        "standardPrice": "160.00",
+        "discountedPrice": "106.00",
+        "shortTag": "sale",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/6/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/6/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/6/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/6/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/6/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/6/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "7",
+        "productType": "Dress",
+        "productCode": "777",
+        "productName": "GGG",
+        "description": "GGGGG",
+        "collection": "All bridesmaids",
+        "season": "GGG 2023",
+        "isActive": "True",
+        "standardPrice": "170.00",
+        "discountedPrice": "107.00",
+        "shortTag": "new",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/7/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/7/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/7/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/7/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/7/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/7/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "8",
+        "productType": "Dress",
+        "productCode": "888",
+        "productName": "HHH",
+        "description": "HHHHH",
+        "collection": "All bridesmaids",
+        "season": "HHH 2023",
+        "isActive": "True",
+        "standardPrice": "180.00",
+        "discountedPrice": "108.00",
+        "shortTag": "popular",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/8/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/8/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/8/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/8/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/8/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/8/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "9",
+        "productType": "Dress",
+        "productCode": "999",
+        "productName": "III",
+        "description": "IIIII",
+        "collection": "All bridesmaids",
+        "season": "III 2023",
+        "isActive": "True",
+        "standardPrice": "190.00",
+        "discountedPrice": "109.00",
+        "shortTag": "sale",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/9/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/9/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/9/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/9/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/9/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/9/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "10",
+        "productType": "Dress",
+        "productCode": "101010",
+        "productName": "JJJ",
+        "description": "JJJJJ",
+        "collection": "All bridesmaids",
+        "season": "JJJ 2023",
+        "isActive": "True",
+        "standardPrice": "210.00",
+        "discountedPrice": "201.00",
+        "shortTag": "new",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/10/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/10/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/10/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/10/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/10/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/10/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "11",
+        "productType": "Dress",
+        "productCode": "101101101",
+        "productName": "KKK",
+        "description": "KKKKK",
+        "collection": "All bridesmaids",
+        "season": "KKK 2023",
+        "isActive": "popular",
+        "standardPrice": "220.00",
+        "discountedPrice": "202.00",
+        "shortTag": "new",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/11/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/11/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/11/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/11/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/11/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/11/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "12",
+        "productType": "Dress",
+        "productCode": "121212",
+        "productName": "LLL",
+        "description": "LLLLL",
+        "collection": "All bridesmaids",
+        "season": "LLL 2023",
+        "isActive": "True",
+        "standardPrice": "230.00",
+        "discountedPrice": "203.00",
+        "shortTag": "sale",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/12/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/12/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/12/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/12/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/12/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/12/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "13",
+        "productType": "Dress",
+        "productCode": "131313",
+        "productName": "MMM",
+        "description": "MMMMM",
+        "collection": "All bridesmaids",
+        "season": "MMM 2023",
+        "isActive": "True",
+        "standardPrice": "240.00",
+        "discountedPrice": "204.00",
+        "shortTag": "new",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/13/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/13/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/13/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/13/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/13/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/13/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "14",
+        "productType": "Dress",
+        "productCode": "141414",
+        "productName": "NNN",
+        "description": "NNNNN",
+        "collection": "All bridesmaids",
+        "season": "NNN 2023",
+        "isActive": "True",
+        "standardPrice": "250.00",
+        "discountedPrice": "205.00",
+        "shortTag": "popular",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/14/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/14/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/14/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/14/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/14/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/14/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    },
+    {
+        "productId": "15",
+        "productType": "Dress",
+        "productCode": "151515",
+        "productName": "OOO",
+        "description": "OOOOO",
+        "collection": "All bridesmaids",
+        "season": "OOO 2023",
+        "isActive": "True",
+        "standardPrice": "280.00",
+        "discountedPrice": "208.00",
+        "shortTag": "sale",
+        "discountTag": "-12%",
+        "currencySymbol": "$",
+        "rating": "5",
+        "reviews": "2",
+        "errorCode": "0",
+        "errorText": "",
+        "pictures": [
+            {
+                "url": "/assets/images/esme-images/products/15/1.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/15/2.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/15/3.jpg",
+                "description": "aaa"
+            },
+            {
+                "url": "/assets/images/esme-images/products/15/4.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/15/5.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            },
+            {
+                "url": "/assets/images/esme-images/products/15/6.jpg",
+                "description": "aaa",
+                "fabricsColorId": "33"
+            }
+        ],
+        "fabrics": [
+            {
+                "fabricsId": "11",
+                "fabricsName": "Velvet",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "33",
+                        "fabricsColorName": "Antique blush"
+                    },
+                    {
+                        "fabricsColorId": "34",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "12",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "36",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "37",
+                        "fabricsColorName": "Yellow"
+                    }
+                ]
+            }
+        ],
+        "lining": [
+            {
+                "fabricsId": "13",
+                "fabricsName": "Satin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "38",
+                        "fabricsColorName": "Gray"
+                    },
+                    {
+                        "fabricsColorId": "67",
+                        "fabricsColorName": "Orange"
+                    }
+                ]
+            },
+            {
+                "fabricsId": "123",
+                "fabricsName": "Martin",
+                "fabricsColors": [
+                    {
+                        "fabricsColorId": "39",
+                        "fabricsColorName": "Blue"
+                    },
+                    {
+                        "fabricsColorId": "49",
+                        "fabricsColorName": "Black"
+                    }
+                ]
+            }
+        ],
+        "combos": [
+            {
+                "combosId": "21",
+                "combosName": "Belt",
+                "fabric": [
+                    {
+                        "fabricsId": "19",
+                        "fabricsName": "Satin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "40",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "41",
+                                "fabricsColorName": "Orange"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "135",
+                        "fabricsName": "Custom",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "42",
+                                "fabricsColorName": "Blue"
+                            },
+                            {
+                                "fabricsColorId": "43",
+                                "fabricsColorName": "Yellow"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "combosId": "29",
+                "combosName": "Shoulder Straps",
+                "fabric": [
+                    {
+                        "fabricsId": "21",
+                        "fabricsName": "Velvet",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "44",
+                                "fabricsColorName": "Black"
+                            },
+                            {
+                                "fabricsColorId": "45",
+                                "fabricsColorName": "Green"
+                            }
+                        ]
+                    },
+                    {
+                        "fabricsId": "136",
+                        "fabricsName": "Mawin",
+                        "fabricsColors": [
+                            {
+                                "fabricsColorId": "46",
+                                "fabricsColorName": "Gray"
+                            },
+                            {
+                                "fabricsColorId": "47",
+                                "fabricsColorName": "Blue"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "sizeCategories": [
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Regular",
+                "sizes": [
+                    {
+                        "sizeCode": "1",
+                        "sizeName": "0"
+                    },
+                    {
+                        "sizeCode": "2",
+                        "sizeName": "2"
+                    },
+                    {
+                        "sizeCode": "3",
+                        "sizeName": "4"
+                    },
+                    {
+                        "sizeCode": "4",
+                        "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            }
+        ],
+        "styleAlterations": [
+            {
+                "styleAlterationId": "1",
+                "styleAlterationName": "3' extra long",
+                "price": "5.00"
+            },
+            {
+                "styleAlterationId": "2",
+                "styleAlterationName": "6' extra long",
+                "price": "15.00"
+            }
+        ],
+        "styleAttributes": [
+            {
+                "styleAttrybutesId": "27",
+                "styleAttrybutesName": "Length",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "87",
+                        "styleAttrybutesValueName": "Midi"
+                    },
+                    {
+                        "styleAttrybutesValueId": "88",
+                        "styleAttrybutesValueName": "Petit",
+                        "price": "10.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "89",
+                        "styleAttrybutesValueName": "Regular",
+                        "price": "15.00"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "28",
+                "styleAttrybutesName": "Mesh color",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "55",
+                        "styleAttrybutesValueName": "Light"
+                    },
+                    {
+                        "styleAttrybutesValueId": "56",
+                        "styleAttrybutesValueName": "Medium"
+                    },
+                    {
+                        "styleAttrybutesValueId": "57",
+                        "styleAttrybutesValueName": "Dark"
+                    }
+                ]
+            },
+            {
+                "styleAttrybutesId": "29",
+                "styleAttrybutesName": "Optional slit",
+                "styleAttrybutesValues": [
+                    {
+                        "styleAttrybutesValueId": "77",
+                        "styleAttrybutesValueName": "Slit",
+                        "price": "5.00"
+                    },
+                    {
+                        "styleAttrybutesValueId": "78",
+                        "styleAttrybutesValueName": "No slit"
+                    }
+                ]
+            }
+        ],
+        "styleOptions": [
+            {
+                "styleOptionId": "1",
+                "styleOptionName": "Belt",
+                "price": "20.00"
+            },
+            {
+                "styleOptionId": "2",
+                "styleOptionName": "Corset",
+                "price": "75.00"
+            }
+        ],
+        "rushOptions": [
+            {
+                "rushId": 12,
+                "rushName": "Standard 12 weeks",
+                "leadTime": "12"
+            },
+            {
+                "rushId": 13,
+                "rushName": "Rush 8 weeks",
+                "leadTime": "8",
+                "price": "75.00"
+            }
+        ],
+        "reviewsList": [
+            {
+                "rating": "4",
+                "name": "Scott Miller",
+                "date": "April 7, 2022",
+                "text": "Awsome dress... I'm delighted"
+            },
+            {
+                "rating": "5",
+                "name": "Ann White",
+                "date": "June 23, 2022",
+                "text": "My customers love it"
+            }
+        ]
+    }
+]

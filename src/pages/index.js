@@ -8,7 +8,7 @@ import { LayoutEight } from "../components/Layout";
 import { ProductTabThree } from "../components/ProductTab";
 import blogData from "../data/blog-posts/blog-post-one.json";
 import heroSliderData from "../data/hero-sliders/hero-slider-five.json";
-import { getProducts } from "../lib/product";
+import { getRealProducts } from "../lib/product";
 
 const Perfumes = ({ newProducts, popularProducts, saleProducts }) => {
   return (
@@ -69,11 +69,12 @@ const Perfumes = ({ newProducts, popularProducts, saleProducts }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log("state", state)
   const products = state.productData;
   return {
-    newProducts: getProducts(products, "perfumes", "new", 10),
-    popularProducts: getProducts(products, "perfumes", "popular", 10),
-    saleProducts: getProducts(products, "perfumes", "sale", 10)
+    newProducts: getRealProducts(products, "new", 10),
+    popularProducts: getRealProducts(products, "popular", 10),
+    saleProducts: getRealProducts(products, "sale", 10)
   };
 };
 

@@ -7,7 +7,8 @@ import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import "../assets/scss/styles.scss";
 import Preloader from "../components/Preloader";
-import products from "../data/products.json";
+// import products from "../data/products.json";
+import products from "../data/real_products.json";
 import withReduxStore from "../lib/with-redux-store";
 import fetchProducts from "../redux/actions/productActions";
 

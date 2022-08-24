@@ -73,8 +73,8 @@ const ImageGalleryBottomThumb = ({
       <div className="product-large-image-wrapper space-mb--30">
         {/* floating badges */}
         <div className="product-large-image-wrapper__floating-badges">
-          {product.discount && product.discount > 0 ? (
-            <span className="onsale">-{product.discount}%</span>
+          {product.discountedPrice && product.discountedPrice > 0 ? (
+            <span className="onsale">{product.discountTag}</span>
           ) : (
             ""
           )}
@@ -111,13 +111,13 @@ const ImageGalleryBottomThumb = ({
         </div>
         <LightgalleryProvider>
           <Swiper {...gallerySwiperParams}>
-            {product.image &&
-              product.image.map((image, i) => {
+            {product.pictures &&
+              product.pictures.map((image, i) => {
                 return (
                   <div key={i}>
                     <LightgalleryItem
                       group="any"
-                      src={process.env.PUBLIC_URL + image}
+                      src={process.env.PUBLIC_URL + image.url}
                     >
                       <Tooltip
                         title="Click to enlarge"
@@ -134,7 +134,7 @@ const ImageGalleryBottomThumb = ({
                     </LightgalleryItem>
                     <div className="single-image">
                       <img
-                        src={process.env.PUBLIC_URL + image}
+                        src={process.env.PUBLIC_URL + image.url}
                         className="img-fluid"
                         alt=""
                       />
@@ -147,13 +147,13 @@ const ImageGalleryBottomThumb = ({
       </div>
       <div className="product-small-image-wrapper">
         <Swiper {...thumbnailSwiperParams}>
-          {product.image &&
-            product.image.map((image, i) => {
+          {product.pictures &&
+            product.pictures.map((image, i) => {
               return (
                 <div key={i}>
                   <div className="single-image">
                     <img
-                      src={process.env.PUBLIC_URL + image}
+                      src={process.env.PUBLIC_URL + image.url}
                       className="img-fluid"
                       alt=""
                     />
