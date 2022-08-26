@@ -1,7 +1,5 @@
 import {
-  ADD_TO_WISHLIST,
-  DELETE_FROM_WISHLIST,
-  DELETE_ALL_FROM_WISHLIST
+  ADD_TO_WISHLIST, DELETE_ALL_FROM_WISHLIST, DELETE_FROM_WISHLIST
 } from "../actions/wishlistActions";
 
 const initState = [];
@@ -12,7 +10,7 @@ const wishlistReducer = (state = initState, action) => {
 
   if (action.type === ADD_TO_WISHLIST) {
     const wishlistItem = wishlistItems.filter(
-      item => item.id === product.id
+      item => item.productId === product.productId
     )[0];
     if (wishlistItem === undefined) {
       return [...wishlistItems, product];
@@ -23,7 +21,7 @@ const wishlistReducer = (state = initState, action) => {
 
   if (action.type === DELETE_FROM_WISHLIST) {
     const remainingItems = (wishlistItems, product) =>
-      wishlistItems.filter(wishlistItem => wishlistItem.id !== product.id);
+      wishlistItems.filter(wishlistItem => wishlistItem.productId !== product.productId);
     return remainingItems(wishlistItems, product);
   }
 

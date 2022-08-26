@@ -4,6 +4,8 @@ export const DELETE_ALL_FROM_WISHLIST = "DELETE_ALL_FROM_WISHLIST";
 
 // add to wishlist
 export const addToWishlist = (item, addToast) => {
+  console.log("Wish Item", item)
+  console.log("Wish addToast", addToast)
   return dispatch => {
     if (addToast) {
       addToast("Added To Wishlist", {

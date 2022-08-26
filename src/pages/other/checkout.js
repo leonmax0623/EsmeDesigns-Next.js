@@ -1,11 +1,10 @@
-import { useEffect } from "react";
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
-import { connect } from "react-redux";
-import { getDiscountPrice } from "../../lib/product";
+import { useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { IoMdCash } from "react-icons/io";
-import { LayoutTwo } from "../../components/Layout";
+import { connect } from "react-redux";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
+import { LayoutTwo } from "../../components/Layout";
 
 const Checkout = ({ cartItems }) => {
   let cartTotalPrice = 0;
@@ -19,7 +18,7 @@ const Checkout = ({ cartItems }) => {
       {/* breadcrumb */}
       <BreadcrumbOne
         pageTitle="Checkout"
-        backgroundImage="/assets/images/backgrounds/breadcrumb-bg-1.png"
+        backgroundImage="/assets/images/esme-images/products_banner.png"
       >
         <ul className="breadcrumb__list">
           <li>
@@ -105,17 +104,12 @@ const Checkout = ({ cartItems }) => {
                               </h4>
                               <ul>
                                 {cartItems.map((product, i) => {
-                                  const discountedPrice = getDiscountPrice(
-                                    product.price,
-                                    product.discount
-                                  ).toFixed(2);
-
                                   cartTotalPrice +=
-                                    discountedPrice * product.quantity;
+                                    product.discountedPrice * product.quantity;
                                   return (
                                     <li key={i}>
-                                      {product.name} X {product.quantity}{" "}
-                                      <span>${discountedPrice}</span>
+                                      {product.productName} X {product.quantity}{" "}
+                                      <span>${product.discountedPrice}</span>
                                     </li>
                                   );
                                 })}

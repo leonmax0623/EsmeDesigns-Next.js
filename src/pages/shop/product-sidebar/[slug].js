@@ -1,25 +1,25 @@
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
-import { LayoutTwo } from "../../../components/Layout";
-import { getDiscountPrice } from "../../../lib/product";
 import { BreadcrumbOne } from "../../../components/Breadcrumb";
+import { LayoutTwo } from "../../../components/Layout";
 import {
   ImageGalleryBottomThumb,
   ProductDescription,
   ProductDescriptionTab
 } from "../../../components/ProductDetails";
+import products from "../../../data/products.json";
+import { getDiscountPrice } from "../../../lib/product";
 import { addToCart } from "../../../redux/actions/cartActions";
-import {
-  addToWishlist,
-  deleteFromWishlist
-} from "../../../redux/actions/wishlistActions";
 import {
   addToCompare,
   deleteFromCompare
 } from "../../../redux/actions/compareActions";
-import products from "../../../data/products.json";
+import {
+  addToWishlist,
+  deleteFromWishlist
+} from "../../../redux/actions/wishlistActions";
 
 const ProductSidebar = ({
   product,
@@ -38,15 +38,15 @@ const ProductSidebar = ({
     product.discount
   ).toFixed(2);
 
-  const productPrice = product.price.toFixed(2);
+  const productPrice = product.standardPrice;
   const cartItem = cartItems.filter(
-    (cartItem) => cartItem.id === product.id
+    (cartItem) => cartItem.productId === product.productId
   )[0];
   const wishlistItem = wishlistItems.filter(
-    (wishlistItem) => wishlistItem.id === product.id
+    (wishlistItem) => wishlistItem.productId === product.productId
   )[0];
   const compareItem = compareItems.filter(
-    (compareItem) => compareItem.id === product.id
+    (compareItem) => compareItem.productId === product.productId
   )[0];
 
   return (

@@ -1,10 +1,22 @@
-
 /*=============================================
 =            product description            =
 =============================================*/
 
 
 /* product description */
+.rmsc .dropdown-heading {
+  cursor: pointer !important;
+}
+
+.rmsc .dropdown-container {
+  border: 1px solid #6e6e6e !important;
+}
+
+.rmsc .select-item {
+  font-size: 18px !important;
+  text-transform: none !important;
+}
+
 
 .product-content {
   &__title {
@@ -22,6 +34,7 @@
       line-height: 1.3;
 
       color: $black--two;
+
       &.discounted {
         font-size: 15px;
         font-weight: 600;
@@ -56,6 +69,7 @@
   &__size {
     display: flex;
     align-items: center;
+
     &__title {
       font-size: 16px;
       font-weight: 500;
@@ -64,12 +78,14 @@
 
       color: $black--two;
 
-@include respond(extra-small-mobile) {
+      @include respond(extra-small-mobile) {
         flex-basis: 30%;
       }
     }
+
     &__content {
       flex-basis: 75%;
+
       label {
         font-size: 24px;
 
@@ -81,7 +97,7 @@
 
         color: $grey--fifteen;
 
-@include respond(extra-small-mobile) {
+        @include respond(extra-small-mobile) {
           font-size: 20px;
 
           margin-right: 20px;
@@ -91,23 +107,26 @@
           color: $black--two;
         }
       }
+
       input[type="radio"] {
         width: 0;
 
         opacity: 0;
 
         &:checked {
-          & + label {
+          &+label {
             color: $black--two;
           }
         }
       }
+
     }
   }
 
   &__color {
     display: flex;
     align-items: center;
+
     &__title {
       font-size: 16px;
       font-weight: 500;
@@ -116,18 +135,21 @@
 
       color: $black--two;
 
-@include respond(extra-small-mobile) {
+      @include respond(extra-small-mobile) {
         flex-basis: 30%;
       }
     }
+
     &__content {
       flex-basis: 75%;
+
       input[type="radio"] {
         width: 0;
 
         opacity: 0;
+
         &:checked {
-          & + label {
+          &+label {
             box-shadow: 0 0 0 2px $white, 0 0 0 3px rgba($black, 0.3);
           }
         }
@@ -142,6 +164,7 @@
         cursor: pointer;
 
         border-radius: 50%;
+
         &:last-child {
           margin-right: 0;
         }
@@ -152,6 +175,7 @@
   &__quantity {
     display: flex;
     align-items: center;
+
     &__title {
       font-size: 16px;
       font-weight: 500;
@@ -160,14 +184,16 @@
 
       color: $black--two;
 
-@include respond(extra-small-mobile) {
+      @include respond(extra-small-mobile) {
         flex-basis: 30%;
       }
     }
+
     .cart-plus-minus {
       padding: 10px 0;
 
       border-bottom: 2px solid $grey--eleven;
+
       button {
         font-size: 20px;
         font-weight: 500;
@@ -178,6 +204,7 @@
         border: none;
         background: none;
       }
+
       input {
         font-size: 16px;
         font-weight: 500;
@@ -235,6 +262,7 @@
     &.active {
       border-color: $black--two;
       background-color: $black--two;
+
       svg {
         color: $white;
       }
@@ -245,10 +273,12 @@
     padding-top: 10px;
 
     border-top: 1px solid $grey--seventeen;
+
     table {
       tr {
         td {
           padding-top: 15px;
+
           &.title {
             font-size: 16px;
             font-weight: 500;
@@ -258,7 +288,7 @@
 
             color: $black--two;
 
-@include respond(extra-small-mobile) {
+            @include respond(extra-small-mobile) {
               width: 100px;
             }
           }
@@ -271,6 +301,7 @@
         display: inline-block;
 
         margin-right: 20px;
+
         &:last-chils {
           margin-right: 0;
         }
@@ -287,17 +318,18 @@
     .nav-item {
       margin-right: 40px;
 
-@include respond(extra-large-mobile) {
+      @include respond(extra-large-mobile) {
         margin-right: 25px;
       }
 
-@include respond(large-mobile) {
+      @include respond(large-mobile) {
         margin-right: 25px;
       }
 
       &:last-child {
         margin-right: 0;
       }
+
       a {
         font-size: 28px;
         line-height: 1.5;
@@ -306,11 +338,11 @@
 
         color: $grey--fifteen;
 
-@include respond(extra-large-mobile) {
+        @include respond(extra-large-mobile) {
           font-size: 20px;
         }
 
-@include respond(large-mobile) {
+        @include respond(large-mobile) {
           font-size: 20px;
         }
 
@@ -340,7 +372,7 @@
 
       border-bottom: 1px solid $grey--eighteen;
 
-@include respond(large-mobile) {
+      @include respond(large-mobile) {
         width: 100%;
       }
 
@@ -377,14 +409,14 @@
     max-width: 70%;
     margin: 0 auto;
 
-@include respond (large-mobile) {
+    @include respond (large-mobile) {
       max-width: 100%;
     }
 
     &--wide {
       max-width: 50%;
 
-@include respond (large-mobile) {
+      @include respond (large-mobile) {
         max-width: 100%;
       }
     }
@@ -422,6 +454,7 @@
 
       &__image {
         flex-basis: 70px;
+
         img {
           border-radius: 50%;
         }
@@ -466,4 +499,3 @@
 }
 
 /*=====  End of product description  ======*/
-

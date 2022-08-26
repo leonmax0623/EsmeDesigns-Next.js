@@ -11,6 +11,7 @@ export const addToCart = (
   selectedProductColor,
   selectedProductSize
 ) => {
+
   return dispatch => {
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
@@ -23,13 +24,13 @@ export const addToCart = (
         selectedProductColor: selectedProductColor
           ? selectedProductColor
           : item.selectedProductColor
-          ? item.selectedProductColor
-          : null,
+            ? item.selectedProductColor
+            : null,
         selectedProductSize: selectedProductSize
           ? selectedProductSize
           : item.selectedProductSize
-          ? item.selectedProductSize
-          : null
+            ? item.selectedProductSize
+            : null
       }
     });
   };
@@ -70,6 +71,9 @@ export const deleteAllFromCart = addToast => {
 
 // get stock of cart item
 export const cartItemStock = (item, color, size) => {
+  console.log("cartItemStock", item)
+  console.log("cartItemStock", color)
+  console.log("cartItemStock", size)
   if (item.stock) {
     return item.stock;
   } else {

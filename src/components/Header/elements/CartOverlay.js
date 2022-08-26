@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { IoIosClose } from "react-icons/io";
 import CustomScroll from "react-custom-scroll";
+import { IoIosClose } from "react-icons/io";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
-import { getDiscountPrice } from "../../../lib/product";
 import { deleteFromCart } from "../../../redux/actions/cartActions";
 
 const CartOverlay = ({
@@ -42,12 +41,8 @@ const CartOverlay = ({
               <div className="cart-product-container">
                 <CustomScroll allowOuterScroll={true}>
                   {cartItems.map((product, i) => {
-                    const discountedPrice = getDiscountPrice(
-                      product.price,
-                      product.discount
-                    ).toFixed(2);
 
-                    cartTotalPrice += discountedPrice * product.quantity;
+                    cartTotalPrice += product.discountedPrice * product.quantity;
 
                     return (
                       <div className="single-cart-product" key={i}>
@@ -60,13 +55,15 @@ const CartOverlay = ({
                         </span>
                         <div className="image">
                           <Link
-                            href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                            as={`${process.env.PUBLIC_URL}/shop/product-basic/${product.slug}`}
+                            href={`/shop/product-basic/[slug]?slug=${product.productName}`}
+                            as={
+                              process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                            }
                           >
                             <a>
                               <img
                                 src={
-                                  process.env.PUBLIC_URL + product.thumbImage[0]
+                                  process.env.PUBLIC_URL + product.pictures[0].url
                                 }
                                 className="img-fluid"
                                 alt=""
@@ -77,27 +74,20 @@ const CartOverlay = ({
                         <div className="content">
                           <h5>
                             <Link
-                              href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                              as={`${process.env.PUBLIC_URL}/shop/product-basic/${product.slug}`}
+                              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
+                              as={
+                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                              }
                             >
-                              <a>{product.name}</a>
+                              <a>{product.productName}</a>
                             </Link>
                           </h5>
-                          {product.selectedProductColor &&
-                          product.selectedProductSize ? (
-                            <div className="cart-item-variation">
-                              <span>Color: {product.selectedProductColor}</span>
-                              <span>Size: {product.selectedProductSize}</span>
-                            </div>
-                          ) : (
-                            ""
-                          )}
                           <p>
                             <span className="cart-count">
                               {product.quantity} x{" "}
                             </span>{" "}
                             <span className="discounted-price">
-                              ${discountedPrice}
+                              ${product.discountedPrice}
                             </span>
                           </p>
                         </div>

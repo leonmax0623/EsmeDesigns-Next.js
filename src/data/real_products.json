@@ -53,11 +53,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -67,11 +69,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -83,11 +87,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -97,11 +103,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -117,11 +125,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -131,11 +141,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -151,11 +163,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -165,11 +179,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -196,6 +212,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -362,11 +401,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -376,11 +417,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -392,11 +435,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -406,11 +451,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -426,11 +473,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -440,11 +489,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -460,11 +511,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -474,11 +527,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -505,6 +560,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -671,11 +749,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -685,11 +765,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -701,11 +783,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -715,11 +799,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -735,11 +821,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -749,11 +837,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -769,11 +859,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -783,11 +875,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -814,6 +908,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -980,11 +1097,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -994,11 +1113,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -1010,11 +1131,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -1024,11 +1147,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -1044,11 +1169,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -1058,11 +1185,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -1078,11 +1207,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -1092,11 +1223,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -1123,6 +1256,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -1289,11 +1445,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -1303,11 +1461,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -1319,11 +1479,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -1333,11 +1495,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -1353,11 +1517,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -1367,11 +1533,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -1387,11 +1555,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -1401,11 +1571,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -1432,6 +1604,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -1598,11 +1793,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -1612,11 +1809,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -1628,11 +1827,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -1642,11 +1843,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -1662,11 +1865,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -1676,11 +1881,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -1696,11 +1903,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -1710,11 +1919,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -1741,6 +1952,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -1907,11 +2141,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -1921,11 +2157,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -1937,11 +2175,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -1951,11 +2191,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -1971,11 +2213,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -1985,11 +2229,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -2005,11 +2251,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -2019,11 +2267,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -2216,11 +2466,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -2230,11 +2482,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -2246,11 +2500,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -2260,11 +2516,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -2280,11 +2538,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -2294,11 +2554,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -2314,11 +2576,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -2328,11 +2592,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -2359,6 +2625,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -2525,11 +2814,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -2539,11 +2830,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -2555,11 +2848,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -2569,11 +2864,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -2589,11 +2886,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -2603,11 +2902,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -2623,11 +2924,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -2637,11 +2940,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -2668,6 +2973,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -2834,11 +3162,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -2848,11 +3178,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -2864,11 +3196,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -2878,11 +3212,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -2898,11 +3234,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -2912,11 +3250,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -2932,11 +3272,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -2946,11 +3288,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -2977,6 +3321,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -3143,11 +3510,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -3157,11 +3526,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -3173,11 +3544,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -3187,11 +3560,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -3207,11 +3582,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -3221,11 +3598,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -3241,11 +3620,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -3255,11 +3636,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -3286,6 +3669,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -3452,11 +3858,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -3466,11 +3874,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -3482,11 +3892,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -3496,11 +3908,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -3516,11 +3930,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -3530,11 +3946,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -3550,11 +3968,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -3564,11 +3984,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -3595,6 +4017,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -3761,11 +4206,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -3775,11 +4222,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -3791,11 +4240,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -3805,11 +4256,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -3825,11 +4278,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -3839,11 +4294,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -3859,11 +4316,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -3873,11 +4332,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -3904,6 +4365,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -4070,11 +4554,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -4084,11 +4570,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -4100,11 +4588,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -4114,11 +4604,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -4134,11 +4626,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -4148,11 +4642,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -4168,11 +4664,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -4182,11 +4680,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -4213,6 +4713,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
@@ -4379,11 +4902,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "33",
-                        "fabricsColorName": "Antique blush"
+                        "fabricsColorName": "Antique blush",
+                        "fabricsColorRGB": "159, 216, 169"
                     },
                     {
                         "fabricsColorId": "34",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "79, 216, 169"
                     }
                 ]
             },
@@ -4393,11 +4918,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "36",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "111, 216, 169"
                     },
                     {
                         "fabricsColorId": "37",
-                        "fabricsColorName": "Yellow"
+                        "fabricsColorName": "Yellow",
+                        "fabricsColorRGB": "145, 216, 169"
                     }
                 ]
             }
@@ -4409,11 +4936,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "38",
-                        "fabricsColorName": "Gray"
+                        "fabricsColorName": "Gray",
+                        "fabricsColorRGB": "230, 216, 169"
                     },
                     {
                         "fabricsColorId": "67",
-                        "fabricsColorName": "Orange"
+                        "fabricsColorName": "Orange",
+                        "fabricsColorRGB": "80, 56, 169"
                     }
                 ]
             },
@@ -4423,11 +4952,13 @@
                 "fabricsColors": [
                     {
                         "fabricsColorId": "39",
-                        "fabricsColorName": "Blue"
+                        "fabricsColorName": "Blue",
+                        "fabricsColorRGB": "20, 150, 169"
                     },
                     {
                         "fabricsColorId": "49",
-                        "fabricsColorName": "Black"
+                        "fabricsColorName": "Black",
+                        "fabricsColorRGB": "49, 170, 169"
                     }
                 ]
             }
@@ -4443,11 +4974,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "40",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "78, 34, 58"
                             },
                             {
                                 "fabricsColorId": "41",
-                                "fabricsColorName": "Orange"
+                                "fabricsColorName": "Orange",
+                                "fabricsColorRGB": "99, 22, 243"
                             }
                         ]
                     },
@@ -4457,11 +4990,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "42",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 240, 120"
                             },
                             {
                                 "fabricsColorId": "43",
-                                "fabricsColorName": "Yellow"
+                                "fabricsColorName": "Yellow",
+                                "fabricsColorRGB": "199, 111, 89"
                             }
                         ]
                     }
@@ -4477,11 +5012,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "44",
-                                "fabricsColorName": "Black"
+                                "fabricsColorName": "Black",
+                                "fabricsColorRGB": "25, 69, 190"
                             },
                             {
                                 "fabricsColorId": "45",
-                                "fabricsColorName": "Green"
+                                "fabricsColorName": "Green",
+                                "fabricsColorRGB": "167, 35, 169"
                             }
                         ]
                     },
@@ -4491,11 +5028,13 @@
                         "fabricsColors": [
                             {
                                 "fabricsColorId": "46",
-                                "fabricsColorName": "Gray"
+                                "fabricsColorName": "Gray",
+                                "fabricsColorRGB": "171, 55, 23"
                             },
                             {
                                 "fabricsColorId": "47",
-                                "fabricsColorName": "Blue"
+                                "fabricsColorName": "Blue",
+                                "fabricsColorRGB": "56, 100, 169"
                             }
                         ]
                     }
@@ -4522,6 +5061,29 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
+                        "price": "45.00"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "23",
+                "sizeCategoryName": "Specific",
+                "sizes": [
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "Specific 10"
+                    },
+                    {
+                        "sizeCode": "20",
+                        "sizeName": "Specific 20"
+                    },
+                    {
+                        "sizeCode": "30",
+                        "sizeName": "Specific 30"
+                    },
+                    {
+                        "sizeCode": "40",
+                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]

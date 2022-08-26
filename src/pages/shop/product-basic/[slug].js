@@ -46,13 +46,13 @@ const ProductBasic = ({
   const discountedPrice = product.discountedPrice;
   const productPrice = product.standardPrice;
   const cartItem = cartItems.filter(
-    (cartItem) => cartItem.id === product.id
+    (cartItem) => cartItem.productId === product.productId
   )[0];
   const wishlistItem = wishlistItems.filter(
-    (wishlistItem) => wishlistItem.id === product.id
+    (wishlistItem) => wishlistItem.productId === product.productId
   )[0];
   const compareItem = compareItems.filter(
-    (compareItem) => compareItem.id === product.id
+    (compareItem) => compareItem.productId === product.productId
   )[0];
 
   return (

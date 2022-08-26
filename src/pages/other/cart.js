@@ -1,19 +1,14 @@
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { IoIosClose, IoMdCart } from "react-icons/io";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
-import {
-  addToCart,
-  decreaseQuantity,
-  deleteFromCart,
-  deleteAllFromCart,
-  cartItemStock
-} from "../../redux/actions/cartActions";
-import { getDiscountPrice } from "../../lib/product";
-import { LayoutTwo } from "../../components/Layout";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
-import { IoIosClose, IoMdCart } from "react-icons/io";
+import { LayoutTwo } from "../../components/Layout";
+import {
+  addToCart, decreaseQuantity, deleteAllFromCart, deleteFromCart
+} from "../../redux/actions/cartActions";
 
 const Cart = ({
   cartItems,
@@ -35,7 +30,7 @@ const Cart = ({
       {/* breadcrumb */}
       <BreadcrumbOne
         pageTitle="Cart"
-        backgroundImage="/assets/images/backgrounds/breadcrumb-bg-2.jpg"
+        backgroundImage="/assets/images/esme-images/products_banner.png"
       >
         <ul className="breadcrumb__list">
           <li>
@@ -69,24 +64,21 @@ const Cart = ({
                   </thead>
                   <tbody>
                     {cartItems.map((product, i) => {
-                      const discountedPrice = getDiscountPrice(
-                        product.price,
-                        product.discount
-                      ).toFixed(2);
-
-                      cartTotalPrice += discountedPrice * product.quantity;
+                      cartTotalPrice += product.discountedPrice * product.quantity;
                       return (
                         <tr key={i}>
                           <td className="product-thumbnail">
                             <Link
-                              href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                              as={`${process.env.PUBLIC_URL}/shop/product-basic/${product.slug}`}
+                              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
+                              as={
+                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                              }
                             >
                               <a>
                                 <img
                                   src={
                                     process.env.PUBLIC_URL +
-                                    product.thumbImage[0]
+                                    product.pictures[0].url
                                   }
                                   className="img-fluid"
                                   alt=""
@@ -96,26 +88,17 @@ const Cart = ({
                           </td>
                           <td className="product-name">
                             <Link
-                              href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                              as={`${process.env.PUBLIC_URL}/shop/product-basic/${product.slug}`}
+                              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
+                              as={
+                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                              }
                             >
-                              <a>{product.name}</a>
+                              <a>{product.productName}</a>
                             </Link>
-                            {product.selectedProductColor &&
-                            product.selectedProductSize ? (
-                              <div className="product-variation">
-                                <span>
-                                  Color: {product.selectedProductColor}
-                                </span>
-                                <span>Size: {product.selectedProductSize}</span>
-                              </div>
-                            ) : (
-                              ""
-                            )}
                           </td>
 
                           <td className="product-price">
-                            <span className="price">${discountedPrice}</span>
+                            <span className="price">${product.discountedPrice}</span>
                           </td>
 
                           <td className="product-quantity">
@@ -139,16 +122,16 @@ const Cart = ({
                                 onClick={() =>
                                   addToCart(product, addToast, quantityCount)
                                 }
-                                disabled={
-                                  product !== undefined &&
-                                  product.quantity &&
-                                  product.quantity >=
-                                    cartItemStock(
-                                      product,
-                                      product.selectedProductColor,
-                                      product.selectedProductSize
-                                    )
-                                }
+                              // disabled={
+                              //   product !== undefined &&
+                              //   product.quantity &&
+                              //   product.quantity >=
+                              //   cartItemStock(
+                              //     product,
+                              //     product.selectedProductColor,
+                              //     product.selectedProductSize
+                              //   )
+                              // }
                               >
                                 +
                               </button>
@@ -157,7 +140,7 @@ const Cart = ({
 
                           <td className="total-price">
                             <span className="price">
-                              ${(discountedPrice * product.quantity).toFixed(2)}
+                              ${(product.discountedPrice * product.quantity).toFixed(2)}
                             </span>
                           </td>
 

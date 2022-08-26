@@ -2,8 +2,11 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IoIosHeartEmpty, IoIosShuffle } from "react-icons/io";
+import { MultiSelect } from "react-multi-select-component";
 import { getProductCartQuantity } from "../../lib/product";
 import { ProductRating } from "../Product";
+
+
 
 const ProductDescription = ({
   product,
@@ -63,7 +66,7 @@ const ProductDescription = ({
   const [productStock, setProductStock] = useState(
     product.variation ? product.variation[0].size[0].stock : product.stock
   );
-  const [quantityCount, setQuantityCount] = useState(1);
+  const [quantityCount, setQuantityCount] = useState(3);
 
   const productCartQty = getProductCartQuantity(
     cartItems,
@@ -71,6 +74,33 @@ const ProductDescription = ({
     selectedProductColor,
     selectedProductSize
   );
+
+  const alterationOptions = [];
+  product.styleAlterations.map((single, i) => {
+    let array = {
+      label: "",
+      value: ""
+    };
+    array.label = single.styleAlterationName;
+    array.value = single.price;
+    alterationOptions.push(array)
+  });
+
+  const styleOptions = [];
+  product.styleOptions.map((single, i) => {
+    let array = {
+      label: "",
+      value: ""
+    };
+    array.label = single.styleOptionName;
+    array.value = single.price;
+    styleOptions.push(array)
+  });
+
+  const [alterationSelected, setAlterationSelected] = useState([]);
+  const [styleOptionSelected, setStyleOptionSelected] = useState([]);
+
+
 
   return (
     <div className="product-content">
@@ -101,22 +131,24 @@ const ProductDescription = ({
         <p>{product.description}</p>
       </div>
 
-      {product.sizeCategories ? (
+
+      {product.fabrics ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
-            <div className="product-content__size__title">Size</div>
+            <div className="product-content__size__title">Fabrics</div>
             <div className="product-content__size__content">
               <select
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 onChange={(event) => {
                   console.log("event", event.target.value)
-                  setSelectedSize(event.target.value)
+                  setSelectedFabrics(event.target.value.split("/")[0])
+                  setSelectedFabricsColor(event.target.value.split("/")[1])
                 }}
               >
-                {product.sizeCategories &&
-                  product.sizeCategories[0].sizes.map((size, i) => {
+                {product.fabrics &&
+                  product.fabrics.map((single, i) => {
                     return (
-                      <option key={i} value={size.sizeCode}>{size.sizeName}</option>
+                      <option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
                     );
                   })
                 }
@@ -127,6 +159,105 @@ const ProductDescription = ({
       ) : (
         ""
       )}
+      {selectedFabricsColor && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title"></div>
+            <div className="product-content__size__content">
+              <div className="product-content__color__content">
+                {product.fabrics.map((single, i) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
+                  return (
+                    <Fragment key={i}>
+                      <input
+                        type="radio"
+                        value={color.fabricsColorName}
+                        name="fabrics-color"
+                        id={`fabrics-${color.fabricsColorName}`}
+                        checked={
+                          color.fabricsColorName === selectedFabricsColor ? "checked" : ""
+                        }
+                        onChange={() => {
+                          console.log("FabricsColor", event.target)
+                          setSelectedFabricsColor(color.fabricsColorName);
+                          setQuantityCount(1);
+                        }}
+                      />
+                      <label
+                        htmlFor={`fabrics-${color.fabricsColorName}`}
+                        style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
+                      ></label>
+                    </Fragment>
+                  );
+                }) : "")}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {product.lining ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Lining</div>
+            <div className="product-content__size__content">
+              <select
+                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                onChange={(event) => {
+                  console.log("event", event.target.value)
+                  setSelectedLining(event.target.value.split("/")[0])
+                  setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                }}
+              >
+                {product.lining &&
+                  product.lining.map((single, i) => {
+                    return (
+                      <option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
+                    );
+                  })
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {selectedLiningFabricsColor && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title"></div>
+            <div className="product-content__size__content">
+              <div className="product-content__color__content">
+                {product.lining.map((single, i) => single.fabricsName === selectedLining ? single.fabricsColors.map((color, i) => {
+                  return (
+                    <Fragment key={i}>
+                      <input
+                        type="radio"
+                        value={color.fabricsColorName}
+                        name="lining-color"
+                        id={`lining-${color.fabricsColorName}`}
+                        checked={
+                          color.fabricsColorName === selectedLiningFabricsColor ? "checked" : ""
+                        }
+                        onChange={() => {
+                          console.log("LiningColor", color.fabricsColorName)
+                          setSelectedLiningFabricsColor(color.fabricsColorName);
+                          setQuantityCount(1);
+                        }}
+                      />
+                      <label
+                        htmlFor={`lining-${color.fabricsColorName}`}
+                        style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
+                      ></label>
+                    </Fragment>
+                  );
+                }) : "")}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
       {product.combos ?
         product.combos.map((combo, comboIndex) => {
           return (
@@ -203,7 +334,7 @@ const ProductDescription = ({
                             />
                             <label
                               htmlFor={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
-                              style={{ backgroundColor: color.fabricsColorName }}
+                              style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
                             ></label>
                           </Fragment>
                         );
@@ -218,197 +349,114 @@ const ProductDescription = ({
           ""
         )}
 
-      {product.styleAlterations ? (
+      {product.styleAttributes ? (
         <div className="product-content__size-color">
-          <div className="product-content__size space-mb--20">
-            <div className="product-content__size__title">Alteration</div>
-            <div className="product-content__size__content">
-              <select
-                style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                onChange={(event) => {
-                  console.log("event", event.target.value)
-                }}
-              >
-                {product.styleAlterations &&
-                  product.styleAlterations.map((single, i) => {
-                    return (
-                      <option key={i} value={single.styleAlterationName}>{single.styleAlterationName}</option>
-                    );
-                  })
-                }
-              </select>
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      {product.lining ? (
-        <div className="product-content__size-color">
-          <div className="product-content__size space-mb--20">
-            <div className="product-content__size__title">Lining</div>
-            <div className="product-content__size__content">
-              <select
-                style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                onChange={(event) => {
-                  console.log("event", event.target.value)
-                  setSelectedLining(event.target.value.split("/")[0])
-                  setSelectedLiningFabricsColor(event.target.value.split("/")[1])
-                }}
-              >
-                {product.lining &&
-                  product.lining.map((single, i) => {
-                    return (
-                      <option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
-                    );
-                  })
-                }
-              </select>
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      {selectedLiningFabricsColor && (
-        <div className="product-content__size-color">
-          <div className="product-content__size space-mb--20">
-            <div className="product-content__size__title"></div>
-            <div className="product-content__size__content">
-              <div className="product-content__color__content">
-                {product.lining.map((single, i) => single.fabricsName === selectedLining ? single.fabricsColors.map((color, i) => {
-                  return (
-                    <Fragment key={i}>
-                      <input
-                        type="radio"
-                        value={color.fabricsColorName}
-                        name="lining-color"
-                        id={`lining-${color.fabricsColorName}`}
-                        checked={
-                          color.fabricsColorName === selectedLiningFabricsColor ? "checked" : ""
-                        }
-                        onChange={() => {
-                          console.log("LiningColor", color.fabricsColorName)
-                          setSelectedLiningFabricsColor(color.fabricsColorName);
-                          setQuantityCount(1);
-                        }}
-                      />
-                      <label
-                        htmlFor={`lining-${color.fabricsColorName}`}
-                        style={{ backgroundColor: color.fabricsColorName }}
-                      ></label>
-                    </Fragment>
-                  );
-                }) : "")}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {product.fabrics ? (
-        <div className="product-content__size-color">
-          <div className="product-content__size space-mb--20">
-            <div className="product-content__size__title">Fabrics</div>
-            <div className="product-content__size__content">
-              <select
-                style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                onChange={(event) => {
-                  console.log("event", event.target.value)
-                  setSelectedFabrics(event.target.value.split("/")[0])
-                  setSelectedFabricsColor(event.target.value.split("/")[1])
-                }}
-              >
-                {product.fabrics &&
-                  product.fabrics.map((single, i) => {
-                    return (
-                      <option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
-                    );
-                  })
-                }
-              </select>
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      {selectedFabricsColor && (
-        <div className="product-content__size-color">
-          <div className="product-content__size space-mb--20">
-            <div className="product-content__size__title"></div>
-            <div className="product-content__size__content">
-              <div className="product-content__color__content">
-                {product.fabrics.map((single, i) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
-                  return (
-                    <Fragment key={i}>
-                      <input
-                        type="radio"
-                        value={color.fabricsColorName}
-                        name="fabrics-color"
-                        id={`fabrics-${color.fabricsColorName}`}
-                        checked={
-                          color.fabricsColorName === selectedFabricsColor ? "checked" : ""
-                        }
-                        onChange={() => {
-                          console.log("FabricsColor", event.target)
-                          setSelectedFabricsColor(color.fabricsColorName);
-                          setQuantityCount(1);
-                        }}
-                      />
-                      <label
-                        htmlFor={`fabrics-${color.fabricsColorName}`}
-                        style={{ backgroundColor: color.fabricsColorName }}
-                      ></label>
-                    </Fragment>
-                  );
-                }) : "")}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* {product.styleAttributes ? (
-        <div className="product-content__size-color">
-          <div className="product-content__size space-mb--20">
+          <div className="product-content__size space-mb--20" style={{ alignItems: "baseline" }}>
             <div className="product-content__size__title">Attributes</div>
             <div className="product-content__size__content">
               {product.styleAttributes.map((attr, i) => {
-                <div className="product-content__size-color">
-                  <div className="product-content__size space-mb--20">
-                    <div className="product-content__size__title">{attr.styleAttrybutesName}</div>
-                    <div className="product-content__size__content">
-                      ываываыва
+                return (
+                  <div className="product-content__size-color">
+                    <div className="product-content__size space-mb--20">
+                      <div className="product-content__size__title">{attr.styleAttrybutesName}</div>
+                      <div className="product-content__size__content">
+                        <select
+                          style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                          onChange={(event) => {
+                            // console.log("event", event.target.value)
+                            // setSelectedLining(event.target.value.split("/")[0])
+                            // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                          }}
+                        >
+                          {attr.styleAttrybutesValues &&
+                            attr.styleAttrybutesValues.map((single, i) => {
+                              return (
+                                <option key={i} value={single.styleAttrybutesValueId}>{single.styleAttrybutesValueName}</option>
+                              );
+                            })
+                          }
+                        </select>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )
               })}
             </div>
           </div>
         </div>
       ) : (
         ""
-      )} */}
+      )}
+
+      {product.sizeCategories ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20" style={{ alignItems: "baseline" }}>
+            <div className="product-content__size__title">Size</div>
+            <div className="product-content__size__content">
+              {product.sizeCategories.map((category, i) => {
+                return (
+                  <div className="product-content__size-color">
+                    <div className="product-content__size space-mb--20">
+                      <div className="product-content__size__title">{category.sizeCategoryName}</div>
+                      <div className="product-content__size__content">
+                        <select
+                          style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                          onChange={(event) => {
+                            // console.log("event", event.target.value)
+                            // setSelectedLining(event.target.value.split("/")[0])
+                            // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                          }}
+                        >
+                          {category.sizes &&
+                            category.sizes.map((single, i) => {
+                              return (
+                                <option key={i} value={single.sizeCode}>{single.sizeName}</option>
+                              );
+                            })
+                          }
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {product.styleAlterations ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Alteration</div>
+            <div className="product-content__size__content">
+              <MultiSelect
+                options={alterationOptions}
+                value={alterationSelected}
+                onChange={setAlterationSelected}
+                labelledBy="Select Alteration"
+              />
+
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       {product.styleOptions ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Options</div>
             <div className="product-content__size__content">
-              <select
-                style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                onChange={(event) => {
-                  // console.log("event", event.target.value)
-                  // setSelectedLining(event.target.value.split("/")[0])
-                  // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
-                }}
-              >
-                {product.styleOptions &&
-                  product.styleOptions.map((single, i) => {
-                    return (
-                      <option key={i} value={single.styleOptionName}>{single.styleOptionName}</option>
-                    );
-                  })
-                }
-              </select>
+              <MultiSelect
+                options={styleOptions}
+                value={styleOptionSelected}
+                onChange={setStyleOptionSelected}
+                labelledBy="Select"
+              />
             </div>
           </div>
         </div>
@@ -463,30 +511,21 @@ const ProductDescription = ({
           </div>
 
           <div className="product-content__button-wrapper d-flex align-items-center">
-            {productStock && productStock > 0 ? (
-              <button
-                onClick={() =>
-                  addToCart(
-                    product,
-                    addToast,
-                    quantityCount,
-                    selectedProductColor,
-                    selectedProductSize
-                  )
-                }
-                disabled={productCartQty >= productStock}
-                className="lezada-button lezada-button--medium product-content__cart space-mr--10"
-              >
-                Add To Cart
-              </button>
-            ) : (
-              <button
-                className="lezada-button lezada-button--medium product-content__ofs space-mr--10"
-                disabled
-              >
-                Out of Stock
-              </button>
-            )}
+            <button
+              onClick={() =>
+                addToCart(
+                  product,
+                  addToast,
+                  quantityCount,
+                  selectedProductColor,
+                  selectedProductSize
+                )
+              }
+              disabled={productCartQty >= productStock}
+              className="lezada-button lezada-button--medium product-content__cart space-mr--10"
+            >
+              Add To Cart
+            </button>
 
             <button
               className={`product-content__wishlist space-mr--10 ${wishlistItem !== undefined ? "active" : ""
