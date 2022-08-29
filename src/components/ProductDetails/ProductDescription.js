@@ -64,9 +64,9 @@ const ProductDescription = ({
   const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
   //custom
   const [productStock, setProductStock] = useState(
-    product.variation ? product.variation[0].size[0].stock : product.stock
+    product.inStock ? product.inStock : 0
   );
-  const [quantityCount, setQuantityCount] = useState(3);
+  const [quantityCount, setQuantityCount] = useState(1);
 
   const productCartQty = getProductCartQuantity(
     cartItems,
@@ -497,17 +497,14 @@ const ProductDescription = ({
               />
               <button
                 onClick={() =>
-                  setQuantityCount(
-                    quantityCount < productStock - productCartQty
-                      ? quantityCount + 1
-                      : quantityCount
-                  )
+                  setQuantityCount(quantityCount + 1)
                 }
                 className="qtybutton"
               >
                 +
               </button>
             </div>
+            <p style={{ marginLeft: "20px" }}>Products in Stock: <span>{productStock - productCartQty - quantityCount}</span><br />Out of Stocks:<span>{Math.abs(quantityCount - productStock - productCartQty)}</span></p>
           </div>
 
           <div className="product-content__button-wrapper d-flex align-items-center">

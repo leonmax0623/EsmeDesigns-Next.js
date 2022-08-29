@@ -15,6 +15,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "5",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -363,6 +366,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "2",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -711,6 +717,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "3",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -1059,6 +1068,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "1",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -1407,6 +1419,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "0",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -1755,6 +1770,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "3",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -2103,6 +2121,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "4",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -2428,6 +2449,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "0",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -2776,6 +2800,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "2",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -3124,6 +3151,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "4",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -3472,6 +3502,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "10",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -3820,6 +3853,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "2",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -4168,6 +4204,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "1",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -4516,6 +4555,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "0",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
@@ -4864,6 +4906,9 @@
         "currencySymbol": "$",
         "rating": "5",
         "reviews": "2",
+        "inStock": "5",
+        "showStock": "True",
+        "allowOutOfStockOrders": "True",
         "errorCode": "0",
         "errorText": "",
         "pictures": [
