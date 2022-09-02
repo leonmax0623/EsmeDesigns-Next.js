@@ -4,6 +4,7 @@ import {
   IoIosArrowForward, IoIosHeartEmpty, IoMdExpand
 } from "react-icons/io";
 import Swiper from "react-id-swiper";
+import ReactImageMagnify from 'react-image-magnify';
 import { LightgalleryItem, LightgalleryProvider } from "react-lightgallery";
 import { Tooltip } from "react-tippy";
 
@@ -43,6 +44,14 @@ const ImageGalleryBottomThumb = ({
     }
   };
 
+  // const props = {
+  //   width: 400,
+  //   height: 250,
+  //   zoomWidth: 500,
+  //   zoomPosition: "original",
+  //   img: product.pictures[0].url
+  // }
+
   const thumbnailSwiperParams = {
     getSwiper: getThumbnailSwiper,
     spaceBetween: 10,
@@ -67,6 +76,7 @@ const ImageGalleryBottomThumb = ({
         <IoIosArrowForward />
       </button>
     )
+
   };
   return (
     <Fragment>
@@ -109,40 +119,54 @@ const ImageGalleryBottomThumb = ({
             </button>
           </Tooltip>
         </div>
-        <LightgalleryProvider>
-          <Swiper {...gallerySwiperParams}>
-            {product.pictures &&
-              product.pictures.map((image, i) => {
-                return (
-                  <div key={i}>
-                    <LightgalleryItem
-                      group="any"
-                      src={process.env.PUBLIC_URL + image.url}
-                    >
-                      <Tooltip
-                        title="Click to enlarge"
-                        position="left"
-                        trigger="mouseenter"
-                        animation="shift"
-                        arrow={true}
-                        duration={200}
+        <LightgalleryProvider >
+          <div className="maximus">
+            <Swiper {...gallerySwiperParams}>
+              {product.pictures &&
+                product.pictures.map((image, i) => {
+                  return (
+                    <div key={i}>
+                      <LightgalleryItem
+                        group="any"
+                        src={process.env.PUBLIC_URL + image.url}
                       >
-                        <button className="enlarge-icon">
-                          <IoMdExpand />
-                        </button>
-                      </Tooltip>
-                    </LightgalleryItem>
-                    <div className="single-image">
-                      <img
+                        <Tooltip
+                          title="Click to enlarge"
+                          position="left"
+                          trigger="mouseenter"
+                          animation="shift"
+                          arrow={true}
+                          duration={200}
+                        >
+                          <button className="enlarge-icon">
+                            <IoMdExpand />
+                          </button>
+                        </Tooltip>
+                      </LightgalleryItem>
+                      <div className="single-image">
+                        {/* <img
                         src={process.env.PUBLIC_URL + image.url}
                         className="img-fluid"
                         alt=""
-                      />
+                      /> */}
+                        <ReactImageMagnify {...{
+                          smallImage: {
+                            alt: 'Wristwatch by Ted Baker London',
+                            isFluidWidth: true,
+                            src: image.url
+                          },
+                          largeImage: {
+                            src: image.url,
+                            width: 1800,
+                            height: 2700
+                          }
+                        }} />
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-          </Swiper>
+                  );
+                })}
+            </Swiper>
+          </div>
         </LightgalleryProvider>
       </div>
       <div className="product-small-image-wrapper">

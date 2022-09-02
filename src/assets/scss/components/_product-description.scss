@@ -17,7 +17,6 @@
   text-transform: none !important;
 }
 
-
 .product-content {
   &__title {
     font-size: 34px;
@@ -365,8 +364,6 @@
   &__additional-info {
     .shop-attributes {
       font-size: 16px;
-
-      width: 550px;
       max-width: 100%;
       margin: 0 auto;
 
@@ -374,6 +371,10 @@
 
       @include respond(large-mobile) {
         width: 100%;
+      }
+
+      tr {
+        text-align: center;
       }
 
       th {

@@ -1,12 +1,9 @@
-import Link from "next/link";
 import { Fragment, useState } from "react";
-import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IoIosHeartEmpty, IoIosShuffle } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
+import { Tooltip } from "react-tippy";
 import { getProductCartQuantity } from "../../lib/product";
 import { ProductRating } from "../Product";
-
-
 
 const ProductDescription = ({
   product,
@@ -100,8 +97,6 @@ const ProductDescription = ({
   const [alterationSelected, setAlterationSelected] = useState([]);
   const [styleOptionSelected, setStyleOptionSelected] = useState([]);
 
-
-
   return (
     <div className="product-content">
       {product.reviewsList && product.reviewsList.length > 0 ? (
@@ -130,7 +125,36 @@ const ProductDescription = ({
       <div className="product-content__description space-mb--30">
         <p>{product.description}</p>
       </div>
-
+      {product.productCode && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Product Code</div>
+            <div className="product-content__size__content">
+              <span>{product.productCode}</span>
+            </div>
+          </div>
+        </div>
+      )}
+      {product.productType && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Product Type</div>
+            <div className="product-content__size__content">
+              <span>{product.productType}</span>
+            </div>
+          </div>
+        </div>
+      )}
+      {product.shortTag && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Short Tag</div>
+            <div className="product-content__size__content">
+              <span>{product.shortTag}</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {product.fabrics ? (
         <div className="product-content__size-color">
@@ -167,26 +191,38 @@ const ProductDescription = ({
               <div className="product-content__color__content">
                 {product.fabrics.map((single, i) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
                   return (
-                    <Fragment key={i}>
-                      <input
-                        type="radio"
-                        value={color.fabricsColorName}
-                        name="fabrics-color"
-                        id={`fabrics-${color.fabricsColorName}`}
-                        checked={
-                          color.fabricsColorName === selectedFabricsColor ? "checked" : ""
-                        }
-                        onChange={() => {
-                          console.log("FabricsColor", event.target)
-                          setSelectedFabricsColor(color.fabricsColorName);
-                          setQuantityCount(1);
-                        }}
-                      />
-                      <label
-                        htmlFor={`fabrics-${color.fabricsColorName}`}
-                        style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
-                      ></label>
-                    </Fragment>
+                    <Tooltip
+                      title={
+                        color.fabricsColorName
+                      }
+                      position="bottom"
+                      trigger="mouseenter"
+                      animation="shift"
+                      arrow={true}
+                      duration={200}
+                      style={{ marginLeft: "15px" }}
+                    >
+                      <Fragment key={i}>
+                        <input
+                          type="radio"
+                          value={color.fabricsColorName}
+                          name="fabrics-color"
+                          id={`fabrics-${color.fabricsColorName}`}
+                          checked={
+                            color.fabricsColorName === selectedFabricsColor ? "checked" : ""
+                          }
+                          onChange={() => {
+                            console.log("FabricsColor", event.target)
+                            setSelectedFabricsColor(color.fabricsColorName);
+                            setQuantityCount(1);
+                          }}
+                        />
+                        <label
+                          htmlFor={`fabrics-${color.fabricsColorName}`}
+                          style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
+                        ></label>
+                      </Fragment>
+                    </Tooltip>
                   );
                 }) : "")}
               </div>
@@ -229,26 +265,38 @@ const ProductDescription = ({
               <div className="product-content__color__content">
                 {product.lining.map((single, i) => single.fabricsName === selectedLining ? single.fabricsColors.map((color, i) => {
                   return (
-                    <Fragment key={i}>
-                      <input
-                        type="radio"
-                        value={color.fabricsColorName}
-                        name="lining-color"
-                        id={`lining-${color.fabricsColorName}`}
-                        checked={
-                          color.fabricsColorName === selectedLiningFabricsColor ? "checked" : ""
-                        }
-                        onChange={() => {
-                          console.log("LiningColor", color.fabricsColorName)
-                          setSelectedLiningFabricsColor(color.fabricsColorName);
-                          setQuantityCount(1);
-                        }}
-                      />
-                      <label
-                        htmlFor={`lining-${color.fabricsColorName}`}
-                        style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
-                      ></label>
-                    </Fragment>
+                    <Tooltip
+                      title={
+                        color.fabricsColorName
+                      }
+                      position="bottom"
+                      trigger="mouseenter"
+                      animation="shift"
+                      arrow={true}
+                      duration={200}
+                      style={{ marginLeft: "15px" }}
+                    >
+                      <Fragment key={i}>
+                        <input
+                          type="radio"
+                          value={color.fabricsColorName}
+                          name="lining-color"
+                          id={`lining-${color.fabricsColorName}`}
+                          checked={
+                            color.fabricsColorName === selectedLiningFabricsColor ? "checked" : ""
+                          }
+                          onChange={() => {
+                            console.log("LiningColor", color.fabricsColorName)
+                            setSelectedLiningFabricsColor(color.fabricsColorName);
+                            setQuantityCount(1);
+                          }}
+                        />
+                        <label
+                          htmlFor={`lining-${color.fabricsColorName}`}
+                          style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
+                        ></label>
+                      </Fragment>
+                    </Tooltip>
                   );
                 }) : "")}
               </div>
@@ -256,8 +304,6 @@ const ProductDescription = ({
           </div>
         </div>
       )}
-
-
       {product.combos ?
         product.combos.map((combo, comboIndex) => {
           return (
@@ -301,42 +347,54 @@ const ProductDescription = ({
                     <div className="product-content__color__content">
                       {combo.fabric.map((single, fabricIndex) => ((fabricIndex == selectedComboFabric[comboIndex].fabric && selectedFabric.fabric != null) ? single.fabricsColors.map((color, i) => {
                         return (
-                          <Fragment key={i}>
-                            <input
-                              type="radio"
-                              value={color.fabricsColorName}
-                              name={`color-${selectedComboFabric[comboIndex].combo}`}
-                              id={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
-                              data-combo-index={comboIndex}
-                              data-fabric-index={fabricIndex}
-                              data-color-index={i}
-                              checked={
-                                color.fabricsColorName === product.combos[selectedComboFabric[comboIndex].combo].fabric[selectedComboFabric[comboIndex].fabric].fabricsColors[selectedComboFabric[comboIndex].color].fabricsColorName ? "checked" : ""
-                              }
-                              onClick={() => {
-                                console.log('aaaaaaaaaa')
-                              }}
-                              onChange={(event) => {
-                                console.log("Combo", color.fabricsColorName)
-                                console.log(event.target)
-                                var optionElement = event.target
-                                var comboId = optionElement.getAttribute('data-combo-index')
-                                var fabricId = optionElement.getAttribute('data-fabric-index')
-                                var colorId = optionElement.getAttribute('data-color-index')
-                                var tempArr = selectedComboFabric
-                                tempArr[comboId].combo = comboId;
-                                tempArr[comboId].fabric = fabricId;
-                                tempArr[comboId].color = colorId;
-                                setSelectedComboFabric(tempArr)
-                                setSelectedFabric({ combo: comboId, fabric: fabricId, color: colorId })
-                                setQuantityCount(1);
-                              }}
-                            />
-                            <label
-                              htmlFor={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
-                              style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
-                            ></label>
-                          </Fragment>
+                          <Tooltip
+                            title={
+                              color.fabricsColorName
+                            }
+                            position="bottom"
+                            trigger="mouseenter"
+                            animation="shift"
+                            arrow={true}
+                            duration={200}
+                            style={{ marginLeft: "15px" }}
+                          >
+                            <Fragment key={i}>
+                              <input
+                                type="radio"
+                                value={color.fabricsColorName}
+                                name={`color-${selectedComboFabric[comboIndex].combo}`}
+                                id={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
+                                data-combo-index={comboIndex}
+                                data-fabric-index={fabricIndex}
+                                data-color-index={i}
+                                checked={
+                                  color.fabricsColorName === product.combos[selectedComboFabric[comboIndex].combo].fabric[selectedComboFabric[comboIndex].fabric].fabricsColors[selectedComboFabric[comboIndex].color].fabricsColorName ? "checked" : ""
+                                }
+                                onClick={() => {
+                                  console.log('aaaaaaaaaa')
+                                }}
+                                onChange={(event) => {
+                                  console.log("Combo", color.fabricsColorName)
+                                  console.log(event.target)
+                                  var optionElement = event.target
+                                  var comboId = optionElement.getAttribute('data-combo-index')
+                                  var fabricId = optionElement.getAttribute('data-fabric-index')
+                                  var colorId = optionElement.getAttribute('data-color-index')
+                                  var tempArr = selectedComboFabric
+                                  tempArr[comboId].combo = comboId;
+                                  tempArr[comboId].fabric = fabricId;
+                                  tempArr[comboId].color = colorId;
+                                  setSelectedComboFabric(tempArr)
+                                  setSelectedFabric({ combo: comboId, fabric: fabricId, color: colorId })
+                                  setQuantityCount(1);
+                                }}
+                              />
+                              <label
+                                htmlFor={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
+                                style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
+                              ></label>
+                            </Fragment>
+                          </Tooltip>
                         );
                       }) : ""))}
                     </div>
@@ -348,7 +406,6 @@ const ProductDescription = ({
         }) : (
           ""
         )}
-
       {product.styleAttributes ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20" style={{ alignItems: "baseline" }}>
@@ -393,7 +450,7 @@ const ProductDescription = ({
           <div className="product-content__size space-mb--20" style={{ alignItems: "baseline" }}>
             <div className="product-content__size__title">Size</div>
             <div className="product-content__size__content">
-              {product.sizeCategories.map((category, i) => {
+              {product.sizeCategories.length > 1 ? product.sizeCategories.map((category, i) => {
                 return (
                   <div className="product-content__size-color">
                     <div className="product-content__size space-mb--20">
@@ -419,7 +476,24 @@ const ProductDescription = ({
                     </div>
                   </div>
                 )
-              })}
+              }) : (
+                <select
+                  style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                  onChange={(event) => {
+                    // console.log("event", event.target.value)
+                    // setSelectedLining(event.target.value.split("/")[0])
+                    // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                  }}
+                >
+                  {product.sizeCategories &&
+                    product.sizeCategories[0].sizes.map((single, i) => {
+                      return (
+                        <option key={i} value={single.sizeCode}>{single.sizeName}</option>
+                      );
+                    })
+                  }
+                </select>
+              )}
             </div>
           </div>
         </div>
@@ -437,6 +511,7 @@ const ProductDescription = ({
                 value={alterationSelected}
                 onChange={setAlterationSelected}
                 labelledBy="Select Alteration"
+                hasSelectAll={false}
               />
 
             </div>
@@ -456,6 +531,7 @@ const ProductDescription = ({
                 value={styleOptionSelected}
                 onChange={setStyleOptionSelected}
                 labelledBy="Select"
+                hasSelectAll={false}
               />
             </div>
           </div>
@@ -525,6 +601,22 @@ const ProductDescription = ({
             </button>
 
             <button
+              onClick={() =>
+                addToCart(
+                  product,
+                  addToast,
+                  quantityCount,
+                  selectedProductColor,
+                  selectedProductSize
+                )
+              }
+              disabled={productCartQty >= productStock}
+              className="lezada-button lezada-button--medium product-content__cart space-mr--10"
+            >
+              Bulk Order
+            </button>
+
+            <button
               className={`product-content__wishlist space-mr--10 ${wishlistItem !== undefined ? "active" : ""
                 }`}
               title={
@@ -559,7 +651,7 @@ const ProductDescription = ({
             </button>
           </div>
 
-          <div className="product-content__other-info space-mt--50">
+          {/* <div className="product-content__other-info space-mt--50">
             <table>
               <tbody>
                 <tr className="single-info">
@@ -598,36 +690,9 @@ const ProductDescription = ({
                       )}
                   </td>
                 </tr>
-                <tr className="single-info">
-                  <td className="title">Share on: </td>
-                  <td className="value">
-                    <ul className="social-icons">
-                      <li>
-                        <a href="https://www.twitter.com">
-                          <FaTwitter />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://www.facebook.com">
-                          <FaFacebookF />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://www.instagram.com">
-                          <FaInstagram />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://www.youtube.com">
-                          <FaYoutube />
-                        </a>
-                      </li>
-                    </ul>
-                  </td>
-                </tr>
               </tbody>
             </table>
-          </div>
+          </div> */}
         </Fragment>
       )}
     </div>
