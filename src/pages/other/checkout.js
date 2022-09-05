@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { IoMdCash } from "react-icons/io";
 import { connect } from "react-redux";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
@@ -8,6 +10,7 @@ import { LayoutTwo } from "../../components/Layout";
 
 const Checkout = ({ cartItems }) => {
   let cartTotalPrice = 0;
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");
@@ -195,9 +198,70 @@ const Checkout = ({ cartItems }) => {
                             <button className="lezada-button lezada-button--medium space-mt--20">
                               Place order
                             </button>
+
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div style={{ display: "flex", marginTop: "20px" }}>
+                      <div className="col-md-4 col-12 space-mb--20">
+                        <label>* Wear date</label>
+                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}>
+                          <div style={{ color: "red" }}>Don't forget to check the weather!</div>
+                        </DatePicker>
+                      </div>
+                      <div className="col-md-4 col-12 space-mb--20">
+                        <label>* Lead Time</label>
+                        {/* <select
+                          style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                          onChange={(event) => {
+                            // console.log("event", event.target.value)
+                            // setSelectedLining(event.target.value.split("/")[0])
+                            // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                          }}
+                        >
+                          {product.sizeCategories &&
+                            product.sizeCategories[0].sizes.map((single, i) => {
+                              return (
+                                <option key={i} value={single.sizeCode}>{single.sizeName}</option>
+                              );
+                            })
+                          }
+                        </select> */}
+                      </div>
+                      <div className="col-md-4 col-12 space-mb--20">
+                        <label>Estimated Ship Date</label>
+                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}>
+                          <div style={{ color: "red" }}>Don't forget to check the weather!</div>
+                        </DatePicker>
+                      </div>
+                    </div>
+                    <div className="lezada-form lezada-form--review">
+                      <form>
+                        <div className="row">
+                          <div className="col-lg-12 space-mb--20">
+                            <span className="rating-title space-mr--20">
+                              Add Comments About Your Order
+                            </span>
+                          </div>
+                          <div className="col-lg-12 space-mb--20">
+                            <textarea
+                              cols={30}
+                              rows={10}
+                              placeholder="Add Comments About Your Order"
+                              defaultValue={""}
+                            />
+                          </div>
+                          <div className="col-lg-12 text-center">
+                            <button
+                              type="submit"
+                              className="lezada-button lezada-button--medium"
+                            >
+                              Confirm Order
+                            </button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </form>
                 </div>
@@ -229,6 +293,7 @@ const Checkout = ({ cartItems }) => {
           )}
         </Container>
       </div>
+
     </LayoutTwo>
   );
 };

@@ -156,7 +156,7 @@ const ProductDescriptionTab = ({ product }) => {
         <Tab.Content>
           <Tab.Pane eventKey="description">
             <div className="product-description-tab__details">
-              {product.fullDescription}
+              {product.description}
             </div>
           </Tab.Pane>
           <Tab.Pane eventKey="additionalInfo">
@@ -176,14 +176,6 @@ const ProductDescriptionTab = ({ product }) => {
                     <th>14</th>
                     <th>16</th>
                     <th>18</th>
-                    <th>20W</th>
-                    <th>22W</th>
-                    <th>24W</th>
-                    <th>26W</th>
-                    <th>28W</th>
-                    <th>30W</th>
-                    <th>32W</th>
-
                   </tr>
                   {sizes.map((size, i) => {
                     return (
@@ -199,6 +191,33 @@ const ProductDescriptionTab = ({ product }) => {
                         <td>{size.size_12}</td>
                         <td>{size.size_14}</td>
                         <td>{size.size_16}</td>
+                        <td>{size.size_18}</td>
+                      </tr>
+                    );
+                  })
+                  }
+                </tbody>
+              </table>
+              <table className="shop-attributes" style={{ marginTop: "30px" }}>
+                <tbody>
+                  <tr>
+                    <th>No</th>
+                    <th>Description</th>
+                    <th>18</th>
+                    <th>20W</th>
+                    <th>22W</th>
+                    <th>24W</th>
+                    <th>26W</th>
+                    <th>28W</th>
+                    <th>30W</th>
+                    <th>32W</th>
+
+                  </tr>
+                  {sizes.map((size, i) => {
+                    return (
+                      <tr>
+                        <td>{size.id}</td>
+                        <td>{size.description}</td>
                         <td>{size.size_18}</td>
                         <td>{size.size_20}</td>
                         <td>{size.size_22}</td>
@@ -218,113 +237,44 @@ const ProductDescriptionTab = ({ product }) => {
           <Tab.Pane eventKey="reviews">
             <div className="product-description-tab__review">
               <h2 className="review-title space-mb--20">
-                {product.ratingCount ? product.ratingCount : ""} reviews on{" "}
-                {product.name}
+                {product.reviewsList ? product.reviewsList.length : ""} reviews on{" "}
+                {product.productName}
               </h2>
               {/*=======  single review  =======*/}
-              <div className="single-review">
-                <div className="single-review__image">
-                  <img
-                    src={
-                      process.env.PUBLIC_URL + "/assets/images/user/user1.jpeg"
-                    }
-                    className="img-fluid"
-                    alt=""
-                  />
-                </div>
-                <div className="single-review__content">
-                  {/*=======  rating  =======*/}
-                  <div className="single-review__rating">
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStarOutline />
-                  </div>
+              {product.reviewsList && product.reviewsList.map((review, i) => {
+                return (
+                  <div className="single-review">
+                    <div className="single-review__image">
+                      <img
+                        src={
+                          process.env.PUBLIC_URL + "/assets/images/user/user1.jpeg"
+                        }
+                        className="img-fluid"
+                        alt=""
+                      />
+                    </div>
+                    <div className="single-review__content">
+                      {/*=======  rating  =======*/}
+                      <div className="single-review__rating">
+                        {[...Array(parseInt(review.rating))].map((e, i) => <IoIosStar />)}
+                        {parseInt(review.rating) < 5 && [...Array(5 - parseInt(review.rating))].map((e, i) => <IoIosStarOutline />)}
+                      </div>
 
-                  {/*=======  username and date  =======*/}
-                  <p className="username">
-                    Scott James <span className="date">/ April 5, 2020</span>
-                  </p>
+                      {/*=======  username and date  =======*/}
+                      <p className="username">
+                        {review.name}<span className="date">/ {review.date}</span>
+                      </p>
 
-                  {/*=======  message  =======*/}
-                  <p className="message">
-                    Thanks for always keeping your HTML themes up to date. Your
-                    level of support and dedication is second to none.
-                  </p>
-                  {/*=======  End of message  =======*/}
-                </div>
-              </div>
-              {/*=======  End of single review  =======*/}
-              {/*=======  single review  =======*/}
-              <div className="single-review">
-                <div className="single-review__image">
-                  <img
-                    src={
-                      process.env.PUBLIC_URL + "/assets/images/user/user2.jpeg"
-                    }
-                    className="img-fluid"
-                    alt=""
-                  />
-                </div>
-                <div className="single-review__content">
-                  {/*=======  rating  =======*/}
-                  <div className="single-review__rating">
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStarOutline />
+                      {/*=======  message  =======*/}
+                      <p className="message">
+                        {review.text}
+                      </p>
+                      {/*=======  End of message  =======*/}
+                    </div>
                   </div>
-                  {/*=======  End of rating  =======*/}
-                  {/*=======  username and date  =======*/}
-                  <p className="username">
-                    Owen Christ <span className="date">/ April 7, 2020</span>
-                  </p>
-                  {/*=======  End of username and date  =======*/}
-                  {/*=======  message  =======*/}
-                  <p className="message">
-                    I didn’t expect this poster to arrive folded. Now there are
-                    lines on the poster and one sad Ninja.
-                  </p>
-                  {/*=======  End of message  =======*/}
-                </div>
-              </div>
-              {/*=======  End of single review  =======*/}
-              {/*=======  single review  =======*/}
-              <div className="single-review">
-                <div className="single-review__image">
-                  <img
-                    src={
-                      process.env.PUBLIC_URL + "/assets/images/user/user3.jpeg"
-                    }
-                    className="img-fluid"
-                    alt=""
-                  />
-                </div>
-                <div className="single-review__content">
-                  {/*=======  rating  =======*/}
-                  <div className="single-review__rating">
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStar />
-                    <IoIosStarOutline />
-                  </div>
-                  {/*=======  End of rating  =======*/}
-                  {/*=======  username and date  =======*/}
-                  <p className="username">
-                    Edna Watson <span className="date">/ April 5, 2020</span>
-                  </p>
-                  {/*=======  End of username and date  =======*/}
-                  {/*=======  message  =======*/}
-                  <p className="message">
-                    Can’t wait to start mixin’ with this one!
-                    Irba-irr-Up-up-up-up-date your theme!
-                  </p>
-                  {/*=======  End of message  =======*/}
-                </div>
-              </div>
+                )
+              })}
+
               {/*=======  End of single review  =======*/}
               <h2 className="review-title space-mb--20">Add a review</h2>
               <p className="text-center">

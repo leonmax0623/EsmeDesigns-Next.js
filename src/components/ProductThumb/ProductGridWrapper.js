@@ -26,8 +26,6 @@ const ProductGridWrapper = ({
   compareItems,
   column
 }) => {
-  console.log("WishListItems::Maximus::", wishlistItems)
-  console.log("products::Maximus::", products)
   const { addToast } = useToasts();
   return (
     <Fragment>

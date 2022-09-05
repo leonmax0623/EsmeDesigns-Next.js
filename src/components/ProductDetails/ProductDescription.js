@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { IoIosHeartEmpty, IoIosShuffle } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
+import { useDispatch } from 'react-redux';
 import { Tooltip } from "react-tippy";
 import { getProductCartQuantity } from "../../lib/product";
 import { ProductRating } from "../Product";
@@ -20,6 +21,7 @@ const ProductDescription = ({
   deleteFromCompare
 }) => {
   console.log("Maximus", product)
+  const dispatch = useDispatch();
   const [selectedProductColor, setSelectedProductColor] = useState(
     product.variation ? product.variation[0].color : ""
   );
@@ -45,7 +47,7 @@ const ProductDescription = ({
   );
 
   const [selectedSize, setSelectedSize] = useState(
-    product.sizeCategories ? product.sizeCategories[0].sizes[0].sizeCode : ""
+    product.sizeCategories ? product.sizeCategories[0].sizes[0].sizeName : ""
   );
 
   const [selectedComboFabric, setSelectedComboFabric] = useState(
@@ -67,9 +69,7 @@ const ProductDescription = ({
 
   const productCartQty = getProductCartQuantity(
     cartItems,
-    product,
-    selectedProductColor,
-    selectedProductSize
+    product
   );
 
   const alterationOptions = [];
@@ -96,6 +96,83 @@ const ProductDescription = ({
 
   const [alterationSelected, setAlterationSelected] = useState([]);
   const [styleOptionSelected, setStyleOptionSelected] = useState([]);
+  const [selectedLengthAttribute, setSelectedLengthAttribute] = useState(
+    product.styleAttributes && product.styleAttributes[0].styleAttrybutesName === "Length" ? product.styleAttributes[0].styleAttrybutesValues[0].styleAttrybutesValueName : ""
+  );
+  const [selectedMeshColorAttribute, setSelectedMeshColorAttribute] = useState(
+    product.styleAttributes && product.styleAttributes[1].styleAttrybutesName === "Mesh color" ? product.styleAttributes[1].styleAttrybutesValues[0].styleAttrybutesValueName : ""
+  );
+  const [selectedSlitAttribute, setSelectedSlitAttribute] = useState(
+    product.styleAttributes && product.styleAttributes[2].styleAttrybutesName === "Optional slit" ? product.styleAttributes[2].styleAttrybutesValues[0].styleAttrybutesValueName : ""
+  );
+
+  const [selectedFirstComboFabrics, setSelectedFirstComboFabrics] = useState(
+    product.combos && product.combos[0] ? product.combos[0].fabric[0].fabricsName : ""
+  );
+  const [selectedSecondComboFabrics, setSelectedSecondComboFabrics] = useState(
+    product.combos && product.combos[1] ? product.combos[1].fabric[0].fabricsName : ""
+  );
+  const [selectedThirdComboFabrics, setSelectedThirdComboFabrics] = useState(
+    product.combos && product.combos[2] ? product.combos[2].fabric[0].fabricsName : ""
+  );
+  const [selectedForthComboFabrics, setSelectedForthComboFabrics] = useState(
+    product.combos && product.combos[3] ? product.combos[3].fabric[0].fabricsName : ""
+  );
+
+  const [selectedFirstComboFabricsColor, setSelectedFirstComboFabricsColor] = useState(
+    product.combos && product.combos[0] ? product.combos[0].fabric[0].fabricsColors[0].fabricsColorName : ""
+  );
+  const [selectedSecondComboFabricsColor, setSelectedSecondComboFabricsColor] = useState(
+    product.combos && product.combos[1] ? product.combos[1].fabric[0].fabricsColors[0].fabricsColorName : ""
+  );
+  const [selectedThirdComboFabricsColor, setSelectedThirdComboFabricsColor] = useState(
+    product.combos && product.combos[2] ? product.combos[2].fabric[0].fabricsColors[0].fabricsColorName : ""
+  );
+  const [selectedForthComboFabricsColor, setSelectedForthComboFabricsColor] = useState(
+    product.combos && product.combos[3] ? product.combos[3].fabric[0].fabricsColors[0].fabricsColorName : ""
+  );
+
+
+  const myTest = (
+    product,
+    addToast,
+    quantityCount,
+    selectedFabrics,
+    selectedFabricsColor,
+    selectedLining,
+    selectedLiningFabricsColor,
+    selectedFirstComboFabrics,
+    selectedSecondComboFabrics,
+    selectedThirdComboFabrics,
+    selectedForthComboFabrics,
+    selectedFirstComboFabricsColor,
+    selectedSecondComboFabricsColor,
+    selectedThirdComboFabricsColor,
+    selectedForthComboFabricsColor,
+    selectedMeshColorAttribute,
+    selectedLengthAttribute,
+    selectedSlitAttribute,
+    selectedSize,
+    alterationSelected,
+    styleOptionSelected
+  ) => {
+    console.log("Cart product", product)
+    console.log("Cart quantityCount", quantityCount)
+    console.log("Cart selectedFabrics", selectedFabrics)
+    console.log("Cart selectedFabricsColor", selectedFabricsColor)
+    console.log("Cart selectedLining", selectedLining)
+    console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
+    console.log("Cart selectedFirstComboFabrics", selectedFirstComboFabrics)
+    console.log("Cart selectedSecondComboFabrics", selectedSecondComboFabrics)
+    console.log("Cart selectedFirstComboFabricsColor", selectedFirstComboFabricsColor)
+    console.log("Cart selectedSecondComboFabricsColor", selectedSecondComboFabricsColor)
+    console.log("Cart selectedMeshColorAttribute", selectedMeshColorAttribute)
+    console.log("Cart selectedLengthAttribute", selectedLengthAttribute)
+    console.log("Cart selectedSlitAttribute", selectedSlitAttribute)
+    console.log("Cart selectedSize", selectedSize)
+    console.log("Cart alterationSelected", alterationSelected)
+    console.log("Cart styleOptionSelected", styleOptionSelected)
+  }
 
   return (
     <div className="product-content">
@@ -164,7 +241,7 @@ const ProductDescription = ({
               <select
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 onChange={(event) => {
-                  console.log("event", event.target.value)
+                  console.log("fabrics event", event.target.value)
                   setSelectedFabrics(event.target.value.split("/")[0])
                   setSelectedFabricsColor(event.target.value.split("/")[1])
                 }}
@@ -315,8 +392,20 @@ const ProductDescription = ({
                     <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
                       onChange={(event) => {
-                        console.log(event.target)
+                        // console.log(event.target)
                         console.log("event", event.target.value)
+                        if (comboIndex === 0) {
+                          setSelectedFirstComboFabrics(event.target.value)
+                        }
+                        if (comboIndex === 1) {
+                          setSelectedSecondComboFabrics(event.target.value)
+                        }
+                        if (comboIndex === 2) {
+                          setSelectedThirdComboFabrics(event.target.value)
+                        }
+                        if (comboIndex === 3) {
+                          setSelectedForthComboFabrics(event.target.value)
+                        }
                         var index = event.target.selectedIndex
                         var optionElement = event.target.childNodes[index]
                         var comboId = optionElement.getAttribute('data-combo-index')
@@ -370,12 +459,21 @@ const ProductDescription = ({
                                 checked={
                                   color.fabricsColorName === product.combos[selectedComboFabric[comboIndex].combo].fabric[selectedComboFabric[comboIndex].fabric].fabricsColors[selectedComboFabric[comboIndex].color].fabricsColorName ? "checked" : ""
                                 }
-                                onClick={() => {
-                                  console.log('aaaaaaaaaa')
-                                }}
                                 onChange={(event) => {
                                   console.log("Combo", color.fabricsColorName)
-                                  console.log(event.target)
+                                  if (comboIndex === 0) {
+                                    setSelectedFirstComboFabricsColor(color.fabricsColorName)
+                                  }
+                                  if (comboIndex === 1) {
+                                    setSelectedSecondComboFabricsColor(color.fabricsColorName)
+                                  }
+                                  if (comboIndex === 2) {
+                                    setSelectedThirdComboFabricsColor(color.fabricsColorName)
+                                  }
+                                  if (comboIndex === 3) {
+                                    setSelectedForthComboFabricsColor(color.fabricsColorName)
+                                  }
+                                  // console.log(event.target)
                                   var optionElement = event.target
                                   var comboId = optionElement.getAttribute('data-combo-index')
                                   var fabricId = optionElement.getAttribute('data-fabric-index')
@@ -420,15 +518,21 @@ const ProductDescription = ({
                         <select
                           style={{ width: "100%", height: "37px", cursor: "pointer" }}
                           onChange={(event) => {
-                            // console.log("event", event.target.value)
-                            // setSelectedLining(event.target.value.split("/")[0])
-                            // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                            if (attr.styleAttrybutesName === "Length") {
+                              setSelectedLengthAttribute(event.target.value)
+                            }
+                            if (attr.styleAttrybutesName === "Mesh color") {
+                              setSelectedMeshColorAttribute(event.target.value)
+                            }
+                            if (attr.styleAttrybutesName === "Optional slit") {
+                              setSelectedSlitAttribute(event.target.value)
+                            }
                           }}
                         >
                           {attr.styleAttrybutesValues &&
                             attr.styleAttrybutesValues.map((single, i) => {
                               return (
-                                <option key={i} value={single.styleAttrybutesValueId}>{single.styleAttrybutesValueName}</option>
+                                <option key={i} value={single.styleAttrybutesValueName}>{single.styleAttrybutesValueName}</option>
                               );
                             })
                           }
@@ -459,15 +563,15 @@ const ProductDescription = ({
                         <select
                           style={{ width: "100%", height: "37px", cursor: "pointer" }}
                           onChange={(event) => {
-                            // console.log("event", event.target.value)
-                            // setSelectedLining(event.target.value.split("/")[0])
+                            console.log("event", event.target.value)
+                            setSelectedSize(event.target.value)
                             // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
                           }}
                         >
                           {category.sizes &&
                             category.sizes.map((single, i) => {
                               return (
-                                <option key={i} value={single.sizeCode}>{single.sizeName}</option>
+                                <option key={i} value={single.sizeName}>{single.sizeName}</option>
                               );
                             })
                           }
@@ -480,15 +584,14 @@ const ProductDescription = ({
                 <select
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
                   onChange={(event) => {
-                    // console.log("event", event.target.value)
-                    // setSelectedLining(event.target.value.split("/")[0])
-                    // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                    console.log("event", event.target.value)
+                    setSelectedSize(event.target.value)
                   }}
                 >
                   {product.sizeCategories &&
                     product.sizeCategories[0].sizes.map((single, i) => {
                       return (
-                        <option key={i} value={single.sizeCode}>{single.sizeName}</option>
+                        <option key={i} value={single.sizeName}>{single.sizeName}</option>
                       );
                     })
                   }
@@ -590,24 +693,58 @@ const ProductDescription = ({
                   product,
                   addToast,
                   quantityCount,
-                  selectedProductColor,
-                  selectedProductSize
+                  selectedFabrics,
+                  selectedFabricsColor,
+                  selectedLining,
+                  selectedLiningFabricsColor,
+                  selectedFirstComboFabrics,
+                  selectedSecondComboFabrics,
+                  selectedThirdComboFabrics,
+                  selectedForthComboFabrics,
+                  selectedFirstComboFabricsColor,
+                  selectedSecondComboFabricsColor,
+                  selectedThirdComboFabricsColor,
+                  selectedForthComboFabricsColor,
+                  selectedMeshColorAttribute,
+                  selectedLengthAttribute,
+                  selectedSlitAttribute,
+                  selectedSize,
+                  alterationSelected,
+                  styleOptionSelected
                 )
+                // myTest(
+                //   product,
+                //   addToast,
+                //   quantityCount,
+                //   selectedFabrics,
+                //   selectedFabricsColor,
+                //   selectedLining,
+                //   selectedLiningFabricsColor,
+                //   selectedFirstComboFabrics,
+                //   selectedSecondComboFabrics,
+                //   selectedThirdComboFabrics,
+                //   selectedForthComboFabrics,
+                //   selectedFirstComboFabricsColor,
+                //   selectedSecondComboFabricsColor,
+                //   selectedThirdComboFabricsColor,
+                //   selectedForthComboFabricsColor,
+                //   selectedMeshColorAttribute,
+                //   selectedLengthAttribute,
+                //   selectedSlitAttribute,
+                //   selectedSize,
+                //   alterationSelected,
+                //   styleOptionSelected
+                // )
               }
               disabled={productCartQty >= productStock}
               className="lezada-button lezada-button--medium product-content__cart space-mr--10"
             >
               Add To Cart
             </button>
-
             <button
               onClick={() =>
-                addToCart(
-                  product,
-                  addToast,
-                  quantityCount,
-                  selectedProductColor,
-                  selectedProductSize
+                addToBulk(
+                  product
                 )
               }
               disabled={productCartQty >= productStock}
@@ -615,7 +752,6 @@ const ProductDescription = ({
             >
               Bulk Order
             </button>
-
             <button
               className={`product-content__wishlist space-mr--10 ${wishlistItem !== undefined ? "active" : ""
                 }`}

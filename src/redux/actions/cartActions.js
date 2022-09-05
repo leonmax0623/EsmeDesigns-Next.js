@@ -8,11 +8,43 @@ export const addToCart = (
   item,
   addToast,
   quantityCount,
-  selectedProductColor,
-  selectedProductSize
+  selectedFabrics,
+  selectedFabricsColor,
+  selectedLining,
+  selectedLiningFabricsColor,
+  selectedFirstComboFabrics,
+  selectedSecondComboFabrics,
+  selectedThirdComboFabrics,
+  selectedForthComboFabrics,
+  selectedFirstComboFabricsColor,
+  selectedSecondComboFabricsColor,
+  selectedThirdComboFabricsColor,
+  selectedForthComboFabricsColor,
+  selectedMeshColorAttribute,
+  selectedLengthAttribute,
+  selectedSlitAttribute,
+  selectedSize,
+  alterationSelected,
+  styleOptionSelected
 ) => {
 
   return dispatch => {
+    console.log("Cart Item", item)
+    console.log("Cart quantityCount", quantityCount)
+    console.log("Cart selectedFabrics", selectedFabrics)
+    console.log("Cart selectedFabricsColor", selectedFabricsColor)
+    console.log("Cart selectedLining", selectedLining)
+    console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
+    console.log("Cart selectedFirstComboFabrics", selectedFirstComboFabrics)
+    console.log("Cart selectedSecondComboFabrics", selectedSecondComboFabrics)
+    console.log("Cart selectedFirstComboFabricsColor", selectedFirstComboFabricsColor)
+    console.log("Cart selectedSecondComboFabricsColor", selectedSecondComboFabricsColor)
+    console.log("Cart selectedMeshColorAttribute", selectedMeshColorAttribute)
+    console.log("Cart selectedLengthAttribute", selectedLengthAttribute)
+    console.log("Cart selectedSlitAttribute", selectedSlitAttribute)
+    console.log("Cart selectedSize", selectedSize)
+    console.log("Cart alterationSelected", alterationSelected)
+    console.log("Cart styleOptionSelected", styleOptionSelected)
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }
@@ -21,16 +53,34 @@ export const addToCart = (
       payload: {
         ...item,
         quantity: quantityCount,
-        selectedProductColor: selectedProductColor
-          ? selectedProductColor
-          : item.selectedProductColor
-            ? item.selectedProductColor
-            : null,
-        selectedProductSize: selectedProductSize
-          ? selectedProductSize
-          : item.selectedProductSize
-            ? item.selectedProductSize
-            : null
+        selectedFabrics: selectedFabrics,
+        selectedFabricsColor: selectedFabricsColor,
+        selectedLining: selectedLining,
+        selectedLiningFabricsColor: selectedLiningFabricsColor,
+        selectedFirstComboFabrics: selectedFirstComboFabrics,
+        selectedSecondComboFabrics: selectedSecondComboFabrics,
+        selectedThirdComboFabrics: selectedThirdComboFabrics,
+        selectedForthComboFabrics: selectedForthComboFabrics,
+        selectedFirstComboFabricsColor: selectedFirstComboFabricsColor,
+        selectedSecondComboFabricsColor: selectedSecondComboFabricsColor,
+        selectedThirdComboFabricsColor: selectedThirdComboFabricsColor,
+        selectedForthComboFabricsColor: selectedForthComboFabricsColor,
+        selectedMeshColorAttribute: selectedMeshColorAttribute,
+        selectedLengthAttribute: selectedLengthAttribute,
+        selectedSlitAttribute: selectedSlitAttribute,
+        selectedSize: selectedSize,
+        selectedAlteration: alterationSelected,
+        selectedStyleOption: styleOptionSelected
+        // selectedProductColor: selectedProductColor
+        //   ? selectedProductColor
+        //   : item.selectedProductColor
+        //     ? item.selectedProductColor
+        //     : null,
+        // selectedProductSize: selectedProductSize
+        //   ? selectedProductSize
+        //   : item.selectedProductSize
+        //     ? item.selectedProductSize
+        //     : null
       }
     });
   };
@@ -47,6 +97,7 @@ export const decreaseQuantity = (item, addToast) => {
     dispatch({ type: DECREASE_QUANTITY, payload: item });
   };
 };
+
 //delete from cart
 export const deleteFromCart = (item, addToast) => {
   return dispatch => {

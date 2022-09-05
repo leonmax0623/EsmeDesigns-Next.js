@@ -1,9 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import {
   ADD_TO_CART,
-  DECREASE_QUANTITY,
-  DELETE_FROM_CART,
-  DELETE_ALL_FROM_CART
+  DECREASE_QUANTITY, DELETE_ALL_FROM_CART, DELETE_FROM_CART
 } from "../actions/cartActions";
 
 const initState = [];
@@ -13,9 +11,11 @@ const cartReducer = (state = initState, action) => {
     product = action.payload;
 
   if (action.type === ADD_TO_CART) {
+    console.log("Reducer Action:::::", action)
+    console.log("Reducer State:::::", state)
     // for non variant products
     if (product.variation === undefined) {
-      const cartItem = cartItems.filter((item) => item.id === product.id)[0];
+      const cartItem = cartItems.filter((item) => item.productId === product.productId)[0];
       if (cartItem === undefined) {
         return [
           ...cartItems,
@@ -29,11 +29,11 @@ const cartReducer = (state = initState, action) => {
         return cartItems.map((item) =>
           item.cartItemId === cartItem.cartItemId
             ? {
-                ...item,
-                quantity: product.quantity
-                  ? item.quantity + product.quantity
-                  : item.quantity + 1
-              }
+              ...item,
+              quantity: product.quantity
+                ? item.quantity + product.quantity
+                : item.quantity + 1
+            }
             : item
         );
       }
@@ -75,13 +75,13 @@ const cartReducer = (state = initState, action) => {
         return cartItems.map((item) =>
           item.cartItemId === cartItem.cartItemId
             ? {
-                ...item,
-                quantity: product.quantity
-                  ? item.quantity + product.quantity
-                  : item.quantity + 1,
-                selectedProductColor: product.selectedProductColor,
-                selectedProductSize: product.selectedProductSize
-              }
+              ...item,
+              quantity: product.quantity
+                ? item.quantity + product.quantity
+                : item.quantity + 1,
+              selectedProductColor: product.selectedProductColor,
+              selectedProductSize: product.selectedProductSize
+            }
             : item
         );
       }

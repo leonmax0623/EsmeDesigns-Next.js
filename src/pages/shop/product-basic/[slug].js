@@ -140,16 +140,48 @@ const mapDispatchToProps = (dispatch) => {
       item,
       addToast,
       quantityCount,
-      selectedProductColor,
-      selectedProductSize
+      selectedFabrics,
+      selectedFabricsColor,
+      selectedLining,
+      selectedLiningFabricsColor,
+      selectedFirstComboFabrics,
+      selectedSecondComboFabrics,
+      selectedThirdComboFabrics,
+      selectedForthComboFabrics,
+      selectedFirstComboFabricsColor,
+      selectedSecondComboFabricsColor,
+      selectedThirdComboFabricsColor,
+      selectedForthComboFabricsColor,
+      selectedMeshColorAttribute,
+      selectedLengthAttribute,
+      selectedSlitAttribute,
+      selectedSize,
+      alterationSelected,
+      styleOptionSelected
     ) => {
       dispatch(
         addToCart(
           item,
           addToast,
           quantityCount,
-          selectedProductColor,
-          selectedProductSize
+          selectedFabrics,
+          selectedFabricsColor,
+          selectedLining,
+          selectedLiningFabricsColor,
+          selectedFirstComboFabrics,
+          selectedSecondComboFabrics,
+          selectedThirdComboFabrics,
+          selectedForthComboFabrics,
+          selectedFirstComboFabricsColor,
+          selectedSecondComboFabricsColor,
+          selectedThirdComboFabricsColor,
+          selectedForthComboFabricsColor,
+          selectedMeshColorAttribute,
+          selectedLengthAttribute,
+          selectedSlitAttribute,
+          selectedSize,
+          alterationSelected,
+          styleOptionSelected
         )
       );
     },

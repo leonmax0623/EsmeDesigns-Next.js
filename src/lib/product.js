@@ -54,26 +54,10 @@ export const getDiscountPrice = (price, discount) => {
 };
 
 // get product cart quantity
-export const getProductCartQuantity = (cartItems, product, color, size) => {
-  let productInCart = cartItems.filter(
-    (single) =>
-      single.id === product.id &&
-      (single.selectedProductColor
-        ? single.selectedProductColor === color
-        : true) &&
-      (single.selectedProductSize ? single.selectedProductSize === size : true)
-  )[0];
+export const getProductCartQuantity = (cartItems, product) => {
+  let productInCart = cartItems.filter((single) => single.productId === product.productId)[0];
   if (cartItems.length >= 1 && productInCart) {
-    if (product.variation) {
-      return cartItems.filter(
-        (single) =>
-          single.id === product.id &&
-          single.selectedProductColor === color &&
-          single.selectedProductSize === size
-      )[0].quantity;
-    } else {
-      return cartItems.filter((single) => product.id === single.id)[0].quantity;
-    }
+    return cartItems.filter((single) => product.productId === single.productId)[0].quantity;
   } else {
     return 0;
   }

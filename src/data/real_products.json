@@ -218,29 +218,6 @@
                         "price": "45.00"
                     }
                 ]
-            },
-            {
-                "sizeCategoryId": "23",
-                "sizeCategoryName": "Specific",
-                "sizes": [
-                    {
-                        "sizeCode": "10",
-                        "sizeName": "Specific 10"
-                    },
-                    {
-                        "sizeCode": "20",
-                        "sizeName": "Specific 20"
-                    },
-                    {
-                        "sizeCode": "30",
-                        "sizeName": "Specific 30"
-                    },
-                    {
-                        "sizeCode": "40",
-                        "sizeName": "Specific 40",
-                        "price": "45.00"
-                    }
-                ]
             }
         ],
         "styleAlterations": [
@@ -648,6 +625,11 @@
                 "styleOptionId": "2",
                 "styleOptionName": "Corset",
                 "price": "75.00"
+            },
+            {
+                "styleOptionId": "3",
+                "styleOptionName": "TEST",
+                "price": "175.00"
             }
         ],
         "rushOptions": [
@@ -4830,29 +4812,6 @@
                     {
                         "sizeCode": "4",
                         "sizeName": "36",
-                        "price": "45.00"
-                    }
-                ]
-            },
-            {
-                "sizeCategoryId": "23",
-                "sizeCategoryName": "Specific",
-                "sizes": [
-                    {
-                        "sizeCode": "10",
-                        "sizeName": "Specific 10"
-                    },
-                    {
-                        "sizeCode": "20",
-                        "sizeName": "Specific 20"
-                    },
-                    {
-                        "sizeCode": "30",
-                        "sizeName": "Specific 30"
-                    },
-                    {
-                        "sizeCode": "40",
-                        "sizeName": "Specific 40",
                         "price": "45.00"
                     }
                 ]
