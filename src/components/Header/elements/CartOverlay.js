@@ -41,8 +41,6 @@ const CartOverlay = ({
               <div className="cart-product-container">
                 <CustomScroll allowOuterScroll={true}>
                   {cartItems.map((product, i) => {
-                    console.log("cart-overlay", product)
-
                     cartTotalPrice += product.discountedPrice * product.quantity;
 
                     return (

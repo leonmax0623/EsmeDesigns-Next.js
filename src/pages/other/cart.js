@@ -20,6 +20,7 @@ const Cart = ({
   const [quantityCount] = useState(1);
   const { addToast } = useToasts();
   let cartTotalPrice = 0;
+  console.log("Cart Items", cartItems)
 
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");

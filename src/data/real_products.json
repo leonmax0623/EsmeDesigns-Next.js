@@ -197,11 +197,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -209,13 +209,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -525,11 +586,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -537,13 +598,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -858,11 +980,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -870,13 +992,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -1186,11 +1369,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -1198,13 +1381,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -1514,11 +1758,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -1526,13 +1770,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -1842,11 +2147,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -1854,13 +2159,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -2170,11 +2536,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -2182,13 +2548,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -2498,11 +2925,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -2510,13 +2937,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -2826,11 +3314,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -2838,13 +3326,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -3154,11 +3703,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -3166,13 +3715,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -3482,11 +4092,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -3494,13 +4104,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -3810,11 +4481,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -3822,13 +4493,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -4138,11 +4870,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -4150,13 +4882,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -4466,11 +5259,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -4478,13 +5271,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }
@@ -4794,11 +5648,11 @@
         ],
         "sizeCategories": [
             {
-                "sizeCategoryId": "2",
-                "sizeCategoryName": "Regular",
+                "sizeCategoryId": "1",
+                "sizeCategoryName": "Regular Size",
                 "sizes": [
                     {
-                        "sizeCode": "1",
+                        "sizeCode": "0",
                         "sizeName": "0"
                     },
                     {
@@ -4806,13 +5660,74 @@
                         "sizeName": "2"
                     },
                     {
-                        "sizeCode": "3",
+                        "sizeCode": "4",
                         "sizeName": "4"
                     },
                     {
-                        "sizeCode": "4",
-                        "sizeName": "36",
-                        "price": "45.00"
+                        "sizeCode": "6",
+                        "sizeName": "6"
+                    },
+                    {
+                        "sizeCode": "8",
+                        "sizeName": "8"
+                    },
+                    {
+                        "sizeCode": "10",
+                        "sizeName": "10"
+                    },
+                    {
+                        "sizeCode": "12",
+                        "sizeName": "12"
+                    },
+                    {
+                        "sizeCode": "14",
+                        "sizeName": "14"
+                    },
+                    {
+                        "sizeCode": "16",
+                        "sizeName": "16"
+                    },
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    }
+                ]
+            },
+            {
+                "sizeCategoryId": "2",
+                "sizeCategoryName": "Specific Size",
+                "sizes": [
+                    {
+                        "sizeCode": "18",
+                        "sizeName": "18"
+                    },
+                    {
+                        "sizeCode": "20w",
+                        "sizeName": "20w"
+                    },
+                    {
+                        "sizeCode": "22w",
+                        "sizeName": "22w"
+                    },
+                    {
+                        "sizeCode": "24w",
+                        "sizeName": "24w"
+                    },
+                    {
+                        "sizeCode": "26w",
+                        "sizeName": "26w"
+                    },
+                    {
+                        "sizeCode": "28w",
+                        "sizeName": "28w"
+                    },
+                    {
+                        "sizeCode": "30w",
+                        "sizeName": "30w"
+                    },
+                    {
+                        "sizeCode": "32w",
+                        "sizeName": "32w"
                     }
                 ]
             }

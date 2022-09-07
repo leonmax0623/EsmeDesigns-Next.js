@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { Fragment, useState } from "react";
 import { IoIosHeartEmpty, IoIosShuffle } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
@@ -15,20 +16,15 @@ const ProductDescription = ({
   compareItem,
   addToast,
   addToCart,
+  addToBulk,
   addToWishlist,
   deleteFromWishlist,
   addToCompare,
   deleteFromCompare
 }) => {
   console.log("Maximus", product)
+  const router = useRouter()
   const dispatch = useDispatch();
-  const [selectedProductColor, setSelectedProductColor] = useState(
-    product.variation ? product.variation[0].color : ""
-  );
-  const [selectedProductSize, setSelectedProductSize] = useState(
-    product.variation ? product.variation[0].size[0].name : ""
-  );
-
   //custom 
   const [selectedLining, setSelectedLining] = useState(
     product.lining ? product.lining[0].fabricsName : ""
@@ -132,6 +128,10 @@ const ProductDescription = ({
     product.combos && product.combos[3] ? product.combos[3].fabric[0].fabricsColors[0].fabricsColorName : ""
   );
 
+  const bulkOrder = (product) => {
+    addToBulk(product);
+    router.push('/other/bulk')
+  }
 
   const myTest = (
     product,
@@ -266,6 +266,32 @@ const ProductDescription = ({
             <div className="product-content__size__title"></div>
             <div className="product-content__size__content">
               <div className="product-content__color__content">
+                <select
+                  style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                  value={selectedFabricsColor}
+                  onChange={(event) => {
+                    console.log("dropdown", event.target.value)
+                    setSelectedFabricsColor(event.target.value);
+                  }}
+                >
+
+                  {product.fabrics.map((single, j) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
+                    return (
+                      <option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+                    );
+                  }) : "")}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {selectedFabricsColor && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title"></div>
+            <div className="product-content__size__content">
+              <div className="product-content__color__content">
                 {product.fabrics.map((single, i) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
                   return (
                     <Tooltip
@@ -289,7 +315,7 @@ const ProductDescription = ({
                             color.fabricsColorName === selectedFabricsColor ? "checked" : ""
                           }
                           onChange={() => {
-                            console.log("FabricsColor", event.target)
+                            console.log("circle", color.fabricsColorName)
                             setSelectedFabricsColor(color.fabricsColorName);
                             setQuantityCount(1);
                           }}
@@ -333,6 +359,32 @@ const ProductDescription = ({
         </div>
       ) : (
         ""
+      )}
+      {selectedLiningFabricsColor && (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title"></div>
+            <div className="product-content__size__content">
+              <div className="product-content__color__content">
+                <select
+                  style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                  value={selectedLiningFabricsColor}
+                  onChange={(event) => {
+                    console.log("dropdown", event.target.value)
+                    setSelectedLiningFabricsColor(event.target.value);
+                  }}
+                >
+
+                  {product.lining.map((single, j) => single.fabricsName === selectedLining ? single.fabricsColors.map((color, i) => {
+                    return (
+                      <option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+                    );
+                  }) : "")}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
       {selectedLiningFabricsColor && (
         <div className="product-content__size-color">
@@ -429,6 +481,64 @@ const ProductDescription = ({
                   </div>
                 </div>
               </div>
+
+              <div className="product-content__size-color">
+                <div className="product-content__size space-mb--20">
+                  <div className="product-content__size__title"></div>
+                  <div className="product-content__size__content">
+                    <div className="product-content__color__content">
+                      <select
+                        style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                        value={product.combos[selectedComboFabric[comboIndex].combo].fabric[selectedComboFabric[comboIndex].fabric].fabricsColors[selectedComboFabric[comboIndex].color].fabricsColorName}
+                        onChange={(event) => {
+                          console.log("selectedComboFabric", selectedComboFabric)
+                          if (comboIndex === 0) {
+                            setSelectedFirstComboFabricsColor(event.target.value)
+                          }
+                          if (comboIndex === 1) {
+                            setSelectedSecondComboFabricsColor(event.target.value)
+                          }
+                          if (comboIndex === 2) {
+                            setSelectedThirdComboFabricsColor(event.target.value)
+                          }
+                          if (comboIndex === 3) {
+                            setSelectedForthComboFabricsColor(event.target.value)
+                          }
+                          // console.log(event.target)
+                          var index = event.target.selectedIndex
+                          var optionElement = event.target.childNodes[index]
+                          console.log('event.target.selectedIndex')
+                          console.log(event.target.selectedIndex)
+                          console.log(event.target.childNodes)
+                          // var optionElement = event.target
+                          console.log(event.target.value)
+                          var comboId = optionElement.getAttribute('data-combo-index')
+                          var fabricId = optionElement.getAttribute('data-fabric-index')
+                          var colorId = optionElement.getAttribute('data-color-index')
+                          var tempArr = selectedComboFabric
+                          tempArr[comboId].combo = comboId;
+                          tempArr[comboId].fabric = fabricId;
+                          tempArr[comboId].color = colorId;
+                          console.log('tempArr', tempArr)
+                          console.log(product.combos)
+                          setSelectedComboFabric(tempArr)
+                          setSelectedFabric({ combo: comboId, fabric: fabricId, color: colorId })
+                          setQuantityCount(1);
+                        }}
+                      >
+
+                        {combo.fabric.map((single, fabricIndex) => ((fabricIndex == selectedComboFabric[comboIndex].fabric && selectedFabric.fabric != null) ? single.fabricsColors.map((color, i) => {
+                          return (
+                            <option data-combo-index={comboIndex} data-fabric-index={fabricIndex} data-color-index={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+                          );
+                        }) : "")).filter((each) => (each !== ""))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
               <div className="product-content__size-color">
                 <div className="product-content__size space-mb--20">
                   <div className="product-content__size__title"></div>
@@ -743,11 +853,10 @@ const ProductDescription = ({
             </button>
             <button
               onClick={() =>
-                addToBulk(
+                bulkOrder(
                   product
                 )
               }
-              disabled={productCartQty >= productStock}
               className="lezada-button lezada-button--medium product-content__cart space-mr--10"
             >
               Bulk Order

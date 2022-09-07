@@ -11,6 +11,7 @@ import {
   ProductDescriptionTab
 } from "../../../components/ProductDetails";
 import products from "../../../data/real_products.json";
+import { addToBulk } from "../../../redux/actions/bulkActions";
 import { addToCart } from "../../../redux/actions/cartActions";
 import {
   addToCompare,
@@ -27,6 +28,7 @@ const ProductBasic = ({
   wishlistItems,
   compareItems,
   addToCart,
+  addToBulk,
   addToWishlist,
   deleteFromWishlist,
   addToCompare,
@@ -106,6 +108,7 @@ const ProductBasic = ({
                 wishlistItem={wishlistItem}
                 compareItem={compareItem}
                 addToast={addToast}
+                addToBulk={addToBulk}
                 addToCart={addToCart}
                 addToWishlist={addToWishlist}
                 deleteFromWishlist={deleteFromWishlist}
@@ -184,6 +187,9 @@ const mapDispatchToProps = (dispatch) => {
           styleOptionSelected
         )
       );
+    },
+    addToBulk: (product) => {
+      dispatch(addToBulk(product));
     },
     addToWishlist: (item, addToast) => {
       dispatch(addToWishlist(item, addToast));
