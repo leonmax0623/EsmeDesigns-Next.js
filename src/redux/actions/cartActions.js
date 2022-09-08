@@ -12,39 +12,25 @@ export const addToCart = (
   selectedFabricsColor,
   selectedLining,
   selectedLiningFabricsColor,
-  selectedFirstComboFabrics,
-  selectedSecondComboFabrics,
-  selectedThirdComboFabrics,
-  selectedForthComboFabrics,
-  selectedFirstComboFabricsColor,
-  selectedSecondComboFabricsColor,
-  selectedThirdComboFabricsColor,
-  selectedForthComboFabricsColor,
-  selectedMeshColorAttribute,
-  selectedLengthAttribute,
-  selectedSlitAttribute,
+  comboArray,
   selectedSize,
   alterationSelected,
+  selectedAttr,
   styleOptionSelected
 ) => {
 
   return dispatch => {
-    console.log("Cart Item", item)
-    console.log("Cart quantityCount", quantityCount)
+    console.log("Cart bulkProduct", bulkProduct)
     console.log("Cart selectedFabrics", selectedFabrics)
     console.log("Cart selectedFabricsColor", selectedFabricsColor)
     console.log("Cart selectedLining", selectedLining)
     console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-    console.log("Cart selectedFirstComboFabrics", selectedFirstComboFabrics)
-    console.log("Cart selectedSecondComboFabrics", selectedSecondComboFabrics)
-    console.log("Cart selectedFirstComboFabricsColor", selectedFirstComboFabricsColor)
-    console.log("Cart selectedSecondComboFabricsColor", selectedSecondComboFabricsColor)
-    console.log("Cart selectedMeshColorAttribute", selectedMeshColorAttribute)
-    console.log("Cart selectedLengthAttribute", selectedLengthAttribute)
-    console.log("Cart selectedSlitAttribute", selectedSlitAttribute)
-    console.log("Cart selectedSize", selectedSize)
     console.log("Cart alterationSelected", alterationSelected)
     console.log("Cart styleOptionSelected", styleOptionSelected)
+    console.log("Cart comboArray", comboArray)
+    console.log("Cart totalItems", totalItems)
+    console.log("Cart regularSizeArray", regularSizeArray)
+    console.log("Cart selectedAttr", selectedAttr)
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }
@@ -93,17 +79,8 @@ export const addBulkToCart = (
   selectedFabricsColor,
   selectedLining,
   selectedLiningFabricsColor,
-  selectedFirstComboFabrics,
-  selectedSecondComboFabrics,
-  selectedThirdComboFabrics,
-  selectedForthComboFabrics,
-  selectedFirstComboFabricsColor,
-  selectedSecondComboFabricsColor,
-  selectedThirdComboFabricsColor,
-  selectedForthComboFabricsColor,
-  selectedMeshColorAttribute,
-  selectedLengthAttribute,
-  selectedSlitAttribute,
+  comboArray,
+  selectedAttr,
   regularSizeArray,
   alterationSelected,
   styleOptionSelected,
@@ -116,17 +93,12 @@ export const addBulkToCart = (
     console.log("Cart selectedFabricsColor", selectedFabricsColor)
     console.log("Cart selectedLining", selectedLining)
     console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-    console.log("Cart selectedFirstComboFabrics", selectedFirstComboFabrics)
-    console.log("Cart selectedSecondComboFabrics", selectedSecondComboFabrics)
-    console.log("Cart selectedFirstComboFabricsColor", selectedFirstComboFabricsColor)
-    console.log("Cart selectedSecondComboFabricsColor", selectedSecondComboFabricsColor)
-    console.log("Cart selectedMeshColorAttribute", selectedMeshColorAttribute)
-    console.log("Cart selectedLengthAttribute", selectedLengthAttribute)
-    console.log("Cart selectedSlitAttribute", selectedSlitAttribute)
     console.log("Cart alterationSelected", alterationSelected)
     console.log("Cart styleOptionSelected", styleOptionSelected)
+    console.log("Cart comboArray", comboArray)
     console.log("Cart totalItems", totalItems)
     console.log("Cart regularSizeArray", regularSizeArray)
+    console.log("Cart selectedAttr", selectedAttr)
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }
@@ -139,30 +111,12 @@ export const addBulkToCart = (
         selectedFabricsColor: selectedFabricsColor,
         selectedLining: selectedLining,
         selectedLiningFabricsColor: selectedLiningFabricsColor,
-        selectedFirstComboFabrics: selectedFirstComboFabrics,
-        selectedSecondComboFabrics: selectedSecondComboFabrics,
-        selectedThirdComboFabrics: selectedThirdComboFabrics,
-        selectedForthComboFabrics: selectedForthComboFabrics,
-        selectedFirstComboFabricsColor: selectedFirstComboFabricsColor,
-        selectedSecondComboFabricsColor: selectedSecondComboFabricsColor,
-        selectedThirdComboFabricsColor: selectedThirdComboFabricsColor,
-        selectedForthComboFabricsColor: selectedForthComboFabricsColor,
-        selectedMeshColorAttribute: selectedMeshColorAttribute,
-        selectedLengthAttribute: selectedLengthAttribute,
-        selectedSlitAttribute: selectedSlitAttribute,
         regularSizeArray: JSON.parse(regularSizeArray),
         selectedAlteration: alterationSelected,
-        selectedStyleOption: styleOptionSelected
-        // selectedProductColor: selectedProductColor
-        //   ? selectedProductColor
-        //   : item.selectedProductColor
-        //     ? item.selectedProductColor
-        //     : null,
-        // selectedProductSize: selectedProductSize
-        //   ? selectedProductSize
-        //   : item.selectedProductSize
-        //     ? item.selectedProductSize
-        //     : null
+        selectedStyleOption: styleOptionSelected,
+        selectedAttr: selectedAttr,
+        comboArray: comboArray,
+
       }
     });
   };

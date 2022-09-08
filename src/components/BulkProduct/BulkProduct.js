@@ -2,12 +2,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { MultiSelect } from "react-multi-select-component";
+// import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 // import {
-//   addBulkToCart, decreaseQuantity, deleteAllFromCart, deleteFromCart
+// 	addBulkToCart
 // } from "../../redux/actions/cartActions";
 
-const BulkProduct = ({ bulkProductProps }) => {
+const BulkProduct = ({ addBulkToCart, bulkProductProps }) => {
 
 	console.log("bulkProductProps_________________", bulkProductProps)
 
@@ -19,20 +20,8 @@ const BulkProduct = ({ bulkProductProps }) => {
 	const [selectedFabrics, setSelectedFabrics] = useState("");
 	const [selectedFabricsColor, setSelectedFabricsColor] = useState("");
 	const [selectedSize, setSelectedSize] = useState("");
-	const [selectedFirstComboFabrics, setSelectedFirstComboFabrics] = useState("");
-	const [selectedSecondComboFabrics, setSelectedSecondComboFabrics] = useState("");
-	const [selectedThirdComboFabrics, setSelectedThirdComboFabrics] = useState("");
-	const [selectedForthComboFabrics, setSelectedForthComboFabrics] = useState("");
-	const [selectedFirstComboFabricsColor, setSelectedFirstComboFabricsColor] = useState("");
-	const [selectedSecondComboFabricsColor, setSelectedSecondComboFabricsColor] = useState("");
-	const [selectedThirdComboFabricsColor, setSelectedThirdComboFabricsColor] = useState("");
-	const [selectedForthComboFabricsColor, setSelectedForthComboFabricsColor] = useState("");
 	const [alterationSelected, setAlterationSelected] = useState([]);
 	const [styleOptionSelected, setStyleOptionSelected] = useState([]);
-	const [selectedLengthAttribute, setSelectedLengthAttribute] = useState("");
-	const [selectedMeshColorAttribute, setSelectedMeshColorAttribute] = useState("");
-	const [selectedSlitAttribute, setSelectedSlitAttribute] = useState("");
-
 	const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
 	const [totalItems, setTotalItems] = useState(0);
 	const [selectedSizeCategory, setSelectedSizeCategory] = useState("Regular Size")
@@ -59,49 +48,19 @@ const BulkProduct = ({ bulkProductProps }) => {
 	useEffect(() => {
 		if (bulkProductProps[0]) {
 			if (bulkProductProps[0].lining) {
-				setSelectedLining(bulkProductProps[0].lining[0].fabricsName)
+				setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
 			}
 			if (bulkProductProps[0].lining) {
-				setSelectedLiningFabricsColor(bulkProductProps[0].lining[0].fabricsColors[0].fabricsColorName)
+				setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColors[0].fabricsColorName)
 			}
 			if (bulkProductProps[0].fabrics) {
-				setSelectedFabrics(bulkProductProps[0].fabrics[0].fabricsName)
+				setSelectedFabrics(bulkProductProps[0].selectedFabrics ? bulkProductProps[0].selectedFabrics : bulkProductProps[0].fabrics[0].fabricsId)
 			}
 			if (bulkProductProps[0].fabrics) {
-				setSelectedFabricsColor(bulkProductProps[0].fabrics[0].fabricsColors[0].fabricsColorName)
+				setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColors[0].fabricsColorName)
 			}
 			if (bulkProductProps[0].sizeCategories) {
 				setSelectedSize(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
-			}
-
-			if (bulkProductProps[0].combos) {
-				if (bulkProductProps[0].combos[0]) {
-					setSelectedFirstComboFabrics(bulkProductProps[0].combos[0].fabric[0].fabricsName)
-					setSelectedFirstComboFabricsColor(bulkProductProps[0].combos[0].fabric[0].fabricsColors[0].fabricsColorName)
-				}
-				if (bulkProductProps[0].combos[1]) {
-					setSelectedSecondComboFabrics(bulkProductProps[0].combos[1].fabric[0].fabricsName)
-					setSelectedSecondComboFabricsColor(bulkProductProps[0].combos[1].fabric[0].fabricsColors[0].fabricsColorName)
-				}
-				if (bulkProductProps[0].combos[2]) {
-					setSelectedThirdComboFabrics(bulkProductProps[0].combos[2].fabric[0].fabricsName)
-					setSelectedThirdComboFabricsColor(bulkProductProps[0].combos[2].fabric[0].fabricsColors[0].fabricsColorName)
-				}
-				if (bulkProductProps[0].combos[3]) {
-					setSelectedForthComboFabrics(bulkProductProps[0].combos[3].fabric[0].fabricsName)
-					setSelectedForthComboFabricsColor(ulkProduct[0].combos[3].fabric[0].fabricsColors[0].fabricsColorName)
-				}
-			}
-			if (bulkProductProps[0].styleAttributes) {
-				if (bulkProductProps[0].styleAttributes[0].styleAttrybutesName === "Length") {
-					setSelectedLengthAttribute(bulkProductProps[0].styleAttributes[0].styleAttrybutesValues[0].styleAttrybutesValueName)
-				}
-				if (bulkProductProps[0].styleAttributes[1].styleAttrybutesName === "Mesh color") {
-					setSelectedMeshColorAttribute(bulkProductProps[0].styleAttributes[1].styleAttrybutesValues[0].styleAttrybutesValueName)
-				}
-				if (bulkProductProps[0].styleAttributes[2].styleAttrybutesName === "Optional slit") {
-					setSelectedSlitAttribute(bulkProductProps[0].styleAttributes[2].styleAttrybutesValues[0].styleAttrybutesValueName)
-				}
 			}
 		}
 	}, [bulkProductProps]);
@@ -131,8 +90,6 @@ const BulkProduct = ({ bulkProductProps }) => {
 
 	const setRegualrSizeArray = (e) => {
 
-		// console.log(e.target.dataset.position)
-		// console.log(e.target.value)
 		let result = e.target.value;
 		if (result === "") {
 			result = 0;
@@ -141,48 +98,7 @@ const BulkProduct = ({ bulkProductProps }) => {
 			let sizeArray = JSON.parse(regularSizeArray)
 			sizeArray[index[0]].sizes[index[1]].sizeCode = result.replace(/[^\d]/g, '');
 			setRegularSizeArray(JSON.stringify(sizeArray))
-			// console.log("Sizes", JSON.parse(regularSizeArray))
 		}
-	}
-
-	const myTest = (
-		bulkProduct,
-		addToast,
-		selectedFabrics,
-		selectedFabricsColor,
-		selectedLining,
-		selectedLiningFabricsColor,
-		selectedFirstComboFabrics,
-		selectedSecondComboFabrics,
-		selectedThirdComboFabrics,
-		selectedForthComboFabrics,
-		selectedFirstComboFabricsColor,
-		selectedSecondComboFabricsColor,
-		selectedThirdComboFabricsColor,
-		selectedForthComboFabricsColor,
-		selectedMeshColorAttribute,
-		selectedLengthAttribute,
-		selectedSlitAttribute,
-		regularSizeArray,
-		alterationSelected,
-		styleOptionSelected,
-		totalItems
-	) => {
-		console.log("Cart bulkProduct", bulkProduct)
-		console.log("Cart selectedFabrics", selectedFabrics)
-		console.log("Cart selectedFabricsColor", selectedFabricsColor)
-		console.log("Cart selectedLining", selectedLining)
-		console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-		console.log("Cart selectedFirstComboFabrics", selectedFirstComboFabrics)
-		console.log("Cart selectedSecondComboFabrics", selectedSecondComboFabrics)
-		console.log("Cart selectedFirstComboFabricsColor", selectedFirstComboFabricsColor)
-		console.log("Cart selectedSecondComboFabricsColor", selectedSecondComboFabricsColor)
-		console.log("Cart selectedMeshColorAttribute", selectedMeshColorAttribute)
-		console.log("Cart selectedLengthAttribute", selectedLengthAttribute)
-		console.log("Cart selectedSlitAttribute", selectedSlitAttribute)
-		console.log("Cart regularSizeArray", regularSizeArray)
-		console.log("Cart alterationSelected", alterationSelected)
-		console.log("Cart styleOptionSelected", styleOptionSelected)
 	}
 
 	useEffect(() => {
@@ -200,6 +116,71 @@ const BulkProduct = ({ bulkProductProps }) => {
 	useEffect(() => {
 		document.querySelector("body").classList.remove("overflow-hidden");
 	});
+
+	const [selectedAttr, setSelectedAttr] = useState([]);
+
+	const handleAttributeChange = (event, attribute) => {
+		console.log("!!!!!", attribute)
+		console.log("~~~~~~~~", event.target.value)
+		let array = [...selectedAttr];
+
+		for (let i = 0; i < array.length; i += 1) {
+			if (array[i].attr === attribute) {
+				array[i].value = event.target.value;
+
+				break;
+			}
+		}
+
+		setSelectedAttr(array);
+		console.log("MMMMMMMMMM => ", selectedAttr);
+	}
+
+	useEffect(() => {
+		setSelectedAttr([]);
+		bulkProductProps[0].styleAttributes.map((item) => {
+			setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
+		});
+	}, [bulkProductProps[0].styleAttributes]);
+
+	const [comboArray, setComboArray] = useState([])
+
+	const handleComboFabricChange = (combo_name) => (e) => {
+		let array = [...comboArray];
+
+		for (let i = 0; i < array.length; i += 1) {
+			if (array[i].combo === combo_name) {
+				array[i].fabric.fabric_name = e.target.value;
+
+				break;
+			}
+		}
+
+		setComboArray(array);
+	}
+
+	const handleComboFabricColorsChange = (e) => {
+		let array = [...comboArray];
+		var index = e.target.selectedIndex;
+		var optionElement = e.target.childNodes[index];
+		var comboId = optionElement.getAttribute('data-combo-index');
+		var fabricId = optionElement.getAttribute('data-fabric-index');
+		var colorId = optionElement.getAttribute('data-color-index');
+
+		array[comboId].fabric.color.color_name = e.target.value;
+		array[comboId].fabric.color.rgb = bulkProductProps[0].combos[comboId].fabric[fabricId].fabricsColors[colorId].fabricsColorRGB;
+
+		setComboArray(array);
+	}
+
+	console.log("comboArray => ", comboArray)
+
+	useEffect(() => {
+		setComboArray([]);
+		bulkProductProps[0].combos.map((item) => {
+			setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColors[0].fabricsColorName, rgb: item.fabric[0].fabricsColors[0].fabricsColorRGB } } }]);
+		});
+	}, [bulkProductProps[0].combos]);
 
 	return (
 		<div style={{ display: "flex", padding: "10px", paddingTop: "20px" }}>
@@ -244,19 +225,21 @@ const BulkProduct = ({ bulkProductProps }) => {
 										<div className="product-content__size__content">
 											<select
 												style={{ width: "100%", height: "37px", cursor: "pointer" }}
+												value={selectedFabrics}
 												onChange={(event) => {
-													setSelectedFabrics(event.target.value.split("/")[0])
-													setSelectedFabricsColor(event.target.value.split("/")[1])
+													setSelectedFabrics(event.target.value)
+													setSelectedFabricsColor(bulkProductProps[0].fabrics.find(x => x.fabricsId === event.target.value).fabricsColors[0].fabricsColorName)
 												}}
 											>
 												{bulkProductProps[0].fabrics &&
 													bulkProductProps[0].fabrics.map((single, i) => {
 														return (
-															<option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
+															<option key={i} value={single.fabricsId}>{single.fabricsName}</option>
 														);
 													})
 												}
 											</select>
+
 										</div>
 									</div>
 								</div>
@@ -269,6 +252,7 @@ const BulkProduct = ({ bulkProductProps }) => {
 										<div className="product-content__size__title"></div>
 										<div className="product-content__size__content">
 											<div className="product-content__color__content">
+
 												<select
 													style={{ width: "100%", height: "37px", cursor: "pointer" }}
 													value={selectedFabricsColor}
@@ -276,8 +260,7 @@ const BulkProduct = ({ bulkProductProps }) => {
 														setSelectedFabricsColor(event.target.value);
 													}}
 												>
-
-													{bulkProductProps[0].fabrics.map((single, j) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
+													{bulkProductProps[0].fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColors.map((color, i) => {
 														return (
 															<option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
 														);
@@ -299,15 +282,16 @@ const BulkProduct = ({ bulkProductProps }) => {
 										<div className="product-content__size__content">
 											<select
 												style={{ width: "100%", height: "37px", cursor: "pointer" }}
+												value={selectedLining}
 												onChange={(event) => {
-													setSelectedLining(event.target.value.split("/")[0])
-													setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+													setSelectedLining(event.target.value)
+													setSelectedLiningFabricsColor(bulkProductProps[0].lining.find(x => x.fabricsId === event.target.value).fabricsColors[0].fabricsColorName)
 												}}
 											>
 												{bulkProductProps[0].lining &&
 													bulkProductProps[0].lining.map((single, i) => {
 														return (
-															<option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
+															<option key={i} value={single.fabricsId}>{single.fabricsName}</option>
 														);
 													})
 												}
@@ -331,8 +315,7 @@ const BulkProduct = ({ bulkProductProps }) => {
 														setSelectedLiningFabricsColor(event.target.value);
 													}}
 												>
-
-													{bulkProductProps[0].lining.map((single, j) => single.fabricsName === selectedLining ? single.fabricsColors.map((color, i) => {
+													{bulkProductProps[0].lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColors.map((color, i) => {
 														return (
 															<option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
 														);
@@ -355,30 +338,8 @@ const BulkProduct = ({ bulkProductProps }) => {
 											<div className="product-content__size__content">
 												<select
 													style={{ width: "100%", height: "37px", cursor: "pointer" }}
-													onChange={(event) => {
-														if (comboIndex === 0) {
-															setSelectedFirstComboFabrics(event.target.value)
-														}
-														if (comboIndex === 1) {
-															setSelectedSecondComboFabrics(event.target.value)
-														}
-														if (comboIndex === 2) {
-															setSelectedThirdComboFabrics(event.target.value)
-														}
-														if (comboIndex === 3) {
-															setSelectedForthComboFabrics(event.target.value)
-														}
-														var index = event.target.selectedIndex
-														var optionElement = event.target.childNodes[index]
-														var comboId = optionElement.getAttribute('data-combo-index')
-														var fabricId = optionElement.getAttribute('data-fabric-index')
-														// console.log(comboId, fabricId)
-														var tempArr = selectedComboFabric
-														tempArr[comboId].combo = comboId;
-														tempArr[comboId].fabric = fabricId;
-														setSelectedComboFabric(tempArr)
-														setSelectedFabric({ combo: comboId, fabric: fabricId })
-													}}
+													value={bulkProductProps[0].comboArray ? bulkProductProps[0].comboArray[comboIndex].fabric.fabric_name : comboArray[comboIndex]?.fabric.fabric_name ?? ''}
+													onChange={handleComboFabricChange(combo.combosName)}
 												>
 													{combo.fabric &&
 														combo.fabric.map((item, i) => {
@@ -398,42 +359,9 @@ const BulkProduct = ({ bulkProductProps }) => {
 												<div className="product-content__color__content">
 													<select
 														style={{ width: "100%", height: "37px", cursor: "pointer" }}
-														value={bulkProductProps[0].combos[selectedComboFabric[comboIndex].combo].fabric[selectedComboFabric[comboIndex].fabric].fabricsColors[selectedComboFabric[comboIndex].color].fabricsColorName}
-														onChange={(event) => {
-															if (comboIndex === 0) {
-																setSelectedFirstComboFabricsColor(event.target.value)
-															}
-															if (comboIndex === 1) {
-																setSelectedSecondComboFabricsColor(event.target.value)
-															}
-															if (comboIndex === 2) {
-																setSelectedThirdComboFabricsColor(event.target.value)
-															}
-															if (comboIndex === 3) {
-																setSelectedForthComboFabricsColor(event.target.value)
-															}
-															// console.log(event.target)
-															var index = event.target.selectedIndex
-															var optionElement = event.target.childNodes[index]
-															// console.log('event.target.selectedIndex')
-															// console.log(event.target.selectedIndex)
-															// console.log(event.target.childNodes)
-															// var optionElement = event.target
-															// console.log(event.target.value)
-															var comboId = optionElement.getAttribute('data-combo-index')
-															var fabricId = optionElement.getAttribute('data-fabric-index')
-															var colorId = optionElement.getAttribute('data-color-index')
-															var tempArr = selectedComboFabric
-															tempArr[comboId].combo = comboId;
-															tempArr[comboId].fabric = fabricId;
-															tempArr[comboId].color = colorId;
-															// console.log('tempArr', tempArr)
-															// console.log(product.combos)
-															setSelectedComboFabric(tempArr)
-															setSelectedFabric({ combo: comboId, fabric: fabricId, color: colorId })
-														}}
+														value={bulkProductProps[0].comboArray ? bulkProductProps[0].comboArray[comboIndex].fabric.color.color_name : comboArray[comboIndex]?.fabric.color.color_name ?? ''}
+														onChange={handleComboFabricColorsChange}
 													>
-
 														{combo.fabric.map((single, fabricIndex) => ((fabricIndex == selectedComboFabric[comboIndex].fabric && selectedFabric.fabric != null) ? single.fabricsColors.map((color, i) => {
 															return (
 																<option data-combo-index={comboIndex} data-fabric-index={fabricIndex} data-color-index={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
@@ -455,29 +383,22 @@ const BulkProduct = ({ bulkProductProps }) => {
 						<Col lg={6}>
 							<div style={{ alignItems: "baseline" }}>
 								<div style={{ display: "flex" }}>
-									{bulkProductProps[0].styleAttributes.map((attr, i) => {
+									{bulkProductProps[0].styleAttributes.map((item, i) => {
 										return (
 											<Col lg={4}>
 												<div className="product-content__size-color">
 													<div>
-														<div style={{ marginBottom: "10px" }} className="product-content__size__title">{attr.styleAttrybutesName}</div>
+														<div style={{ marginBottom: "10px" }} className="product-content__size__title">{item.styleAttrybutesName}</div>
 														<div className="product-content__size__content">
 															<select
 																style={{ width: "100%", height: "37px", cursor: "pointer" }}
+																value={bulkProductProps[0].selectedAttr ? bulkProductProps[0].selectedAttr[i].value : selectedAttr[i]?.value ?? ''}
 																onChange={(event) => {
-																	if (attr.styleAttrybutesName === "Length") {
-																		setSelectedLengthAttribute(event.target.value)
-																	}
-																	if (attr.styleAttrybutesName === "Mesh color") {
-																		setSelectedMeshColorAttribute(event.target.value)
-																	}
-																	if (attr.styleAttrybutesName === "Optional slit") {
-																		setSelectedSlitAttribute(event.target.value)
-																	}
+																	handleAttributeChange(event, item.styleAttrybutesName)
 																}}
 															>
-																{attr.styleAttrybutesValues &&
-																	attr.styleAttrybutesValues.map((single, i) => {
+																{item.styleAttrybutesValues &&
+																	item.styleAttrybutesValues.map((single, i) => {
 																		return (
 																			<option key={i} value={single.styleAttrybutesValueName}>{single.styleAttrybutesValueName}</option>
 																		);
@@ -573,7 +494,7 @@ const BulkProduct = ({ bulkProductProps }) => {
 													<>
 														<div style={{ display: "flex", flexDirection: "column" }}>
 															<span style={{ fontSize: "14px", textAlign: "center", color: "#333" }}>{size.sizeName}</span>
-															<input style={{ width: "50px", textAlign: "center", margin: "10px" }} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`1-${j}`} name="amount" max="999" min="0" onblur="if(this.value==''){this.value=0;}" onChange={(e) => setRegualrSizeArray(e)} />
+															<input style={{ width: "50px", textAlign: "center", margin: "10px" }} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`1-${j}`} name="amount" max="999" min="0" onChange={(e) => setRegualrSizeArray(e)} />
 														</div>
 													</>
 												)
@@ -625,54 +546,22 @@ const BulkProduct = ({ bulkProductProps }) => {
 					<Col lg={6} style={{ textAlign: "center" }}>
 						<button
 							className="lezada-button lezada-button--medium"
-						// onClick={() =>
-						// addBulkToCart(
-						//   bulkProductProps[0],
-						//   addToast,
-						//   selectedFabrics,
-						//   selectedFabricsColor,
-						//   selectedLining,
-						//   selectedLiningFabricsColor,
-						//   selectedFirstComboFabrics,
-						//   selectedSecondComboFabrics,
-						//   selectedThirdComboFabrics,
-						//   selectedForthComboFabrics,
-						//   selectedFirstComboFabricsColor,
-						//   selectedSecondComboFabricsColor,
-						//   selectedThirdComboFabricsColor,
-						//   selectedForthComboFabricsColor,
-						//   selectedMeshColorAttribute,
-						//   selectedLengthAttribute,
-						//   selectedSlitAttribute,
-						//   regularSizeArray,
-						//   alterationSelected,
-						//   styleOptionSelected,
-						//   totalItems
-						// )
-						// myTest(
-						//   bulkProductProps[0],
-						//   addToast,
-						//   selectedFabrics,
-						//   selectedFabricsColor,
-						//   selectedLining,
-						//   selectedLiningFabricsColor,
-						//   selectedFirstComboFabrics,
-						//   selectedSecondComboFabrics,
-						//   selectedThirdComboFabrics,
-						//   selectedForthComboFabrics,
-						//   selectedFirstComboFabricsColor,
-						//   selectedSecondComboFabricsColor,
-						//   selectedThirdComboFabricsColor,
-						//   selectedForthComboFabricsColor,
-						//   selectedMeshColorAttribute,
-						//   selectedLengthAttribute,
-						//   selectedSlitAttribute,
-						//   regularSizeArray,
-						//   alterationSelected,
-						//   styleOptionSelected,
-						// totalItems
-						// )
-						// }
+							onClick={() =>
+								addBulkToCart(
+									bulkProductProps[0],
+									addToast,
+									selectedFabrics,
+									selectedFabricsColor,
+									selectedLining,
+									selectedLiningFabricsColor,
+									comboArray,
+									selectedAttr,
+									regularSizeArray,
+									alterationSelected,
+									styleOptionSelected,
+									totalItems
+								)
+							}
 						>
 							Save Order and Add to Cart
 						</button>
@@ -683,4 +572,5 @@ const BulkProduct = ({ bulkProductProps }) => {
 	)
 
 };
+
 export default BulkProduct;
