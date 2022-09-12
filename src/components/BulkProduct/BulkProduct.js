@@ -172,7 +172,6 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 	}
 
 	const removeOrder = () => {
-		console.log("#@###################")
 		deleteFromCart(bulkProductProps[0], addToast)
 	}
 
