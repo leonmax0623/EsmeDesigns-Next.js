@@ -22,8 +22,8 @@ const Bulk = ({
 
   const { addToast } = useToasts();
   let cartTotalPrice = 0;
-  console.log("BulkPage/BulkProduct => ", bulkProduct)
-  const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId);
+  const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId).reverse();
+  console.log("bulkOrders => ", bulkOrders)
   const [newBulkProduct, setNewBulkProduct] = useState(bulkProduct)
   const addNewBulkOrder = () => {
     setNewBulkProduct(bulkProduct)
@@ -99,7 +99,6 @@ const Bulk = ({
                       add bulk order
                     </button>
                   </div>
-                  {/* <BulkProduct className="emptyBulk" style={{ display: "none" }} bulkProductProps={newBulkProduct} addBulkToCart={addBulkToCart} ></BulkProduct> */}
                   {newBulkProduct && newBulkProduct.length >= 1 ? (
                     <BulkProduct bulkProductProps={newBulkProduct} addBulkToCart={handleAddBulkToCart} ></BulkProduct>
                   ) : ''}
@@ -110,7 +109,6 @@ const Bulk = ({
                     )
                   }) : ''}
                 </div>
-
               </Col>
               <Col lg={12} className="space-mb--r100">
                 <div className="cart-coupon-area space-pt--30 space-pb--30">

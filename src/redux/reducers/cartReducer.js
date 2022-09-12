@@ -9,9 +9,9 @@ const initState = [];
 const cartReducer = (state = initState, action) => {
   const cartItems = state,
     product = action.payload;
+  console.log("Redux / action.payload => ", product)
 
-  console.log("ReduxPage/cartItem", cartItems);
-  console.log("ReduxPage/product", product);
+
   if (action.type === ADD_TO_CART) {
     // for non variant products
     if (product.variation === undefined) {
@@ -34,7 +34,7 @@ const cartReducer = (state = initState, action) => {
           );
         } else {
           return [
-            ...cartItems, product
+            ...cartItems, { ...product, cartItemId: uuidv4() }
           ];
         }
 

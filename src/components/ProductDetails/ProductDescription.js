@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { IoIosHeartEmpty, IoIosShuffle } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
 import { useDispatch } from 'react-redux';
@@ -42,21 +42,15 @@ const ProductDescription = ({
     product.fabrics ? product.fabrics[0].fabricsColors[0].fabricsColorName : ""
   );
 
-  const [selectedSize, setSelectedSize] = useState(
+  const [selectedSizeCategory, setSelectedSizeCategory] = useState(
+    product.sizeCategories ? product.sizeCategories[0].sizeCategoryName : ""
+  );
+
+  const [selectedCategorySizeValue, setSelectedCategorySizeValue] = useState(
     product.sizeCategories ? product.sizeCategories[0].sizes[0].sizeName : ""
   );
 
-  const [selectedComboFabric, setSelectedComboFabric] = useState(
-    product.combos.map((combo, i) => {
-      return { combo: i, fabric: 0, color: 0 }
-    })
-  );
 
-  const [selectedComboFabricsColor, setSelectedComboFabricsColor] = useState(
-    ""
-  );
-
-  const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
   //custom
   const [productStock, setProductStock] = useState(
     product.inStock ? product.inStock : 0
@@ -92,46 +86,90 @@ const ProductDescription = ({
 
   const [alterationSelected, setAlterationSelected] = useState([]);
   const [styleOptionSelected, setStyleOptionSelected] = useState([]);
-  const [selectedLengthAttribute, setSelectedLengthAttribute] = useState(
-    product.styleAttributes && product.styleAttributes[0].styleAttrybutesName === "Length" ? product.styleAttributes[0].styleAttrybutesValues[0].styleAttrybutesValueName : ""
-  );
-  const [selectedMeshColorAttribute, setSelectedMeshColorAttribute] = useState(
-    product.styleAttributes && product.styleAttributes[1].styleAttrybutesName === "Mesh color" ? product.styleAttributes[1].styleAttrybutesValues[0].styleAttrybutesValueName : ""
-  );
-  const [selectedSlitAttribute, setSelectedSlitAttribute] = useState(
-    product.styleAttributes && product.styleAttributes[2].styleAttrybutesName === "Optional slit" ? product.styleAttributes[2].styleAttrybutesValues[0].styleAttrybutesValueName : ""
-  );
-
-  const [selectedFirstComboFabrics, setSelectedFirstComboFabrics] = useState(
-    product.combos && product.combos[0] ? product.combos[0].fabric[0].fabricsName : ""
-  );
-  const [selectedSecondComboFabrics, setSelectedSecondComboFabrics] = useState(
-    product.combos && product.combos[1] ? product.combos[1].fabric[0].fabricsName : ""
-  );
-  const [selectedThirdComboFabrics, setSelectedThirdComboFabrics] = useState(
-    product.combos && product.combos[2] ? product.combos[2].fabric[0].fabricsName : ""
-  );
-  const [selectedForthComboFabrics, setSelectedForthComboFabrics] = useState(
-    product.combos && product.combos[3] ? product.combos[3].fabric[0].fabricsName : ""
-  );
-
-  const [selectedFirstComboFabricsColor, setSelectedFirstComboFabricsColor] = useState(
-    product.combos && product.combos[0] ? product.combos[0].fabric[0].fabricsColors[0].fabricsColorName : ""
-  );
-  const [selectedSecondComboFabricsColor, setSelectedSecondComboFabricsColor] = useState(
-    product.combos && product.combos[1] ? product.combos[1].fabric[0].fabricsColors[0].fabricsColorName : ""
-  );
-  const [selectedThirdComboFabricsColor, setSelectedThirdComboFabricsColor] = useState(
-    product.combos && product.combos[2] ? product.combos[2].fabric[0].fabricsColors[0].fabricsColorName : ""
-  );
-  const [selectedForthComboFabricsColor, setSelectedForthComboFabricsColor] = useState(
-    product.combos && product.combos[3] ? product.combos[3].fabric[0].fabricsColors[0].fabricsColorName : ""
-  );
 
   const bulkOrder = (product) => {
     addToBulk(product);
     router.push('/other/bulk')
   }
+
+  const [comboArray, setComboArray] = useState([])
+
+  const handleComboFabricChange = (combo_name) => (e) => {
+    let array = [...comboArray];
+    var index = e.target.selectedIndex;
+    var optionElement = e.target.childNodes[index];
+    var comboId = optionElement.getAttribute('data-combo-index');
+    var fabricId = optionElement.getAttribute('data-fabric-index');
+
+    array[comboId].fabric.fabric_name = e.target.value;
+    array[comboId].fabric.fabric_index = fabricId;
+    array[comboId].fabric.color.color_name = product.combos[comboId].fabric[fabricId].fabricsColors[0].fabricsColorName;
+    array[comboId].fabric.color.rgb = product.combos[comboId].fabric[fabricId].fabricsColors[0].fabricsColorRGB;
+
+    setComboArray(array);
+  }
+
+  const handleComboFabricColorsChange = (e) => {
+    let array = [...comboArray];
+    var index = e.target.selectedIndex;
+    var optionElement = e.target.childNodes[index];
+    var comboId = optionElement.getAttribute('data-combo-index');
+    var fabricId = optionElement.getAttribute('data-fabric-index');
+    var colorId = optionElement.getAttribute('data-color-index');
+
+    array[comboId].fabric.color.color_name = e.target.value;
+    array[comboId].fabric.color.rgb = product.combos[comboId].fabric[fabricId].fabricsColors[colorId].fabricsColorRGB;
+
+    setComboArray(array);
+  }
+
+  const handleComboFabricColorsRadioChange = (comboIndex, color_name) => (e) => {
+    let array = [...comboArray];
+
+    array[comboIndex].fabric.color.color_name = color_name;
+    setComboArray(array);
+  }
+
+  useEffect(() => {
+    setComboArray([]);
+    if (product.comboArray) {
+      setComboArray(product.comboArray);
+    } else {
+      product.combos.map((item) => {
+        setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColors[0].fabricsColorName, rgb: item.fabric[0].fabricsColors[0].fabricsColorRGB } } }]);
+      });
+    }
+  }, [product.combos]);
+
+  const [selectedAttr, setSelectedAttr] = useState([]);
+
+  const handleAttributeChange = (event, attribute) => {
+    let array = [...selectedAttr];
+
+    for (let i = 0; i < array.length; i += 1) {
+      if (array[i].attr === attribute) {
+        array[i].value = event.target.value;
+
+        break;
+      }
+    }
+
+    setSelectedAttr(array);
+  }
+
+  console.log("setComboArray", comboArray)
+
+  useEffect(() => {
+    setSelectedAttr([]);
+    if (product.selectedAttr && product.selectedAttr.length > 1) {
+      setSelectedAttr(product.selectedAttr);
+    } else {
+      product.styleAttributes.map((item) => {
+        setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
+      });
+    }
+
+  }, [product.styleAttributes]);
 
   const myTest = (
     product,
@@ -141,18 +179,9 @@ const ProductDescription = ({
     selectedFabricsColor,
     selectedLining,
     selectedLiningFabricsColor,
-    selectedFirstComboFabrics,
-    selectedSecondComboFabrics,
-    selectedThirdComboFabrics,
-    selectedForthComboFabrics,
-    selectedFirstComboFabricsColor,
-    selectedSecondComboFabricsColor,
-    selectedThirdComboFabricsColor,
-    selectedForthComboFabricsColor,
-    selectedMeshColorAttribute,
-    selectedLengthAttribute,
-    selectedSlitAttribute,
-    selectedSize,
+    comboArray,
+    selectedAttr,
+    selectedCategorySizeValue,
     alterationSelected,
     styleOptionSelected
   ) => {
@@ -162,14 +191,9 @@ const ProductDescription = ({
     console.log("Cart selectedFabricsColor", selectedFabricsColor)
     console.log("Cart selectedLining", selectedLining)
     console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-    console.log("Cart selectedFirstComboFabrics", selectedFirstComboFabrics)
-    console.log("Cart selectedSecondComboFabrics", selectedSecondComboFabrics)
-    console.log("Cart selectedFirstComboFabricsColor", selectedFirstComboFabricsColor)
-    console.log("Cart selectedSecondComboFabricsColor", selectedSecondComboFabricsColor)
-    console.log("Cart selectedMeshColorAttribute", selectedMeshColorAttribute)
-    console.log("Cart selectedLengthAttribute", selectedLengthAttribute)
-    console.log("Cart selectedSlitAttribute", selectedSlitAttribute)
-    console.log("Cart selectedSize", selectedSize)
+    console.log("Cart comboArray", comboArray)
+    console.log("Cart selectedAttr", selectedAttr)
+    console.log("Cart selectedSize", selectedCategorySizeValue)
     console.log("Cart alterationSelected", alterationSelected)
     console.log("Cart styleOptionSelected", styleOptionSelected)
   }
@@ -433,285 +457,173 @@ const ProductDescription = ({
           </div>
         </div>
       )}
-      {product.combos ?
-        product.combos.map((combo, comboIndex) => {
-          return (
-            <>
-              <div className="product-content__size-color">
-                <div className="product-content__size space-mb--20">
-                  <div className="product-content__size__title">{combo.combosName}</div>
-                  <div className="product-content__size__content">
+      {product.combos ? product.combos.map((combo, comboIndex) => {
+        return (
+          <>
+            <div className="product-content__size-color">
+              <div className="product-content__size space-mb--20">
+                <div className="product-content__size__title">{combo.combosName}</div>
+                <div className="product-content__size__content">
+                  <select
+                    style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                    value={product.comboArray ? product.comboArray[comboIndex].fabric.fabric_name : comboArray[comboIndex]?.fabric.fabric_name ?? ''}
+                    onChange={handleComboFabricChange(combo.combosName)}
+                  >
+                    {combo.fabric &&
+                      combo.fabric.map((item, i) => {
+                        return (
+                          <option data-combo-index={comboIndex} data-fabric-index={i} value={item.fabricsName}>{item.fabricsName}</option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="product-content__size-color">
+              <div className="product-content__size space-mb--20">
+                <div className="product-content__size__title"></div>
+                <div className="product-content__size__content">
+                  <div className="product-content__color__content">
                     <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                      onChange={(event) => {
-                        // console.log(event.target)
-                        console.log("event", event.target.value)
-                        if (comboIndex === 0) {
-                          setSelectedFirstComboFabrics(event.target.value)
-                        }
-                        if (comboIndex === 1) {
-                          setSelectedSecondComboFabrics(event.target.value)
-                        }
-                        if (comboIndex === 2) {
-                          setSelectedThirdComboFabrics(event.target.value)
-                        }
-                        if (comboIndex === 3) {
-                          setSelectedForthComboFabrics(event.target.value)
-                        }
-                        var index = event.target.selectedIndex
-                        var optionElement = event.target.childNodes[index]
-                        var comboId = optionElement.getAttribute('data-combo-index')
-                        var fabricId = optionElement.getAttribute('data-fabric-index')
-                        console.log(comboId, fabricId)
-                        var tempArr = selectedComboFabric
-                        tempArr[comboId].combo = comboId;
-                        tempArr[comboId].fabric = fabricId;
-                        setSelectedComboFabric(tempArr)
-                        setSelectedFabric({ combo: comboId, fabric: fabricId })
-                      }}
+                      value={comboArray[comboIndex]?.fabric.color.color_name ?? ''}
+                      onChange={handleComboFabricColorsChange}
                     >
-                      {combo.fabric &&
-                        combo.fabric.map((item, i) => {
-                          return (
-                            <option data-combo-index={comboIndex} data-fabric-index={i} value={item.fabricsName}>{item.fabricsName}</option>
-                          );
-                        })
-                      }
+                      {combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColors.map((color, i) => {
+                        return (
+                          <option data-combo-index={comboIndex} data-fabric-index={comboArray[comboIndex]?.fabric.fabric_index ?? 0} data-color-index={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+                        )
+                      })}
                     </select>
                   </div>
                 </div>
               </div>
-
-              <div className="product-content__size-color">
-                <div className="product-content__size space-mb--20">
-                  <div className="product-content__size__title"></div>
-                  <div className="product-content__size__content">
-                    <div className="product-content__color__content">
-                      <select
-                        style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                        value={product.combos[selectedComboFabric[comboIndex].combo].fabric[selectedComboFabric[comboIndex].fabric].fabricsColors[selectedComboFabric[comboIndex].color].fabricsColorName}
-                        onChange={(event) => {
-                          console.log("selectedComboFabric", selectedComboFabric)
-                          if (comboIndex === 0) {
-                            setSelectedFirstComboFabricsColor(event.target.value)
-                          }
-                          if (comboIndex === 1) {
-                            setSelectedSecondComboFabricsColor(event.target.value)
-                          }
-                          if (comboIndex === 2) {
-                            setSelectedThirdComboFabricsColor(event.target.value)
-                          }
-                          if (comboIndex === 3) {
-                            setSelectedForthComboFabricsColor(event.target.value)
-                          }
-                          // console.log(event.target)
-                          var index = event.target.selectedIndex
-                          var optionElement = event.target.childNodes[index]
-                          console.log('event.target.selectedIndex')
-                          console.log(event.target.selectedIndex)
-                          console.log(event.target.childNodes)
-                          // var optionElement = event.target
-                          console.log(event.target.value)
-                          var comboId = optionElement.getAttribute('data-combo-index')
-                          var fabricId = optionElement.getAttribute('data-fabric-index')
-                          var colorId = optionElement.getAttribute('data-color-index')
-                          var tempArr = selectedComboFabric
-                          tempArr[comboId].combo = comboId;
-                          tempArr[comboId].fabric = fabricId;
-                          tempArr[comboId].color = colorId;
-                          console.log('tempArr', tempArr)
-                          console.log(product.combos)
-                          setSelectedComboFabric(tempArr)
-                          setSelectedFabric({ combo: comboId, fabric: fabricId, color: colorId })
-                          setQuantityCount(1);
-                        }}
-                      >
-
-                        {combo.fabric.map((single, fabricIndex) => ((fabricIndex == selectedComboFabric[comboIndex].fabric && selectedFabric.fabric != null) ? single.fabricsColors.map((color, i) => {
-                          return (
-                            <option data-combo-index={comboIndex} data-fabric-index={fabricIndex} data-color-index={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
-                          );
-                        }) : "")).filter((each) => (each !== ""))}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div>
 
 
-              <div className="product-content__size-color">
-                <div className="product-content__size space-mb--20">
-                  <div className="product-content__size__title"></div>
-                  <div className="product-content__size__content">
-                    <div className="product-content__color__content">
-                      {combo.fabric.map((single, fabricIndex) => ((fabricIndex == selectedComboFabric[comboIndex].fabric && selectedFabric.fabric != null) ? single.fabricsColors.map((color, i) => {
-                        return (
-                          <Tooltip
-                            title={
-                              color.fabricsColorName
-                            }
-                            position="bottom"
-                            trigger="mouseenter"
-                            animation="shift"
-                            arrow={true}
-                            duration={200}
-                            style={{ marginLeft: "15px" }}
-                          >
-                            <Fragment key={i}>
-                              <input
-                                type="radio"
-                                value={color.fabricsColorName}
-                                name={`color-${selectedComboFabric[comboIndex].combo}`}
-                                id={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
-                                data-combo-index={comboIndex}
-                                data-fabric-index={fabricIndex}
-                                data-color-index={i}
-                                checked={
-                                  color.fabricsColorName === product.combos[selectedComboFabric[comboIndex].combo].fabric[selectedComboFabric[comboIndex].fabric].fabricsColors[selectedComboFabric[comboIndex].color].fabricsColorName ? "checked" : ""
-                                }
-                                onChange={(event) => {
-                                  console.log("Combo", color.fabricsColorName)
-                                  if (comboIndex === 0) {
-                                    setSelectedFirstComboFabricsColor(color.fabricsColorName)
-                                  }
-                                  if (comboIndex === 1) {
-                                    setSelectedSecondComboFabricsColor(color.fabricsColorName)
-                                  }
-                                  if (comboIndex === 2) {
-                                    setSelectedThirdComboFabricsColor(color.fabricsColorName)
-                                  }
-                                  if (comboIndex === 3) {
-                                    setSelectedForthComboFabricsColor(color.fabricsColorName)
-                                  }
-                                  // console.log(event.target)
-                                  var optionElement = event.target
-                                  var comboId = optionElement.getAttribute('data-combo-index')
-                                  var fabricId = optionElement.getAttribute('data-fabric-index')
-                                  var colorId = optionElement.getAttribute('data-color-index')
-                                  var tempArr = selectedComboFabric
-                                  tempArr[comboId].combo = comboId;
-                                  tempArr[comboId].fabric = fabricId;
-                                  tempArr[comboId].color = colorId;
-                                  setSelectedComboFabric(tempArr)
-                                  setSelectedFabric({ combo: comboId, fabric: fabricId, color: colorId })
-                                  setQuantityCount(1);
-                                }}
-                              />
-                              <label
-                                htmlFor={`${color.fabricsColorName}-${selectedComboFabric[comboIndex].combo}`}
-                                style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
-                              ></label>
-                            </Fragment>
-                          </Tooltip>
-                        );
-                      }) : ""))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          );
-        }) : (
-          ""
-        )}
-      {product.styleAttributes ? (
-        <div className="product-content__size-color">
-          <div className="product-content__size space-mb--20" style={{ alignItems: "baseline" }}>
-            <div className="product-content__size__title">Attributes</div>
-            <div className="product-content__size__content">
-              {product.styleAttributes.map((attr, i) => {
-                return (
-                  <div className="product-content__size-color">
-                    <div className="product-content__size space-mb--20">
-                      <div className="product-content__size__title">{attr.styleAttrybutesName}</div>
-                      <div className="product-content__size__content">
-                        <select
-                          style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                          onChange={(event) => {
-                            if (attr.styleAttrybutesName === "Length") {
-                              setSelectedLengthAttribute(event.target.value)
-                            }
-                            if (attr.styleAttrybutesName === "Mesh color") {
-                              setSelectedMeshColorAttribute(event.target.value)
-                            }
-                            if (attr.styleAttrybutesName === "Optional slit") {
-                              setSelectedSlitAttribute(event.target.value)
-                            }
-                          }}
+            <div className="product-content__size-color">
+              <div className="product-content__size space-mb--20">
+                <div className="product-content__size__title"></div>
+                <div className="product-content__size__content">
+                  <div className="product-content__color__content">
+                    {combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColors.map((color, i) => {
+                      return (
+                        <Tooltip
+                          title={
+                            color.fabricsColorName
+                          }
+                          position="bottom"
+                          trigger="mouseenter"
+                          animation="shift"
+                          arrow={true}
+                          duration={200}
+                          style={{ marginLeft: "15px" }}
                         >
-                          {attr.styleAttrybutesValues &&
-                            attr.styleAttrybutesValues.map((single, i) => {
-                              return (
-                                <option key={i} value={single.styleAttrybutesValueName}>{single.styleAttrybutesValueName}</option>
-                              );
-                            })
-                          }
-                        </select>
-                      </div>
-                    </div>
+                          <Fragment key={i}>
+                            <input
+                              type="radio"
+                              value={color.fabricsColorName}
+                              name={`${combo.combosName}-${color.fabricsColorName}-${i}`}
+                              id={`${combo.combosName}-${color.fabricsColorName}-${i}`}
+                              checked={
+                                color.fabricsColorName === comboArray[comboIndex]?.fabric.color.color_name ?? '' ? true : false
+                              }
+                              onChange={handleComboFabricColorsRadioChange(comboIndex, color.fabricsColorName)}
+                            />
+                            <label
+                              htmlFor={`${combo.combosName}-${color.fabricsColorName}-${i}`}
+                              style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
+                            ></label>
+                          </Fragment>
+                        </Tooltip>
+                      );
+                    })}
                   </div>
-                )
-              })}
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      }) : (
+        ""
+      )}
+      {product.styleAttributes && product.styleAttributes.map((item, i) => {
+        return (
+          <div className="product-content__size-color">
+            <div className="product-content__size space-mb--20">
+              <div className="product-content__size__title">{item.styleAttrybutesName}</div>
+              <div className="product-content__size__content">
+                <select
+                  style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                  value={selectedAttr && selectedAttr.length > 1 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
+                  onChange={(event) => {
+                    handleAttributeChange(event, item.styleAttrybutesName)
+                  }}
+                >
+                  {item.styleAttrybutesValues &&
+                    item.styleAttrybutesValues.map((single, j) => {
+                      return (
+                        <option key={j} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
+                      );
+                    })
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+        )
+      })}
+
+      {product.sizeCategories ? (
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Size Category</div>
+            <div className="product-content__size__content">
+              <select
+                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                onChange={(event) => {
+                  setSelectedSizeCategory(event.target.value.split("/")[0])
+                  setSelectedCategorySizeValue(event.target.value.split("/")[1])
+                }}
+              >
+                {product.sizeCategories &&
+                  product.sizeCategories.map((size, i) => {
+                    return (
+                      <option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
+                    );
+                  })
+                }
+              </select>
             </div>
           </div>
         </div>
       ) : (
         ""
       )}
-
-      {product.sizeCategories ? (
+      {selectedSizeCategory && (
         <div className="product-content__size-color">
-          <div className="product-content__size space-mb--20" style={{ alignItems: "baseline" }}>
-            <div className="product-content__size__title">Size</div>
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title"></div>
             <div className="product-content__size__content">
-              {product.sizeCategories.length > 1 ? product.sizeCategories.map((category, i) => {
-                return (
-                  <div className="product-content__size-color">
-                    <div className="product-content__size space-mb--20">
-                      <div className="product-content__size__title">{category.sizeCategoryName}</div>
-                      <div className="product-content__size__content">
-                        <select
-                          style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                          onChange={(event) => {
-                            console.log("event", event.target.value)
-                            setSelectedSize(event.target.value)
-                            // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
-                          }}
-                        >
-                          {category.sizes &&
-                            category.sizes.map((single, i) => {
-                              return (
-                                <option key={i} value={single.sizeName}>{single.sizeName}</option>
-                              );
-                            })
-                          }
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                )
-              }) : (
+              <div className="product-content__color__content">
                 <select
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
                   onChange={(event) => {
-                    console.log("event", event.target.value)
-                    setSelectedSize(event.target.value)
+                    setSelectedCategorySizeValue(event.target.value);
                   }}
                 >
-                  {product.sizeCategories &&
-                    product.sizeCategories[0].sizes.map((single, i) => {
-                      return (
-                        <option key={i} value={single.sizeName}>{single.sizeName}</option>
-                      );
-                    })
-                  }
+                  {product.sizeCategories.map((single, j) => single.sizeCategoryName === selectedSizeCategory ? single.sizes.map((size, i) => {
+                    return (
+                      <option key={i} value={size.sizeName}>{size.sizeName}</option>
+                    );
+                  }) : "")}
                 </select>
-              )}
+              </div>
             </div>
           </div>
         </div>
-      ) : (
-        ""
       )}
 
       {product.styleAlterations ? (
@@ -726,7 +638,6 @@ const ProductDescription = ({
                 labelledBy="Select Alteration"
                 hasSelectAll={false}
               />
-
             </div>
           </div>
         </div>
@@ -807,18 +718,9 @@ const ProductDescription = ({
                   selectedFabricsColor,
                   selectedLining,
                   selectedLiningFabricsColor,
-                  selectedFirstComboFabrics,
-                  selectedSecondComboFabrics,
-                  selectedThirdComboFabrics,
-                  selectedForthComboFabrics,
-                  selectedFirstComboFabricsColor,
-                  selectedSecondComboFabricsColor,
-                  selectedThirdComboFabricsColor,
-                  selectedForthComboFabricsColor,
-                  selectedMeshColorAttribute,
-                  selectedLengthAttribute,
-                  selectedSlitAttribute,
-                  selectedSize,
+                  comboArray,
+                  selectedAttr,
+                  selectedCategorySizeValue,
                   alterationSelected,
                   styleOptionSelected
                 )
@@ -830,18 +732,9 @@ const ProductDescription = ({
                 //   selectedFabricsColor,
                 //   selectedLining,
                 //   selectedLiningFabricsColor,
-                //   selectedFirstComboFabrics,
-                //   selectedSecondComboFabrics,
-                //   selectedThirdComboFabrics,
-                //   selectedForthComboFabrics,
-                //   selectedFirstComboFabricsColor,
-                //   selectedSecondComboFabricsColor,
-                //   selectedThirdComboFabricsColor,
-                //   selectedForthComboFabricsColor,
-                //   selectedMeshColorAttribute,
-                //   selectedLengthAttribute,
-                //   selectedSlitAttribute,
-                //   selectedSize,
+                //   comboArray,
+                //   selectedAttr,
+                //   selectedCategorySizeValue,
                 //   alterationSelected,
                 //   styleOptionSelected
                 // )

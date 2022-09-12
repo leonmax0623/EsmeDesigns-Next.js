@@ -13,9 +13,9 @@ export const addToCart = (
   selectedLining,
   selectedLiningFabricsColor,
   comboArray,
-  selectedSize,
-  alterationSelected,
   selectedAttr,
+  selectedCategorySizeValue,
+  alterationSelected,
   styleOptionSelected
 ) => {
 
@@ -32,18 +32,9 @@ export const addToCart = (
         selectedFabricsColor: selectedFabricsColor,
         selectedLining: selectedLining,
         selectedLiningFabricsColor: selectedLiningFabricsColor,
-        selectedFirstComboFabrics: selectedFirstComboFabrics,
-        selectedSecondComboFabrics: selectedSecondComboFabrics,
-        selectedThirdComboFabrics: selectedThirdComboFabrics,
-        selectedForthComboFabrics: selectedForthComboFabrics,
-        selectedFirstComboFabricsColor: selectedFirstComboFabricsColor,
-        selectedSecondComboFabricsColor: selectedSecondComboFabricsColor,
-        selectedThirdComboFabricsColor: selectedThirdComboFabricsColor,
-        selectedForthComboFabricsColor: selectedForthComboFabricsColor,
-        selectedMeshColorAttribute: selectedMeshColorAttribute,
-        selectedLengthAttribute: selectedLengthAttribute,
-        selectedSlitAttribute: selectedSlitAttribute,
-        selectedSize: selectedSize,
+        selectedComboArray: comboArray,
+        selectedAttr: selectedAttr,
+        selectedSize: selectedCategorySizeValue,
         selectedAlteration: alterationSelected,
         selectedStyleOption: styleOptionSelected
         // selectedProductColor: selectedProductColor
