@@ -163,15 +163,10 @@ const Cart = ({
                 </table>
                 <div className="cart-table">
                   <div style={{ borderBottom: "1px solid #ededed", display: "flex", padding: "10px", justifyContent: "end" }}>
-                    <button
-                      className="lezada-button lezada-button--medium"
-                    >
-                      add bulk order
-                    </button>
                   </div>
                   {bulkOrders && bulkOrders.map((order, i) => {
                     return (
-                      <BulkProduct bulkProductProps={[order]} addBulkToCart={addBulkToCart}></BulkProduct>
+                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart}></BulkProduct>
                     )
                   })}
                 </div>

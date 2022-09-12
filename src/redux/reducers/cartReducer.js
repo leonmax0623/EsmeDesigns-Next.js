@@ -10,8 +10,9 @@ const cartReducer = (state = initState, action) => {
   const cartItems = state,
     product = action.payload;
 
+  console.log("ReduxPage/cartItem", cartItems);
+  console.log("ReduxPage/product", product);
   if (action.type === ADD_TO_CART) {
-    console.log("Cart Action", action)
     // for non variant products
     if (product.variation === undefined) {
       const cartItem = cartItems.filter((item) => item.productId === product.productId)[0];
@@ -25,16 +26,17 @@ const cartReducer = (state = initState, action) => {
           }
         ];
       } else {
-        return cartItems.map((item) =>
-          item.cartItemId === cartItem.cartItemId
-            ? {
-              ...item,
-              quantity: product.quantity
-                ? item.quantity + product.quantity
-                : item.quantity + 1
-            }
-            : item
-        );
+        console.log("Redux Same Product => ", action)
+
+        // return cartItems.map((item) =>
+        //   item.cartItemId === product.cartItemId
+        //     ? product
+        //     : item
+        // );
+        return [
+          ...cartItems, product
+
+        ];
       }
       // for variant products
     } else {
