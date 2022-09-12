@@ -20,17 +20,6 @@ export const addToCart = (
 ) => {
 
   return dispatch => {
-    console.log("Cart bulkProduct", bulkProduct)
-    console.log("Cart selectedFabrics", selectedFabrics)
-    console.log("Cart selectedFabricsColor", selectedFabricsColor)
-    console.log("Cart selectedLining", selectedLining)
-    console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-    console.log("Cart alterationSelected", alterationSelected)
-    console.log("Cart styleOptionSelected", styleOptionSelected)
-    console.log("Cart comboArray", comboArray)
-    console.log("Cart totalItems", totalItems)
-    console.log("Cart regularSizeArray", regularSizeArray)
-    console.log("Cart selectedAttr", selectedAttr)
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }
@@ -88,17 +77,6 @@ export const addBulkToCart = (
 ) => {
 
   return dispatch => {
-    console.log("Cart bulkProduct", bulkProduct)
-    console.log("Cart selectedFabrics", selectedFabrics)
-    console.log("Cart selectedFabricsColor", selectedFabricsColor)
-    console.log("Cart selectedLining", selectedLining)
-    console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-    console.log("Cart alterationSelected", alterationSelected)
-    console.log("Cart styleOptionSelected", styleOptionSelected)
-    console.log("Cart comboArray", comboArray)
-    console.log("Cart totalItems", totalItems)
-    console.log("Cart regularSizeArray", regularSizeArray)
-    console.log("Cart selectedAttr", selectedAttr)
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }

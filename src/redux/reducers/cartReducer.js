@@ -26,17 +26,18 @@ const cartReducer = (state = initState, action) => {
           }
         ];
       } else {
-        console.log("Redux Same Product => ", action)
+        if (product.cartItemId) {
+          return cartItems.map((item) =>
+            item.cartItemId === product.cartItemId
+              ? product
+              : item
+          );
+        } else {
+          return [
+            ...cartItems, product
+          ];
+        }
 
-        // return cartItems.map((item) =>
-        //   item.cartItemId === product.cartItemId
-        //     ? product
-        //     : item
-        // );
-        return [
-          ...cartItems, product
-
-        ];
       }
       // for variant products
     } else {
