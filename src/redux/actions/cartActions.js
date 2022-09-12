@@ -12,39 +12,25 @@ export const addToCart = (
   selectedFabricsColor,
   selectedLining,
   selectedLiningFabricsColor,
-  selectedFirstComboFabrics,
-  selectedSecondComboFabrics,
-  selectedThirdComboFabrics,
-  selectedForthComboFabrics,
-  selectedFirstComboFabricsColor,
-  selectedSecondComboFabricsColor,
-  selectedThirdComboFabricsColor,
-  selectedForthComboFabricsColor,
-  selectedMeshColorAttribute,
-  selectedLengthAttribute,
-  selectedSlitAttribute,
+  comboArray,
   selectedSize,
   alterationSelected,
+  selectedAttr,
   styleOptionSelected
 ) => {
 
   return dispatch => {
-    console.log("Cart Item", item)
-    console.log("Cart quantityCount", quantityCount)
+    console.log("Cart bulkProduct", bulkProduct)
     console.log("Cart selectedFabrics", selectedFabrics)
     console.log("Cart selectedFabricsColor", selectedFabricsColor)
     console.log("Cart selectedLining", selectedLining)
     console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-    console.log("Cart selectedFirstComboFabrics", selectedFirstComboFabrics)
-    console.log("Cart selectedSecondComboFabrics", selectedSecondComboFabrics)
-    console.log("Cart selectedFirstComboFabricsColor", selectedFirstComboFabricsColor)
-    console.log("Cart selectedSecondComboFabricsColor", selectedSecondComboFabricsColor)
-    console.log("Cart selectedMeshColorAttribute", selectedMeshColorAttribute)
-    console.log("Cart selectedLengthAttribute", selectedLengthAttribute)
-    console.log("Cart selectedSlitAttribute", selectedSlitAttribute)
-    console.log("Cart selectedSize", selectedSize)
     console.log("Cart alterationSelected", alterationSelected)
     console.log("Cart styleOptionSelected", styleOptionSelected)
+    console.log("Cart comboArray", comboArray)
+    console.log("Cart totalItems", totalItems)
+    console.log("Cart regularSizeArray", regularSizeArray)
+    console.log("Cart selectedAttr", selectedAttr)
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }
@@ -81,6 +67,56 @@ export const addToCart = (
         //   : item.selectedProductSize
         //     ? item.selectedProductSize
         //     : null
+      }
+    });
+  };
+};
+
+export const addBulkToCart = (
+  bulkProduct,
+  addToast,
+  selectedFabrics,
+  selectedFabricsColor,
+  selectedLining,
+  selectedLiningFabricsColor,
+  comboArray,
+  selectedAttr,
+  regularSizeArray,
+  alterationSelected,
+  styleOptionSelected,
+  totalItems
+) => {
+
+  return dispatch => {
+    console.log("Cart bulkProduct", bulkProduct)
+    console.log("Cart selectedFabrics", selectedFabrics)
+    console.log("Cart selectedFabricsColor", selectedFabricsColor)
+    console.log("Cart selectedLining", selectedLining)
+    console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
+    console.log("Cart alterationSelected", alterationSelected)
+    console.log("Cart styleOptionSelected", styleOptionSelected)
+    console.log("Cart comboArray", comboArray)
+    console.log("Cart totalItems", totalItems)
+    console.log("Cart regularSizeArray", regularSizeArray)
+    console.log("Cart selectedAttr", selectedAttr)
+    if (addToast) {
+      addToast("Added To Cart", { appearance: "success", autoDismiss: true });
+    }
+    dispatch({
+      type: ADD_TO_CART,
+      payload: {
+        ...bulkProduct,
+        totalItems: totalItems,
+        selectedFabrics: selectedFabrics,
+        selectedFabricsColor: selectedFabricsColor,
+        selectedLining: selectedLining,
+        selectedLiningFabricsColor: selectedLiningFabricsColor,
+        regularSizeArray: JSON.parse(regularSizeArray),
+        selectedAlteration: alterationSelected,
+        selectedStyleOption: styleOptionSelected,
+        selectedAttr: selectedAttr,
+        comboArray: comboArray,
+
       }
     });
   };

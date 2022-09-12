@@ -1,26 +1,30 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { IoIosClose, IoMdCart } from "react-icons/io";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
+import { BulkProduct } from "../../components/BulkProduct";
 import { LayoutTwo } from "../../components/Layout";
-import {
-  addToCart, decreaseQuantity, deleteAllFromCart, deleteFromCart
-} from "../../redux/actions/cartActions";
+import { addBulkToCart, addToCart, decreaseQuantity, deleteAllFromCart, deleteFromCart } from "../../redux/actions/cartActions";
 
 const Cart = ({
   cartItems,
+  addBulkToCart,
+  bulkProduct,
   decreaseQuantity,
   addToCart,
   deleteFromCart,
   deleteAllFromCart
 }) => {
-  const [quantityCount] = useState(1);
   const { addToast } = useToasts();
   let cartTotalPrice = 0;
   console.log("Cart Items", cartItems)
+  const regularOrders = cartItems.filter((item, i) => item.totalItems === undefined);
+  const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined);
+
+  console.log("bulkOrders))))))", bulkOrders)
 
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");
@@ -64,7 +68,7 @@ const Cart = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {cartItems.map((product, i) => {
+                    {regularOrders.map((product, i) => {
                       cartTotalPrice += product.discountedPrice * product.quantity;
                       return (
                         <tr key={i}>
@@ -157,6 +161,15 @@ const Cart = ({
                     })}
                   </tbody>
                 </table>
+                <div className="cart-table">
+                  <div style={{ borderBottom: "1px solid #ededed", display: "flex", padding: "10px", justifyContent: "end" }}>
+                  </div>
+                  {bulkOrders && bulkOrders.map((order, i) => {
+                    return (
+                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart}></BulkProduct>
+                    )
+                  })}
+                </div>
               </Col>
               <Col lg={12} className="space-mb--r100">
                 <div className="cart-coupon-area space-pt--30 space-pb--30">
@@ -251,12 +264,43 @@ const Cart = ({
 
 const mapStateToProps = (state) => {
   return {
-    cartItems: state.cartData
+    cartItems: state.cartData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addBulkToCart: (
+      bulkProduct,
+      addToast,
+      selectedFabrics,
+      selectedFabricsColor,
+      selectedLining,
+      selectedLiningFabricsColor,
+      comboArray,
+      selectedAttr,
+      regularSizeArray,
+      alterationSelected,
+      styleOptionSelected,
+      totalItems
+    ) => {
+      dispatch(
+        addBulkToCart(
+          bulkProduct,
+          addToast,
+          selectedFabrics,
+          selectedFabricsColor,
+          selectedLining,
+          selectedLiningFabricsColor,
+          comboArray,
+          selectedAttr,
+          regularSizeArray,
+          alterationSelected,
+          styleOptionSelected,
+          totalItems
+        )
+      );
+    },
     addToCart: (item, addToast, quantityCount) => {
       dispatch(addToCart(item, addToast, quantityCount));
     },

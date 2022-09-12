@@ -12,6 +12,7 @@ const CartOverlay = ({
   deleteFromCart
 }) => {
   let cartTotalPrice = 0;
+  console.log("MAXIMUS", cartItems)
   const { addToast } = useToasts();
   return (
     <div className={`cart-overlay ${activeStatus ? "active" : ""}`}>
@@ -41,8 +42,11 @@ const CartOverlay = ({
               <div className="cart-product-container">
                 <CustomScroll allowOuterScroll={true}>
                   {cartItems.map((product, i) => {
-                    cartTotalPrice += product.discountedPrice * product.quantity;
-
+                    if (product.totalItems) {
+                      cartTotalPrice += product.discountedPrice * product.totalItems;
+                    } else {
+                      cartTotalPrice += product.discountedPrice * product.quantity;
+                    }
                     return (
                       <div className="single-cart-product" key={i}>
                         <span className="cart-close-icon">
@@ -83,7 +87,7 @@ const CartOverlay = ({
                           </h5>
                           <p>
                             <span className="cart-count">
-                              {product.quantity} x{" "}
+                              {product.totalItems ? product.totalItems : product.quantity} x{" "}
                             </span>{" "}
                             <span className="discounted-price">
                               ${product.discountedPrice}
