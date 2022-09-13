@@ -5,7 +5,6 @@ import {
 const initState = [];
 
 const bulkReducer = (state = initState, action) => {
-  console.log("bulkProduct", action)
   let bulkProducts = state,
     addedProduct = action.payload;
 

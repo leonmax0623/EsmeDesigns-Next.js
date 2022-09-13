@@ -8,9 +8,7 @@ import { useToasts } from "react-toast-notifications";
 // 	addBulkToCart
 // } from "../../redux/actions/cartActions";
 
-const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
-
-	console.log("bulkProductProps_________________", bulkProductProps)
+const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCart }) => {
 
 	const { addToast } = useToasts();
 	let cartTotalPrice = 0;
@@ -20,31 +18,26 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 	const [selectedFabrics, setSelectedFabrics] = useState("");
 	const [selectedFabricsColor, setSelectedFabricsColor] = useState("");
 	const [selectedSize, setSelectedSize] = useState("");
-	const [alterationSelected, setAlterationSelected] = useState(bulkProductProps[0].selectedAlteration ? bulkProductProps[0].selectedAlteration : []);
-	const [styleOptionSelected, setStyleOptionSelected] = useState(bulkProductProps[0].selectedStyleOption ? bulkProductProps[0].selectedStyleOption : []);
+	const [alterationSelected, setAlterationSelected] = useState([]);
+	const [styleOptionSelected, setStyleOptionSelected] = useState([]);
 	const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
 	const [totalItems, setTotalItems] = useState(0);
 	const [selectedSizeCategory, setSelectedSizeCategory] = useState("Regular Size")
 
-	const [selectedComboFabric, setSelectedComboFabric] = useState(
-		bulkProductProps[0] && bulkProductProps[0].combos.map((combo, i) => {
-			return { combo: i, fabric: 0, color: 0 }
-		})
+	const [sizeCategory, setSizeCategory] = useState(
+		bulkProductProps[0].selectedSizeCategory ? bulkProductProps[0].selectedSizeCategory : bulkProductProps[0].sizeCategories[0].sizeCategoryName
 	);
-	const [regularSizeArray, setRegularSizeArray] = useState(
-		bulkProductProps[0].regularSizeArray ? JSON.stringify(bulkProductProps[0].regularSizeArray) :
-			JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.map((each) => {
 
-				const sizes = each.sizes.map((eachSize) => {
-					return {
-						sizeCode: 0,
-						sizeName: eachSize.sizeName
-					}
-				})
-				each.sizes = sizes
-				return each
-			}))
+	const [selectedCategorySizeValue, setSelectedCategorySizeValue] = useState(
+		bulkProductProps[0].selectedSize ? bulkProductProps[0].selectedSize : bulkProductProps[0].sizeCategories[0].sizes[0].sizeName
 	);
+
+	// const [selectedComboFabric, setSelectedComboFabric] = useState(
+	// 	bulkProductProps[0] && bulkProductProps[0].combos.map((combo, i) => {
+	// 		return { combo: i, fabric: 0, color: 0 }
+	// 	})
+	// );
+	const [regularSizeArray, setRegularSizeArray] = useState(JSON.stringify([]));
 
 	useEffect(() => {
 		if (bulkProductProps[0]) {
@@ -62,6 +55,46 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 			}
 			if (bulkProductProps[0].sizeCategories) {
 				setSelectedSize(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
+			}
+
+			if (bulkProductProps[0].regularSizeArray) {
+				setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
+			} else {
+				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.map((each) => {
+
+					const sizes = each.sizes.map((eachSize) => {
+						return {
+							sizeCode: 0,
+							sizeName: eachSize.sizeName
+						}
+					})
+					each.sizes = sizes
+					return each
+				})))
+			}
+
+			if (bulkProductProps[0].selectedAlteration) {
+				setAlterationSelected(bulkProductProps[0].selectedAlteration)
+			}
+
+			if (bulkProductProps[0].selectedStyleOption) {
+				setStyleOptionSelected(bulkProductProps[0].selectedStyleOption)
+			}
+
+			if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 1) {
+				setSelectedAttr(bulkProductProps[0].selectedAttr);
+			} else {
+				bulkProductProps[0].styleAttributes.map((item) => {
+					setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
+				});
+			}
+
+			if (bulkProductProps[0].comboArray) {
+				setComboArray(bulkProductProps[0].comboArray);
+			} else {
+				bulkProductProps[0].combos.map((item) => {
+					setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColors[0].fabricsColorName, rgb: item.fabric[0].fabricsColors[0].fabricsColorRGB } } }]);
+				});
 			}
 		}
 	}, [bulkProductProps]);
@@ -133,17 +166,10 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 		setSelectedAttr(array);
 	}
 
-	useEffect(() => {
-		setSelectedAttr([]);
-		if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 1) {
-			setSelectedAttr(bulkProductProps[0].selectedAttr);
-		} else {
-			bulkProductProps[0].styleAttributes.map((item) => {
-				setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
-			});
-		}
-
-	}, [bulkProductProps[0].styleAttributes]);
+	const [productStock, setProductStock] = useState(
+		bulkProductProps[0].inStock ? bulkProductProps[0].inStock : 0
+	);
+	const [quantityCount, setQuantityCount] = useState(bulkProductProps[0].quantity ? bulkProductProps[0].quantity : 1);
 
 	const [comboArray, setComboArray] = useState([])
 
@@ -151,20 +177,38 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 
 	const handleBulkOrder = () => {
 		setEditBoolean(true)
-		addBulkToCart(
-			bulkProductProps[0],
-			addToast,
-			selectedFabrics,
-			selectedFabricsColor,
-			selectedLining,
-			selectedLiningFabricsColor,
-			comboArray,
-			selectedAttr,
-			regularSizeArray,
-			alterationSelected,
-			styleOptionSelected,
-			totalItems
-		)
+		if (!bulkProductProps[0].regularOrder) {
+			addBulkToCart(
+				bulkProductProps[0],
+				addToast,
+				selectedFabrics,
+				selectedFabricsColor,
+				selectedLining,
+				selectedLiningFabricsColor,
+				comboArray,
+				selectedAttr,
+				regularSizeArray,
+				alterationSelected,
+				styleOptionSelected,
+				totalItems
+			)
+		} else {
+			addToCart(
+				bulkProductProps[0],
+				addToast,
+				quantityCount,
+				selectedFabrics,
+				selectedFabricsColor,
+				selectedLining,
+				selectedLiningFabricsColor,
+				comboArray,
+				selectedAttr,
+				sizeCategory,
+				selectedCategorySizeValue,
+				alterationSelected,
+				styleOptionSelected
+			)
+		}
 	}
 
 	const editOrder = () => {
@@ -202,19 +246,8 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 		setComboArray(array);
 	}
 
-	useEffect(() => {
-		setComboArray([]);
-		if (bulkProductProps[0].comboArray) {
-			setComboArray(bulkProductProps[0].comboArray);
-		} else {
-			bulkProductProps[0].combos.map((item) => {
-				setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColors[0].fabricsColorName, rgb: item.fabric[0].fabricsColors[0].fabricsColorRGB } } }]);
-			});
-		}
-	}, [bulkProductProps[0].combos]);
-
 	return (
-		<div style={{ display: "flex", padding: "10px", paddingTop: "20px" }}>
+		<div style={{ display: "flex", padding: "20px", borderBottom: "1px solid rgb(237, 237, 237)" }}>
 			<div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 				<Link
 					href={`/shop/product-basic/[slug]?slug=${bulkProductProps[0].productName}`}
@@ -245,14 +278,14 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 				</Link>
 			</div>
 
-			<div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
+			<div style={{ width: "100%", display: "flex", flexWrap: "wrap", padding: "0px 20px" }}>
 				<Col lg={12} style={{ padding: "0px", display: "flex" }}>
 					<Col lg={3}>
 						<div style={{ display: "flex", flexDirection: "column" }}>
 							{bulkProductProps[0].fabrics ? (
 								<div className="product-content__size-color">
-									<div className="product-content__size space-mb--20">
-										<div style={{ marginRight: "10px" }} className="product-content__size__title">Fabrics</div>
+									<div>
+										<div style={{ marginBottom: "10px" }} className="product-content__size__title">Fabrics</div>
 										<div className="product-content__size__content">
 											<select
 												style={{ width: "100%", height: "37px", cursor: "pointer" }}
@@ -279,8 +312,8 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 								""
 							)}
 							{selectedFabricsColor && (
-								<div className="product-content__size-color">
-									<div className="product-content__size space-mb--20">
+								<div style={{ marginTop: "10px" }} className="product-content__size-color">
+									<div>
 										<div className="product-content__size__title"></div>
 										<div className="product-content__size__content">
 											<div className="product-content__color__content">
@@ -310,8 +343,8 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 						<div style={{ display: "flex", flexDirection: "column" }}>
 							{bulkProductProps[0].lining ? (
 								<div className="product-content__size-color">
-									<div className="product-content__size space-mb--20">
-										<div style={{ marginRight: "10px" }} className="product-content__size__title">Lining</div>
+									<div>
+										<div style={{ marginBottom: "10px" }} className="product-content__size__title">Lining</div>
 										<div className="product-content__size__content">
 											<select
 												style={{ width: "100%", height: "37px", cursor: "pointer" }}
@@ -337,8 +370,8 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 								""
 							)}
 							{selectedLiningFabricsColor && (
-								<div className="product-content__size-color">
-									<div className="product-content__size space-mb--20">
+								<div className="product-content__size-color" style={{ marginTop: "10px" }}>
+									<div>
 										<div className="product-content__size__title"></div>
 										<div className="product-content__size__content">
 											<div className="product-content__color__content">
@@ -368,8 +401,8 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 							return (
 								<Col lg={3}>
 									<div className="product-content__size-color">
-										<div className="product-content__size space-mb--20">
-											<div style={{ marginRight: "10px" }} className="product-content__size__title">{combo.combosName}</div>
+										<div>
+											<div style={{ marginBottom: "10px" }} className="product-content__size__title">{combo.combosName}</div>
 											<div className="product-content__size__content">
 												<select
 													style={{ width: "100%", height: "37px", cursor: "pointer" }}
@@ -388,8 +421,8 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 											</div>
 										</div>
 									</div>
-									<div className="product-content__size-color">
-										<div className="product-content__size space-mb--20">
+									<div style={{ marginTop: "10px" }} className="product-content__size-color">
+										<div>
 											<div className="product-content__size__title"></div>
 											<div className="product-content__size__content">
 												<div className="product-content__color__content">
@@ -415,9 +448,9 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 							""
 						)}
 				</Col>
-				<Col lg={12} style={{ display: "flex" }}>
+				<Col lg={12} style={{ display: "flex", marginTop: "30px", padding: "0px" }}>
 					{bulkProductProps[0].styleAttributes ? (
-						<Col lg={6}>
+						<Col lg={6} style={{ padding: "0px" }}>
 							<div style={{ alignItems: "baseline" }}>
 								<div style={{ display: "flex" }}>
 									{bulkProductProps[0].styleAttributes.map((item, i) => {
@@ -455,7 +488,7 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 					) : (
 						""
 					)}
-					<Col lg={6} style={{ display: "flex" }}>
+					<Col lg={6} style={{ display: "flex", padding: "0px" }}>
 						{bulkProductProps[0].styleAlterations ? (
 							<Col lg={7}>
 								<div className="product-content__size-color">
@@ -501,12 +534,12 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 						)}
 					</Col>
 				</Col>
-				<Col lg={12} style={{ marginTop: "20px", marginLeft: "15px" }}>
-					{regularSizeArray ? (
+				<Col lg={12} style={{ marginTop: "20px", marginLeft: "15px", padding: "0px" }}>
+					{!bulkProductProps[0].regularOrder ? (
 						<div className="product-content__size-color">
 							<div style={{ alignItems: "baseline" }}>
-								<div className="product-content__size__content" style={{ display: "flex", alignItems: "center" }}>
-									<Col lg={2}>
+								<div className="product-content__size__content" style={{ display: "flex", alignItems: "end" }}>
+									<Col lg={2} style={{ padding: "10px", padding: "0px" }}>
 										<select
 											style={{ width: "100%", height: "30px", cursor: "pointer" }}
 											disabled={editBoolean}
@@ -525,16 +558,16 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 										<div style={{ display: "flex" }}>
 											{selectedSizeCategory === "Regular Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[0].sizes.map((size, j) => {
 												return <div style={{ display: "flex", flexDirection: "column" }}>
-													<span style={{ fontSize: "14px", textAlign: "center", color: "#333" }}>{size.sizeName}</span>
-													<input style={{ width: "50px", textAlign: "center", margin: "10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`0-${j}`} name="amount" max="999" onChange={(e) => setRegualrSizeArray(e)} />
+													<span style={{ fontSize: "14px", textAlign: "center", color: "#333", marginBottom: "10px" }}>{size.sizeName}</span>
+													<input style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`0-${j}`} name="amount" max="999" onChange={(e) => setRegualrSizeArray(e)} />
 												</div>
 											})}
 											{selectedSizeCategory === "Specific Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[1].sizes.map((size, j) => {
 												return (
 													<>
 														<div style={{ display: "flex", flexDirection: "column" }}>
-															<span style={{ fontSize: "14px", textAlign: "center", color: "#333" }}>{size.sizeName}</span>
-															<input disabled={editBoolean} style={{ width: "50px", textAlign: "center", margin: "10px" }} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`1-${j}`} name="amount" max="999" min="0" onChange={(e) => setRegualrSizeArray(e)} />
+															<span style={{ fontSize: "14px", textAlign: "center", color: "#333", marginBottom: "10px" }}>{size.sizeName}</span>
+															<input disabled={editBoolean} style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`1-${j}`} name="amount" max="999" min="0" onChange={(e) => setRegualrSizeArray(e)} />
 														</div>
 													</>
 												)
@@ -545,29 +578,171 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 							</div>
 						</div>
 					) : (
-						""
+						<div className="product-content__size-color" style={{ marginBottom: "20px" }}>
+							<div style={{ alignItems: "center" }}>
+								<div className="product-content__size__content" style={{ display: "flex", alignItems: "end" }}>
+									<Col lg={2} style={{ padding: "10px", padding: "0px" }}>
+										<select
+											style={{ width: "100%", height: "37px", cursor: "pointer" }}
+											disabled={editBoolean}
+											value={sizeCategory}
+											onChange={(event) => {
+												setSizeCategory(event.target.value)
+											}}
+										>
+											{bulkProductProps[0].sizeCategories &&
+												bulkProductProps[0].sizeCategories.map((size, i) => {
+													return (
+														<option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
+													);
+												})
+											}
+										</select>
+									</Col>
+									<Col lg={2}>
+										{sizeCategory && (
+											<div className="product-content__size-color">
+												<div>
+													<div className="product-content__size__title"></div>
+													<div className="product-content__size__content">
+														<div className="product-content__color__content">
+															<select
+																style={{ width: "100%", height: "37px", cursor: "pointer" }}
+																disabled={editBoolean}
+																value={selectedCategorySizeValue}
+																onChange={(event) => {
+																	setSelectedCategorySizeValue(event.target.value);
+																}}
+															>
+																{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === sizeCategory ? single.sizes.map((size, i) => {
+																	return (
+																		<option key={i} value={size.sizeName}>{size.sizeName}</option>
+																	);
+																}) : "")}
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										)}
+									</Col>
+									<Col lg={2}></Col>
+									<Col lg={6}>
+										<div className="product-content__quantity">
+											<div className="product-content__quantity__title">Quantity</div>
+											<div className="cart-plus-minus">
+												<button
+													onClick={() =>
+														setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
+													}
+													disabled={editBoolean}
+													className="qtybutton"
+												>
+													-
+												</button>
+												<input
+													className="cart-plus-minus-box"
+													type="text"
+													value={quantityCount}
+													readOnly
+												/>
+												<button
+													onClick={() =>
+														setQuantityCount(quantityCount + 1)
+													}
+													disabled={editBoolean}
+													className="qtybutton"
+												>
+													+
+												</button>
+											</div>
+										</div>
+									</Col>
+								</div>
+							</div>
+						</div>
 					)}
 				</Col>
-				<Col lg={12} style={{ display: "flex" }}>
-					<Col lg={9}>{''}</Col>
-					<Col lg={3} style={{ textAlign: "center" }}>
-						<div className="product-content__size__title">Total Items:
-							<input style={{ width: "50px", textAlign: "center", margin: "10px" }} value={bulkProductProps[0].totalItems ? bulkProductProps[0].totalItems : totalItems} disabled />
-						</div>
+				{bulkProductProps[0].regularSizeArray ? (
+					<Col lg={12} style={{ display: "flex", marginTop: "10px", padding: "0px" }}>
+						<Col lg={9}>{''}</Col>
+						<Col lg={3} style={{ textAlign: "end" }}>
+							<div className="product-content__size__title">Total Items:
+								<input style={{ width: "50px", textAlign: "center", margin: "10px" }} value={bulkProductProps[0].totalItems ? bulkProductProps[0].totalItems : totalItems} disabled />
+							</div>
+						</Col>
 					</Col>
-				</Col>
-				<Col lg={12} style={{ marginTop: "10px", display: "flex" }}>
-					<Col lg={6}>{''}</Col>
+				) : ""}
+				<Col lg={12} style={{ marginTop: "10px", display: "flex", alignItems: "center", padding: "0px" }}>
+					<Col lg={6} style={{ padding: "0px" }}>
+						{editBoolean ? (
+							<Col lg={12} style={{ display: "flex", marginTop: "20px", justifyContent: "center", padding: "0px" }}>
+								{bulkProductProps[0].selectedFabrics ? (
+									<>
+										<button
+											className="lezada-button lezada-button--medium"
+											onClick={() =>
+												editOrder()
+											}
+										>
+											Edit Order
+										</button>
+										<button
+											style={{ marginLeft: "20px" }}
+											className="lezada-button lezada-button--medium"
+											onClick={() =>
+												removeOrder()
+											}
+										>
+											Remove Order
+										</button>
+									</>
+								) : (
+									<button
+										className="lezada-button lezada-button--medium"
+										disabled={editBoolean ? true : false}
+										onClick={() =>
+											handleBulkOrder()
+										}
+									>
+										Not setted
+									</button>
+								)}
+							</Col>
+						) : (
+							<Col lg={12} style={{ display: "flex", marginTop: "20px", justifyContent: "center", padding: "0px" }}>
+								{bulkProductProps[0].selectedFabrics ? (
+									<button
+										className="lezada-button lezada-button--medium"
+										onClick={() =>
+											handleBulkOrder()
+										}
+									>
+										Save Edited Order
+									</button>
+								) : (
+									<button
+										className="lezada-button lezada-button--medium"
+										onClick={() =>
+											handleBulkOrder()
+										}
+									>
+										Save Bulk Order
+									</button>
+								)}
+							</Col>
+						)}
+					</Col>
 					<Col lg={6}>
 						<table className="cart-table">
 							<thead>
 								<tr>
-									<th className="product-name" style={{ fontSize: "14px" }}>
-										Unit Price
+									<th className="product-name" style={{ fontSize: "14px", textAlign: "center" }}>
+										Price
 									</th>
-									<th className="product-price" style={{ fontSize: "14px" }}>Discounted Price</th>
-									<th className="product-quantity" style={{ fontSize: "14px" }}>Extras</th>
-									<th className="product-subtotal" style={{ fontSize: "14px" }}>Total</th>
+									<th className="product-price" style={{ fontSize: "14px", textAlign: "center" }}>Discounted</th>
+									<th className="product-quantity" style={{ fontSize: "14px", textAlign: "center" }}>Extras</th>
+									<th className="product-subtotal" style={{ fontSize: "14px", textAlign: "center" }}>Total</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -575,75 +750,12 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].standardPrice}</td>
 									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].discountedPrice}</td>
 									<td style={{ paddingLeft: "0px" }}>$0.00</td>
-									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? bulkProductProps[0].discountedPrice * bulkProductProps[0].totalItems : bulkProductProps[0].discountedPrice * totalItems}</td>
+									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? bulkProductProps[0].discountedPrice * bulkProductProps[0].totalItems : bulkProductProps[0].discountedPrice * quantityCount}</td>
 								</tr>
 							</tbody>
 						</table>
 					</Col>
 				</Col>
-				{editBoolean ? (
-					<Col lg={12} style={{ display: "flex", marginTop: "20px" }}>
-						<Col lg={6}>{''}</Col>
-						<Col lg={6} style={{ textAlign: "center" }}>
-							{bulkProductProps[0].selectedFabrics ? (
-								<>
-									<button
-										className="lezada-button lezada-button--medium"
-										onClick={() =>
-											editOrder()
-										}
-									>
-										Edit Order
-									</button>
-									<button
-										style={{ marginLeft: "20px" }}
-										className="lezada-button lezada-button--medium"
-										onClick={() =>
-											removeOrder()
-										}
-									>
-										Remove Order
-									</button>
-								</>
-							) : (
-								<button
-									className="lezada-button lezada-button--medium"
-									disabled={editBoolean ? true : false}
-									onClick={() =>
-										handleBulkOrder()
-									}
-								>
-									Not setted
-								</button>
-							)}
-						</Col>
-					</Col>
-				) : (
-					<Col lg={12} style={{ display: "flex", marginTop: "20px" }}>
-						<Col lg={6}>{''}</Col>
-						<Col lg={6} style={{ textAlign: "center" }}>
-							{bulkProductProps[0].selectedFabrics ? (
-								<button
-									className="lezada-button lezada-button--medium"
-									onClick={() =>
-										handleBulkOrder()
-									}
-								>
-									Save Edited Order
-								</button>
-							) : (
-								<button
-									className="lezada-button lezada-button--medium"
-									onClick={() =>
-										handleBulkOrder()
-									}
-								>
-									Save Bulk Order
-								</button>
-							)}
-						</Col>
-					</Col>
-				)}
 			</div>
 		</div >
 	)

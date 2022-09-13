@@ -21,9 +21,14 @@ const Bulk = ({
 }) => {
 
   const { addToast } = useToasts();
+
+  console.log("Cart Items", cartItems)
+  const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId).reverse();
   let cartTotalPrice = 0;
-  console.log("BulkPage/BulkProduct => ", bulkProduct)
-  const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId);
+  bulkOrders.map((item, i) => {
+    cartTotalPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
+  })
+  console.log("bulkOrders => ", bulkOrders)
   const [newBulkProduct, setNewBulkProduct] = useState(bulkProduct)
   const addNewBulkOrder = () => {
     setNewBulkProduct(bulkProduct)
@@ -99,18 +104,15 @@ const Bulk = ({
                       add bulk order
                     </button>
                   </div>
-                  {/* <BulkProduct className="emptyBulk" style={{ display: "none" }} bulkProductProps={newBulkProduct} addBulkToCart={addBulkToCart} ></BulkProduct> */}
                   {newBulkProduct && newBulkProduct.length >= 1 ? (
                     <BulkProduct bulkProductProps={newBulkProduct} addBulkToCart={handleAddBulkToCart} ></BulkProduct>
                   ) : ''}
                   {bulkOrders && bulkOrders.length > 0 ? bulkOrders.map((order, i) => {
-                    console.log("bulkOrders", order)
                     return (
                       <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart}></BulkProduct>
                     )
                   }) : ''}
                 </div>
-
               </Col>
               <Col lg={12} className="space-mb--r100">
                 <div className="cart-coupon-area space-pt--30 space-pb--30">
@@ -131,7 +133,7 @@ const Bulk = ({
               </Col>
               <Col lg={5} className="ml-auto">
                 <div className="cart-calculation-area">
-                  <h2 className="space-mb--40">Cart totals</h2>
+                  <h2 className="space-mb--40">Bulk totals</h2>
                   <table className="cart-calculation-table space-mb--40">
                     <tbody>
                       <tr>

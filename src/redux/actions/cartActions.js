@@ -13,9 +13,10 @@ export const addToCart = (
   selectedLining,
   selectedLiningFabricsColor,
   comboArray,
-  selectedSize,
-  alterationSelected,
   selectedAttr,
+  selectedSizeCategory,
+  selectedCategorySizeValue,
+  alterationSelected,
   styleOptionSelected
 ) => {
 
@@ -32,30 +33,13 @@ export const addToCart = (
         selectedFabricsColor: selectedFabricsColor,
         selectedLining: selectedLining,
         selectedLiningFabricsColor: selectedLiningFabricsColor,
-        selectedFirstComboFabrics: selectedFirstComboFabrics,
-        selectedSecondComboFabrics: selectedSecondComboFabrics,
-        selectedThirdComboFabrics: selectedThirdComboFabrics,
-        selectedForthComboFabrics: selectedForthComboFabrics,
-        selectedFirstComboFabricsColor: selectedFirstComboFabricsColor,
-        selectedSecondComboFabricsColor: selectedSecondComboFabricsColor,
-        selectedThirdComboFabricsColor: selectedThirdComboFabricsColor,
-        selectedForthComboFabricsColor: selectedForthComboFabricsColor,
-        selectedMeshColorAttribute: selectedMeshColorAttribute,
-        selectedLengthAttribute: selectedLengthAttribute,
-        selectedSlitAttribute: selectedSlitAttribute,
-        selectedSize: selectedSize,
+        comboArray: comboArray,
+        selectedAttr: selectedAttr,
+        selectedSizeCategory: selectedSizeCategory,
+        selectedSize: selectedCategorySizeValue,
         selectedAlteration: alterationSelected,
-        selectedStyleOption: styleOptionSelected
-        // selectedProductColor: selectedProductColor
-        //   ? selectedProductColor
-        //   : item.selectedProductColor
-        //     ? item.selectedProductColor
-        //     : null,
-        // selectedProductSize: selectedProductSize
-        //   ? selectedProductSize
-        //   : item.selectedProductSize
-        //     ? item.selectedProductSize
-        //     : null
+        selectedStyleOption: styleOptionSelected,
+        regularOrder: true
       }
     });
   };
