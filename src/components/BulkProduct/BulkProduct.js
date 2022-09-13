@@ -9,7 +9,7 @@ import { useToasts } from "react-toast-notifications";
 // } from "../../redux/actions/cartActions";
 
 const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCart }) => {
-
+	console.log("BulkProductPage/bulkProductProps => ", bulkProductProps[0])
 	const { addToast } = useToasts();
 	let cartTotalPrice = 0;
 	//custom 
@@ -32,11 +32,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		bulkProductProps[0].selectedSize ? bulkProductProps[0].selectedSize : bulkProductProps[0].sizeCategories[0].sizes[0].sizeName
 	);
 
-	// const [selectedComboFabric, setSelectedComboFabric] = useState(
-	// 	bulkProductProps[0] && bulkProductProps[0].combos.map((combo, i) => {
-	// 		return { combo: i, fabric: 0, color: 0 }
-	// 	})
-	// );
 	const [regularSizeArray, setRegularSizeArray] = useState(JSON.stringify([]));
 
 	useEffect(() => {
@@ -58,8 +53,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			}
 
 			if (bulkProductProps[0].regularSizeArray) {
+				console.log("True!!!!!", JSON.stringify(bulkProductProps[0].regularSizeArray))
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
 			} else {
+				console.log("False!!!!!")
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.map((each) => {
 
 					const sizes = each.sizes.map((eachSize) => {
@@ -138,13 +135,29 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	useEffect(() => {
 		let sum = 0;
 		JSON.parse(regularSizeArray).map((item) => {
-			item.sizes.map((size) => {
-				sum = sum + parseInt(size.sizeCode)
-			})
+			if (selectedSizeCategory === item.sizeCategoryName) {
+				item.sizes.map((size) => {
+					sum = sum + parseInt(size.sizeCode)
+				})
+				setTotalItems(sum)
+			}
 		})
+	}, [regularSizeArray, selectedSizeCategory])
 
-		setTotalItems(sum)
-	}, [regularSizeArray])
+	// useEffect(() => {
+	// 	setTotalItems(0)
+	// 	// setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.map((each) => {
+
+	// 	// 	const sizes = each.sizes.map((eachSize) => {
+	// 	// 		return {
+	// 	// 			sizeCode: 0,
+	// 	// 			sizeName: eachSize.sizeName
+	// 	// 		}
+	// 	// 	})
+	// 	// 	each.sizes = sizes
+	// 	// 	return each
+	// 	// })))
+	// }, [selectedSizeCategory])
 
 	useEffect(() => {
 		document.querySelector("body").classList.remove("overflow-hidden");
@@ -245,6 +258,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 		setComboArray(array);
 	}
+	console.log("#####", bulkProductProps[0].regularSizeArray)
 
 	return (
 		<div style={{ display: "flex", padding: "20px", borderBottom: "1px solid rgb(237, 237, 237)" }}>
@@ -572,6 +586,11 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 													</>
 												)
 											})}
+											<div style={{ display: "flex", flexDirection: "column" }}>
+												<span style={{ fontSize: "14px", textAlign: "center", color: "#333", marginBottom: "10px" }}>Total</span>
+												<input disabled style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} value={bulkProductProps[0].totalItems ? bulkProductProps[0].totalItems : totalItems} />
+											</div>
+
 										</div>
 									</Col>
 								</div>
@@ -663,16 +682,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						</div>
 					)}
 				</Col>
-				{bulkProductProps[0].regularSizeArray ? (
-					<Col lg={12} style={{ display: "flex", marginTop: "10px", padding: "0px" }}>
-						<Col lg={9}>{''}</Col>
-						<Col lg={3} style={{ textAlign: "end" }}>
-							<div className="product-content__size__title">Total Items:
-								<input style={{ width: "50px", textAlign: "center", margin: "10px" }} value={bulkProductProps[0].totalItems ? bulkProductProps[0].totalItems : totalItems} disabled />
-							</div>
-						</Col>
-					</Col>
-				) : ""}
 				<Col lg={12} style={{ marginTop: "10px", display: "flex", alignItems: "center", padding: "0px" }}>
 					<Col lg={6} style={{ padding: "0px" }}>
 						{editBoolean ? (

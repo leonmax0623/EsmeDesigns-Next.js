@@ -1,41 +1,46 @@
 // get products
 export const getProducts = (products, category, type, limit) => {
-  const finalProducts = category
-    ? products.filter(
-      (product) => product.category.filter((single) => single === category)[0]
-    )
-    : products;
+  console.log("Lib/product => ", products)
+  console.log("Lib/category => ", category)
+  console.log("Lib/type => ", type)
+  console.log("Lib/limit => ", limit)
+  const finalProducts = products;
+  // const finalProducts = category
+  //   ? products.filter(
+  //     (product) => product.category.filter((single) => single === category)[0]
+  //   )
+  //   : products;
 
-  if (type && type === "new") {
-    const newProducts = finalProducts.filter((single) => single.new);
-    return newProducts.slice(0, limit ? limit : newProducts.length);
-  }
-  if (type && type === "popular") {
-    return (
-      finalProducts &&
-      finalProducts
-        .sort((a, b) => {
-          return b.saleCount - a.saleCount;
-        })
-        .slice(0, limit ? limit : finalProducts.length)
-    );
-  }
-  if (type && type === "topRated") {
-    return (
-      finalProducts &&
-      finalProducts
-        .sort((a, b) => {
-          return b.rating - a.rating;
-        })
-        .slice(0, limit ? limit : finalProducts.length)
-    );
-  }
-  if (type && type === "sale") {
-    const saleItems =
-      finalProducts &&
-      finalProducts.filter((single) => single.discount && single.discount > 0);
-    return saleItems.slice(0, limit ? limit : saleItems.length);
-  }
+  // if (type && type === "new") {
+  //   const newProducts = finalProducts.filter((single) => single.new);
+  //   return newProducts.slice(0, limit ? limit : newProducts.length);
+  // }
+  // if (type && type === "popular") {
+  //   return (
+  //     finalProducts &&
+  //     finalProducts
+  //       .sort((a, b) => {
+  //         return b.saleCount - a.saleCount;
+  //       })
+  //       .slice(0, limit ? limit : finalProducts.length)
+  //   );
+  // }
+  // if (type && type === "topRated") {
+  //   return (
+  //     finalProducts &&
+  //     finalProducts
+  //       .sort((a, b) => {
+  //         return b.rating - a.rating;
+  //       })
+  //       .slice(0, limit ? limit : finalProducts.length)
+  //   );
+  // }
+  // if (type && type === "sale") {
+  //   const saleItems =
+  //     finalProducts &&
+  //     finalProducts.filter((single) => single.discount && single.discount > 0);
+  //   return saleItems.slice(0, limit ? limit : saleItems.length);
+  // }
   return (
     finalProducts &&
     finalProducts.slice(0, limit ? limit : finalProducts.length)
@@ -65,31 +70,29 @@ export const getProductCartQuantity = (cartItems, product) => {
 
 //get products based on category
 export const getSortedProducts = (products, sortType, sortValue) => {
-  console.log("getSortedProducts", products)
-  console.log("sortType", sortType)
-  console.log("sortValue", sortValue)
-  const perfume_products = products.filter((product) => product.category[0] === 'perfumes')
+  console.log("*********", products)
+
   if (products && sortType && sortValue) {
     if (sortType === "category") {
-      return perfume_products.filter(
+      return products.filter(
         (product) =>
           product.category.filter((single) => single === sortValue)[0]
       );
     }
     if (sortType === "tag") {
-      return perfume_products.filter(
-        (product) => product.tag.filter((single) => single === sortValue)[0]
+      return products.filter(
+        (product) => product.shortTag === sortValue
       );
     }
     if (sortType === "color") {
-      return perfume_products.filter(
+      return products.filter(
         (product) =>
           product.variation &&
           product.variation.filter((single) => single.color === sortValue)[0]
       );
     }
     if (sortType === "size") {
-      return perfume_products.filter(
+      return products.filter(
         (product) =>
           product.variation &&
           product.variation.filter(
@@ -99,23 +102,23 @@ export const getSortedProducts = (products, sortType, sortValue) => {
       );
     }
     if (sortType === "filterSort") {
-      let perfume_products = [...products];
+      let products = [...products];
       if (sortValue === "default") {
-        return perfume_products;
+        return products;
       }
       if (sortValue === "priceHighToLow") {
-        return perfume_products.sort((a, b) => {
+        return products.sort((a, b) => {
           return b.price - a.price;
         });
       }
       if (sortValue === "priceLowToHigh") {
-        return sortProducts.sort((a, b) => {
+        return products.sort((a, b) => {
           return a.price - b.price;
         });
       }
     }
   }
-  return perfume_products;
+  return products;
 };
 
 // get individual element
@@ -158,12 +161,7 @@ export const getIndividualTags = (products) => {
   let productTags = [];
   products &&
     products.map((product) => {
-      return (
-        product.tag &&
-        product.tag.map((single) => {
-          return productTags.push(single);
-        })
-      );
+      return productTags.push(product.shortTag);
     });
   const individualProductTags = getIndividualItemArray(productTags);
   return individualProductTags;

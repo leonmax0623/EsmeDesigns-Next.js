@@ -32,12 +32,12 @@ const ProductGridWrapper = ({
       {products &&
         products.map((product) => {
           // const discountedPrice = getDiscountPrice(
-          //   product.standardPrice,
-          //   product.discountedPrice
+          //   parseInt(product.standardPrice),
+          //   parseInt(product.discountedPrice)
           // ).toFixed(2);
-          const discountedPrice = product.discountedPrice;
+          const discountedPrice = parseInt(product.discountedPrice);
           // const productPrice = product.price.toFixed(2);
-          const productPrice = product.standardPrice;
+          const productPrice = parseInt(product.standardPrice);
           const cartItem = cartItems.filter(
             (cartItem) => cartItem.productId === product.productId
           )[0];

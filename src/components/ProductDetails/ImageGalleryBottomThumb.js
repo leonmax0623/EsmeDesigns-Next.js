@@ -83,7 +83,7 @@ const ImageGalleryBottomThumb = ({
       <div className="product-large-image-wrapper space-mb--30">
         {/* floating badges */}
         <div className="product-large-image-wrapper__floating-badges">
-          {product.discountedPrice && product.discountedPrice > 0 ? (
+          {parseInt(product.discountedPrice) && parseInt(product.discountedPrice) > 0 ? (
             <span className="onsale">{product.discountTag}</span>
           ) : (
             ""

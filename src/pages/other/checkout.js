@@ -108,13 +108,13 @@ const Checkout = ({ cartItems }) => {
                               <ul>
                                 {cartItems.map((product, i) => {
                                   product.totalItems ? cartTotalPrice +=
-                                    product.discountedPrice * product.totalItems :
+                                    parseInt(product.discountedPrice) * product.totalItems :
                                     cartTotalPrice +=
-                                    product.discountedPrice * product.quantity;
+                                    parseInt(product.discountedPrice) * product.quantity;
                                   return (
                                     <li key={i}>
                                       {product.productName} X {product.totalItems ? product.totalItems : product.quantity}{" "}
-                                      <span>${product.discountedPrice}</span>
+                                      <span>${parseInt(product.discountedPrice)}</span>
                                     </li>
                                   );
                                 })}

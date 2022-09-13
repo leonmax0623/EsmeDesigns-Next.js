@@ -58,7 +58,7 @@ const ProductGrid = ({
               </a>
             </Link>
             <div className="product-grid__floating-badges">
-              {product.discountedPrice && parseInt(product.discountedPrice) > 0 ? (
+              {parseInt(product.discountedPrice) && parseInt(product.discountedPrice) > 0 ? (
                 <span className="onsale">{product.discountTag}</span>
               ) : (
                 ""
@@ -171,8 +171,7 @@ const ProductGrid = ({
                 <button
                   onClick={() => addToCart(product, addToast)}
                   disabled={
-                    cartItem !== undefined &&
-                    cartItem.quantity >= cartItem.stock
+                    cartItem !== undefined
                   }
                 >
                   {cartItem !== undefined ? "Added to cart" : "Add to cart"}

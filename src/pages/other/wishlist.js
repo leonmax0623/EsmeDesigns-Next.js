@@ -110,7 +110,7 @@ const Wishlist = ({
                           </td>
 
                           <td className="product-price">
-                            <span className="price">${product.discountedPrice}</span>
+                            <span className="price">${parseInt(product.discountedPrice)}</span>
                           </td>
 
                           <td>

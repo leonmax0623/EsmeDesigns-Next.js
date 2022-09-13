@@ -45,8 +45,8 @@ const ProductBasic = ({
   // ).toFixed(2);
 
   // const productPrice = product.price.toFixed(2);
-  const discountedPrice = product.discountedPrice;
-  const productPrice = product.standardPrice;
+  const discountedPrice = parseInt(product.discountedPrice);
+  const productPrice = parseInt(product.standardPrice);
   const cartItem = cartItems.filter(
     (cartItem) => cartItem.productId === product.productId
   )[0];

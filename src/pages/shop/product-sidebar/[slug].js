@@ -10,7 +10,6 @@ import {
   ProductDescriptionTab
 } from "../../../components/ProductDetails";
 import products from "../../../data/products.json";
-import { getDiscountPrice } from "../../../lib/product";
 import { addToCart } from "../../../redux/actions/cartActions";
 import {
   addToCompare,
@@ -33,12 +32,9 @@ const ProductSidebar = ({
   deleteFromCompare
 }) => {
   const { addToast } = useToasts();
-  const discountedPrice = getDiscountPrice(
-    product.price,
-    product.discount
-  ).toFixed(2);
+  const discountedPrice = parseInt(product.discountedPrice)
 
-  const productPrice = product.standardPrice;
+  const productPrice = parseInt(product.standardPrice);
   const cartItem = cartItems.filter(
     (cartItem) => cartItem.productId === product.productId
   )[0];
