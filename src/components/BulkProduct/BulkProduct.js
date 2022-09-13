@@ -8,7 +8,7 @@ import { useToasts } from "react-toast-notifications";
 // 	addBulkToCart
 // } from "../../redux/actions/cartActions";
 
-const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
+const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCart }) => {
 
 	const { addToast } = useToasts();
 	let cartTotalPrice = 0;
@@ -23,6 +23,14 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 	const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
 	const [totalItems, setTotalItems] = useState(0);
 	const [selectedSizeCategory, setSelectedSizeCategory] = useState("Regular Size")
+
+	const [sizeCategory, setSizeCategory] = useState(
+		bulkProductProps[0].selectedSizeCategory ? bulkProductProps[0].selectedSizeCategory : bulkProductProps[0].sizeCategories[0].sizeCategoryName
+	);
+
+	const [selectedCategorySizeValue, setSelectedCategorySizeValue] = useState(
+		bulkProductProps[0].selectedSize ? bulkProductProps[0].selectedSize : bulkProductProps[0].sizeCategories[0].sizes[0].sizeName
+	);
 
 	// const [selectedComboFabric, setSelectedComboFabric] = useState(
 	// 	bulkProductProps[0] && bulkProductProps[0].combos.map((combo, i) => {
@@ -158,26 +166,49 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 		setSelectedAttr(array);
 	}
 
+	const [productStock, setProductStock] = useState(
+		bulkProductProps[0].inStock ? bulkProductProps[0].inStock : 0
+	);
+	const [quantityCount, setQuantityCount] = useState(bulkProductProps[0].quantity ? bulkProductProps[0].quantity : 1);
+
 	const [comboArray, setComboArray] = useState([])
 
 	const [editBoolean, setEditBoolean] = useState(bulkProductProps[0].selectedFabrics ? true : false)
 
 	const handleBulkOrder = () => {
 		setEditBoolean(true)
-		addBulkToCart(
-			bulkProductProps[0],
-			addToast,
-			selectedFabrics,
-			selectedFabricsColor,
-			selectedLining,
-			selectedLiningFabricsColor,
-			comboArray,
-			selectedAttr,
-			regularSizeArray,
-			alterationSelected,
-			styleOptionSelected,
-			totalItems
-		)
+		if (!bulkProductProps[0].regularOrder) {
+			addBulkToCart(
+				bulkProductProps[0],
+				addToast,
+				selectedFabrics,
+				selectedFabricsColor,
+				selectedLining,
+				selectedLiningFabricsColor,
+				comboArray,
+				selectedAttr,
+				regularSizeArray,
+				alterationSelected,
+				styleOptionSelected,
+				totalItems
+			)
+		} else {
+			addToCart(
+				bulkProductProps[0],
+				addToast,
+				quantityCount,
+				selectedFabrics,
+				selectedFabricsColor,
+				selectedLining,
+				selectedLiningFabricsColor,
+				comboArray,
+				selectedAttr,
+				sizeCategory,
+				selectedCategorySizeValue,
+				alterationSelected,
+				styleOptionSelected
+			)
+		}
 	}
 
 	const editOrder = () => {
@@ -504,7 +535,7 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 					</Col>
 				</Col>
 				<Col lg={12} style={{ marginTop: "20px", marginLeft: "15px", padding: "0px" }}>
-					{regularSizeArray ? (
+					{!bulkProductProps[0].regularOrder ? (
 						<div className="product-content__size-color">
 							<div style={{ alignItems: "baseline" }}>
 								<div className="product-content__size__content" style={{ display: "flex", alignItems: "end" }}>
@@ -547,17 +578,101 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 							</div>
 						</div>
 					) : (
-						""
+						<div className="product-content__size-color" style={{ marginBottom: "20px" }}>
+							<div style={{ alignItems: "center" }}>
+								<div className="product-content__size__content" style={{ display: "flex", alignItems: "end" }}>
+									<Col lg={2} style={{ padding: "10px", padding: "0px" }}>
+										<select
+											style={{ width: "100%", height: "37px", cursor: "pointer" }}
+											disabled={editBoolean}
+											value={sizeCategory}
+											onChange={(event) => {
+												setSizeCategory(event.target.value)
+											}}
+										>
+											{bulkProductProps[0].sizeCategories &&
+												bulkProductProps[0].sizeCategories.map((size, i) => {
+													return (
+														<option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
+													);
+												})
+											}
+										</select>
+									</Col>
+									<Col lg={2}>
+										{sizeCategory && (
+											<div className="product-content__size-color">
+												<div>
+													<div className="product-content__size__title"></div>
+													<div className="product-content__size__content">
+														<div className="product-content__color__content">
+															<select
+																style={{ width: "100%", height: "37px", cursor: "pointer" }}
+																disabled={editBoolean}
+																value={selectedCategorySizeValue}
+																onChange={(event) => {
+																	setSelectedCategorySizeValue(event.target.value);
+																}}
+															>
+																{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === sizeCategory ? single.sizes.map((size, i) => {
+																	return (
+																		<option key={i} value={size.sizeName}>{size.sizeName}</option>
+																	);
+																}) : "")}
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										)}
+									</Col>
+									<Col lg={2}></Col>
+									<Col lg={6}>
+										<div className="product-content__quantity">
+											<div className="product-content__quantity__title">Quantity</div>
+											<div className="cart-plus-minus">
+												<button
+													onClick={() =>
+														setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
+													}
+													disabled={editBoolean}
+													className="qtybutton"
+												>
+													-
+												</button>
+												<input
+													className="cart-plus-minus-box"
+													type="text"
+													value={quantityCount}
+													readOnly
+												/>
+												<button
+													onClick={() =>
+														setQuantityCount(quantityCount + 1)
+													}
+													disabled={editBoolean}
+													className="qtybutton"
+												>
+													+
+												</button>
+											</div>
+										</div>
+									</Col>
+								</div>
+							</div>
+						</div>
 					)}
 				</Col>
-				<Col lg={12} style={{ display: "flex", marginTop: "10px", padding: "0px" }}>
-					<Col lg={9}>{''}</Col>
-					<Col lg={3} style={{ textAlign: "end" }}>
-						<div className="product-content__size__title">Total Items:
-							<input style={{ width: "50px", textAlign: "center", margin: "10px" }} value={bulkProductProps[0].totalItems ? bulkProductProps[0].totalItems : totalItems} disabled />
-						</div>
+				{bulkProductProps[0].regularSizeArray ? (
+					<Col lg={12} style={{ display: "flex", marginTop: "10px", padding: "0px" }}>
+						<Col lg={9}>{''}</Col>
+						<Col lg={3} style={{ textAlign: "end" }}>
+							<div className="product-content__size__title">Total Items:
+								<input style={{ width: "50px", textAlign: "center", margin: "10px" }} value={bulkProductProps[0].totalItems ? bulkProductProps[0].totalItems : totalItems} disabled />
+							</div>
+						</Col>
 					</Col>
-				</Col>
+				) : ""}
 				<Col lg={12} style={{ marginTop: "10px", display: "flex", alignItems: "center", padding: "0px" }}>
 					<Col lg={6} style={{ padding: "0px" }}>
 						{editBoolean ? (
@@ -635,7 +750,7 @@ const BulkProduct = ({ addBulkToCart, bulkProductProps, deleteFromCart }) => {
 									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].standardPrice}</td>
 									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].discountedPrice}</td>
 									<td style={{ paddingLeft: "0px" }}>$0.00</td>
-									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? bulkProductProps[0].discountedPrice * bulkProductProps[0].totalItems : bulkProductProps[0].discountedPrice * totalItems}</td>
+									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? bulkProductProps[0].discountedPrice * bulkProductProps[0].totalItems : bulkProductProps[0].discountedPrice * quantityCount}</td>
 								</tr>
 							</tbody>
 						</table>

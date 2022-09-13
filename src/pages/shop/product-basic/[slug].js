@@ -149,6 +149,7 @@ const mapDispatchToProps = (dispatch) => {
       selectedLiningFabricsColor,
       comboArray,
       selectedAttr,
+      selectedSizeCategory,
       selectedCategorySizeValue,
       alterationSelected,
       styleOptionSelected
@@ -164,6 +165,7 @@ const mapDispatchToProps = (dispatch) => {
           selectedLiningFabricsColor,
           comboArray,
           selectedAttr,
+          selectedSizeCategory,
           selectedCategorySizeValue,
           alterationSelected,
           styleOptionSelected

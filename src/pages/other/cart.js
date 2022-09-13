@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { IoIosClose, IoMdCart } from "react-icons/io";
+import { IoMdCart } from "react-icons/io";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
@@ -20,11 +20,10 @@ const Cart = ({
 }) => {
   const { addToast } = useToasts();
   let cartTotalPrice = 0;
+  cartItems.map((item, i) => {
+    cartTotalPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
+  })
   console.log("Cart Items", cartItems)
-  const regularOrders = cartItems.filter((item, i) => item.totalItems === undefined);
-  const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined);
-
-  console.log("bulkOrders))))))", bulkOrders)
 
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");
@@ -49,124 +48,16 @@ const Cart = ({
       </BreadcrumbOne>
 
       {/* cart content */}
-      <div className="cart-content space-mt--r130 space-mb--r130">
+      <div className="cart-content space-mt--r100 space-mb--r100">
         <Container>
           {cartItems && cartItems.length >= 1 ? (
             <Row>
               <Col lg={12}>
                 {/* cart table */}
-                <table className="cart-table">
-                  <thead>
-                    <tr>
-                      <th className="product-name" colSpan="2">
-                        Product
-                      </th>
-                      <th className="product-price">Price</th>
-                      <th className="product-quantity">Quantity</th>
-                      <th className="product-subtotal">Total</th>
-                      <th className="product-remove">&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {regularOrders.map((product, i) => {
-                      cartTotalPrice += product.discountedPrice * product.quantity;
-                      return (
-                        <tr key={i}>
-                          <td className="product-thumbnail">
-                            <Link
-                              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
-                              as={
-                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
-                              }
-                            >
-                              <a>
-                                <img
-                                  src={
-                                    process.env.PUBLIC_URL +
-                                    product.pictures[0].url
-                                  }
-                                  className="img-fluid"
-                                  alt=""
-                                />
-                              </a>
-                            </Link>
-                          </td>
-                          <td className="product-name">
-                            <Link
-                              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
-                              as={
-                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
-                              }
-                            >
-                              <a>{product.productName}</a>
-                            </Link>
-                          </td>
-
-                          <td className="product-price">
-                            <span className="price">${product.discountedPrice}</span>
-                          </td>
-
-                          <td className="product-quantity">
-                            <div className="cart-plus-minus">
-                              <button
-                                className="dec qtybutton"
-                                onClick={() =>
-                                  decreaseQuantity(product, addToast)
-                                }
-                              >
-                                -
-                              </button>
-                              <input
-                                className="cart-plus-minus-box"
-                                type="text"
-                                value={product.quantity}
-                                readOnly
-                              />
-                              <button
-                                className="inc qtybutton"
-                                onClick={() =>
-                                  addToCart(product, addToast, quantityCount)
-                                }
-                              // disabled={
-                              //   product !== undefined &&
-                              //   product.quantity &&
-                              //   product.quantity >=
-                              //   cartItemStock(
-                              //     product,
-                              //     product.selectedProductColor,
-                              //     product.selectedProductSize
-                              //   )
-                              // }
-                              >
-                                +
-                              </button>
-                            </div>
-                          </td>
-
-                          <td className="total-price">
-                            <span className="price">
-                              ${(product.discountedPrice * product.quantity).toFixed(2)}
-                            </span>
-                          </td>
-
-                          <td className="product-remove">
-                            <button
-                              onClick={() => deleteFromCart(product, addToast)}
-                            >
-                              <IoIosClose />
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
                 <div className="cart-table">
-                  <div style={{ borderBottom: "1px solid #ededed", display: "flex", padding: "10px", justifyContent: "end" }}>
-                  </div>
-                  {bulkOrders && bulkOrders.map((order, i) => {
+                  {cartItems && cartItems.map((order, i) => {
                     return (
-                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart}></BulkProduct>
+                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart} addToCart={addToCart}></BulkProduct>
                     )
                   })}
                 </div>
@@ -301,8 +192,36 @@ const mapDispatchToProps = (dispatch) => {
         )
       );
     },
-    addToCart: (item, addToast, quantityCount) => {
-      dispatch(addToCart(item, addToast, quantityCount));
+    addToCart: (
+      item,
+      addToast,
+      quantityCount,
+      selectedFabrics,
+      selectedFabricsColor,
+      selectedLining,
+      selectedLiningFabricsColor,
+      comboArray,
+      selectedAttr,
+      sizeCategory,
+      selectedCategorySizeValue,
+      alterationSelected,
+      styleOptionSelected
+    ) => {
+      dispatch(addToCart(
+        item,
+        addToast,
+        quantityCount,
+        selectedFabrics,
+        selectedFabricsColor,
+        selectedLining,
+        selectedLiningFabricsColor,
+        comboArray,
+        selectedAttr,
+        sizeCategory,
+        selectedCategorySizeValue,
+        alterationSelected,
+        styleOptionSelected
+      ));
     },
     decreaseQuantity: (item, addToast) => {
       dispatch(decreaseQuantity(item, addToast));

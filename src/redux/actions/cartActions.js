@@ -14,6 +14,7 @@ export const addToCart = (
   selectedLiningFabricsColor,
   comboArray,
   selectedAttr,
+  selectedSizeCategory,
   selectedCategorySizeValue,
   alterationSelected,
   styleOptionSelected
@@ -32,21 +33,13 @@ export const addToCart = (
         selectedFabricsColor: selectedFabricsColor,
         selectedLining: selectedLining,
         selectedLiningFabricsColor: selectedLiningFabricsColor,
-        selectedComboArray: comboArray,
+        comboArray: comboArray,
         selectedAttr: selectedAttr,
+        selectedSizeCategory: selectedSizeCategory,
         selectedSize: selectedCategorySizeValue,
         selectedAlteration: alterationSelected,
-        selectedStyleOption: styleOptionSelected
-        // selectedProductColor: selectedProductColor
-        //   ? selectedProductColor
-        //   : item.selectedProductColor
-        //     ? item.selectedProductColor
-        //     : null,
-        // selectedProductSize: selectedProductSize
-        //   ? selectedProductSize
-        //   : item.selectedProductSize
-        //     ? item.selectedProductSize
-        //     : null
+        selectedStyleOption: styleOptionSelected,
+        regularOrder: true
       }
     });
   };

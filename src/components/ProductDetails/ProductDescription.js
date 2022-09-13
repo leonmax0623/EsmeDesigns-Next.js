@@ -26,22 +26,10 @@ const ProductDescription = ({
   const router = useRouter()
   const dispatch = useDispatch();
   //custom 
-  const [selectedLining, setSelectedLining] = useState(
-    product.lining ? product.lining[0].fabricsName : ""
-  );
-
-  const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState(
-    product.lining ? product.lining[0].fabricsColors[0].fabricsColorName : ""
-  );
-
-  const [selectedFabrics, setSelectedFabrics] = useState(
-    product.fabrics ? product.fabrics[0].fabricsName : ""
-  );
-
-  const [selectedFabricsColor, setSelectedFabricsColor] = useState(
-    product.fabrics ? product.fabrics[0].fabricsColors[0].fabricsColorName : ""
-  );
-
+  const [selectedLining, setSelectedLining] = useState("");
+  const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState("");
+  const [selectedFabrics, setSelectedFabrics] = useState("");
+  const [selectedFabricsColor, setSelectedFabricsColor] = useState("");
   const [selectedSizeCategory, setSelectedSizeCategory] = useState(
     product.sizeCategories ? product.sizeCategories[0].sizeCategoryName : ""
   );
@@ -49,21 +37,53 @@ const ProductDescription = ({
   const [selectedCategorySizeValue, setSelectedCategorySizeValue] = useState(
     product.sizeCategories ? product.sizeCategories[0].sizes[0].sizeName : ""
   );
+  const [alterationSelected, setAlterationSelected] = useState([]);
+  const [styleOptionSelected, setStyleOptionSelected] = useState([]);
 
+  useEffect(() => {
+    if (product) {
+      if (product.lining) {
+        setSelectedLining(product.selectedLining ? product.selectedLining : product.lining[0].fabricsId)
+      }
+      if (product.lining) {
+        setSelectedLiningFabricsColor(product.selectedLiningFabricsColor ? product.selectedLiningFabricsColor : product.lining[0].fabricsColors[0].fabricsColorName)
+      }
+      if (product.fabrics) {
+        setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
+      }
+      if (product.fabrics) {
+        setSelectedFabricsColor(product.selectedFabricsColor ? product.selectedFabricsColor : product.fabrics[0].fabricsColors[0].fabricsColorName)
+      }
+
+      if (product.selectedAlteration) {
+        setAlterationSelected(product.selectedAlteration)
+      }
+
+      if (product.selectedStyleOption) {
+        setStyleOptionSelected(product.selectedStyleOption)
+      }
+
+      if (product.selectedAttr && product.selectedAttr.length > 1) {
+        setSelectedAttr(product.selectedAttr);
+      } else {
+        product.styleAttributes.map((item) => {
+          setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
+        });
+      }
+
+      if (product.comboArray) {
+        setComboArray(product.comboArray);
+      } else {
+        product.combos.map((item) => {
+          setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColors[0].fabricsColorName, rgb: item.fabric[0].fabricsColors[0].fabricsColorRGB } } }]);
+        });
+      }
+    }
+  }, [product]);
 
   //custom
-  const [productStock, setProductStock] = useState(
-    product.inStock ? product.inStock : 0
-  );
-  const [quantityCount, setQuantityCount] = useState(1);
-
-  const productCartQty = getProductCartQuantity(
-    cartItems,
-    product
-  );
-
   const alterationOptions = [];
-  product.styleAlterations.map((single, i) => {
+  product && product.styleAlterations.map((single, i) => {
     let array = {
       label: "",
       value: ""
@@ -74,7 +94,7 @@ const ProductDescription = ({
   });
 
   const styleOptions = [];
-  product.styleOptions.map((single, i) => {
+  product && product.styleOptions.map((single, i) => {
     let array = {
       label: "",
       value: ""
@@ -84,12 +104,29 @@ const ProductDescription = ({
     styleOptions.push(array)
   });
 
-  const [alterationSelected, setAlterationSelected] = useState([]);
-  const [styleOptionSelected, setStyleOptionSelected] = useState([]);
-
   const bulkOrder = (product) => {
     addToBulk(product);
     router.push('/other/bulk')
+  }
+
+  useEffect(() => {
+    document.querySelector("body").classList.remove("overflow-hidden");
+  });
+
+  const [selectedAttr, setSelectedAttr] = useState([]);
+
+  const handleAttributeChange = (event, attribute) => {
+    let array = [...selectedAttr];
+
+    for (let i = 0; i < array.length; i += 1) {
+      if (array[i].attr === attribute) {
+        array[i].value = event.target.value;
+
+        break;
+      }
+    }
+
+    setSelectedAttr(array);
   }
 
   const [comboArray, setComboArray] = useState([])
@@ -103,8 +140,6 @@ const ProductDescription = ({
 
     array[comboId].fabric.fabric_name = e.target.value;
     array[comboId].fabric.fabric_index = fabricId;
-    array[comboId].fabric.color.color_name = product.combos[comboId].fabric[fabricId].fabricsColors[0].fabricsColorName;
-    array[comboId].fabric.color.rgb = product.combos[comboId].fabric[fabricId].fabricsColors[0].fabricsColorRGB;
 
     setComboArray(array);
   }
@@ -130,46 +165,17 @@ const ProductDescription = ({
     setComboArray(array);
   }
 
-  useEffect(() => {
-    setComboArray([]);
-    if (product.comboArray) {
-      setComboArray(product.comboArray);
-    } else {
-      product.combos.map((item) => {
-        setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColors[0].fabricsColorName, rgb: item.fabric[0].fabricsColors[0].fabricsColorRGB } } }]);
-      });
-    }
-  }, [product.combos]);
 
-  const [selectedAttr, setSelectedAttr] = useState([]);
+  //custom
+  const [productStock, setProductStock] = useState(
+    product.inStock ? product.inStock : 0
+  );
+  const [quantityCount, setQuantityCount] = useState(1);
 
-  const handleAttributeChange = (event, attribute) => {
-    let array = [...selectedAttr];
-
-    for (let i = 0; i < array.length; i += 1) {
-      if (array[i].attr === attribute) {
-        array[i].value = event.target.value;
-
-        break;
-      }
-    }
-
-    setSelectedAttr(array);
-  }
-
-  console.log("setComboArray", comboArray)
-
-  useEffect(() => {
-    setSelectedAttr([]);
-    if (product.selectedAttr && product.selectedAttr.length > 1) {
-      setSelectedAttr(product.selectedAttr);
-    } else {
-      product.styleAttributes.map((item) => {
-        setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
-      });
-    }
-
-  }, [product.styleAttributes]);
+  const productCartQty = getProductCartQuantity(
+    cartItems,
+    product
+  );
 
   const myTest = (
     product,
@@ -264,16 +270,16 @@ const ProductDescription = ({
             <div className="product-content__size__content">
               <select
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                value={selectedFabrics}
                 onChange={(event) => {
-                  console.log("fabrics event", event.target.value)
-                  setSelectedFabrics(event.target.value.split("/")[0])
-                  setSelectedFabricsColor(event.target.value.split("/")[1])
+                  setSelectedFabrics(event.target.value)
+                  setSelectedFabricsColor(product.fabrics.find(x => x.fabricsId === event.target.value).fabricsColors[0].fabricsColorName)
                 }}
               >
                 {product.fabrics &&
                   product.fabrics.map((single, i) => {
                     return (
-                      <option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
+                      <option key={i} value={single.fabricsId}>{single.fabricsName}</option>
                     );
                   })
                 }
@@ -294,12 +300,10 @@ const ProductDescription = ({
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
                   value={selectedFabricsColor}
                   onChange={(event) => {
-                    console.log("dropdown", event.target.value)
                     setSelectedFabricsColor(event.target.value);
                   }}
                 >
-
-                  {product.fabrics.map((single, j) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
+                  {product.fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColors.map((color, i) => {
                     return (
                       <option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
                     );
@@ -316,7 +320,7 @@ const ProductDescription = ({
             <div className="product-content__size__title"></div>
             <div className="product-content__size__content">
               <div className="product-content__color__content">
-                {product.fabrics.map((single, i) => single.fabricsName === selectedFabrics ? single.fabricsColors.map((color, i) => {
+                {product.fabrics.map((single, i) => single.fabricsId === selectedFabrics ? single.fabricsColors.map((color, i) => {
                   return (
                     <Tooltip
                       title={
@@ -333,7 +337,7 @@ const ProductDescription = ({
                         <input
                           type="radio"
                           value={color.fabricsColorName}
-                          name="fabrics-color"
+                          name={`fabrics-${color.fabricsColorName}`}
                           id={`fabrics-${color.fabricsColorName}`}
                           checked={
                             color.fabricsColorName === selectedFabricsColor ? "checked" : ""
@@ -364,16 +368,16 @@ const ProductDescription = ({
             <div className="product-content__size__content">
               <select
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                value={selectedLining}
                 onChange={(event) => {
-                  console.log("event", event.target.value)
-                  setSelectedLining(event.target.value.split("/")[0])
-                  setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                  setSelectedLining(event.target.value)
+                  setSelectedLiningFabricsColor(product.lining.find(x => x.fabricsId === event.target.value).fabricsColors[0].fabricsColorName)
                 }}
               >
                 {product.lining &&
                   product.lining.map((single, i) => {
                     return (
-                      <option key={i} value={`${single.fabricsName}/${single.fabricsColors[0].fabricsColorName}`}>{single.fabricsName}</option>
+                      <option key={i} value={single.fabricsId}>{single.fabricsName}</option>
                     );
                   })
                 }
@@ -394,12 +398,10 @@ const ProductDescription = ({
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
                   value={selectedLiningFabricsColor}
                   onChange={(event) => {
-                    console.log("dropdown", event.target.value)
                     setSelectedLiningFabricsColor(event.target.value);
                   }}
                 >
-
-                  {product.lining.map((single, j) => single.fabricsName === selectedLining ? single.fabricsColors.map((color, i) => {
+                  {product.lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColors.map((color, i) => {
                     return (
                       <option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
                     );
@@ -416,7 +418,7 @@ const ProductDescription = ({
             <div className="product-content__size__title"></div>
             <div className="product-content__size__content">
               <div className="product-content__color__content">
-                {product.lining.map((single, i) => single.fabricsName === selectedLining ? single.fabricsColors.map((color, i) => {
+                {product.lining.map((single, i) => single.fabricsId === selectedLining ? single.fabricsColors.map((color, i) => {
                   return (
                     <Tooltip
                       title={
@@ -584,8 +586,7 @@ const ProductDescription = ({
               <select
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 onChange={(event) => {
-                  setSelectedSizeCategory(event.target.value.split("/")[0])
-                  setSelectedCategorySizeValue(event.target.value.split("/")[1])
+                  setSelectedSizeCategory(event.target.value)
                 }}
               >
                 {product.sizeCategories &&
@@ -720,6 +721,7 @@ const ProductDescription = ({
                   selectedLiningFabricsColor,
                   comboArray,
                   selectedAttr,
+                  selectedSizeCategory,
                   selectedCategorySizeValue,
                   alterationSelected,
                   styleOptionSelected
