@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { IoIosSearch } from "react-icons/io";
 import {
-  getDiscountPrice, getIndividualCategories,
+  getIndividualCategories,
   getIndividualColors,
   getIndividualTags, getProducts, setActiveSort
 } from "../../lib/product";
@@ -13,7 +13,6 @@ const ShopSidebar = ({ products, getSortParams }) => {
   const colors = getIndividualColors(products);
   const tags = getIndividualTags(products);
   const popularProducts = getProducts(products, "perfumes", "popular", 3);
-  console.log("popularProducts", popularProducts)
 
   return (
     <div className="shop-sidebar">
@@ -68,7 +67,7 @@ const ShopSidebar = ({ products, getSortParams }) => {
       </div>
 
       {/* color list */}
-      <div className="single-sidebar-widget space-mb--40">
+      {/* <div className="single-sidebar-widget space-mb--40">
         <h2 className="single-sidebar-widget__title space-mb--30">Colors</h2>
         {colors.length > 0 ? (
           <ul className="single-sidebar-widget__list single-sidebar-widget__list--color">
@@ -99,7 +98,7 @@ const ShopSidebar = ({ products, getSortParams }) => {
         ) : (
           "No colors found"
         )}
-      </div>
+      </div> */}
 
       {/* popular products */}
       <div className="single-sidebar-widget space-mb--40">
@@ -109,28 +108,25 @@ const ShopSidebar = ({ products, getSortParams }) => {
         {popularProducts.length > 0 ? (
           <div className="widget-product-wrapper">
             {popularProducts.map((product, i) => {
-              const discountedPrice = getDiscountPrice(
-                product.price,
-                product.discount
-              ).toFixed(2);
-              const productPrice = product.price.toFixed(2);
+              const discountedPrice = parseInt(product.discountedPrice)
+              const productPrice = parseInt(product.standardPrice);
               return (
                 <div className="single-widget-product-wrapper" key={i}>
                   <div className="single-widget-product">
                     <div className="single-widget-product__image">
                       <Link
-                        href={`/shop/product-basic/[slug]?slug=${product.slug}`}
+                        href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                         as={
                           process.env.PUBLIC_URL +
                           "/shop/product-basic/" +
-                          product.slug
+                          product.productName
                         }
                       >
                         <a className="image-wrap">
                           <img
-                            src={process.env.PUBLIC_URL + product.thumbImage[0]}
+                            src={process.env.PUBLIC_URL + product.pictures[0].url}
                             className="img-fluid"
-                            alt={product.name}
+                            alt={product.productName}
                           />
                         </a>
                       </Link>
@@ -139,14 +135,14 @@ const ShopSidebar = ({ products, getSortParams }) => {
                       <div className="single-widget-product__content__top">
                         <h3 className="product-title space-mb--10">
                           <Link
-                            href={`/shop/product-basic/[slug]?slug=${product.slug}`}
+                            href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                             as={
                               process.env.PUBLIC_URL +
                               "/shop/product-basic/" +
-                              product.slug
+                              product.productName
                             }
                           >
-                            <a>{product.name}</a>
+                            <a>{product.productName}</a>
                           </Link>
                         </h3>
                         <div className="price space-mb--10">

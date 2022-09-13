@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Col } from "react-bootstrap";
-import Link from "next/link";
-import { IoIosHeartEmpty, IoIosShuffle, IoIosSearch } from "react-icons/io";
+import { IoIosHeartEmpty, IoIosSearch, IoIosShuffle } from "react-icons/io";
 import { Tooltip } from "react-tippy";
 import ProductModal from "./ProductModal";
 
@@ -30,22 +30,22 @@ const ProductGridList = ({
           {/*=======  single product image  =======*/}
           <div className="product-grid__image">
             <Link
-              href={`/shop/product-basic/[slug]?slug=${product.slug}`}
+              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
               as={
-                process.env.PUBLIC_URL + "/shop/product-basic/" + product.slug
+                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
               }
             >
               <a className="image-wrap">
                 <img
-                  src={process.env.PUBLIC_URL + product.thumbImage[0]}
+                  src={process.env.PUBLIC_URL + product.pictures[0].url}
                   className="img-fluid"
-                  alt={product.name}
+                  alt={product.productName}
                 />
-                {product.thumbImage.length > 1 ? (
+                {product.pictures.length > 1 ? (
                   <img
-                    src={process.env.PUBLIC_URL + product.thumbImage[1]}
+                    src={process.env.PUBLIC_URL + product.pictures[1].url}
                     className="img-fluid"
-                    alt={product.name}
+                    alt={product.productName}
                   />
                 ) : (
                   ""
@@ -59,7 +59,7 @@ const ProductGridList = ({
                 ""
               )}
               {product.new ? <span className="hot">New</span> : ""}
-              {product.stock === 0 ? (
+              {product.inStock === 0 ? (
                 <span className="out-of-stock">out</span>
               ) : (
                 ""
@@ -147,7 +147,7 @@ const ProductGridList = ({
                     product.slug
                   }
                 >
-                  <a>{product.name}</a>
+                  <a>{product.productName}</a>
                 </Link>
               </h3>
               {/* add to cart */}
@@ -166,12 +166,12 @@ const ProductGridList = ({
                 >
                   <a>Select Option</a>
                 </Link>
-              ) : product.stock && product.stock > 0 ? (
+              ) : product.inStock && product.inStock > 0 ? (
                 <button
                   onClick={() => addToCart(product, addToast)}
                   disabled={
                     cartItem !== undefined &&
-                    cartItem.quantity >= cartItem.stock
+                    cartItem.quantity >= cartItem.inStock
                   }
                 >
                   {cartItem !== undefined ? "Added to cart" : "Add to cart"}
@@ -204,15 +204,15 @@ const ProductGridList = ({
             >
               <a className="image-wrap">
                 <img
-                  src={process.env.PUBLIC_URL + product.thumbImage[0]}
+                  src={process.env.PUBLIC_URL + product.pictures[0].url}
                   className="img-fluid"
-                  alt={product.name}
+                  alt={product.productName}
                 />
-                {product.thumbImage.length > 1 ? (
+                {product.pictures.length > 1 ? (
                   <img
-                    src={process.env.PUBLIC_URL + product.thumbImage[1]}
+                    src={process.env.PUBLIC_URL + product.pictures[1].url}
                     className="img-fluid"
-                    alt={product.name}
+                    alt={product.productName}
                   />
                 ) : (
                   ""
@@ -226,7 +226,7 @@ const ProductGridList = ({
                 ""
               )}
               {product.new ? <span className="hot">New</span> : ""}
-              {product.stock === 0 ? (
+              {product.inStock === 0 ? (
                 <span className="out-of-stock">out</span>
               ) : (
                 ""
@@ -314,7 +314,7 @@ const ProductGridList = ({
                     product.slug
                   }
                 >
-                  <a>{product.name}</a>
+                  <a>{product.productName}</a>
                 </Link>
               </h3>
             </div>
@@ -353,12 +353,12 @@ const ProductGridList = ({
                     Select Option
                   </a>
                 </Link>
-              ) : product.stock && product.stock > 0 ? (
+              ) : product.inStock && product.inStock > 0 ? (
                 <button
                   onClick={() => addToCart(product, addToast)}
                   disabled={
                     cartItem !== undefined &&
-                    cartItem.quantity >= cartItem.stock
+                    cartItem.quantity >= cartItem.inStock
                   }
                   className="lezada-button lezada-button--medium"
                 >

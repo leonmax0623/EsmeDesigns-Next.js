@@ -741,7 +741,6 @@ const ProductDescription = ({
                 //   styleOptionSelected
                 // )
               }
-              disabled={productCartQty >= productStock}
               className="lezada-button lezada-button--medium product-content__cart space-mr--10"
             >
               Add To Cart

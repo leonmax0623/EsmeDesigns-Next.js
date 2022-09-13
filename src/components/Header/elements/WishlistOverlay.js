@@ -83,7 +83,7 @@ const WishlistOverlay = ({
                           </h5>
                           <p>
                             <span className="discounted-price">
-                              ${product.discountedPrice}
+                              ${parseInt(product.discountedPrice)}
                             </span>
                           </p>
                         </div>
