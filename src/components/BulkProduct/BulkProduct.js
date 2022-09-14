@@ -564,7 +564,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						)}
 					</Col>
 				</Col>
-				<Col lg={12} className="size-main">
+				<Col lg={12} className="bulk-container__settings__size-main">
 					{!bulkProductProps[0].regularOrder ? (
 						<div className="product-content__size-color">
 							<div style={{ alignItems: "baseline" }}>
@@ -618,89 +618,179 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							</div>
 						</div>
 					) : (
-						<div className="product-content__size-color" style={{ marginBottom: "20px" }}>
-							<div style={{ alignItems: "center" }}>
-								<div className="product-content__size__content" style={{ display: "flex", alignItems: "end" }}>
-									<Col lg={2} style={{ padding: "10px", padding: "0px" }}>
-										<select
-											style={{ width: "100%", height: "37px", cursor: "pointer" }}
-											disabled={editBoolean}
-											value={sizeCategory}
-											onChange={(event) => {
-												setSizeCategory(event.target.value)
-											}}
-										>
-											{bulkProductProps[0].sizeCategories &&
-												bulkProductProps[0].sizeCategories.map((size, i) => {
-													return (
-														<option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
-													);
-												})
-											}
-										</select>
-									</Col>
-									<Col lg={2}>
-										{sizeCategory && (
-											<div className="product-content__size-color">
-												<div>
-													<div className="product-content__size__title"></div>
-													<div className="product-content__size__content">
-														<div className="product-content__color__content">
-															<select
-																style={{ width: "100%", height: "37px", cursor: "pointer" }}
-																disabled={editBoolean}
-																value={selectedCategorySizeValue}
-																onChange={(event) => {
-																	setSelectedCategorySizeValue(event.target.value);
-																}}
-															>
-																{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === sizeCategory ? single.sizes.map((size, i) => {
-																	return (
-																		<option key={i} value={size.sizeName}>{size.sizeName}</option>
-																	);
-																}) : "")}
-															</select>
+						<>
+							<div className="bulk-container__settings__size-main__regular-desktop">
+								<div className="product-content__size-color" style={{ marginBottom: "20px" }}>
+									<div style={{ alignItems: "center" }}>
+										<div className="product-content__size__content" style={{ display: "flex", alignItems: "end" }}>
+											<Col lg={2} style={{ padding: "10px", padding: "0px" }}>
+												<select
+													style={{ width: "100%", height: "37px", cursor: "pointer" }}
+													disabled={editBoolean}
+													value={sizeCategory}
+													onChange={(event) => {
+														setSizeCategory(event.target.value)
+													}}
+												>
+													{bulkProductProps[0].sizeCategories &&
+														bulkProductProps[0].sizeCategories.map((size, i) => {
+															return (
+																<option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
+															);
+														})
+													}
+												</select>
+											</Col>
+											<Col lg={2}>
+												{sizeCategory && (
+													<div className="product-content__size-color">
+														<div>
+															<div className="product-content__size__title"></div>
+															<div className="product-content__size__content">
+																<div className="product-content__color__content">
+																	<select
+																		style={{ width: "100%", height: "37px", cursor: "pointer" }}
+																		disabled={editBoolean}
+																		value={selectedCategorySizeValue}
+																		onChange={(event) => {
+																			setSelectedCategorySizeValue(event.target.value);
+																		}}
+																	>
+																		{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === sizeCategory ? single.sizes.map((size, i) => {
+																			return (
+																				<option key={i} value={size.sizeName}>{size.sizeName}</option>
+																			);
+																		}) : "")}
+																	</select>
+																</div>
+															</div>
 														</div>
+													</div>
+												)}
+											</Col>
+											<Col lg={2}></Col>
+											<Col lg={6}>
+												<div className="product-content__quantity">
+													<div className="product-content__quantity__title">Quantity</div>
+													<div className="cart-plus-minus">
+														<button
+															onClick={() =>
+																setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
+															}
+															disabled={editBoolean}
+															className="qtybutton"
+														>
+															-
+														</button>
+														<input
+															className="cart-plus-minus-box"
+															type="text"
+															value={quantityCount}
+															readOnly
+														/>
+														<button
+															onClick={() =>
+																setQuantityCount(quantityCount + 1)
+															}
+															disabled={editBoolean}
+															className="qtybutton"
+														>
+															+
+														</button>
+													</div>
+												</div>
+											</Col>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div className="bulk-container__settings__size-main__regular-mobile">
+								<div className="bulk-container__settings__fabrics__container">
+									{bulkProductProps[0].sizeCategories ? (
+										<div className="product-content__size-color">
+											<div className="bulk-container__settings__fabrics__container__title">
+												<div className="product-content__size__title bulk-container__settings__fabrics__container__title__header">Size</div>
+												<div className="product-content__size__content">
+													<select
+														style={{ width: "100%", height: "37px", cursor: "pointer" }}
+														disabled={editBoolean}
+														value={sizeCategory}
+														onChange={(event) => {
+															setSizeCategory(event.target.value)
+														}}
+													>
+														{bulkProductProps[0].sizeCategories &&
+															bulkProductProps[0].sizeCategories.map((size, i) => {
+																return (
+																	<option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
+																);
+															})
+														}
+													</select>
+												</div>
+											</div>
+										</div>
+									) : (
+										""
+									)}
+									{sizeCategory && (
+										<div style={{ marginTop: "10px" }} className="product-content__size-color">
+											<div className="bulk-container__settings__fabrics__container__title">
+												<div className="product-content__size__title"></div>
+												<div className="product-content__size__content">
+													<div className="product-content__color__content">
+														<select
+															style={{ width: "100%", height: "37px", cursor: "pointer" }}
+															disabled={editBoolean}
+															value={selectedCategorySizeValue}
+															onChange={(event) => {
+																setSelectedCategorySizeValue(event.target.value);
+															}}
+														>
+															{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === sizeCategory ? single.sizes.map((size, i) => {
+																return (
+																	<option key={i} value={size.sizeName}>{size.sizeName}</option>
+																);
+															}) : "")}
+														</select>
 													</div>
 												</div>
 											</div>
-										)}
-									</Col>
-									<Col lg={2}></Col>
-									<Col lg={6}>
-										<div className="product-content__quantity">
-											<div className="product-content__quantity__title">Quantity</div>
-											<div className="cart-plus-minus">
-												<button
-													onClick={() =>
-														setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-													}
-													disabled={editBoolean}
-													className="qtybutton"
-												>
-													-
-												</button>
-												<input
-													className="cart-plus-minus-box"
-													type="text"
-													value={quantityCount}
-													readOnly
-												/>
-												<button
-													onClick={() =>
-														setQuantityCount(quantityCount + 1)
-													}
-													disabled={editBoolean}
-													className="qtybutton"
-												>
-													+
-												</button>
-											</div>
 										</div>
-									</Col>
+									)}
+								</div>
+								<div className="product-content__quantity">
+									<div className="product-content__quantity__title">Quantity</div>
+									<div className="cart-plus-minus">
+										<button
+											onClick={() =>
+												setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
+											}
+											disabled={editBoolean}
+											className="qtybutton"
+										>
+											-
+										</button>
+										<input
+											className="cart-plus-minus-box"
+											type="text"
+											value={quantityCount}
+											readOnly
+										/>
+										<button
+											onClick={() =>
+												setQuantityCount(quantityCount + 1)
+											}
+											disabled={editBoolean}
+											className="qtybutton"
+										>
+											+
+										</button>
+									</div>
 								</div>
 							</div>
-						</div>
+						</>
 					)}
 				</Col>
 				<Col lg={12} className="bulk-container__settings__fabrics__footer">

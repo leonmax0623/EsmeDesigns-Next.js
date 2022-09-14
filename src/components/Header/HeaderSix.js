@@ -49,7 +49,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
       >
         <div className="multilevel-header">
           <Container>
-            <Row className="multilevel-header__top">
+            <Row className="multilevel-header__top" style={{ alignItems: "center" }}>
               <Col lg={4} className="d-none d-lg-block">
                 <div className="d-flex">
                   <div className="language-change change-dropdown">
@@ -83,7 +83,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                   <Link href="/" as={process.env.PUBLIC_URL + "/"}>
                     <a>
                       <img
-                        src={process.env.PUBLIC_URL + "/assets/images/logo.png"}
+                        src={process.env.PUBLIC_URL + "/assets/images/esme-logo.svg"}
                         className="img-fluid"
                         alt=""
                       />

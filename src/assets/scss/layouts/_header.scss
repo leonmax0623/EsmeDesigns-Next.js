@@ -179,6 +179,7 @@ header {
 
     .multilevel-header {
       padding-top: 0;
+      align-items: center;
 
       @include respond(extra-large-mobile) {
         padding-top: 10px;
@@ -190,6 +191,7 @@ header {
 
       &__top {
         display: none;
+        align-items: center;
 
         @include respond(extra-large-mobile) {
           align-items: center;

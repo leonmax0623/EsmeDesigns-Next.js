@@ -47,6 +47,58 @@
 
       }
 
+      &__size-main {
+        &__regular-desktop {
+          @include respond(extra-large-mobile) {
+            display: none;
+          }
+
+          @include respond(large-mobile) {
+            display: none;
+          }
+        }
+
+        &__regular-mobile {
+          @include respond(extra-large-mobile) {
+            display: flex;
+            flex-direction: column;
+            padding: 0px 15px
+          }
+
+          @include respond(large-mobile) {
+            display: flex;
+            flex-direction: column;
+            padding: 0px 15px
+          }
+
+          display: none
+        }
+
+        &__title {
+          @include respond(extra-large-mobile) {
+            display: flex;
+          }
+
+          @include respond(large-mobile) {
+            display: flex;
+          }
+
+          padding: 0px;
+
+        }
+
+        @include respond(extra-large-mobile) {
+          margin-left: 0px;
+        }
+
+        @include respond(large-mobile) {
+          margin-left: 0px;
+        }
+
+        padding: 0px;
+        margin-left: 15px;
+      }
+
       &__fabrics {
         &__footer {
           .price-table {
@@ -106,6 +158,28 @@
         }
 
         .size-main {
+          &__regular-desktop {
+            @include respond(extra-large-mobile) {
+              display: none;
+            }
+
+            @include respond(large-mobile) {
+              display: none;
+            }
+          }
+
+          &__regular-mobile {
+            @include respond(extra-large-mobile) {
+              display: flex;
+            }
+
+            @include respond(large-mobile) {
+              display: flex;
+            }
+
+            display: none
+          }
+
           &__title {
             @include respond(extra-large-mobile) {
               display: flex;
