@@ -45,39 +45,27 @@ export const addToCart = (
   };
 };
 
-export const addBulkToCart = (
-  bulkProduct,
-  addToast,
-  selectedFabrics,
-  selectedFabricsColor,
-  selectedLining,
-  selectedLiningFabricsColor,
-  comboArray,
-  selectedAttr,
-  regularSizeArray,
-  alterationSelected,
-  styleOptionSelected,
-  totalItems
-) => {
-
+export const addBulkToCart = (data) => {
   return dispatch => {
-    if (addToast) {
-      addToast("Added To Cart", { appearance: "success", autoDismiss: true });
+    if (data.addToast) {
+      data.addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }
     dispatch({
       type: ADD_TO_CART,
       payload: {
-        ...bulkProduct,
-        totalItems: totalItems,
-        selectedFabrics: selectedFabrics,
-        selectedFabricsColor: selectedFabricsColor,
-        selectedLining: selectedLining,
-        selectedLiningFabricsColor: selectedLiningFabricsColor,
-        regularSizeArray: JSON.parse(regularSizeArray),
-        selectedAlteration: alterationSelected,
-        selectedStyleOption: styleOptionSelected,
-        selectedAttr: selectedAttr,
-        comboArray: comboArray,
+        ...data.bulkProduct,
+        totalItems: data.totalItems,
+        selectedFabrics: data.selectedFabrics,
+        selectedFabricsColor: data.selectedFabricsColor,
+        selectedLining: data.selectedLining,
+        selectedLiningFabricsColor: data.selectedLiningFabricsColor,
+        selectedSizeCategory: data.selectedSizeCategory,
+        regularSizeArray: JSON.parse(data.regularSizeArray),
+        // specificSizeArray: JSON.parse(specificSizeArray),
+        selectedAlteration: data.alterationSelected,
+        selectedStyleOption: data.styleOptionSelected,
+        selectedAttr: data.selectedAttr,
+        comboArray: data.comboArray,
 
       }
     });

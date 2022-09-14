@@ -198,35 +198,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBulkToCart: (
-      bulkProduct,
-      addToast,
-      selectedFabrics,
-      selectedFabricsColor,
-      selectedLining,
-      selectedLiningFabricsColor,
-      comboArray,
-      selectedAttr,
-      regularSizeArray,
-      alterationSelected,
-      styleOptionSelected,
-      totalItems,
-    ) => {
+    addBulkToCart: (data) => {
       dispatch(
-        addBulkToCart(
-          bulkProduct,
-          addToast,
-          selectedFabrics,
-          selectedFabricsColor,
-          selectedLining,
-          selectedLiningFabricsColor,
-          comboArray,
-          selectedAttr,
-          regularSizeArray,
-          alterationSelected,
-          styleOptionSelected,
-          totalItems
-        )
+        addBulkToCart(data)
       );
     },
     deleteFromCart: (item, addToast) => {
