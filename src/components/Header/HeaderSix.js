@@ -91,7 +91,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                   </Link>
                 </div>
               </Col>
-              <Col xs={6} lg={4} className="text-right">
+              <Col xs={6} lg={4} className="text-right" style={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
                 <div className="header-content__icons">
                   <ul className="d-none d-lg-block">
                     <li>
@@ -205,7 +205,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
             <Row className="multilevel-header__bottom">
               <Col
                 lg={12}
-                className="text-center d-none d-lg-block space-mt--40"
+                className="text-center d-none d-lg-block"
               >
                 {/* navigation */}
                 <Navigation />
