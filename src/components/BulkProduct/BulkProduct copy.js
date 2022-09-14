@@ -22,31 +22,21 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	const [styleOptionSelected, setStyleOptionSelected] = useState([]);
 	const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
 	const [totalItems, setTotalItems] = useState(0);
-	const [selectedSizeCategory, setSelectedSizeCategory] = useState("")
+	const [selectedSizeCategory, setSelectedSizeCategory] = useState("Regular Size")
 
-	const [sizeCategory, setSizeCategory] = useState("");
+	const [sizeCategory, setSizeCategory] = useState(
+		bulkProductProps[0].selectedSizeCategory ? bulkProductProps[0].selectedSizeCategory : bulkProductProps[0].sizeCategories[0].sizeCategoryName
+	);
 
-	const [selectedCategorySizeValue, setSelectedCategorySizeValue] = useState("");
+	const [selectedCategorySizeValue, setSelectedCategorySizeValue] = useState(
+		bulkProductProps[0].selectedSize ? bulkProductProps[0].selectedSize : bulkProductProps[0].sizeCategories[0].sizes[0].sizeName
+	);
 
-	const [regularSizeArray, setRegularSizeArray] = useState(JSON.stringify([]));
+	const [regularSizeArray, setRegularSizeArray] = useState(bulkProductProps[0].regularSizeArray ? JSON.stringify(bulkProductProps[0].regularSizeArray) : JSON.stringify(bulkProductProps[0].sizeCategories[0]));
+	const [specificSizeArray, setSpecificSizeArray] = useState(bulkProductProps[0].specificSizeArray ? JSON.stringify(bulkProductProps[0].specificSizeArray) : JSON.stringify(bulkProductProps[0].sizeCategories[1]));
 
 	useEffect(() => {
 		if (bulkProductProps[0]) {
-			if (bulkProductProps[0].totalItems) {
-				setTotalItems(bulkProductProps[0].totalItems)
-			}
-			if (bulkProductProps[0].selectedSize) {
-				setSelectedCategorySizeValue(bulkProductProps[0].selectedSize)
-			} else {
-				setSelectedCategorySizeValue(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
-			}
-			if (bulkProductProps[0].selectedSizeCategory) {
-				setSizeCategory(bulkProductProps[0].selectedSizeCategory)
-				setSelectedSizeCategory(bulkProductProps[0].selectedSizeCategory)
-			} else {
-				setSizeCategory(bulkProductProps[0].sizeCategories[0].sizeCategoryName)
-				setSelectedSizeCategory(bulkProductProps[0].sizeCategories[0].sizeCategoryName)
-			}
 			if (bulkProductProps[0].lining) {
 				setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
 			}
@@ -63,23 +53,29 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				setSelectedSize(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
 			}
 
-			if (bulkProductProps[0].regularSizeArray) {
-				console.log("True!!!!!", JSON.stringify(bulkProductProps[0].regularSizeArray))
-				setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
-			} else {
-				console.log("False!!!!!")
-				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.map((each) => {
+			// if (bulkProductProps[0].regularSizeArray || bulkProductProps[0].specificSizeArray) {
+			// 	console.log("True")
+			// 	setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
+			// 	setSpecificSizeArray(JSON.stringify(bulkProductProps[0].specificSizeArray))
+			// } else {
+			// 	console.log("False")
+			// 	if (bulkProductProps[0] && bulkProductProps[0].sizeCategories) {
+			// 		setRegularSizeArray(JSON.stringify(bulkProductProps[0].sizeCategories[0]))
+			// 		setSpecificSizeArray(JSON.stringify(bulkProductProps[0].sizeCategories[1]))
+			// 	}
 
-					const sizes = each.sizes.map((eachSize) => {
-						return {
-							sizeCode: 0,
-							sizeName: eachSize.sizeName
-						}
-					})
-					each.sizes = sizes
-					return each
-				})))
-			}
+			// 	// setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.map((each) => {
+
+			// 	// 	const sizes = each.sizes.map((eachSize) => {
+			// 	// return {
+			// 	// 	sizeCode: 0,
+			// 	// 	sizeName: eachSize.sizeName
+			// 	// }
+			// 	// 	})
+			// 	// 	each.sizes = sizes
+			// 	// 	return each
+			// 	// })))
+			// }
 
 			if (bulkProductProps[0].selectedAlteration) {
 				setAlterationSelected(bulkProductProps[0].selectedAlteration)
@@ -130,47 +126,65 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		styleOptions.push(array)
 	});
 
-	const handleRegularSizeArray = (e) => {
-
+	const setRegualrSizeArray = (e) => {
+		console.log("setRegualrSizeArray=>", e.target.dataset.position.split('-'))
 		let result = e.target.value;
 		if (result === "") {
 			result = 0;
 		} else {
 			const index = e.target.dataset.position.split('-')
 			let sizeArray = JSON.parse(regularSizeArray)
-			sizeArray[index[0]].sizes[index[1]].sizeCode = result.replace(/[^\d]/g, '');
+			sizeArray.sizes[index[1]].sizeCode = result.replace(/[^\d]/g, '');
 			setRegularSizeArray(JSON.stringify(sizeArray))
+		}
+	}
+
+	const setSpecifciSizeArray = (e) => {
+		console.log("setSpecifciSizeArray=>", e.target.value)
+		let result = e.target.value;
+		if (result === "") {
+			result = 0;
+		} else {
+			const index = e.target.dataset.position.split('-')
+			let sizeArray = JSON.parse(specificSizeArray)
+			sizeArray.sizes[index[1]].sizeCode = result.replace(/[^\d]/g, '');
+			setSpecificSizeArray(JSON.stringify(sizeArray))
 		}
 	}
 
 	useEffect(() => {
 		let sum = 0;
-		JSON.parse(regularSizeArray).map((item) => {
-			if (selectedSizeCategory === item.sizeCategoryName) {
-				item.sizes.map((size) => {
-					sum = sum + parseInt(size.sizeCode)
-				})
-				setTotalItems(sum)
-			}
-		})
-
-	}, [regularSizeArray])
-
-	const handleResetSizeArrayInput = (value) => {
-		console.log('===============')
-		const sizeArray = JSON.parse(regularSizeArray).map(item => {
-			let tempItem = item
-			// if (value !== item.sizeCategoryName) {
-			const sizes = item.sizes.map(each => {
-				return { ...each, sizeCode: 0 }
+		if (selectedSizeCategory === "Regular Size") {
+			console.log("selectedSizeCategory === 'Regular Size'")
+			JSON.parse(regularSizeArray).sizes.map((size) => {
+				sum = sum + parseInt(size.sizeCode)
 			})
-			tempItem.sizes = sizes
-			// }
-			return tempItem
-		})
-		setTotalItems(0)
-		setRegularSizeArray(JSON.stringify(sizeArray))
-	}
+			setTotalItems(sum)
+		} else if (selectedSizeCategory === "Specific Size") {
+			console.log("selectedSizeCategory === 'Specific Size'")
+			JSON.parse(specificSizeArray).sizes.map((size) => {
+				sum = sum + parseInt(size.sizeCode)
+			})
+			setTotalItems(sum)
+		}
+		console.log("SUM => ", totalItems)
+	}, [regularSizeArray, specificSizeArray, selectedSizeCategory])
+
+	useEffect(() => {
+		setRegularSizeArray(JSON.stringify(bulkProductProps[0].sizeCategories[0]))
+		setSpecificSizeArray(JSON.stringify(bulkProductProps[0].sizeCategories[1]))
+		// setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.map((each) => {
+
+		// 	const sizes = each.sizes.map((eachSize) => {
+		// 		return {
+		// 			sizeCode: 0,
+		// 			sizeName: eachSize.sizeName
+		// 		}
+		// 	})
+		// 	each.sizes = sizes
+		// 	return each
+		// })))
+	}, [selectedSizeCategory])
 
 	useEffect(() => {
 		document.querySelector("body").classList.remove("overflow-hidden");
@@ -202,10 +216,11 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	const [editBoolean, setEditBoolean] = useState(bulkProductProps[0].selectedFabrics ? true : false)
 
 	const handleBulkOrder = () => {
+		console.log("editBoolean", editBoolean)
 		setEditBoolean(true)
 		if (!bulkProductProps[0].regularOrder) {
-			addBulkToCart({
-				bulkProduct: bulkProductProps[0],
+			addBulkToCart(
+				bulkProductProps[0],
 				addToast,
 				selectedFabrics,
 				selectedFabricsColor,
@@ -213,12 +228,12 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				selectedLiningFabricsColor,
 				comboArray,
 				selectedAttr,
-				selectedSizeCategory,
 				regularSizeArray,
+				specificSizeArray,
 				alterationSelected,
 				styleOptionSelected,
 				totalItems
-			})
+			)
 		} else {
 			addToCart(
 				bulkProductProps[0],
@@ -230,7 +245,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				selectedLiningFabricsColor,
 				comboArray,
 				selectedAttr,
-				selectedSizeCategory,
 				sizeCategory,
 				selectedCategorySizeValue,
 				alterationSelected,
@@ -273,7 +287,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 		setComboArray(array);
 	}
-	console.log("#####", bulkProductProps[0].regularSizeArray)
 
 	return (
 		<div style={{ display: "flex", padding: "20px", borderBottom: "1px solid rgb(237, 237, 237)" }}>
@@ -572,13 +585,11 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 										<select
 											style={{ width: "100%", height: "30px", cursor: "pointer" }}
 											disabled={editBoolean}
-											value={selectedSizeCategory}
 											onChange={(event) => {
 												setSelectedSizeCategory(event.target.value)
-												handleResetSizeArrayInput(event.target.value)
 											}}
 										>
-											{JSON.parse(regularSizeArray).length > 1 ? JSON.parse(regularSizeArray).map((category, i) => {
+											{bulkProductProps[0].sizeCategories ? bulkProductProps[0].sizeCategories.map((category, i) => {
 												return (
 													<option value={category.sizeCategoryName}>{category.sizeCategoryName}</option>
 												)
@@ -587,25 +598,25 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 									</Col>
 									<Col lg={10}>
 										<div style={{ display: "flex" }}>
-											{selectedSizeCategory === "Regular Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[0].sizes.map((size, j) => {
+											{selectedSizeCategory === "Regular Size" && JSON.parse(regularSizeArray) && JSON.parse(regularSizeArray).sizes.map((size, j) => {
 												return <div style={{ display: "flex", flexDirection: "column" }}>
 													<span style={{ fontSize: "14px", textAlign: "center", color: "#333", marginBottom: "10px" }}>{size.sizeName}</span>
-													<input style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`0-${j}`} name="amount" max="999" onChange={(e) => handleRegularSizeArray(e)} />
+													<input style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`0-${j}`} name="amount" max="999" onChange={(e) => setRegualrSizeArray(e)} />
 												</div>
 											})}
-											{selectedSizeCategory === "Specific Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[1].sizes.map((size, j) => {
+											{selectedSizeCategory === "Specific Size" && JSON.parse(specificSizeArray) && JSON.parse(specificSizeArray).sizes.map((size, j) => {
 												return (
 													<>
 														<div style={{ display: "flex", flexDirection: "column" }}>
 															<span style={{ fontSize: "14px", textAlign: "center", color: "#333", marginBottom: "10px" }}>{size.sizeName}</span>
-															<input disabled={editBoolean} style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`1-${j}`} name="amount" max="999" min="0" onChange={(e) => handleRegularSizeArray(e)} />
+															<input disabled={editBoolean} style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`1-${j}`} name="amount" max="999" min="0" onChange={(e) => setSpecifciSizeArray(e)} />
 														</div>
 													</>
 												)
 											})}
 											<div style={{ display: "flex", flexDirection: "column" }}>
 												<span style={{ fontSize: "14px", textAlign: "center", color: "#333", marginBottom: "10px" }}>Total</span>
-												<input disabled style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} value={totalItems} />
+												<input disabled style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} value={bulkProductProps[0].totalItems ? bulkProductProps[0].totalItems : totalItems} />
 											</div>
 
 										</div>
@@ -776,7 +787,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].standardPrice}</td>
 									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].discountedPrice}</td>
 									<td style={{ paddingLeft: "0px" }}>$0.00</td>
-									<td style={{ paddingLeft: "0px" }}>${totalItems ? bulkProductProps[0].discountedPrice * totalItems : bulkProductProps[0].discountedPrice * quantityCount}</td>
+									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? bulkProductProps[0].discountedPrice * bulkProductProps[0].totalItems : bulkProductProps[0].discountedPrice * quantityCount}</td>
 								</tr>
 							</tbody>
 						</table>
