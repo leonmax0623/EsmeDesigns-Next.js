@@ -133,12 +133,16 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	const handleRegularSizeArray = (e) => {
 
 		let result = e.target.value;
-		if (result === "") {
+		if (result === "" || result === NaN || totalItems === NaN) {
+			const index = e.target.dataset.position.split('-')
+			let sizeArray = JSON.parse(regularSizeArray)
+			sizeArray[index[0]].sizes[index[1]].sizeCode = 0;
+			setRegularSizeArray(JSON.stringify(sizeArray))
 			result = 0;
 		} else {
 			const index = e.target.dataset.position.split('-')
 			let sizeArray = JSON.parse(regularSizeArray)
-			sizeArray[index[0]].sizes[index[1]].sizeCode = result.replace(/[^\d]/g, '');
+			sizeArray[index[0]].sizes[index[1]].sizeCode = ((sizeArray[index[0]].sizes[index[1]].sizeCode * 0) + result).replace(/^0+/, '');
 			setRegularSizeArray(JSON.stringify(sizeArray))
 		}
 	}
@@ -157,7 +161,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	}, [regularSizeArray])
 
 	const handleResetSizeArrayInput = (value) => {
-		console.log('===============')
 		const sizeArray = JSON.parse(regularSizeArray).map(item => {
 			let tempItem = item
 			// if (value !== item.sizeCategoryName) {
@@ -273,7 +276,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 		setComboArray(array);
 	}
-	console.log("#####", bulkProductProps[0].regularSizeArray)
 
 	return (
 		<div className="bulk-container">
@@ -594,7 +596,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 											{selectedSizeCategory === "Regular Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[0].sizes.map((size, j) => {
 												return <div style={{ display: "flex", flexDirection: "column" }}>
 													<span style={{ fontSize: "14px", textAlign: "center", color: "#333", margin: "10px 0px" }}>{size.sizeName}</span>
-													<input style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`0-${j}`} name="amount" max="999" onChange={(e) => handleRegularSizeArray(e)} />
+													<input style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`0-${j}`} name="amount" max="999" min="0" onChange={(e) => handleRegularSizeArray(e)} />
 												</div>
 											})}
 											{selectedSizeCategory === "Specific Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[1].sizes.map((size, j) => {
@@ -602,6 +604,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 													<>
 														<div style={{ display: "flex", flexDirection: "column" }}>
 															<span style={{ fontSize: "14px", textAlign: "center", color: "#333", margin: "10px 0px" }}>{size.sizeName}</span>
+
 															<input disabled={editBoolean} style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`1-${j}`} name="amount" max="999" min="0" onChange={(e) => handleRegularSizeArray(e)} />
 														</div>
 													</>
@@ -847,7 +850,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 											handleBulkOrder()
 										}
 									>
-										Save Bulk Order
+										Save Order
 									</button>
 								)}
 							</Col>
