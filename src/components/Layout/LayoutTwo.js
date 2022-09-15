@@ -1,11 +1,11 @@
 import { Fragment } from "react";
-import { HeaderOne } from "../Header";
 import { FooterTwo } from "../Footer";
+import { HeaderSix } from "../Header";
 
 const LayoutTwo = ({ children, aboutOverlay, footerBgClass }) => {
   return (
     <Fragment>
-      <HeaderOne aboutOverlay={aboutOverlay} />
+      <HeaderSix aboutOverlay={aboutOverlay} />
       {children}
       <FooterTwo footerBgClass={footerBgClass} />
     </Fragment>
