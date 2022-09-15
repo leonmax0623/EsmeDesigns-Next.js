@@ -25,6 +25,22 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
     false
   );
 
+  let totalOrders = 0
+
+  cartItems.map((item, i) => {
+    if (item.quantity || item.totalItems) {
+      totalOrders += item.totalItems ? item.totalItems : item.quantity
+    }
+  })
+
+  useEffect(() => {
+    cartItems.map((item, i) => {
+      if (item.quantity || item.totalItems) {
+        totalOrders += item.totalItems ? item.totalItems : item.quantity
+      }
+    })
+  }, [cartItems])
+
   useEffect(() => {
     const header = document.querySelector("header");
     setHeaderTop(header.offsetTop);
@@ -145,13 +161,9 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                         }}
                       >
                         <IoIosCart />
-                        {cartItems.length >= 1 ? (
-                          <span className="count">
-                            {cartItems.length ? cartItems.length : ""}
-                          </span>
-                        ) : (
-                          ""
-                        )}
+                        <span className="count">
+                          {totalOrders}
+                        </span>
                       </button>
                     </li>
                   </ul>
@@ -181,13 +193,9 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                       >
                         <a>
                           <IoIosCart />
-                          {cartItems.length >= 1 ? (
-                            <span className="count">
-                              {cartItems.length ? cartItems.length : ""}
-                            </span>
-                          ) : (
-                            ""
-                          )}
+                          <span className="count">
+                            {totalOrders}
+                          </span>
                         </a>
                       </Link>
                     </li>
