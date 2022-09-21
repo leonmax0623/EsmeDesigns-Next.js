@@ -9,10 +9,12 @@
     "export": "next export"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "bootstrap": "4.6.0",
     "next": "^11.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
+    "react-cookie": "^4.1.1",
     "react-countdown": "^2.2.1",
     "react-custom-scroll": "^4.2.0",
     "react-datepicker": "^4.8.0",

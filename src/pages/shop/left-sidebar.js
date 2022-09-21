@@ -10,8 +10,15 @@ import {
   ShopFilter, ShopHeader, ShopProducts, ShopSidebar
 } from "../../components/Shop";
 import { getSortedProducts } from "../../lib/product";
+import { getProductsList } from "../../redux/actions/productListActions";
 
 const LeftSidebar = ({ products }) => {
+
+  useEffect(async () => {
+    const products = await getProductsList();
+    console.log("getProductsList => ", products)
+  }, [])
+
   const [layout, setLayout] = useState("grid four-column");
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");
