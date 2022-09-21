@@ -4,6 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import Paginator from "react-hooks-paginator";
 import { connect } from "react-redux";
 import { SlideDown } from "react-slidedown";
+import { getProductsList } from "../../../redux/actions/productListActions";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { LayoutTwo } from "../../components/Layout";
 import {
@@ -12,6 +13,12 @@ import {
 import { getSortedProducts } from "../../lib/product";
 
 const LeftSidebar = ({ products }) => {
+
+  useEffect(async () => {
+    const products = await getProductsList();
+    console.log("getProductsList => ", products)
+  }, [])
+
   const [layout, setLayout] = useState("grid four-column");
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");

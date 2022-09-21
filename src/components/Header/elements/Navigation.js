@@ -1,6 +1,14 @@
 import Link from "next/link";
+import { useEffect } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import { getCollections } from "../../../redux/actions/navigationActions";
+
 const Navigation = () => {
+  useEffect(async () => {
+    const collections = await getCollections();
+    console.log("NAVIGATIONS => ", collections)
+  }, [])
+
   return (
     <nav className="header-content__navigation space-pr--15 space-pl--15 d-none d-lg-block">
       <ul>
