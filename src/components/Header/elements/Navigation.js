@@ -1,225 +1,43 @@
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { getCollections } from "../../../redux/actions/navigationActions";
 
 const Navigation = () => {
+  const [collections, setCollections] = useState('')
   useEffect(async () => {
-    const collections = await getCollections();
+    const response = await getCollections();
     console.log("NAVIGATIONS => ", collections)
+    setCollections(response.data.collections)
   }, [])
 
   return (
     <nav className="header-content__navigation space-pr--15 space-pl--15 d-none d-lg-block">
       <ul>
-        <li className="position-relative">
-          <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
-            <a>Accessories</a>
-          </Link>
-          <IoIosArrowDown />
-          <ul className="sub-menu sub-menu--one-column">
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Bridal Soft Tulle</a>
+        {collections && collections.map((col, i) => {
+          return (
+            <li key={i} className="position-relative">
+              <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
+                <a>{col.name}</a>
               </Link>
+              <IoIosArrowDown />
+              <ul className="sub-menu sub-menu--one-column">
+                {col && col.fabrics.map((item, j) => {
+                  return (
+                    <li key={j}>
+                      <Link
+                        href="/shop/left-sidebar"
+                        as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                      >
+                        <a>{item.name}</a>
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
             </li>
-          </ul>
-        </li>
-        <li className="position-relative">
-          <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
-            <a>Bridal Collection</a>
-          </Link>
-          <IoIosArrowDown />
-          <ul className="sub-menu sub-menu--one-column">
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Alencon Lace</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Bridal Crepe</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Bridal English Net</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Bridal Luxe Chiffon</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Bridal Soft Tulle</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Bridal Stretch Lace</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Chantilly Lace</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Lace Embroidered</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Poly Mikado</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Poly Satin</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Sequins Embroidery</a>
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li className="position-relative">
-          <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
-            <a>Bridal Plus</a>
-          </Link>
-          <IoIosArrowDown />
-          <ul className="sub-menu sub-menu--one-column">
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Bridal English Net</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Bridal Soft Tulle</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Chantilly Lace</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Lace Embroidered</a>
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li className="position-relative">
-          <Link href="/shop/left-sidebar" as={process.env.PUBLIC_URL + "/shop/left-sidebar"}>
-            <a>Bridesmaids Collection</a>
-          </Link>
-          <IoIosArrowDown />
-          <ul className="sub-menu sub-menu--one-column">
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Charmeuse Satin</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>English Net</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Lace Softly Corded</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Luxe Chiffon</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Sequin Tulle</a>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-              >
-                <a>Stretch Crepe</a>
-              </Link>
-            </li>
-          </ul>
-        </li>
+          )
+        })}
         <li className="position-relative">
           <Link href="/other/about" as={process.env.PUBLIC_URL + "/other/about"}>
             <a>About</a>

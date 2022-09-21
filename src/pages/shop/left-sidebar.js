@@ -4,13 +4,13 @@ import { Col, Container, Row } from "react-bootstrap";
 import Paginator from "react-hooks-paginator";
 import { connect } from "react-redux";
 import { SlideDown } from "react-slidedown";
-import { getProductsList } from "../../../redux/actions/productListActions";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { LayoutTwo } from "../../components/Layout";
 import {
   ShopFilter, ShopHeader, ShopProducts, ShopSidebar
 } from "../../components/Shop";
 import { getSortedProducts } from "../../lib/product";
+import { getProductsList } from "../../redux/actions/productListActions";
 
 const LeftSidebar = ({ products }) => {
 
