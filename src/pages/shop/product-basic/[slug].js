@@ -38,6 +38,8 @@ const ProductBasic = ({
     document.querySelector("body").classList.remove("overflow-hidden");
   });
 
+  console.log("Single Product => ", product)
+
   const { addToast } = useToasts();
   // const discountedPrice = getDiscountPrice(
   //   product.price,
