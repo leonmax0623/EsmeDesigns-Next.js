@@ -23,7 +23,6 @@ const ProductGridList = ({
 }) => {
   const [modalShow, setModalShow] = useState(false);
 
-  console.log("!!!!!!!!!!!", product.picture[0].url)
   return (
     <Fragment>
       <Col lg={3} md={6} className={bottomSpace ? bottomSpace : ""}>
