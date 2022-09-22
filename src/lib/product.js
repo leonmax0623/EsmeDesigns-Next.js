@@ -1,9 +1,6 @@
 // get products
 export const getProducts = (products, category, type, limit) => {
   console.log("Lib/product => ", products)
-  console.log("Lib/category => ", category)
-  console.log("Lib/type => ", type)
-  console.log("Lib/limit => ", limit)
   const finalProducts = products;
   // const finalProducts = category
   //   ? products.filter(
@@ -70,8 +67,6 @@ export const getProductCartQuantity = (cartItems, product) => {
 
 //get products based on category
 export const getSortedProducts = (products, sortType, sortValue) => {
-  console.log("*********", products)
-
   if (products && sortType && sortValue) {
     if (sortType === "category") {
       return products.filter(

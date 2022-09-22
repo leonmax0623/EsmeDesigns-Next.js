@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Router from 'next/router';
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Paginator from "react-hooks-paginator";
 import { connect } from "react-redux";
 import { SlideDown } from "react-slidedown";
+import { useToasts } from "react-toast-notifications";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { LayoutTwo } from "../../components/Layout";
 import {
@@ -13,11 +15,21 @@ import { getSortedProducts } from "../../lib/product";
 import { getProductsList } from "../../redux/actions/productListActions";
 
 const LeftSidebar = ({ products }) => {
+  const { addToast } = useToasts();
+
+  const [apiProducts, setApiProducts] = useState([])
 
   useEffect(async () => {
-    const products = await getProductsList();
-    console.log("getProductsList => ", products)
-  }, [])
+    const response = await getProductsList();
+    if (response.data.errorText === 'accessToken expired') {
+      addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+      Router.push('/other/login');
+    } else {
+      const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined && i < 20) : '';
+      setApiProducts(aaa)
+      console.log("getProductsList => ", response.data.items)
+    }
+  }, [apiProducts])
 
   const [layout, setLayout] = useState("grid four-column");
   const [sortType, setSortType] = useState("");
@@ -108,7 +120,7 @@ const LeftSidebar = ({ products }) => {
 
               <Col lg={9} className="order-1 order-lg-2">
                 {/* shop products */}
-                <ShopProducts layout={layout} products={currentData} />
+                <ShopProducts layout={layout} products={apiProducts} />
 
                 {/* shop product pagination */}
                 <div className="pro-pagination-style">

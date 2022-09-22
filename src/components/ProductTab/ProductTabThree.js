@@ -1,11 +1,31 @@
-import Link from "next/link";
-import Tab from "react-bootstrap/Tab";
+import Router from 'next/router';
+import { Col, Container, Row } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
-import { Container, Row, Col } from "react-bootstrap";
+import Tab from "react-bootstrap/Tab";
 import { IoIosAdd } from "react-icons/io";
+import { useToasts } from "react-toast-notifications";
+import { getUserCheckResult } from "../../redux/actions/userCheckActions";
 import { ProductGridWrapper } from "../ProductThumb";
 
+
 const ProductTabThree = ({ newProducts, popularProducts, saleProducts }) => {
+  const { addToast } = useToasts();
+
+  const shopMore = async () => {
+    if (localStorage.getItem('accessToken')) {
+      const response = await getUserCheckResult();
+      if (response.data.errorText === 'accessToken expired') {
+        addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+        Router.push('/other/login');
+      } else {
+        Router.push('/shop/left-sidebar');
+      }
+    } else {
+      addToast("Please log in!", { appearance: "error", autoDismiss: true });
+      Router.push('/other/login');
+    }
+  }
+
   return (
     <div className="product-tab product-tab--style2 space-mb--r100">
       <Container className="wide">
@@ -53,15 +73,10 @@ const ProductTabThree = ({ newProducts, popularProducts, saleProducts }) => {
         </Tab.Container>
         <Row>
           <Col lg={12} className="text-center">
-            <Link
-              href="/shop/left-sidebar"
-              as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-            >
-              <a className="lezada-button lezada-button--medium lezada-button--icon--left">
-                <IoIosAdd />
-                Shop More
-              </a>
-            </Link>
+            <a className="lezada-button lezada-button--medium lezada-button--icon--left" onClick={shopMore}>
+              <IoIosAdd />
+              Shop More
+            </a>
           </Col>
         </Row>
       </Container>

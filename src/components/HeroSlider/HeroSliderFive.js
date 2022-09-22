@@ -1,8 +1,27 @@
-import Link from "next/link";
+import Router from 'next/router';
 import { Col, Container, Row } from "react-bootstrap";
 import Swiper from "react-id-swiper";
+import { useToasts } from "react-toast-notifications";
+import { getUserCheckResult } from "../../redux/actions/userCheckActions";
 
 const HeroSliderFive = ({ sliderData, spaceBottomClass }) => {
+  const { addToast } = useToasts();
+
+  const shopNow = async () => {
+    if (localStorage.getItem('accessToken')) {
+      const response = await getUserCheckResult();
+      if (response.data.errorText === 'accessToken expired') {
+        addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+        Router.push('/other/login');
+      } else {
+        Router.push('/shop/left-sidebar');
+      }
+    } else {
+      addToast("Please log in!", { appearance: "error", autoDismiss: true });
+      Router.push('/other/login');
+    }
+  }
+
   const params = {
     loop: true,
     speed: 1000,
@@ -52,14 +71,10 @@ const HeroSliderFive = ({ sliderData, spaceBottomClass }) => {
                               dangerouslySetInnerHTML={{ __html: single.title }}
                             />
                             <div className="slider-link">
-                              <Link
-                                href={single.url}
-                                as={process.env.PUBLIC_URL + single.url}
-                              >
-                                <a className="lezada-button lezada-button--medium">
-                                  shop now
-                                </a>
-                              </Link>
+
+                              <a className="lezada-button lezada-button--medium" onClick={shopNow}>
+                                shop now
+                              </a>
                             </div>
                           </div>
                         </Col>

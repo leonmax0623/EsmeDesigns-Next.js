@@ -9,8 +9,6 @@ const initState = [];
 const cartReducer = (state = initState, action) => {
   const cartItems = state,
     product = action.payload;
-  console.log("Redux / action.payload => ", product)
-
 
   if (action.type === ADD_TO_CART) {
     // for non variant products

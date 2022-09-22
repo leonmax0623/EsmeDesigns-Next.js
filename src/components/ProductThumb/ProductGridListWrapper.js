@@ -26,11 +26,11 @@ const ProductGridWrapper = ({
   compareItems
 }) => {
   const { addToast } = useToasts();
+  console.log("API Products => ", products)
   return (
     <Fragment>
       {products &&
         products.map((product) => {
-          console.log("@@@@@@", product)
           const discountedPrice = parseInt(product.discountedPrice)
           const productPrice = parseInt(product.standardPrice);
           const cartItem = cartItems.filter(

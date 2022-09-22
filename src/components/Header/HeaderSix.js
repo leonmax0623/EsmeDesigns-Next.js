@@ -161,9 +161,11 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                         }}
                       >
                         <IoIosCart />
-                        <span className="count">
-                          {totalOrders}
-                        </span>
+                        {totalOrders > 0 && (
+                          <span className="count">
+                            {totalOrders}
+                          </span>
+                        )}
                       </button>
                     </li>
                   </ul>
@@ -193,9 +195,12 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                       >
                         <a>
                           <IoIosCart />
-                          <span className="count">
-                            {totalOrders}
-                          </span>
+                          {totalOrders > 0 && (
+                            <span className="count">
+                              {totalOrders}
+                            </span>
+                          )}
+
                         </a>
                       </Link>
                     </li>

@@ -1,14 +1,14 @@
 import { Cookies } from 'react-cookie';
 import API from '../../api';
 
-export async function getProductsList() {
+export async function getUserCheckResult() {
     const cookies = new Cookies();
 
     const userToken = cookies.get('accessToken')
     const tokenInStorage = localStorage.getItem('accessToken')
 
     const formData = {
-        feaMethod: 'getProductsList',
+        feaMethod: 'getSalesOrdersList',
         accessToken: tokenInStorage
     }
 

@@ -28,7 +28,8 @@ const Login = () => {
 			.then(response => {
 				console.log('response', response);
 				const cookie = response.data.accessToken;
-				cookies.set("accessToken", cookie, [{ maxAge: 36000000 }])
+				localStorage.setItem('accessToken', cookie)
+				// cookies.set("accessToken", cookie, [{ maxAge: 3600000 }])
 				Router.push('/');
 				addToast("Successfully Logged In", { appearance: "success", autoDismiss: true });
 

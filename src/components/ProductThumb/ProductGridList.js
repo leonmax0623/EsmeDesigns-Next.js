@@ -23,6 +23,7 @@ const ProductGridList = ({
 }) => {
   const [modalShow, setModalShow] = useState(false);
 
+  console.log("!!!!!!!!!!!", product.picture[0].url)
   return (
     <Fragment>
       <Col lg={3} md={6} className={bottomSpace ? bottomSpace : ""}>
@@ -32,18 +33,18 @@ const ProductGridList = ({
             <Link
               href={`/shop/product-basic/[slug]?slug=${product.productName}`}
               as={
-                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                "/shop/product-basic/" + product.productName
               }
             >
               <a className="image-wrap">
                 <img
-                  src={process.env.PUBLIC_URL + product.pictures[0].url}
+                  src={product.picture.length > 0 && product.picture[0].url ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
                   className="img-fluid"
                   alt={product.productName}
                 />
-                {product.pictures.length > 1 ? (
+                {product.picture.length > 1 ? (
                   <img
-                    src={process.env.PUBLIC_URL + product.pictures[1].url}
+                    src={product.picture.length > 0 && product.picture[1].url ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
                     className="img-fluid"
                     alt={product.productName}
                   />
@@ -140,11 +141,11 @@ const ProductGridList = ({
             <div className="title">
               <h3>
                 <Link
-                  href={`/shop/product-basic/[slug]?slug=${product.slug}`}
+                  href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                   as={
                     process.env.PUBLIC_URL +
                     "/shop/product-basic/" +
-                    product.slug
+                    product.productName
                   }
                 >
                   <a>{product.productName}</a>
@@ -157,11 +158,11 @@ const ProductGridList = ({
                 </a>
               ) : product.variation && product.variation.length >= 1 ? (
                 <Link
-                  href={`/shop/product-basic/[slug]?slug=${product.slug}`}
+                  href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                   as={
                     process.env.PUBLIC_URL +
                     "/shop/product-basic/" +
-                    product.slug
+                    product.productName
                   }
                 >
                   <a>Select Option</a>
@@ -197,20 +198,20 @@ const ProductGridList = ({
           {/*=======  single product image  =======*/}
           <div className="product-list__image">
             <Link
-              href={`/shop/product-basic/[slug]?slug=${product.slug}`}
+              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
               as={
-                process.env.PUBLIC_URL + "/shop/product-basic/" + product.slug
+                "/shop/product-basic/" + product.productName
               }
             >
               <a className="image-wrap">
                 <img
-                  src={process.env.PUBLIC_URL + product.pictures[0].url}
+                  src={product.picture.length > 0 && product.picture[0].url ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
                   className="img-fluid"
                   alt={product.productName}
                 />
-                {product.pictures.length > 1 ? (
+                {product.picture.length > 1 ? (
                   <img
-                    src={process.env.PUBLIC_URL + product.pictures[1].url}
+                    src={product.picture.length > 0 && product.picture[1].url ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
                     className="img-fluid"
                     alt={product.productName}
                   />
@@ -299,79 +300,6 @@ const ProductGridList = ({
                   <IoIosSearch />
                 </button>
               </Tooltip>
-            </div>
-          </div>
-
-          {/*=======  single product content  =======*/}
-          <div className="product-list__content">
-            <div className="title">
-              <h3>
-                <Link
-                  href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                  as={
-                    process.env.PUBLIC_URL +
-                    "/shop/product-basic/" +
-                    product.slug
-                  }
-                >
-                  <a>{product.productName}</a>
-                </Link>
-              </h3>
-            </div>
-            <div className="price">
-              {product.discount > 0 ? (
-                <Fragment>
-                  <span className="main-price discounted">${productPrice}</span>
-                  <span className="discounted-price">${discountedPrice}</span>
-                </Fragment>
-              ) : (
-                <span className="main-price">${productPrice}</span>
-              )}
-            </div>
-
-            <div className="short-description">{product.shortDescription}</div>
-            <div className="add-to-cart">
-              {/* add to cart */}
-              {product.affiliateLink ? (
-                <a
-                  href={product.affiliateLink}
-                  target="_blank"
-                  className="lezada-button lezada-button--medium"
-                >
-                  Buy now
-                </a>
-              ) : product.variation && product.variation.length >= 1 ? (
-                <Link
-                  href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                  as={
-                    process.env.PUBLIC_URL +
-                    "/shop/product-basic/" +
-                    product.slug
-                  }
-                >
-                  <a className="lezada-button lezada-button--medium">
-                    Select Option
-                  </a>
-                </Link>
-              ) : product.inStock && product.inStock > 0 ? (
-                <button
-                  onClick={() => addToCart(product, addToast)}
-                  disabled={
-                    cartItem !== undefined &&
-                    cartItem.quantity >= cartItem.inStock
-                  }
-                  className="lezada-button lezada-button--medium"
-                >
-                  {cartItem !== undefined ? "Added to cart" : "Add to cart"}
-                </button>
-              ) : (
-                <button
-                  disabled
-                  className="lezada-button lezada-button--medium"
-                >
-                  Out of Stock
-                </button>
-              )}
             </div>
           </div>
         </div>
