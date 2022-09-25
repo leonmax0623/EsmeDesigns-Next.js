@@ -37,13 +37,13 @@ const ProductGridList = ({
             >
               <a className="image-wrap">
                 <img
-                  src={product.picture.length > 0 && product.picture[0].url ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
+                  src={process.env.API_BASE_URL + product.picture.length > 0 && product.picture[0].url ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
                   className="img-fluid"
                   alt={product.productName}
                 />
                 {product.picture.length > 1 ? (
                   <img
-                    src={product.picture.length > 0 && product.picture[1].url ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
+                    src={process.env.API_BASE_URL + product.picture.length > 0 && product.picture[1].url ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
                     className="img-fluid"
                     alt={product.productName}
                   />
@@ -204,13 +204,13 @@ const ProductGridList = ({
             >
               <a className="image-wrap">
                 <img
-                  src={product.picture.length > 0 && product.picture[0].url ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
+                  src={process.env.API_BASE_URL + product.picture.length > 0 && product.picture[0].url ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
                   className="img-fluid"
                   alt={product.productName}
                 />
                 {product.picture.length > 1 ? (
                   <img
-                    src={product.picture.length > 0 && product.picture[1].url ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
+                    src={process.env.API_BASE_URL + product.picture.length > 0 && product.picture[1].url ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
                     className="img-fluid"
                     alt={product.productName}
                   />

@@ -12,28 +12,19 @@ import {
   ShopFilter, ShopHeader, ShopProducts, ShopSidebar
 } from "../../components/Shop";
 import { getSortedProducts } from "../../lib/product";
+import { getCollections } from "../../redux/actions/navigationActions";
 import { getProductsList } from "../../redux/actions/productListActions";
 
 const LeftSidebar = ({ products }) => {
   const { addToast } = useToasts();
 
   const [apiProducts, setApiProducts] = useState([])
-
-  useEffect(async () => {
-    const response = await getProductsList();
-    if (response.data.errorText === 'accessToken expired') {
-      addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
-      Router.push('/other/login');
-    } else {
-      const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined && i < 20) : '';
-      setApiProducts(aaa)
-      console.log("getProductsList => ", response.data.items)
-    }
-  }, [apiProducts])
+  const [apiFilteredProducts, setApiFilteredProducts] = useState([])
+  const [collections, setCollections] = useState('')
 
   const [layout, setLayout] = useState("grid four-column");
   const [sortType, setSortType] = useState("");
-  const [sortValue, setSortValue] = useState("");
+  const [sortValue, setSortValue] = useState("all");
   const [filterSortType, setFilterSortType] = useState("");
   const [filterSortValue, setFilterSortValue] = useState("");
   const [offset, setOffset] = useState(0);
@@ -41,16 +32,17 @@ const LeftSidebar = ({ products }) => {
   const [currentData, setCurrentData] = useState([]);
   const [sortedProducts, setSortedProducts] = useState([]);
   const [shopTopFilterStatus, setShopTopFilterStatus] = useState(false);
+  const [totalLength, setTotalLength] = useState(0);
 
-  const pageLimit = 20;
+  const pageLimit = 24;
 
   const getLayout = (layout) => {
     setLayout(layout);
   };
 
-  const getSortParams = (sortType, sortValue) => {
-    setSortType(sortType);
-    setSortValue(sortValue);
+  const getSortParams = (type, value) => {
+    setSortType(type);
+    setSortValue(value);
   };
 
   const getFilterSortParams = (sortType, sortValue) => {
@@ -58,8 +50,12 @@ const LeftSidebar = ({ products }) => {
     setFilterSortValue(sortValue);
   };
 
+  const getPageProducts = () => {
+    return apiFilteredProducts.slice(offset, offset + pageLimit)
+  }
+
   useEffect(() => {
-    let sortedProducts = getSortedProducts(products, sortType, sortValue);
+    let sortedProducts = getSortedProducts(apiProducts, sortType, sortValue);
     const filterSortedProducts = getSortedProducts(
       sortedProducts,
       filterSortType,
@@ -68,7 +64,36 @@ const LeftSidebar = ({ products }) => {
     sortedProducts = filterSortedProducts;
     setSortedProducts(sortedProducts);
     setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-  }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
+  }, [offset, apiProducts, filterSortType, filterSortValue]);
+
+  useEffect(async () => {
+
+    const response = await getProductsList();
+    if (response.data.errorText === 'accessToken expired') {
+      addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+      Router.push('/other/login');
+    } else {
+      const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
+      setApiProducts(aaa)
+    }
+  }, [products])
+
+  useEffect(() => {
+    let filtered = [];
+
+    if (sortValue === "all") {
+      filtered = apiProducts.filter((item, i) => Array.isArray(item.picture) === true)
+    } else {
+      filtered = apiProducts.filter((item) => item.subCategory.includes(sortValue) === true)
+    }
+    setTotalLength(filtered.length);
+    setApiFilteredProducts(filtered)
+  }, [sortType, sortValue, apiProducts])
+
+  useEffect(async () => {
+    const response = await getCollections();
+    setCollections(response.data.collections)
+  }, [])
 
   return (
     <LayoutTwo>
@@ -92,8 +117,8 @@ const LeftSidebar = ({ products }) => {
         <ShopHeader
           getLayout={getLayout}
           getFilterSortParams={getFilterSortParams}
-          productCount={products.length}
-          sortedProductCount={currentData.length}
+          productCount={totalLength}
+          sortedProductCount={getPageProducts().length}
           shopTopFilterStatus={shopTopFilterStatus}
           setShopTopFilterStatus={setShopTopFilterStatus}
         />
@@ -113,19 +138,20 @@ const LeftSidebar = ({ products }) => {
               >
                 {/* shop sidebar */}
                 <ShopSidebar
-                  products={products}
+                  products={apiProducts}
                   getSortParams={getSortParams}
+                  collections={collections}
                 />
               </Col>
 
               <Col lg={9} className="order-1 order-lg-2">
                 {/* shop products */}
-                <ShopProducts layout={layout} products={apiProducts} />
+                <ShopProducts layout={layout} products={getPageProducts()} />
 
                 {/* shop product pagination */}
                 <div className="pro-pagination-style">
                   <Paginator
-                    totalRecords={sortedProducts.length}
+                    totalRecords={totalLength}
                     pageLimit={pageLimit}
                     pageNeighbours={2}
                     setOffset={setOffset}
