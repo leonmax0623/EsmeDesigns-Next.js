@@ -1,6 +1,5 @@
 // get products
 export const getProducts = (products, category, type, limit) => {
-  console.log("Lib/product => ", products)
   const finalProducts = products;
   // const finalProducts = category
   //   ? products.filter(
@@ -71,7 +70,7 @@ export const getSortedProducts = (products, sortType, sortValue) => {
     if (sortType === "category") {
       return products.filter(
         (product) =>
-          product.category.filter((single) => single === sortValue)[0]
+          product.subCategory.filter((single) => single === sortValue)[0]
       );
     }
     if (sortType === "tag") {
@@ -141,9 +140,9 @@ export const getIndividualCategories = (products) => {
   products &&
     products.map((product) => {
       return (
-        product.category &&
-        product.category.map((single) => {
-          return productCategories.push(single);
+        product.fabrics &&
+        product.fabrics.map((single) => {
+          return productCategories.push(single.name);
         })
       );
     });
@@ -216,6 +215,7 @@ export const getIndividualSizes = (product) => {
 };
 
 export const setActiveSort = (e) => {
+  console.log("TARGET VALUE", e)
   const filterButtons = document.querySelectorAll(
     ".single-sidebar-widget__list button, .tag-container button, .single-filter-widget__list button"
   );

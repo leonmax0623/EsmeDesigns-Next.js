@@ -1,15 +1,13 @@
-import Link from "next/link";
-import { Fragment } from "react";
 import { IoIosSearch } from "react-icons/io";
 import {
   getIndividualCategories,
   getIndividualColors,
   getIndividualTags, getProducts, setActiveSort
 } from "../../lib/product";
-import { ProductRating } from "../Product";
 
-const ShopSidebar = ({ products, getSortParams }) => {
-  const categories = getIndividualCategories(products);
+const ShopSidebar = ({ collections, products, getSortParams }) => {
+  const navCollection = localStorage.getItem('navCollection');
+  const categories = getIndividualCategories(collections);
   const colors = getIndividualColors(products);
   const tags = getIndividualTags(products);
   const popularProducts = getProducts(products, "perfumes", "popular", 3);
@@ -38,10 +36,10 @@ const ShopSidebar = ({ products, getSortParams }) => {
             <li>
               <button
                 onClick={(e) => {
-                  getSortParams("category", "");
+                  getSortParams("category", "all");
                   setActiveSort(e);
                 }}
-                className="active"
+                className={navCollection === "all" ? 'active' : ''}
               >
                 All categories
               </button>
@@ -54,6 +52,7 @@ const ShopSidebar = ({ products, getSortParams }) => {
                       getSortParams("category", category);
                       setActiveSort(e);
                     }}
+                    className={navCollection === category ? 'active' : ''}
                   >
                     {category}
                   </button>
@@ -101,7 +100,7 @@ const ShopSidebar = ({ products, getSortParams }) => {
       </div> */}
 
       {/* popular products */}
-      <div className="single-sidebar-widget space-mb--40">
+      {/* <div className="single-sidebar-widget space-mb--40">
         <h2 className="single-sidebar-widget__title space-mb--30">
           Popular products
         </h2>
@@ -172,7 +171,7 @@ const ShopSidebar = ({ products, getSortParams }) => {
         ) : (
           "No products found"
         )}
-      </div>
+      </div> */}
 
       {/* tag list */}
       <div className="single-sidebar-widget">

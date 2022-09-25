@@ -1,5 +1,5 @@
-import { ProductGridListWrapper } from "../../components/ProductThumb";
 import { Row } from "react-bootstrap";
+import { ProductGridListWrapper } from "../../components/ProductThumb";
 const ShopProducts = ({ products, layout }) => {
   return (
     <div className="shop-products">
