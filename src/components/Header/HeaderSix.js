@@ -96,10 +96,10 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
               <Col xs={6} lg={4} className="text-left text-lg-center">
                 {/* logo */}
                 <div className="header-content__logo">
-                  <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+                  <Link href="/" as={"/"}>
                     <a>
                       <img
-                        src={process.env.PUBLIC_URL + "/assets/images/esme-logo.svg"}
+                        src={"/assets/images/esme-logo.svg"}
                         className="img-fluid"
                         alt=""
                       />
@@ -125,7 +125,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                     <li>
                       <Link
                         href="/other/login"
-                        as={process.env.PUBLIC_URL + "/other/login"}
+                        as={"/other/login"}
                       >
                         <a>
                           <IoMdPerson />
@@ -174,7 +174,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                     <li>
                       <Link
                         href="/other/wishlist"
-                        as={process.env.PUBLIC_URL + "/other/wishlist"}
+                        as={"/other/wishlist"}
                       >
                         <a>
                           <IoIosHeartEmpty />
@@ -191,7 +191,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                     <li>
                       <Link
                         href="/other/cart"
-                        as={process.env.PUBLIC_URL + "/other/cart"}
+                        as={"/other/cart"}
                       >
                         <a>
                           <IoIosCart />
