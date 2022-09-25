@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-// import RECAPTCHA from "react-google-recaptcha";
+import RECAPTCHA from "react-google-recaptcha";
 // import Router from 'next/router';
 import API from '../../api';
 import { BreadcrumbOne } from "../../components/Breadcrumb";
@@ -380,7 +380,7 @@ const Register = () => {
                   </Col>
                 </Row>
               </Col>
-              {/* <Col lg={12} style={{ marginBottom: "30px" }}>
+              <Col lg={12} style={{ marginBottom: "30px" }}>
                 <h4>Captcha</h4><hr />
                 <Row>
                   <Col lg={6}>
@@ -392,7 +392,7 @@ const Register = () => {
                     <RECAPTCHA sitekey={process.env.REACT_APP_SITE_KEY} />
                   </Col>
                 </Row>
-              </Col> */}
+              </Col>
               <div className="section-title--login text-center space-mb--50 space-mt--50" >
                 <button className="lezada-button lezada-button--medium" style={{ marginBottom: "20px" }}>
                   register
