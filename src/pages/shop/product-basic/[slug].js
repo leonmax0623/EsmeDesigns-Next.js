@@ -10,7 +10,7 @@ import {
   ProductDescription,
   ProductDescriptionTab
 } from "../../../components/ProductDetails";
-import products from "../../../data/real_products.json";
+// import products from "../../../data/real_products.json";
 import { addToBulk } from "../../../redux/actions/bulkActions";
 import { addToCart } from "../../../redux/actions/cartActions";
 import {
@@ -23,7 +23,6 @@ import {
 } from "../../../redux/actions/wishlistActions";
 
 const ProductBasic = ({
-  product,
   cartItems,
   wishlistItems,
   compareItems,
@@ -38,7 +37,7 @@ const ProductBasic = ({
     document.querySelector("body").classList.remove("overflow-hidden");
   });
 
-  console.log("Single Product => ", product)
+  const product = [JSON.parse(localStorage.getItem('specificProduct'))]
 
   const { addToast } = useToasts();
   // const discountedPrice = getDiscountPrice(
@@ -91,7 +90,7 @@ const ProductBasic = ({
             <Col lg={6} className="space-mb-mobile-only--50">
               {/* image gallery bottom thumb */}
               <ImageGalleryBottomThumb
-                product={product}
+                product={product[0]}
                 wishlistItem={wishlistItem}
                 addToast={addToast}
                 addToWishlist={addToWishlist}
@@ -102,7 +101,7 @@ const ProductBasic = ({
             <Col lg={6}>
               {/* product description */}
               <ProductDescription
-                product={product}
+                product={product[0]}
                 productPrice={productPrice}
                 discountedPrice={discountedPrice}
                 cartItems={cartItems}
@@ -122,7 +121,7 @@ const ProductBasic = ({
           <Row>
             <Col>
               {/* product description tab */}
-              <ProductDescriptionTab product={product} />
+              <ProductDescriptionTab product={product[0]} />
             </Col>
           </Row>
         </Container>
@@ -135,7 +134,7 @@ const mapStateToProps = (state) => {
   return {
     cartItems: state.cartData,
     wishlistItems: state.wishlistData,
-    compareItems: state.compareData
+    compareItems: state.compareData,
   };
 };
 
@@ -194,18 +193,19 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductBasic);
 
-export async function getStaticPaths() {
-  // get the paths we want to pre render based on products
-  const paths = products.map((product) => ({
-    params: { slug: product.productName }
-  }));
+// export async function getStaticPaths() {
+//   console.log("^^^^^^^^^^^^^", products)
+//   // get the paths we want to pre render based on products
+//   const paths = products.map((product) => ({
+//     params: { slug: product.productName }
+//   }));
 
-  return { paths, fallback: false };
-}
+//   return { paths, fallback: false };
+// }
 
-export async function getStaticProps({ params }) {
-  // get product data based on slug
-  const product = products.filter((single) => single.productName === params.slug)[0];
+// export async function getStaticProps({ params }) {
+//   // get product data based on slug
+//   const product = JSON.parse(localStorage.getItem('specificProduct'))
 
-  return { props: { product } };
-}
+//   return { props: { product } };
+// }

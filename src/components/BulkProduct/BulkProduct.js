@@ -47,23 +47,23 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				setSizeCategory(bulkProductProps[0].sizeCategories[0].sizeCategoryName)
 				setSelectedSizeCategory(bulkProductProps[0].sizeCategories[0].sizeCategoryName)
 			}
-			if (bulkProductProps[0].lining) {
+			if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
 				setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
 			}
-			if (bulkProductProps[0].lining) {
-				setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColors[0].fabricsColorName)
+			if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
+				setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricColorName)
 			}
-			if (bulkProductProps[0].fabrics) {
+			if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
 				setSelectedFabrics(bulkProductProps[0].selectedFabrics ? bulkProductProps[0].selectedFabrics : bulkProductProps[0].fabrics[0].fabricsId)
 			}
-			if (bulkProductProps[0].fabrics) {
-				setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColors[0].fabricsColorName)
+			if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
+				setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorName)
 			}
-			if (bulkProductProps[0].sizeCategories) {
+			if (bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0) {
 				setSelectedSize(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
 			}
 
-			if (bulkProductProps[0].regularSizeArray) {
+			if (bulkProductProps[0].regularSizeArray && bulkProductProps[0].regularSizeArray.length > 0) {
 				console.log("True!!!!!", JSON.stringify(bulkProductProps[0].regularSizeArray))
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
 			} else {
@@ -101,11 +101,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				setComboArray(bulkProductProps[0].comboArray);
 			} else {
 				bulkProductProps[0].combos.map((item) => {
-					setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColors[0].fabricsColorName, rgb: item.fabric[0].fabricsColors[0].fabricsColorRGB } } }]);
+					setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColor[0].fabricColorName, rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB } } }]);
 				});
 			}
 		}
 	}, [bulkProductProps]);
+
+	console.log("styleOptions/styleOptions=>", JSON.parse(regularSizeArray)[0])
 
 	//custom
 	const alterationOptions = [];
@@ -272,7 +274,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		var colorId = optionElement.getAttribute('data-color-index');
 
 		array[comboId].fabric.color.color_name = e.target.value;
-		array[comboId].fabric.color.rgb = bulkProductProps[0].combos[comboId].fabric[fabricId].fabricsColors[colorId].fabricsColorRGB;
+		array[comboId].fabric.color.rgb = bulkProductProps[0].combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorRGB;
 
 		setComboArray(array);
 	}
@@ -291,7 +293,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							style={{ width: "115px" }}
 							src={
 								process.env.PUBLIC_URL +
-								bulkProductProps[0].pictures[0].url
+								bulkProductProps[0].picture[0].url
 							}
 							className="img-fluid image"
 							alt=""
@@ -313,7 +315,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				<Col lg={12} className="bulk-container__settings__fabrics" style={{ marginBottom: "20px" }}>
 					<Col lg={3}>
 						<div className="bulk-container__settings__fabrics__container">
-							{bulkProductProps[0].fabrics ? (
+							{bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0 ? (
 								<div className="product-content__size-color">
 									<div className="bulk-container__settings__fabrics__container__title">
 										<div className="product-content__size__title bulk-container__settings__fabrics__container__title__header">Fabrics</div>
@@ -324,7 +326,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 												disabled={editBoolean}
 												onChange={(event) => {
 													setSelectedFabrics(event.target.value)
-													setSelectedFabricsColor(bulkProductProps[0].fabrics.find(x => x.fabricsId === event.target.value).fabricsColors[0].fabricsColorName)
+													setSelectedFabricsColor(bulkProductProps[0].fabrics.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
 												}}
 											>
 												{bulkProductProps[0].fabrics &&
@@ -357,9 +359,9 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 														setSelectedFabricsColor(event.target.value);
 													}}
 												>
-													{bulkProductProps[0].fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColors.map((color, i) => {
+													{bulkProductProps[0].fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
 														return (
-															<option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+															<option key={i} value={color.fabricColorName}>{color.fabricColorName}</option>
 														);
 													}) : "")}
 												</select>
@@ -372,7 +374,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 					</Col>
 					<Col lg={3}>
 						<div className="bulk-container__settings__fabrics__container">
-							{bulkProductProps[0].lining ? (
+							{bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0 ? (
 								<div className="product-content__size-color">
 									<div className="bulk-container__settings__fabrics__container__title">
 										<div className="product-content__size__title bulk-container__settings__fabrics__container__title__header">Lining</div>
@@ -383,7 +385,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 												disabled={editBoolean}
 												onChange={(event) => {
 													setSelectedLining(event.target.value)
-													setSelectedLiningFabricsColor(bulkProductProps[0].lining.find(x => x.fabricsId === event.target.value).fabricsColors[0].fabricsColorName)
+													setSelectedLiningFabricsColor(bulkProductProps[0].lining.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
 												}}
 											>
 												{bulkProductProps[0].lining &&
@@ -414,9 +416,9 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 														setSelectedLiningFabricsColor(event.target.value);
 													}}
 												>
-													{bulkProductProps[0].lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColors.map((color, i) => {
+													{bulkProductProps[0].lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
 														return (
-															<option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+															<option key={i} value={color.fabricColorName}>{color.fabricColorName}</option>
 														);
 													}) : "")}
 												</select>
@@ -427,7 +429,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							)}
 						</div>
 					</Col>
-					{bulkProductProps[0].combos ?
+					{bulkProductProps[0].combos && bulkProductProps[0].combos.length > 0 ?
 						bulkProductProps[0].combos.map((combo, comboIndex) => {
 							return (
 								<Col lg={3} className="bulk-container__settings__fabrics__container">
@@ -463,9 +465,9 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 														onChange={handleComboFabricColorsChange}
 														disabled={editBoolean}
 													>
-														{combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColors.map((color, i) => {
+														{combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColor.map((color, i) => {
 															return (
-																<option data-combo-index={comboIndex} data-fabric-index={comboArray[comboIndex]?.fabric.fabric_index ?? 0} data-color-index={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+																<option data-combo-index={comboIndex} data-fabric-index={comboArray[comboIndex]?.fabric.fabric_index ?? 0} data-color-index={i} value={color.fabricColorName}>{color.fabricColorName}</option>
 															)
 														})}
 													</select>
@@ -480,7 +482,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						)}
 				</Col>
 				<Col lg={12} className="bulk-container__settings__fabrics" style={{ marginBottom: "20px" }}>
-					{bulkProductProps[0].styleAttributes ? (
+					{bulkProductProps[0].styleAttributes && bulkProductProps[0].styleAttributes.length > 0 ? (
 						<Col lg={6} style={{ padding: "0px" }}>
 							<div style={{ alignItems: "baseline" }}>
 								<div className="header">
@@ -520,7 +522,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						""
 					)}
 					<Col lg={6} className="bulk-container__settings__fabrics">
-						{bulkProductProps[0].styleAlterations ? (
+						{bulkProductProps[0].styleAlterations && bulkProductProps[0].styleAlterations.length > 0 ? (
 							<Col lg={7} style={{ marginBottom: "10px" }}>
 								<div className="product-content__size-color">
 									<div className="bulk-container__settings__fabrics__container__title">
@@ -542,7 +544,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							""
 						)}
 
-						{bulkProductProps[0].styleOptions ? (
+						{bulkProductProps[0].styleOptions && bulkProductProps[0].styleOptions.length > 0 ? (
 							<Col lg={5}>
 								<div className="product-content__size-color">
 									<div className="bulk-container__settings__fabrics__container__title">
@@ -570,7 +572,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 					{!bulkProductProps[0].regularOrder ? (
 						<div className="product-content__size-color">
 							<div style={{ alignItems: "baseline" }}>
-								<div className="product-content__size__content bulk-container__settings__fabrics" style={{ display: "flex", alignItems: "end" }}>
+								<div className="product-content__size__content bulk-container__settings__fabrics" style={{ display: "flex", alignItems: "start" }}>
 									<Col lg={2} className="size-main__title">
 										<div className="product-content__size__title bulk-container__settings__fabrics__container__title__header__title-header">Size</div>
 										<div className="product-content__size__content">
@@ -583,7 +585,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 													handleResetSizeArrayInput(event.target.value)
 												}}
 											>
-												{JSON.parse(regularSizeArray).length > 1 ? JSON.parse(regularSizeArray).map((category, i) => {
+												{JSON.parse(regularSizeArray).length > 0 ? JSON.parse(regularSizeArray).map((category, i) => {
 													return (
 														<option value={category.sizeCategoryName}>{category.sizeCategoryName}</option>
 													)
@@ -593,13 +595,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 									</Col>
 									<Col lg={10}>
 										<div className="inputs">
-											{selectedSizeCategory === "Regular Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[0].sizes.map((size, j) => {
+											{JSON.parse(regularSizeArray).length > 0 && JSON.parse(regularSizeArray)[0].sizes.map((size, j) => {
 												return <div style={{ display: "flex", flexDirection: "column" }}>
 													<span style={{ fontSize: "14px", textAlign: "center", color: "#333", margin: "10px 0px" }}>{size.sizeName}</span>
 													<input style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`0-${j}`} name="amount" max="999" min="0" onChange={(e) => handleRegularSizeArray(e)} />
 												</div>
 											})}
-											{selectedSizeCategory === "Specific Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[1].sizes.map((size, j) => {
+											{/* {selectedSizeCategory === "Specific Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[1].sizes.map((size, j) => {
 												return (
 													<>
 														<div style={{ display: "flex", flexDirection: "column" }}>
@@ -609,7 +611,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 														</div>
 													</>
 												)
-											})}
+											})} */}
 											<div style={{ display: "flex", flexDirection: "column" }}>
 												<span style={{ fontSize: "14px", textAlign: "center", color: "#333", margin: "10px 0px" }}>Total</span>
 												<input disabled style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} value={totalItems} />

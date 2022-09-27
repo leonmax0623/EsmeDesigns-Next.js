@@ -215,7 +215,6 @@ export const getIndividualSizes = (product) => {
 };
 
 export const setActiveSort = (e) => {
-  console.log("TARGET VALUE", e)
   const filterButtons = document.querySelectorAll(
     ".single-sidebar-widget__list button, .tag-container button, .single-filter-widget__list button"
   );
