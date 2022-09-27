@@ -86,47 +86,49 @@ const Register = () => {
     console.log("divisionRegion", divisionRegion)
     console.log("divisionCountry", divisionCountry)
 
+    const parameters = {
+      "username": firstName,
+      "password": password,
+      "userFirstName": firstName,
+      "userLastName": lastName,
+      "userEmailAddress": email,
+      "userPhoneNumber": telephone,
+      "companyName": wholesaleName,
+      "companyLegalName": legalName,
+      "divisionName": divisionName,
+      "taxId": taxNumber,
+      "divisionStreet": divisionAddressOne,
+      "divisionStreet2": divisionAddressTwo,
+      "divisionCity": divisionCity,
+      "divisionZipCode": divisionZipCode,
+      "divisionState": divisionRegion,
+      "divisionCountry": divisionCountry,
+      "billingStreet": billingAddressOne,
+      "billingStreet2": billingAddressTwo,
+      "billingCity": billingCity,
+      "billingZipCode": billingZipCode,
+      "billingState": billingRegion,
+      "billingCountry": billingCountry,
+      "shippingStreet": shippingAddressOne,
+      "shippingStreet2": shippingAddressTwo,
+      "shippingCity": shippingCity,
+      "shippingZipCode": shippingZipCode,
+      "shippingState": shippingRegion,
+      "shippingCountry": shippingCountry,
+      "subscribeNewsletter": newsletterSubscribe ? "True" : "False"
+    }
+
     const formData = {
-      feaMethod: 'newCustomerRegistration',
-      customersType: "WS",
-      parameters: {
-        "username": firstName + lastName,
-        "password": password,
-        "userFirstName": firstName,
-        "userLastName": lastName,
-        "userEmailAddress": email,
-        "userPhoneNumber": telephone,
-        "companyName": wholesaleName,
-        "companyLegalName": legalName,
-        "divisionName": divisionName,
-        "taxId": taxNumber,
-        "divisionStreet": divisionAddressOne,
-        "divisionStreet2": divisionAddressTwo,
-        "divisionCity": divisionCity,
-        "divisionZipCode": divisionZipCode,
-        "divisionState": divisionRegion,
-        "divisionCountry": divisionCountry,
-        "billingStreet": billingAddressOne,
-        "billingStreet2": billingAddressTwo,
-        "billingCity": billingCity,
-        "billingZipCode": billingZipCode,
-        "billingState": billingRegion,
-        "billingCountry": billingCountry,
-        "shippingStreet": shippingAddressOne,
-        "shippingStreet2": shippingAddressTwo,
-        "shippingCity": shippingCity,
-        "shippingZipCode": shippingZipCode,
-        "shippingState": shippingRegion,
-        "shippingCountry": shippingCountry,
-        "subscribeNewsletter": newsletterSubscribe ? "True" : "False"
-      }
+      "feaMethod": "newCustomerRegistration",
+      "customersType": "WS",
+      "parameters": JSON.stringify(parameters)
     }
 
     API.post('/', new URLSearchParams(formData))
       .then(response => {
         console.log('response', response);
-        const cookie = response.data.accessToken;
-        localStorage.setItem('accessToken', cookie)
+        // const cookie = response.data.accessToken;
+        // localStorage.setItem('accessToken', cookie)
         // cookies.set("accessToken", cookie, [{ maxAge: 3600000 }])
         // Router.push('/');
         addToast("Successfully Logged In", { appearance: "success", autoDismiss: true });

@@ -1,8 +1,10 @@
 import Link from "next/link";
+import Router from 'next/router';
 import { Fragment, useState } from "react";
 import { Col } from "react-bootstrap";
 import { IoIosHeartEmpty, IoIosSearch, IoIosShuffle } from "react-icons/io";
 import { Tooltip } from "react-tippy";
+import { getProductDetail } from "../../redux/actions/productDetailActions";
 import ProductModal from "./ProductModal";
 
 const ProductGridList = ({
@@ -23,35 +25,48 @@ const ProductGridList = ({
 }) => {
   const [modalShow, setModalShow] = useState(false);
 
+  const navigateSpecificProduct = async () => {
+    const response = await getProductDetail(product.productId, product.productTypeId);
+    if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
+      addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+      // Router.push('/other/login');
+    } else {
+      console.log("TTTTTTT", response)
+      const product = response.data;
+      localStorage.setItem('specificProduct', JSON.stringify(product))
+      Router.push(`/shop/product-basic/${product.productName}`);
+    }
+  }
+
   return (
     <Fragment>
       <Col lg={3} md={6} className={bottomSpace ? bottomSpace : ""}>
         <div className="product-grid">
           {/*=======  single product image  =======*/}
           <div className="product-grid__image">
-            <Link
+            {/* <Link
               href={`/shop/product-basic/[slug]?slug=${product.productName}`}
               as={
                 "/shop/product-basic/" + product.productName
               }
-            >
-              <a className="image-wrap">
+            > */}
+            <a className="image-wrap" onClick={navigateSpecificProduct}>
+              <img
+                src={process.env.API_BASE_URL + product.picture.length > 0 ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
+                className="img-fluid"
+                alt={product.productName}
+              />
+              {product.picture.length > 0 && product.picture.length > 1 ? (
                 <img
-                  src={process.env.API_BASE_URL + product.picture.length > 0 && product.picture[0].url ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
+                  src={process.env.API_BASE_URL + product.picture.length > 1 ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
                   className="img-fluid"
                   alt={product.productName}
                 />
-                {product.picture.length > 1 ? (
-                  <img
-                    src={process.env.API_BASE_URL + product.picture.length > 0 && product.picture[1].url ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
-                    className="img-fluid"
-                    alt={product.productName}
-                  />
-                ) : (
-                  ""
-                )}
-              </a>
-            </Link>
+              ) : (
+                ""
+              )}
+            </a>
+            {/* </Link> */}
             <div className="product-grid__floating-badges">
               {product.discount && product.discount > 0 ? (
                 <span className="onsale">-{product.discount}%</span>
@@ -204,13 +219,13 @@ const ProductGridList = ({
             >
               <a className="image-wrap">
                 <img
-                  src={process.env.API_BASE_URL + product.picture.length > 0 && product.picture[0].url ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
+                  src={process.env.API_BASE_URL + product.picture.length > 0 ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
                   className="img-fluid"
                   alt={product.productName}
                 />
-                {product.picture.length > 1 ? (
+                {product.picture.length > 0 && product.picture.length > 1 ? (
                   <img
-                    src={process.env.API_BASE_URL + product.picture.length > 0 && product.picture[1].url ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
+                    src={process.env.API_BASE_URL + product.picture.length > 0 ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
                     className="img-fluid"
                     alt={product.productName}
                   />

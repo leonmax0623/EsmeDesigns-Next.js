@@ -5,7 +5,7 @@ export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 
 //add to cart
 export const addToCart = (
-  item,
+  product,
   addToast,
   quantityCount,
   selectedFabrics,
@@ -20,6 +20,8 @@ export const addToCart = (
   styleOptionSelected
 ) => {
 
+  console.log("CART ITEMS =>>>", product)
+
   return dispatch => {
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
@@ -27,7 +29,7 @@ export const addToCart = (
     dispatch({
       type: ADD_TO_CART,
       payload: {
-        ...item,
+        ...product,
         quantity: quantityCount,
         selectedFabrics: selectedFabrics,
         selectedFabricsColor: selectedFabricsColor,

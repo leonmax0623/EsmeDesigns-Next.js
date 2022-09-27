@@ -22,7 +22,7 @@ const ProductDescription = ({
   addToCompare,
   deleteFromCompare
 }) => {
-  console.log("Maximus", product)
+  console.log("Maximus Product Description", product)
   const router = useRouter()
   const dispatch = useDispatch();
   //custom 
@@ -42,17 +42,17 @@ const ProductDescription = ({
 
   useEffect(() => {
     if (product) {
-      if (product.lining) {
+      if (product.lining && product.lining.length > 0) {
         setSelectedLining(product.selectedLining ? product.selectedLining : product.lining[0].fabricsId)
       }
-      if (product.lining) {
-        setSelectedLiningFabricsColor(product.selectedLiningFabricsColor ? product.selectedLiningFabricsColor : product.lining[0].fabricsColors[0].fabricsColorName)
+      if (product.lining && product.lining.length > 0) {
+        setSelectedLiningFabricsColor(product.selectedLiningFabricsColor ? product.selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricColorName)
       }
-      if (product.fabrics) {
+      if (product.fabrics && product.fabrics.length > 0) {
         setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
       }
-      if (product.fabrics) {
-        setSelectedFabricsColor(product.selectedFabricsColor ? product.selectedFabricsColor : product.fabrics[0].fabricsColors[0].fabricsColorName)
+      if (product.fabrics && product.fabrics.length > 0) {
+        setSelectedFabricsColor(product.selectedFabricsColor ? product.selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
       }
 
       if (product.selectedAlteration) {
@@ -66,7 +66,7 @@ const ProductDescription = ({
       if (product.selectedAttr && product.selectedAttr.length > 1) {
         setSelectedAttr(product.selectedAttr);
       } else {
-        product.styleAttributes.map((item) => {
+        product.styleAttributes && product.styleAttributes.map((item) => {
           setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
         });
       }
@@ -74,8 +74,8 @@ const ProductDescription = ({
       if (product.comboArray) {
         setComboArray(product.comboArray);
       } else {
-        product.combos.map((item) => {
-          setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColors[0].fabricsColorName, rgb: item.fabric[0].fabricsColors[0].fabricsColorRGB } } }]);
+        product.combos && product.combos.map((item) => {
+          setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColor[0].fabricColorName, rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB } } }]);
         });
       }
     }
@@ -83,7 +83,7 @@ const ProductDescription = ({
 
   //custom
   const alterationOptions = [];
-  product && product.styleAlterations.map((single, i) => {
+  product.styleAlterations && product.styleAlterations.map((single, i) => {
     let array = {
       label: "",
       value: ""
@@ -94,7 +94,7 @@ const ProductDescription = ({
   });
 
   const styleOptions = [];
-  product && product.styleOptions.map((single, i) => {
+  product.styleOptions && product.styleOptions.map((single, i) => {
     let array = {
       label: "",
       value: ""
@@ -153,7 +153,7 @@ const ProductDescription = ({
     var colorId = optionElement.getAttribute('data-color-index');
 
     array[comboId].fabric.color.color_name = e.target.value;
-    array[comboId].fabric.color.rgb = product.combos[comboId].fabric[fabricId].fabricsColors[colorId].fabricsColorRGB;
+    array[comboId].fabric.color.rgb = product.combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorRGB;
 
     setComboArray(array);
   }
@@ -263,7 +263,7 @@ const ProductDescription = ({
         </div>
       )}
 
-      {product.fabrics ? (
+      {product.fabrics && product.fabrics.length > 0 ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Fabrics</div>
@@ -273,7 +273,7 @@ const ProductDescription = ({
                 value={selectedFabrics}
                 onChange={(event) => {
                   setSelectedFabrics(event.target.value)
-                  setSelectedFabricsColor(product.fabrics.find(x => x.fabricsId === event.target.value).fabricsColors[0].fabricsColorName)
+                  setSelectedFabricsColor(product.fabrics.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
                 }}
               >
                 {product.fabrics &&
@@ -303,9 +303,9 @@ const ProductDescription = ({
                     setSelectedFabricsColor(event.target.value);
                   }}
                 >
-                  {product.fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColors.map((color, i) => {
+                  {product.fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
                     return (
-                      <option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+                      <option key={i} value={color.fabricColorName}>{color.fabricColorName}</option>
                     );
                   }) : "")}
                 </select>
@@ -320,11 +320,11 @@ const ProductDescription = ({
             <div className="product-content__size__title"></div>
             <div className="product-content__size__content">
               <div className="product-content__color__content">
-                {product.fabrics.map((single, i) => single.fabricsId === selectedFabrics ? single.fabricsColors.map((color, i) => {
+                {product.fabrics.map((single, i) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
                   return (
                     <Tooltip
                       title={
-                        color.fabricsColorName
+                        color.fabricColorName
                       }
                       position="bottom"
                       trigger="mouseenter"
@@ -336,21 +336,21 @@ const ProductDescription = ({
                       <Fragment key={i}>
                         <input
                           type="radio"
-                          value={color.fabricsColorName}
-                          name={`fabrics-${color.fabricsColorName}`}
-                          id={`fabrics-${color.fabricsColorName}`}
+                          value={color.fabricColorName}
+                          name={`fabrics-${color.fabricColorName}`}
+                          id={`fabrics-${color.fabricColorName}`}
                           checked={
-                            color.fabricsColorName === selectedFabricsColor ? "checked" : ""
+                            color.fabricColorName === selectedFabricsColor ? "checked" : ""
                           }
                           onChange={() => {
-                            console.log("circle", color.fabricsColorName)
-                            setSelectedFabricsColor(color.fabricsColorName);
+                            console.log("circle", color.fabricColorName)
+                            setSelectedFabricsColor(color.fabricColorName);
                             setQuantityCount(1);
                           }}
                         />
                         <label
-                          htmlFor={`fabrics-${color.fabricsColorName}`}
-                          style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
+                          htmlFor={`fabrics-${color.fabricColorName}`}
+                          style={{ backgroundColor: `rgb(${color.fabricsColorRGB ? color.fabricsColorRGB : "98,98,98"})` }}
                         ></label>
                       </Fragment>
                     </Tooltip>
@@ -361,7 +361,7 @@ const ProductDescription = ({
           </div>
         </div>
       )}
-      {product.lining ? (
+      {product.lining && product.lining.length > 0 ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Lining</div>
@@ -371,7 +371,7 @@ const ProductDescription = ({
                 value={selectedLining}
                 onChange={(event) => {
                   setSelectedLining(event.target.value)
-                  setSelectedLiningFabricsColor(product.lining.find(x => x.fabricsId === event.target.value).fabricsColors[0].fabricsColorName)
+                  setSelectedLiningFabricsColor(product.lining.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
                 }}
               >
                 {product.lining &&
@@ -401,9 +401,9 @@ const ProductDescription = ({
                     setSelectedLiningFabricsColor(event.target.value);
                   }}
                 >
-                  {product.lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColors.map((color, i) => {
+                  {product.lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
                     return (
-                      <option key={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+                      <option key={i} value={color.fabricColorName}>{color.fabricColorName}</option>
                     );
                   }) : "")}
                 </select>
@@ -418,11 +418,11 @@ const ProductDescription = ({
             <div className="product-content__size__title"></div>
             <div className="product-content__size__content">
               <div className="product-content__color__content">
-                {product.lining.map((single, i) => single.fabricsId === selectedLining ? single.fabricsColors.map((color, i) => {
+                {product.lining.map((single, i) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
                   return (
                     <Tooltip
                       title={
-                        color.fabricsColorName
+                        color.fabricColorName
                       }
                       position="bottom"
                       trigger="mouseenter"
@@ -434,20 +434,20 @@ const ProductDescription = ({
                       <Fragment key={i}>
                         <input
                           type="radio"
-                          value={color.fabricsColorName}
+                          value={color.fabricColorName}
                           name="lining-color"
-                          id={`lining-${color.fabricsColorName}`}
+                          id={`lining-${color.fabricColorName}`}
                           checked={
-                            color.fabricsColorName === selectedLiningFabricsColor ? "checked" : ""
+                            color.fabricColorName === selectedLiningFabricsColor ? "checked" : ""
                           }
                           onChange={() => {
-                            console.log("LiningColor", color.fabricsColorName)
-                            setSelectedLiningFabricsColor(color.fabricsColorName);
+                            console.log("LiningColor", color.fabricColorName)
+                            setSelectedLiningFabricsColor(color.fabricColorName);
                             setQuantityCount(1);
                           }}
                         />
                         <label
-                          htmlFor={`lining-${color.fabricsColorName}`}
+                          htmlFor={`lining-${color.fabricColorName}`}
                           style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
                         ></label>
                       </Fragment>
@@ -459,7 +459,7 @@ const ProductDescription = ({
           </div>
         </div>
       )}
-      {product.combos ? product.combos.map((combo, comboIndex) => {
+      {(product.combos && product.combos.length > 0) ? product.combos.map((combo, comboIndex) => {
         return (
           <>
             <div className="product-content__size-color">
@@ -493,9 +493,9 @@ const ProductDescription = ({
                       value={comboArray[comboIndex]?.fabric.color.color_name ?? ''}
                       onChange={handleComboFabricColorsChange}
                     >
-                      {combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColors.map((color, i) => {
+                      {combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColor.map((color, i) => {
                         return (
-                          <option data-combo-index={comboIndex} data-fabric-index={comboArray[comboIndex]?.fabric.fabric_index ?? 0} data-color-index={i} value={color.fabricsColorName}>{color.fabricsColorName}</option>
+                          <option data-combo-index={comboIndex} data-fabric-index={comboArray[comboIndex]?.fabric.fabric_index ?? 0} data-color-index={i} value={color.fabricColorName}>{color.fabricColorName}</option>
                         )
                       })}
                     </select>
@@ -510,11 +510,11 @@ const ProductDescription = ({
                 <div className="product-content__size__title"></div>
                 <div className="product-content__size__content">
                   <div className="product-content__color__content">
-                    {combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColors.map((color, i) => {
+                    {combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColor.map((color, i) => {
                       return (
                         <Tooltip
                           title={
-                            color.fabricsColorName
+                            color.fabricColorName
                           }
                           position="bottom"
                           trigger="mouseenter"
@@ -526,16 +526,16 @@ const ProductDescription = ({
                           <Fragment key={i}>
                             <input
                               type="radio"
-                              value={color.fabricsColorName}
-                              name={`${combo.combosName}-${color.fabricsColorName}-${i}`}
-                              id={`${combo.combosName}-${color.fabricsColorName}-${i}`}
+                              value={color.fabricColorName}
+                              name={`${combo.combosName}-${color.fabricColorName}-${i}`}
+                              id={`${combo.combosName}-${color.fabricColorName}-${i}`}
                               checked={
-                                color.fabricsColorName === comboArray[comboIndex]?.fabric.color.color_name ?? '' ? true : false
+                                color.fabricColorName === comboArray[comboIndex]?.fabric.color.color_name ?? '' ? true : false
                               }
-                              onChange={handleComboFabricColorsRadioChange(comboIndex, color.fabricsColorName)}
+                              onChange={handleComboFabricColorsRadioChange(comboIndex, color.fabricColorName)}
                             />
                             <label
-                              htmlFor={`${combo.combosName}-${color.fabricsColorName}-${i}`}
+                              htmlFor={`${combo.combosName}-${color.fabricColorName}-${i}`}
                               style={{ backgroundColor: `rgb(${color.fabricsColorRGB})` }}
                             ></label>
                           </Fragment>
@@ -551,7 +551,7 @@ const ProductDescription = ({
       }) : (
         ""
       )}
-      {product.styleAttributes && product.styleAttributes.map((item, i) => {
+      {product.styleAttributes && product.styleAttributes.length > 0 && product.styleAttributes.map((item, i) => {
         return (
           <div className="product-content__size-color">
             <div className="product-content__size space-mb--20">
@@ -578,7 +578,7 @@ const ProductDescription = ({
         )
       })}
 
-      {product.sizeCategories ? (
+      {product.sizeCategories && product.sizeCategories.length > 0 ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Size Category</div>
@@ -627,7 +627,7 @@ const ProductDescription = ({
         </div>
       )}
 
-      {product.styleAlterations ? (
+      {product.styleAlterations && product.styleAlterations.length > 0 ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Alteration</div>
@@ -646,7 +646,7 @@ const ProductDescription = ({
         ""
       )}
 
-      {product.styleOptions ? (
+      {product.styleOptions && product.styleOptions.length > 0 ? (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
             <div className="product-content__size__title">Options</div>

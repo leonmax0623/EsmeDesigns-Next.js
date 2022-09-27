@@ -1,6 +1,6 @@
-import { useState, useEffect, Fragment } from "react";
-import { Container } from "react-bootstrap";
 import Link from "next/link";
+import { Fragment, useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 
 const HeaderTwo = () => {
   const [scroll, setScroll] = useState(0);
@@ -27,13 +27,12 @@ const HeaderTwo = () => {
   return (
     <Fragment>
       <header
-        className={`topbar-shadow position-absolute ${
-          scroll > headerTop ? "is-sticky" : ""
-        }`}
+        className={`topbar-shadow position-absolute ${scroll > headerTop ? "is-sticky" : ""
+          }`}
         style={{
           top: 0,
           left: 0,
-          width: "100%",
+          width: "15%",
           paddingTop: "25px"
         }}
       >
@@ -41,10 +40,10 @@ const HeaderTwo = () => {
           <div className="header-content d-flex align-items-center justify-content-between position-relative space-py-mobile-only--30">
             {/* logo */}
             <div className="header-content__logo d-flex align-items-center space-pr--15">
-              <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+              <Link href="/" as={"/"}>
                 <a>
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/images/logo.png"}
+                    src={"/assets/images/esme-logo.svg"}
                     className="img-fluid"
                     alt=""
                   />

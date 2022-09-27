@@ -13,9 +13,16 @@ const Navigation = () => {
     console.log("NAVIGATIONS => ", collections)
   }, [])
 
-  const navigate = (param) => {
-    localStorage.setItem('navCollection', param)
-    Router.push(`/shop/left-sidebar/${param}`);
+  const navigate = (colId, colName, fabricId, fabricName) => {
+    console.log("~~~~~~~~~~~!!!!!!!!!!!", colId, fabricId)
+    const collectionArray = {
+      collectionId: colId,
+      collectionName: colName,
+      fabricId: fabricId,
+      fabricName: fabricName
+    }
+    localStorage.setItem('navCollection', JSON.stringify(collectionArray))
+    Router.push(`/shop/left-sidebar/${fabricName}`);
   }
 
   return (
@@ -34,7 +41,7 @@ const Navigation = () => {
                         href={`/shop/left-sidebar/${item.name}`}
                         as={`/shop/left-sidebar/${item.name}`}
                       > */}
-                      <a onClick={() => navigate(item.name)}>{item.name}</a>
+                      <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name}</a>
                       {/* </Link> */}
                     </li>
                   )

@@ -12,7 +12,7 @@ const CartOverlay = ({
   deleteFromCart
 }) => {
   let cartTotalPrice = 0;
-  console.log("MAXIMUS", cartItems)
+  console.log("MAXIMUS cartItems=>", cartItems)
   const { addToast } = useToasts();
   return (
     <div className={`cart-overlay ${activeStatus ? "active" : ""}`}>
@@ -66,7 +66,7 @@ const CartOverlay = ({
                             <a>
                               <img
                                 src={
-                                  process.env.PUBLIC_URL + product.pictures[0].url
+                                  process.env.PUBLIC_URL + product.picture.length > 0 && product.picture[0].url
                                 }
                                 className="img-fluid"
                                 alt=""

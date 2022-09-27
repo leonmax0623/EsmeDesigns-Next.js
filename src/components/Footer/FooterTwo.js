@@ -37,10 +37,10 @@ const FooterTwo = ({ footerBgClass }) => {
             <div className="logo space-mb--35">
               <img
                 src={
-                  process.env.PUBLIC_URL + footerBgClass ===
+                  footerBgClass ===
                     "bg-color--blue-two"
-                    ? "/assets/images/logo-alt.png"
-                    : "/assets/images/logo.png"
+                    ? "/assets/images/esme-logo.svg"
+                    : "/assets/images/esme-logo.svg"
                 }
                 className="img-fluid"
                 alt=""
