@@ -1,6 +1,6 @@
-import { IoIosClose } from "react-icons/io";
 import Link from "next/link";
 import Accordion from "react-bootstrap/Accordion";
+import { IoIosClose } from "react-icons/io";
 
 const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
   return (
@@ -35,7 +35,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/decor"
-                                  as={process.env.PUBLIC_URL + "/home/decor"}
+                                  as={"/home/decor"}
                                 >
                                   <a>Decor</a>
                                 </Link>
@@ -43,7 +43,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/creative"
-                                  as={process.env.PUBLIC_URL + "/home/creative"}
+                                  as={"/home/creative"}
                                 >
                                   <a>Creative</a>
                                 </Link>
@@ -51,7 +51,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/perfumes"
-                                  as={process.env.PUBLIC_URL + "/home/perfumes"}
+                                  as={"/home/perfumes"}
                                 >
                                   <a>Perfumes</a>
                                 </Link>
@@ -59,7 +59,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/trending"
-                                  as={process.env.PUBLIC_URL + "/home/trending"}
+                                  as={"/home/trending"}
                                 >
                                   <a>Trending</a>
                                 </Link>
@@ -79,7 +79,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/home/essentials"
                                   as={
-                                    process.env.PUBLIC_URL + "/home/essentials"
+                                    "/home/essentials"
                                   }
                                 >
                                   <a>Essentials</a>
@@ -89,7 +89,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/home/accessories"
                                   as={
-                                    process.env.PUBLIC_URL + "/home/accessories"
+                                    "/home/accessories"
                                   }
                                 >
                                   <a>Accessories</a>
@@ -98,7 +98,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/lookbook"
-                                  as={process.env.PUBLIC_URL + "/home/lookbook"}
+                                  as={"/home/lookbook"}
                                 >
                                   <a>Lookbook</a>
                                 </Link>
@@ -107,7 +107,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/home/furniture"
                                   as={
-                                    process.env.PUBLIC_URL + "/home/furniture"
+                                    "/home/furniture"
                                   }
                                 >
                                   <a>Furniture</a>
@@ -139,7 +139,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/home/collection"
                                   as={
-                                    process.env.PUBLIC_URL + "/home/collection"
+                                    "/home/collection"
                                   }
                                 >
                                   <a>Collection</a>
@@ -148,7 +148,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/jewelry"
-                                  as={process.env.PUBLIC_URL + "/home/jewelry"}
+                                  as={"/home/jewelry"}
                                 >
                                   <a>Jewelry</a>
                                 </Link>
@@ -157,7 +157,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/home/cosmetics"
                                   as={
-                                    process.env.PUBLIC_URL + "/home/cosmetics"
+                                    "/home/cosmetics"
                                   }
                                 >
                                   <a>Cosmetics</a>
@@ -177,7 +177,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/swimsuit"
-                                  as={process.env.PUBLIC_URL + "/home/swimsuit"}
+                                  as={"/home/swimsuit"}
                                 >
                                   <a>Swimsuit</a>
                                 </Link>
@@ -185,7 +185,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/special"
-                                  as={process.env.PUBLIC_URL + "/home/special"}
+                                  as={"/home/special"}
                                 >
                                   <a>Special</a>
                                 </Link>
@@ -193,7 +193,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/home/concept"
-                                  as={process.env.PUBLIC_URL + "/home/concept"}
+                                  as={"/home/concept"}
                                 >
                                   <a>Concept</a>
                                 </Link>
@@ -246,7 +246,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/shop/no-sidebar"
                                   as={
-                                    process.env.PUBLIC_URL + "/shop/no-sidebar"
+                                    "/shop/no-sidebar"
                                   }
                                 >
                                   <a>No Sidebar</a>
@@ -356,7 +356,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/other/cart"
-                                  as={process.env.PUBLIC_URL + "/other/cart"}
+                                  as={"/other/cart"}
                                 >
                                   <a>Shopping Cart</a>
                                 </Link>
@@ -365,7 +365,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/other/wishlist"
                                   as={
-                                    process.env.PUBLIC_URL + "/other/wishlist"
+                                    "/other/wishlist"
                                   }
                                 >
                                   <a>Wishlist</a>
@@ -374,7 +374,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/other/compare"
-                                  as={process.env.PUBLIC_URL + "/other/compare"}
+                                  as={"/other/compare"}
                                 >
                                   <a>Compare</a>
                                 </Link>
@@ -394,7 +394,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/other/checkout"
                                   as={
-                                    process.env.PUBLIC_URL + "/other/checkout"
+                                    "/other/checkout"
                                   }
                                 >
                                   <a>Checkout</a>
@@ -415,7 +415,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/other/my-account"
                                   as={
-                                    process.env.PUBLIC_URL + "/other/my-account"
+                                    "/other/my-account"
                                   }
                                 >
                                   <a>My Account</a>
@@ -633,7 +633,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                               <li>
                                 <Link
                                   href="/element/faqs"
-                                  as={process.env.PUBLIC_URL + "/element/faqs"}
+                                  as={"/element/faqs"}
                                 >
                                   <a>FAQs / Toggles</a>
                                 </Link>
@@ -664,7 +664,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                                 <Link
                                   href="/element/buttons"
                                   as={
-                                    process.env.PUBLIC_URL + "/element/buttons"
+                                    "/element/buttons"
                                   }
                                 >
                                   <a>Buttons</a>
@@ -710,7 +710,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                       <li>
                         <Link
                           href="/other/about"
-                          as={process.env.PUBLIC_URL + "/other/about"}
+                          as={"/other/about"}
                         >
                           <a>About Us</a>
                         </Link>
@@ -718,7 +718,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                       <li>
                         <Link
                           href="/other/about-two"
-                          as={process.env.PUBLIC_URL + "/other/about-two"}
+                          as={"/other/about-two"}
                         >
                           <a>About Us Two</a>
                         </Link>
@@ -726,7 +726,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                       <li>
                         <Link
                           href="/other/contact"
-                          as={process.env.PUBLIC_URL + "/other/contact"}
+                          as={"/other/contact"}
                         >
                           <a>Contact Us</a>
                         </Link>
@@ -734,7 +734,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                       <li>
                         <Link
                           href="/other/faq"
-                          as={process.env.PUBLIC_URL + "/other/faq"}
+                          as={"/other/faq"}
                         >
                           <a>F.A.Q</a>
                         </Link>
@@ -742,7 +742,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                       <li>
                         <Link
                           href="/other/coming-soon"
-                          as={process.env.PUBLIC_URL + "/other/coming-soon"}
+                          as={"/other/coming-soon"}
                         >
                           <a>Coming Soon</a>
                         </Link>
@@ -750,7 +750,7 @@ const NavigationOverlay = ({ activeStatus, getActiveStatus }) => {
                       <li>
                         <Link
                           href="/other/not-found"
-                          as={process.env.PUBLIC_URL + "/other/not-found"}
+                          as={"/other/not-found"}
                         >
                           <a>Not Found</a>
                         </Link>
