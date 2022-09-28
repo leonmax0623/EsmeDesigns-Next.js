@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import RECAPTCHA from "react-google-recaptcha";
@@ -7,8 +7,14 @@ import RECAPTCHA from "react-google-recaptcha";
 import API from '../../api';
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { LayoutTwo } from "../../components/Layout";
+import { getTerritories } from "../../redux/actions/territoryAction";
 
 const Register = () => {
+
+  useEffect(async () => {
+    const response = await getTerritories();
+    console.log("TERRITORIES =>", response.data)
+  }, [])
 
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
