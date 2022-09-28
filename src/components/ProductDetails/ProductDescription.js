@@ -31,11 +31,11 @@ const ProductDescription = ({
   const [selectedFabrics, setSelectedFabrics] = useState("");
   const [selectedFabricsColor, setSelectedFabricsColor] = useState("");
   const [selectedSizeCategory, setSelectedSizeCategory] = useState(
-    product.sizeCategories ? product.sizeCategories[0].sizeCategoryName : ""
+    product.sizeCategories && product.sizeCategories.length > 0 ? product.sizeCategories[0].sizeCategoryName : ""
   );
 
   const [selectedCategorySizeValue, setSelectedCategorySizeValue] = useState(
-    product.sizeCategories ? product.sizeCategories[0].sizes[0].sizeName : ""
+    product.sizeCategories && product.sizeCategories.length > 0 ? product.sizeCategories[0].sizes[0].sizeName : ""
   );
   const [alterationSelected, setAlterationSelected] = useState([]);
   const [styleOptionSelected, setStyleOptionSelected] = useState([]);
@@ -105,6 +105,7 @@ const ProductDescription = ({
   });
 
   const bulkOrder = (product) => {
+    console.log("AAAAAAAAA", product)
     addToBulk(product);
     router.push('/other/bulk')
   }

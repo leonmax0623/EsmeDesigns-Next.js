@@ -38,14 +38,14 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			if (bulkProductProps[0].selectedSize) {
 				setSelectedCategorySizeValue(bulkProductProps[0].selectedSize)
 			} else {
-				setSelectedCategorySizeValue(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
+				setSelectedCategorySizeValue(bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
 			}
 			if (bulkProductProps[0].selectedSizeCategory) {
 				setSizeCategory(bulkProductProps[0].selectedSizeCategory)
 				setSelectedSizeCategory(bulkProductProps[0].selectedSizeCategory)
 			} else {
-				setSizeCategory(bulkProductProps[0].sizeCategories[0].sizeCategoryName)
-				setSelectedSizeCategory(bulkProductProps[0].sizeCategories[0].sizeCategoryName)
+				setSizeCategory(bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
+				setSelectedSizeCategory(bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
 			}
 			if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
 				setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
@@ -67,8 +67,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				console.log("True!!!!!", JSON.stringify(bulkProductProps[0].regularSizeArray))
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
 			} else {
-				console.log("False!!!!!")
-				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.map((each) => {
+				console.log("False!!!!!", bulkProductProps[0].sizeCategories)
+				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories.map((each) => {
 
 					const sizes = each.sizes.map((eachSize) => {
 						return {
@@ -151,14 +151,18 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 	useEffect(() => {
 		let sum = 0;
-		JSON.parse(regularSizeArray).map((item) => {
-			if (selectedSizeCategory === item.sizeCategoryName) {
-				item.sizes.map((size) => {
-					sum = sum + parseInt(size.sizeCode)
-				})
-				setTotalItems(sum)
-			}
-		})
+		console.log("YOU're here!", regularSizeArray)
+		if (JSON.parse(regularSizeArray).length > 0) {
+
+			JSON.parse(regularSizeArray).map((item) => {
+				if (selectedSizeCategory === item.sizeCategoryName) {
+					item.sizes.map((size) => {
+						sum = sum + parseInt(size.sizeCode)
+					})
+					setTotalItems(sum)
+				}
+			})
+		}
 
 	}, [regularSizeArray])
 
@@ -285,15 +289,14 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				<Link
 					href={`/shop/product-basic/[slug]?slug=${bulkProductProps[0].productName}`}
 					as={
-						process.env.PUBLIC_URL + "/shop/product-basic/" + bulkProductProps[0].productName
+						"/shop/product-basic/" + bulkProductProps[0].productName
 					}
 				>
 					<a>
 						<img
 							style={{ width: "115px" }}
 							src={
-								process.env.PUBLIC_URL +
-								bulkProductProps[0].picture[0].url
+								bulkProductProps[0].picture.length > 0 && bulkProductProps[0].picture[0].url
 							}
 							className="img-fluid image"
 							alt=""
@@ -304,7 +307,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 					className="product-name"
 					href={`/shop/product-basic/[slug]?slug=${bulkProductProps[0].productName}`}
 					as={
-						process.env.PUBLIC_URL + "/shop/product-basic/" + bulkProductProps[0].productName
+						"/shop/product-basic/" + bulkProductProps[0].productName
 					}
 				>
 					<a style={{ marginTop: "10px", fontWeight: "bold", fontSize: "20px" }}>{bulkProductProps[0].productName}</a>
@@ -572,7 +575,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 					{!bulkProductProps[0].regularOrder ? (
 						<div className="product-content__size-color">
 							<div style={{ alignItems: "baseline" }}>
-								<div className="product-content__size__content bulk-container__settings__fabrics" style={{ display: "flex", alignItems: "start" }}>
+								<div className="product-content__size__content bulk-container__settings__fabrics" style={{ display: "flex", alignItems: "center" }}>
 									<Col lg={2} className="size-main__title">
 										<div className="product-content__size__title bulk-container__settings__fabrics__container__title__header__title-header">Size</div>
 										<div className="product-content__size__content">
@@ -629,22 +632,24 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 									<div style={{ alignItems: "center" }}>
 										<div className="product-content__size__content" style={{ display: "flex", alignItems: "end" }}>
 											<Col lg={2} style={{ padding: "10px", padding: "0px" }}>
-												<select
-													style={{ width: "100%", height: "37px", cursor: "pointer" }}
-													disabled={editBoolean}
-													value={sizeCategory}
-													onChange={(event) => {
-														setSizeCategory(event.target.value)
-													}}
-												>
-													{bulkProductProps[0].sizeCategories &&
-														bulkProductProps[0].sizeCategories.map((size, i) => {
-															return (
-																<option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
-															);
-														})
-													}
-												</select>
+												{bulkProductProps[0].sizeCategories.length > 0 && (
+													<select
+														style={{ width: "100%", height: "37px", cursor: "pointer" }}
+														disabled={editBoolean}
+														value={sizeCategory}
+														onChange={(event) => {
+															setSizeCategory(event.target.value)
+														}}
+													>
+														{bulkProductProps[0].sizeCategories.length > 0 &&
+															bulkProductProps[0].sizeCategories.map((size, i) => {
+																return (
+																	<option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
+																);
+															})
+														}
+													</select>
+												)}
 											</Col>
 											<Col lg={2}>
 												{sizeCategory && (

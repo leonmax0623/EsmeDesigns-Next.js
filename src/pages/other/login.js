@@ -36,7 +36,7 @@ const Login = () => {
 			})
 			.catch(error => {
 				console.log('error', error.response);
-				// addToast(error.response.data.description, { appearance: "error", autoDismiss: true });
+				addToast("Incorrect username or password!", { appearance: "error", autoDismiss: true });
 			});
 	}
 

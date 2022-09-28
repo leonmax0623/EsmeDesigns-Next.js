@@ -82,7 +82,7 @@ const LeftSidebar = ({ products }) => {
 		console.log("SIDEEFFECT", sortValue)
 		let filtered = [];
 
-		if (sortValue === "all" && !JSON.parse(localStorage.getItem('navCollection'))) {
+		if (sortValue === "all") {
 			const response = await getProductsList();
 			if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
 				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
