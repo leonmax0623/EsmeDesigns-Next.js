@@ -60,13 +60,13 @@ const CartOverlay = ({
                           <Link
                             href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                             as={
-                              process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                              "/shop/product-basic/" + product.productName
                             }
                           >
                             <a>
                               <img
                                 src={
-                                  process.env.PUBLIC_URL + product.picture.length > 0 && product.picture[0].url
+                                  product.picture.length > 0 && product.picture[0].url
                                 }
                                 className="img-fluid"
                                 alt=""
@@ -79,7 +79,7 @@ const CartOverlay = ({
                             <Link
                               href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                               as={
-                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                                "/shop/product-basic/" + product.productName
                               }
                             >
                               <a>{product.productName}</a>
@@ -110,13 +110,13 @@ const CartOverlay = ({
               <div className="cart-buttons">
                 <Link
                   href="/other/cart"
-                  as={process.env.PUBLIC_URL + "/other/cart"}
+                  as={"/other/cart"}
                 >
                   <a>view cart</a>
                 </Link>
                 <Link
                   href="/other/checkout"
-                  as={process.env.PUBLIC_URL + "/other/checkout"}
+                  as={"/other/checkout"}
                 >
                   <a>checkout</a>
                 </Link>
