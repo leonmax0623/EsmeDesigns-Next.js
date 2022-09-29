@@ -2,6 +2,8 @@ import Link from "next/link";
 import Router, { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import ReactPaginate from 'react-paginate';
+// import { Pagination } from "../../../components/Pagination";
 // import Paginator from "react-hooks-paginator";
 import { connect } from "react-redux";
 // import { SlideDown } from "react-slidedown";
@@ -15,6 +17,9 @@ import { getProductsList } from "../../../redux/actions/productListActions";
 const LeftSidebar = ({ products }) => {
 	const router = useRouter();
 	const { addToast } = useToasts();
+
+	const [pageCount, setPageCount] = useState(0);
+	const [pageIndex, setPageIndex] = useState(1);
 
 	const [apiProducts, setApiProducts] = useState([])
 	const [apiFilteredProducts, setApiFilteredProducts] = useState([])
@@ -38,22 +43,27 @@ const LeftSidebar = ({ products }) => {
 		setLayout(layout);
 	};
 
-	const getSortParams = async (type, value) => {
+	const getSortParams = async (type, value, pageIndex) => {
+		console.log("######", pageIndex)
+		localStorage.setItem('navCollection', null)
+		setSortValue(value)
 		let filtered = [];
+		const falseArray = undefined
 
 		if (value === "all") {
-			const response = await getProductsList();
+			const response = await getProductsList(falseArray, pageIndex);
 			if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
 				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
 				Router.push('/other/login');
 			} else {
 				const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
 				setApiProducts(response.data.items)
+				setTotalLength(response.data.totalItems);
+				setPageCount(response.data.pages);
 			}
 		} else {
-
 			let fabricId = "";
-
+			console.log("AAA", pageIndex)
 			if (collections) {
 				collections.map((col, i) => {
 					col.fabrics.map((item, i) => {
@@ -65,18 +75,20 @@ const LeftSidebar = ({ products }) => {
 				const filterArray = {
 					fabricId: fabricId
 				}
-				const response = await getProductsList(filterArray);
+				console.log("$%$%$%$%$5", filterArray)
+				const response = await getProductsList(filterArray, pageIndex);
 				if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
 					addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
 					Router.push('/other/login');
 				} else {
 					const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
 					setApiProducts(response.data.items)
+					setTotalLength(response.data.totalItems);
+					setPageCount(response.data.pages);
 				}
 			}
 		}
 
-		setTotalLength(filtered.length);
 		setApiFilteredProducts(filtered);
 	};
 
@@ -89,73 +101,20 @@ const LeftSidebar = ({ products }) => {
 		return apiFilteredProducts.slice(offset, offset + pageLimit)
 	}
 
-	// useEffect(() => {
-	// 	let sortedProducts = getSortedProducts(apiProducts, sortType, sortValue);
-	// 	const filterSortedProducts = getSortedProducts(
-	// 		sortedProducts,
-	// 		filterSortType,
-	// 		filterSortValue
-	// 	);
-	// 	sortedProducts = filterSortedProducts;
-	// 	setSortedProducts(sortedProducts);
-	// 	setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-	// }, [offset, apiProducts, filterSortType, filterSortValue]);
-
 	useEffect(async () => {
 		console.log("STATRT")
 		const collectionArray = JSON.parse(localStorage.getItem("navCollection"))
-		const response = await getProductsList(collectionArray);
+		const response = await getProductsList(collectionArray, pageIndex);
 		if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
 			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
 			Router.push('/other/login');
 		} else {
 			const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
 			setApiProducts(response.data.items)
+			setTotalLength(response.data.totalItems);
+			setPageCount(response.data.pages);
 		}
 	}, [localStorage.getItem('navCollection')])
-
-	// useEffect(async () => {
-	// 	console.log("SIDEEFFECT", sortValue)
-	// 	let filtered = [];
-
-	// 	if (sortValue === "all") {
-	// 		const response = await getProductsList();
-	// 		if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
-	// 			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
-	// 			Router.push('/other/login');
-	// 		} else {
-	// 			const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
-	// 			setApiProducts(response.data.items)
-	// 		}
-	// 	} else {
-
-	// 		let fabricId = "";
-
-	// 		if (collections) {
-	// 			collections.map((col, i) => {
-	// 				col.fabrics.map((item, i) => {
-	// 					if (item.name === sortValue) {
-	// 						fabricId = item.id
-	// 					}
-	// 				})
-	// 			})
-	// 			const filterArray = {
-	// 				fabricId: fabricId
-	// 			}
-	// 			const response = await getProductsList(filterArray);
-	// 			if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
-	// 				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
-	// 				Router.push('/other/login');
-	// 			} else {
-	// 				const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
-	// 				setApiProducts(response.data.items)
-	// 			}
-	// 		}
-	// 	}
-
-	// 	setTotalLength(filtered.length);
-	// 	setApiFilteredProducts(filtered)
-	// }, [sortType, sortValue])
 
 	useEffect(async () => {
 		const response = await getCollections();
@@ -168,6 +127,28 @@ const LeftSidebar = ({ products }) => {
 		console.log("searchedProducts", searchedProducts)
 		setApiProducts(searchedProducts)
 	}
+
+	const handlePageClick = async (event) => {
+
+		setPageIndex(event.selected + 1)
+		if (localStorage.getItem('navCollection') === "null") {
+			console.log(`User requested page number ${event.selected}`, sortValue);
+			getSortParams("category", sortValue, event.selected + 1)
+		} else {
+			const collectionArray = JSON.parse(localStorage.getItem("navCollection"))
+			const response = await getProductsList(collectionArray, event.selected + 1);
+			if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
+				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+				Router.push('/other/login');
+			} else {
+				const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
+				setApiProducts(response.data.items)
+				setTotalLength(response.data.totalItems);
+				setPageCount(response.data.pages);
+			}
+		}
+
+	};
 
 	return (
 		<LayoutTwo>
@@ -236,6 +217,34 @@ const LeftSidebar = ({ products }) => {
 										pagePrevText="«"
 										pageNextText="»"
 									/> */}
+									{/* <Pagination
+										data={apiProducts}
+										RenderComponent={Post}
+										title="Posts"
+										buttonConst={3}
+										contentPerPage={5}
+										siblingCount={1}
+									/> */}
+									<ReactPaginate
+										breakLabel="..."
+										nextLabel=""
+										onPageChange={handlePageClick}
+										pageRangeDisplayed={3}
+										pageCount={pageCount}
+										previousLabel=""
+										renderOnZeroPageCount={null}
+										pageLinkClassName="page-link"
+										previousClassName="page-item"
+										previousLinkClassName="page-link"
+										nextClassName="page-item"
+										nextLinkClassName="page-link"
+										breakClassName="page-item"
+										breakLinkClassName="page-link"
+										marginPagesDisplayed={2}
+										pageClassName="page-item"
+										activeClassName="active"
+										selectedPageRel="canonical"
+									/>
 								</div>
 							</Col>
 						</Row>
