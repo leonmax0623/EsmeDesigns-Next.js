@@ -10,11 +10,11 @@ const Navigation = () => {
   useEffect(async () => {
     const response = await getCollections();
     setCollections(response.data.collections)
-    console.log("NAVIGATIONS => ", collections)
+    // console.log("NAVIGATIONS => ", collections)
   }, [])
 
   const navigate = (colId, colName, fabricId, fabricName) => {
-    console.log("~~~~~~~~~~~!!!!!!!!!!!", colId, fabricId)
+    // console.log("~~~~~~~~~~~!!!!!!!!!!!", colId, fabricId)
     const collectionArray = {
       collectionId: colId,
       collectionName: colName,

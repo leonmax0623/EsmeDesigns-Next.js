@@ -7,7 +7,6 @@ import {
 const initState = [];
 
 const cartReducer = (state = initState, action) => {
-  console.log("REX=>", action)
   const cartItems = state,
     product = action.payload;
 
@@ -16,7 +15,6 @@ const cartReducer = (state = initState, action) => {
     if (product.variation === undefined) {
       const cartItem = cartItems.filter((item) => item.productId === product.productId)[0];
       if (cartItem === undefined) {
-        console.log("!!!!!!!!!!!", product)
         return [
           ...cartItems,
           {
@@ -26,7 +24,6 @@ const cartReducer = (state = initState, action) => {
           }
         ];
       } else {
-        console.log("@@@@@@@@@")
         if (product.cartItemId) {
           return cartItems.map((item) =>
             item.cartItemId === product.cartItemId
@@ -42,7 +39,6 @@ const cartReducer = (state = initState, action) => {
       }
       // for variant products
     } else {
-      console.log("##########")
       const cartItem = cartItems.filter(
         (item) =>
           item.id === product.id &&

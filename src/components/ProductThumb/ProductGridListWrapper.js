@@ -26,7 +26,7 @@ const ProductGridWrapper = ({
   compareItems
 }) => {
   const { addToast } = useToasts();
-  console.log("API Products => ", products)
+  console.log("LeftSidebar Products => ", products)
   return (
     <Fragment>
       {products &&

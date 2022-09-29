@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import {
   getIndividualCategories,
@@ -5,24 +6,39 @@ import {
   getIndividualTags, getProducts, setActiveSort
 } from "../../lib/product";
 
-const ShopSidebar = ({ collections, products, getSortParams }) => {
+const ShopSidebar = ({ collections, products, getSortParams, searchProduct }) => {
   const navCollection = localStorage.getItem('navCollection');
   const categories = getIndividualCategories(collections);
   const colors = getIndividualColors(products);
   const tags = getIndividualTags(products);
   const popularProducts = getProducts(products, "perfumes", "popular", 3);
+  const [searchKey, setSearchKey] = useState("")
+
+  const handleSearchKey = (e) => {
+    setSearchKey(e.target.value)
+  }
+
+  const handleSearch = () => {
+    searchProduct(searchKey)
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchProduct(searchKey)
+    }
+  }
 
   return (
     <div className="shop-sidebar">
       <div className="single-sidebar-widget space-mb--40">
         {/* search widget */}
         <div className="search-widget">
-          <form>
-            <input type="search" placeholder="Search products ..." />
-            <button type="button">
+          <div>
+            <input type="search" placeholder="Search products ..." onKeyPress={handleKeyPress} onChange={handleSearchKey} />
+            <button type="button" onClick={handleSearch}>
               <IoIosSearch />
             </button>
-          </form>
+          </div>
         </div>
       </div>
 

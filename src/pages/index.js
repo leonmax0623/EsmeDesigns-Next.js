@@ -69,7 +69,6 @@ const Perfumes = ({ newProducts, popularProducts, saleProducts }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("state", state)
   const products = state.productData;
   return {
     newProducts: getRealProducts(products, "new", 10),

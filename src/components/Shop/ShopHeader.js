@@ -1,6 +1,6 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { MdViewComfy, MdApps, MdList } from "react-icons/md";
-import { IoMdFunnel } from "react-icons/io";
+import { Col, Container, Row } from "react-bootstrap";
+import { MdApps, MdList, MdViewComfy } from "react-icons/md";
+// import { IoMdFunnel } from "react-icons/io";
 import { setActiveLayout } from "../../lib/product";
 const ShopHeader = ({
   shopTopFilterStatus,
@@ -67,14 +67,14 @@ const ShopHeader = ({
                 )}
               </div>
 
-              <div className="single-icon advance-filter-icon">
+              {/* <div className="single-icon advance-filter-icon">
                 <button
                   onClick={() => setShopTopFilterStatus(!shopTopFilterStatus)}
                   className={shopTopFilterStatus ? "active" : ""}
                 >
                   <IoMdFunnel /> Filter
                 </button>
-              </div>
+              </div> */}
             </div>
           </Col>
         </Row>

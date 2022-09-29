@@ -64,10 +64,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			}
 
 			if (bulkProductProps[0].regularSizeArray && bulkProductProps[0].regularSizeArray.length > 0) {
-				console.log("True!!!!!", JSON.stringify(bulkProductProps[0].regularSizeArray))
+				// console.log("True!!!!!", JSON.stringify(bulkProductProps[0].regularSizeArray))
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
 			} else {
-				console.log("False!!!!!", bulkProductProps[0].sizeCategories)
+				// console.log("False!!!!!", bulkProductProps[0].sizeCategories)
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories.map((each) => {
 
 					const sizes = each.sizes.map((eachSize) => {
@@ -107,7 +107,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		}
 	}, [bulkProductProps]);
 
-	console.log("styleOptions/styleOptions=>", JSON.parse(regularSizeArray)[0])
+	// console.log("styleOptions/styleOptions=>", JSON.parse(regularSizeArray)[0])
 
 	//custom
 	const alterationOptions = [];
@@ -151,7 +151,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 	useEffect(() => {
 		let sum = 0;
-		console.log("YOU're here!", regularSizeArray)
+		// console.log("YOU're here!", regularSizeArray)
 		if (JSON.parse(regularSizeArray).length > 0) {
 
 			JSON.parse(regularSizeArray).map((item) => {
@@ -229,7 +229,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				totalItems
 			})
 		} else {
-			console.log("@@#@#@#@#@#@#")
 			addToCart(
 				bulkProductProps[0],
 				addToast,
@@ -874,7 +873,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<div style={{ display: "flex", marginBottom: "10px" }}>
 								<Col lg={3}><div className="product-content__size__title">Discount: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>${bulkProductProps[0].discountedPrice}</span>
+									<span>${parseInt(bulkProductProps[0].discountedPrice)}</span>
 								</div></Col>
 							</div>
 							<div style={{ display: "flex", marginBottom: "10px" }}>
@@ -886,7 +885,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<div style={{ display: "flex", marginBottom: "20px" }}>
 								<Col lg={3}><div className="product-content__size__title">Total: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>${totalItems ? bulkProductProps[0].discountedPrice * totalItems : bulkProductProps[0].discountedPrice * quantityCount}</span>
+									<span>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * bulkProductProps[0].totalItems : parseInt(bulkProductProps[0].discountedPrice) * bulkProductProps[0].quantity}</span>
 								</div></Col>
 							</div>
 						</div>
@@ -905,9 +904,9 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<tbody>
 								<tr style={{ textAlign: "center" }}>
 									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].standardPrice}</td>
-									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].discountedPrice}</td>
+									<td style={{ paddingLeft: "0px" }}>${parseInt(bulkProductProps[0].discountedPrice)}</td>
 									<td style={{ paddingLeft: "0px" }}>$0.00</td>
-									<td style={{ paddingLeft: "0px" }}>${totalItems ? bulkProductProps[0].discountedPrice * totalItems : bulkProductProps[0].discountedPrice * quantityCount}</td>
+									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * bulkProductProps[0].totalItems : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * bulkProductProps[0].quantity : 0)}</td>
 								</tr>
 							</tbody>
 						</table>

@@ -2,7 +2,6 @@ import { Cookies } from 'react-cookie';
 import API from '../../api';
 
 export async function getProductsList(arr) {
-    console.log("%%%%%%%%%%%", arr)
     const cookies = new Cookies();
 
     const userToken = cookies.get('accessToken')
@@ -32,7 +31,6 @@ export async function getProductsList(arr) {
         return result;
     }
     if (!arr) {
-        console.log("***********")
         const formData = {
             feaMethod: 'getProductsList',
             accessToken: tokenInStorage,

@@ -22,13 +22,11 @@ const Bulk = ({
 
   const { addToast } = useToasts();
 
-  console.log("Cart Items", cartItems)
   const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId).reverse();
   let cartTotalPrice = 0;
   bulkOrders.map((item, i) => {
     cartTotalPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
   })
-  console.log("bulkOrders => ", bulkOrders)
   const [newBulkProduct, setNewBulkProduct] = useState(bulkProduct)
   const addNewBulkOrder = () => {
     setNewBulkProduct(bulkProduct)

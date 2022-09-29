@@ -31,7 +31,7 @@ const ProductGridList = ({
       addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
       // Router.push('/other/login');
     } else {
-      console.log("TTTTTTT", response)
+      // console.log("TTTTTTT", response)
       const product = response.data;
       localStorage.setItem('specificProduct', JSON.stringify(product))
       Router.push(`/shop/product-basic/${product.productName}`);

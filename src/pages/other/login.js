@@ -26,7 +26,6 @@ const Login = () => {
 
 		API.post('/', new URLSearchParams(formData))
 			.then(response => {
-				console.log('response', response);
 				const cookie = response.data.accessToken;
 				localStorage.setItem('accessToken', cookie)
 				// cookies.set("accessToken", cookie, [{ maxAge: 3600000 }])
@@ -35,7 +34,6 @@ const Login = () => {
 
 			})
 			.catch(error => {
-				console.log('error', error.response);
 				addToast("Incorrect username or password!", { appearance: "error", autoDismiss: true });
 			});
 	}
