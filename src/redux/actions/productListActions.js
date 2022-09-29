@@ -1,7 +1,7 @@
 import { Cookies } from 'react-cookie';
 import API from '../../api';
 
-export async function getProductsList(arr) {
+export async function getProductsList(arr, pageIndex) {
     const cookies = new Cookies();
 
     const userToken = cookies.get('accessToken')
@@ -11,7 +11,7 @@ export async function getProductsList(arr) {
         const formData = {
             feaMethod: 'getProductsList',
             accessToken: tokenInStorage,
-            page: 1,
+            page: pageIndex,
             pageSize: 24,
             idCollection: arr.collectionId,
             idCollectionFabric: arr.fabricId
@@ -23,7 +23,7 @@ export async function getProductsList(arr) {
         const formData = {
             feaMethod: 'getProductsList',
             accessToken: tokenInStorage,
-            page: 1,
+            page: pageIndex,
             pageSize: 24,
             idCollectionFabric: arr.fabricId
         }
@@ -34,7 +34,7 @@ export async function getProductsList(arr) {
         const formData = {
             feaMethod: 'getProductsList',
             accessToken: tokenInStorage,
-            page: 1,
+            page: pageIndex,
             pageSize: 24,
         }
         const result = await API.post('/', new URLSearchParams(formData))

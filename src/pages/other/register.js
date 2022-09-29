@@ -1,21 +1,21 @@
 import Link from "next/link";
+import Router from 'next/router';
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import RECAPTCHA from "react-google-recaptcha";
-// import Router from 'next/router';
+import { useToasts } from "react-toast-notifications";
 import API from '../../api';
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { LayoutTwo } from "../../components/Layout";
-import { getTerritories } from "../../redux/actions/territoryAction";
+import { getStates, getTerritories } from "../../redux/actions/territoryAction";
 
 const Register = () => {
+  const { addToast } = useToasts();
 
-  useEffect(async () => {
-    const response = await getTerritories();
-    console.log("TERRITORIES =>", response.data)
-  }, [])
-
+  const [territories, setTerritories] = useState([])
+  const [divisionStates, setDivisionStates] = useState([])
+  const [billingStates, setBillingStates] = useState([])
+  const [shippingStates, setShippingStates] = useState([])
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
@@ -33,64 +33,46 @@ const Register = () => {
   const [divisionCity, setDivisionCity] = useState("")
   const [divisionZipCode, setDivisionZipCode] = useState("")
   const [divisionCountry, setDivisionCountry] = useState("United States")
-  const [divisionRegion, setDivisionRegion] = useState("")
+  const [divisionCountryId, setDivisionCountryId] = useState("223")
+  const [divisionRegion, setDivisionRegion] = useState("New York")
+  const [divisionRegionId, setDivisionRegionId] = useState("3814")
 
   const [billingAddressOne, setBillingAddressOne] = useState("")
   const [billingAddressTwo, setBillingAddressTwo] = useState("")
   const [billingCity, setBillingCity] = useState("")
   const [billingZipCode, setBillingZipCode] = useState("")
   const [billingCountry, setBillingCountry] = useState("United States")
-  const [billingRegion, setBillingRegion] = useState("")
+  const [billingCountryId, setBillingCountryId] = useState("223")
+  const [billingRegion, setBillingRegion] = useState("New York")
+  const [billingRegionId, setBillingRegionId] = useState("3814")
 
   const [shippingAddressOne, setShippingAddressOne] = useState("")
   const [shippingAddressTwo, setShippingAddressTwo] = useState("")
   const [shippingCity, setShippingCity] = useState("")
   const [shippingZipCode, setShippingZipCode] = useState("")
   const [shippingCountry, setShippingCountry] = useState("United States")
-  const [shippingRegion, setShippingRegion] = useState("")
-
-  const selectDivisionCountry = (val) => {
-    setDivisionCountry(val);
-  }
-
-  const selectDivisionRegion = (val) => {
-    setDivisionRegion(val)
-  }
-
-  const selectBillingCountry = (val) => {
-    setBillingCountry(val);
-  }
-
-  const selectBillingRegion = (val) => {
-    setBillingRegion(val)
-  }
-
-  const selectShippingCountry = (val) => {
-    setShippingCountry(val);
-  }
-
-  const selectShippingRegion = (val) => {
-    setShippingRegion(val)
-  }
+  const [shippingCountryId, setShippingCountryId] = useState("223")
+  const [shippingRegion, setShippingRegion] = useState("New York")
+  const [shippingRegionId, setShippingRegionId] = useState("3814")
 
   const handleRegister = (event) => {
     event.preventDefault();
 
-    // console.log("firstName", firstName)
-    // console.log("lastName", lastName)
-    // console.log("password", password)
-    // console.log("email", email)
-    // console.log("telephone", telephone)
-    // console.log("wholesaleName", wholesaleName)
-    // console.log("legalName", legalName)
-    // console.log("divisionName", divisionName)
-    // console.log("taxNumber", taxNumber)
-    // console.log("divisionAddressOne", divisionAddressOne)
-    // console.log("divisionAddressTwo", divisionAddressTwo)
-    // console.log("divisionCity", divisionCity)
-    // console.log("divisionZipCode", divisionZipCode)
-    // console.log("divisionRegion", divisionRegion)
-    // console.log("divisionCountry", divisionCountry)
+    console.log("firstName", firstName)
+    console.log("lastName", lastName)
+    console.log("password", password)
+    console.log("email", email)
+    console.log("telephone", telephone)
+    console.log("wholesaleName", wholesaleName)
+    console.log("legalName", legalName)
+    console.log("divisionName", divisionName)
+    console.log("taxNumber", taxNumber)
+    console.log("divisionAddressOne", divisionAddressOne)
+    console.log("divisionAddressTwo", divisionAddressTwo)
+    console.log("divisionCity", divisionCity)
+    console.log("divisionZipCode", divisionZipCode)
+    console.log("divisionRegion", divisionRegionId)
+    console.log("divisionCountry", divisionCountry)
 
     const parameters = {
       "username": firstName,
@@ -107,20 +89,20 @@ const Register = () => {
       "divisionStreet2": divisionAddressTwo,
       "divisionCity": divisionCity,
       "divisionZipCode": divisionZipCode,
-      "divisionState": divisionRegion,
-      "divisionCountry": divisionCountry,
+      "divisionState": divisionRegionId,
+      "divisionCountry": divisionCountryId,
       "billingStreet": billingAddressOne,
       "billingStreet2": billingAddressTwo,
       "billingCity": billingCity,
       "billingZipCode": billingZipCode,
-      "billingState": billingRegion,
-      "billingCountry": billingCountry,
+      "billingState": billingRegionId,
+      "billingCountry": billingCountryId,
       "shippingStreet": shippingAddressOne,
       "shippingStreet2": shippingAddressTwo,
       "shippingCity": shippingCity,
       "shippingZipCode": shippingZipCode,
-      "shippingState": shippingRegion,
-      "shippingCountry": shippingCountry,
+      "shippingState": shippingRegionId,
+      "shippingCountry": shippingCountryId,
       "subscribeNewsletter": newsletterSubscribe ? "True" : "False"
     }
 
@@ -132,20 +114,68 @@ const Register = () => {
 
     API.post('/', new URLSearchParams(formData))
       .then(response => {
-        // console.log('response', response);
+        console.log('response', response);
+        if (response.data.errorCode === "0") {
+          addToast("Successfully Registered", { appearance: "success", autoDismiss: true });
+          Router.push('/other/login');
+        } else {
+          addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+        }
         // const cookie = response.data.accessToken;
         // localStorage.setItem('accessToken', cookie)
         // cookies.set("accessToken", cookie, [{ maxAge: 3600000 }])
         // Router.push('/');
-        addToast("Successfully Logged In", { appearance: "success", autoDismiss: true });
-
       })
       .catch(error => {
-        // console.log('error', error.response);
-        // addToast(error.response.data.description, { appearance: "error", autoDismiss: true });
+        console.log('error', error);
       });
 
   }
+
+  useEffect(async () => {
+    const responseCountries = await getTerritories();
+    console.log("responseCountries =>", responseCountries.data.territory)
+    setTerritories(responseCountries.data.territory)
+
+    const countryId = 223;
+
+    const responseStates = await getStates(countryId);
+    console.log("responseStates =>", responseStates.data.territory)
+    setDivisionStates(responseStates.data.territory)
+    setBillingStates(responseStates.data.territory)
+    setShippingStates(responseStates.data.territory)
+  }, [])
+
+  const selectDivisionCountry = async (event) => {
+    console.log("countryid", event.target.value.split("/")[0])
+    setDivisionCountryId(event.target.value.split("/")[0])
+    setDivisionCountry(event.target.value.split("/")[1])
+
+    const responseStates = await getStates(event.target.value.split("/")[0]);
+    console.log("responseStates =>", responseStates.data.territory)
+    setDivisionStates(responseStates.data.territory)
+  }
+
+  const selectBillingCountry = async (event) => {
+    console.log("countryid", event.target.value.split("/")[0])
+    setBillingCountryId(event.target.value.split("/")[0])
+    setBillingCountry(event.target.value.split("/")[1])
+
+    const responseStates = await getStates(event.target.value.split("/")[0]);
+    console.log("responseStates =>", responseStates.data.territory)
+    setBillingStates(responseStates.data.territory)
+  }
+
+  const selectShippingCountry = async (event) => {
+    console.log("countryid", event.target.value.split("/")[0])
+    setShippingCountryId(event.target.value.split("/")[0])
+    setShippingCountry(event.target.value.split("/")[1])
+
+    const responseStates = await getStates(event.target.value.split("/")[0]);
+    console.log("responseStates =>", responseStates.data.territory)
+    setShippingStates(responseStates.data.territory)
+  }
+
   return (
     <LayoutTwo>
       {/* breadcrumb */}
@@ -236,12 +266,22 @@ const Register = () => {
                     <label htmlFor="divisionState">
                       <span className="required">*</span>{" "}State
                     </label><br />
-                    <RegionDropdown
-                      id="divisionState"
+                    <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                      country={divisionCountry}
-                      value={divisionRegion}
-                      onChange={(val) => selectDivisionRegion(val)} />
+                      onChange={(event) => {
+                        console.log("!!!!!!!!!", event.target.value.split("/")[0])
+                        setDivisionRegionId(event.target.value.split("/")[0])
+                        setDivisionRegion(event.target.value.split("/")[1])
+                      }}
+                    >
+                      {divisionStates && divisionStates.length > 0 &&
+                        divisionStates.map((state, j) => {
+                          return (
+                            <option key={j} selected={state.id === divisionRegionId} value={`${state.id}/${state.name}`} >{state.name}</option>
+                          );
+                        })
+                      }
+                    </select>
                   </Col>
                   <Col lg={6}>
                     <label htmlFor="divisionAddressTwo">
@@ -255,11 +295,18 @@ const Register = () => {
                     <label htmlFor="divisionCountry">
                       <span className="required">*</span>{" "}Country
                     </label>
-                    <CountryDropdown
-                      id="divisionCountry"
+                    <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                      value={divisionCountry}
-                      onChange={(val) => selectDivisionCountry(val)} />
+                      onChange={selectDivisionCountry}
+                    >
+                      {territories && territories.length > 0 &&
+                        territories.map((single, j) => {
+                          return (
+                            <option key={j} selected={single.name === divisionCountry} value={`${single.id}/${single.name}`} >{single.name}</option>
+                          );
+                        })
+                      }
+                    </select>
                   </Col>
                 </Row>
               </Col>
@@ -278,12 +325,21 @@ const Register = () => {
                     <label htmlFor="billingState">
                       <span className="required">*</span>{" "}State
                     </label><br />
-                    <RegionDropdown
-                      id="billingState"
+                    <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                      country={billingCountry}
-                      value={billingRegion}
-                      onChange={(val) => selectBillingRegion(val)} />
+                      onChange={(event) => {
+                        setBillingRegionId(event.target.value.split("/")[0])
+                        setBillingRegion(event.target.value.split("/")[1])
+                      }}
+                    >
+                      {billingStates && billingStates.length > 0 &&
+                        billingStates.map((state, j) => {
+                          return (
+                            <option key={j} selected={state.name === billingRegion} value={`${state.id}/${state.name}`} >{state.name}</option>
+                          );
+                        })
+                      }
+                    </select>
                   </Col>
                   <Col lg={6}>
                     <label htmlFor="billingAddressTwo">
@@ -297,11 +353,18 @@ const Register = () => {
                     <label htmlFor="billingCountry">
                       <span className="required">*</span>{" "}Country
                     </label>
-                    <CountryDropdown
-                      id="billingCountry"
+                    <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                      value={billingCountry}
-                      onChange={(val) => selectBillingCountry(val)} />
+                      onChange={selectBillingCountry}
+                    >
+                      {territories && territories.length > 0 &&
+                        territories.map((single, j) => {
+                          return (
+                            <option key={j} selected={single.name === billingCountry} value={`${single.id}/${single.name}`} >{single.name}</option>
+                          );
+                        })
+                      }
+                    </select>
                   </Col>
                 </Row>
               </Col>
@@ -320,12 +383,21 @@ const Register = () => {
                     <label htmlFor="shippingState">
                       <span className="required">*</span>{" "}State
                     </label><br />
-                    <RegionDropdown
-                      id="shippingState"
+                    <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                      country={shippingCountry}
-                      value={shippingRegion}
-                      onChange={(val) => selectShippingRegion(val)} />
+                      onChange={(event) => {
+                        setShippingRegionId(event.target.value.split("/")[0])
+                        setShippingRegion(event.target.value.split("/")[1])
+                      }}
+                    >
+                      {shippingStates && shippingStates.length > 0 &&
+                        shippingStates.map((state, j) => {
+                          return (
+                            <option key={j} selected={state.name === shippingRegion} value={`${state.id}/${state.name}`} >{state.name}</option>
+                          );
+                        })
+                      }
+                    </select>
                   </Col>
                   <Col lg={6}>
                     <label htmlFor="shippingAddressTwo">
@@ -339,11 +411,18 @@ const Register = () => {
                     <label htmlFor="shippingCountry">
                       <span className="required">*</span>{" "}Country
                     </label>
-                    <CountryDropdown
-                      id="shippingCountry"
+                    <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                      value={shippingCountry}
-                      onChange={(val) => selectShippingCountry(val)} />
+                      onChange={selectShippingCountry}
+                    >
+                      {territories && territories.length > 0 &&
+                        territories.map((single, j) => {
+                          return (
+                            <option key={j} selected={single.name === shippingCountry} value={`${single.id}/${single.name}`} >{single.name}</option>
+                          );
+                        })
+                      }
+                    </select>
                   </Col>
                 </Row>
               </Col>

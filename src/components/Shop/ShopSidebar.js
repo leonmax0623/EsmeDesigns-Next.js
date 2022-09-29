@@ -52,7 +52,7 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct }) =>
             <li>
               <button
                 onClick={(e) => {
-                  getSortParams("category", "all");
+                  getSortParams("category", "all", 1);
                   setActiveSort(e);
                 }}
                 className={navCollection === "all" ? 'active' : ''}
@@ -65,7 +65,7 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct }) =>
                 <li key={i}>
                   <button
                     onClick={(e) => {
-                      getSortParams("category", category);
+                      getSortParams("category", category, 1);
                       setActiveSort(e);
                     }}
                     className={navCollection === category ? 'active' : ''}

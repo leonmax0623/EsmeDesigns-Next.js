@@ -12,6 +12,26 @@
     overflow: inherit;
 }
 
+.pageClassName {
+    font-weight: 500;
+    padding: 0 5px;
+    color: #ababab;
+    border: none;
+    border-radius: 0;
+    background: none;
+    margin: 0px 10px;
+}
+
+.activeClassName {
+    color: #333;
+    border-radius: 0;
+    background: none;
+}
+
+.pageLinkClassName {
+    background-color: blue;
+}
+
 html,
 body {
     height: 100%;
