@@ -76,21 +76,21 @@ const Register = () => {
   const handleRegister = (event) => {
     event.preventDefault();
 
-    console.log("firstName", firstName)
-    console.log("lastName", lastName)
-    console.log("password", password)
-    console.log("email", email)
-    console.log("telephone", telephone)
-    console.log("wholesaleName", wholesaleName)
-    console.log("legalName", legalName)
-    console.log("divisionName", divisionName)
-    console.log("taxNumber", taxNumber)
-    console.log("divisionAddressOne", divisionAddressOne)
-    console.log("divisionAddressTwo", divisionAddressTwo)
-    console.log("divisionCity", divisionCity)
-    console.log("divisionZipCode", divisionZipCode)
-    console.log("divisionRegion", divisionRegion)
-    console.log("divisionCountry", divisionCountry)
+    // console.log("firstName", firstName)
+    // console.log("lastName", lastName)
+    // console.log("password", password)
+    // console.log("email", email)
+    // console.log("telephone", telephone)
+    // console.log("wholesaleName", wholesaleName)
+    // console.log("legalName", legalName)
+    // console.log("divisionName", divisionName)
+    // console.log("taxNumber", taxNumber)
+    // console.log("divisionAddressOne", divisionAddressOne)
+    // console.log("divisionAddressTwo", divisionAddressTwo)
+    // console.log("divisionCity", divisionCity)
+    // console.log("divisionZipCode", divisionZipCode)
+    // console.log("divisionRegion", divisionRegion)
+    // console.log("divisionCountry", divisionCountry)
 
     const parameters = {
       "username": firstName,
@@ -132,7 +132,7 @@ const Register = () => {
 
     API.post('/', new URLSearchParams(formData))
       .then(response => {
-        console.log('response', response);
+        // console.log('response', response);
         // const cookie = response.data.accessToken;
         // localStorage.setItem('accessToken', cookie)
         // cookies.set("accessToken", cookie, [{ maxAge: 3600000 }])
@@ -141,7 +141,7 @@ const Register = () => {
 
       })
       .catch(error => {
-        console.log('error', error.response);
+        // console.log('error', error.response);
         // addToast(error.response.data.description, { appearance: "error", autoDismiss: true });
       });
 

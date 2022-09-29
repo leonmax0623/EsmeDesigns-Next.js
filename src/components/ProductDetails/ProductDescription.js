@@ -22,7 +22,7 @@ const ProductDescription = ({
   addToCompare,
   deleteFromCompare
 }) => {
-  console.log("Maximus Product Description", product)
+  console.log("Maximus ProductDescription=>", product)
   const router = useRouter()
   const dispatch = useDispatch();
   //custom 
@@ -66,8 +66,10 @@ const ProductDescription = ({
       if (product.selectedAttr && product.selectedAttr.length > 1) {
         setSelectedAttr(product.selectedAttr);
       } else {
-        product.styleAttributes && product.styleAttributes.map((item) => {
-          setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
+        product.styleAttributes.length > 0 && product.styleAttributes.map((item) => {
+          if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
+            setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
+          }
         });
       }
 
@@ -105,7 +107,6 @@ const ProductDescription = ({
   });
 
   const bulkOrder = (product) => {
-    console.log("AAAAAAAAA", product)
     addToBulk(product);
     router.push('/other/bulk')
   }
@@ -192,17 +193,17 @@ const ProductDescription = ({
     alterationSelected,
     styleOptionSelected
   ) => {
-    console.log("Cart product", product)
-    console.log("Cart quantityCount", quantityCount)
-    console.log("Cart selectedFabrics", selectedFabrics)
-    console.log("Cart selectedFabricsColor", selectedFabricsColor)
-    console.log("Cart selectedLining", selectedLining)
-    console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-    console.log("Cart comboArray", comboArray)
-    console.log("Cart selectedAttr", selectedAttr)
-    console.log("Cart selectedSize", selectedCategorySizeValue)
-    console.log("Cart alterationSelected", alterationSelected)
-    console.log("Cart styleOptionSelected", styleOptionSelected)
+    // console.log("Cart product", product)
+    // console.log("Cart quantityCount", quantityCount)
+    // console.log("Cart selectedFabrics", selectedFabrics)
+    // console.log("Cart selectedFabricsColor", selectedFabricsColor)
+    // console.log("Cart selectedLining", selectedLining)
+    // console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
+    // console.log("Cart comboArray", comboArray)
+    // console.log("Cart selectedAttr", selectedAttr)
+    // console.log("Cart selectedSize", selectedCategorySizeValue)
+    // console.log("Cart alterationSelected", alterationSelected)
+    // console.log("Cart styleOptionSelected", styleOptionSelected)
   }
 
   return (
@@ -344,7 +345,6 @@ const ProductDescription = ({
                             color.fabricColorName === selectedFabricsColor ? "checked" : ""
                           }
                           onChange={() => {
-                            console.log("circle", color.fabricColorName)
                             setSelectedFabricsColor(color.fabricColorName);
                             setQuantityCount(1);
                           }}
@@ -442,7 +442,6 @@ const ProductDescription = ({
                             color.fabricColorName === selectedLiningFabricsColor ? "checked" : ""
                           }
                           onChange={() => {
-                            console.log("LiningColor", color.fabricColorName)
                             setSelectedLiningFabricsColor(color.fabricColorName);
                             setQuantityCount(1);
                           }}
@@ -555,26 +554,28 @@ const ProductDescription = ({
       {product.styleAttributes && product.styleAttributes.length > 0 && product.styleAttributes.map((item, i) => {
         return (
           <div className="product-content__size-color">
-            <div className="product-content__size space-mb--20">
-              <div className="product-content__size__title">{item.styleAttrybutesName}</div>
-              <div className="product-content__size__content">
-                <select
-                  style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                  value={selectedAttr && selectedAttr.length > 1 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
-                  onChange={(event) => {
-                    handleAttributeChange(event, item.styleAttrybutesName)
-                  }}
-                >
-                  {item.styleAttrybutesValues &&
-                    item.styleAttrybutesValues.map((single, j) => {
-                      return (
-                        <option key={j} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
-                      );
-                    })
-                  }
-                </select>
+            {item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0 && (
+              <div className="product-content__size space-mb--20">
+                <div className="product-content__size__title">{item.styleAttrybutesName}</div>
+                <div className="product-content__size__content">
+                  <select
+                    style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                    value={selectedAttr && selectedAttr.length > 1 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
+                    onChange={(event) => {
+                      handleAttributeChange(event, item.styleAttrybutesName)
+                    }}
+                  >
+                    {item.styleAttrybutesValues &&
+                      item.styleAttrybutesValues.map((single, j) => {
+                        return (
+                          <option key={j} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         )
       })}

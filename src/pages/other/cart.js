@@ -23,7 +23,6 @@ const Cart = ({
   cartItems.map((item, i) => {
     cartTotalPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
   })
-  console.log("Cart Items", cartItems)
 
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");

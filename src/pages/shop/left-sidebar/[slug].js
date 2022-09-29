@@ -9,7 +9,6 @@ import { useToasts } from "react-toast-notifications";
 import { BreadcrumbOne } from "../../../components/Breadcrumb";
 import { LayoutTwo } from "../../../components/Layout";
 import { ShopHeader, ShopProducts, ShopSidebar } from "../../../components/Shop";
-import { getSortedProducts } from "../../../lib/product";
 import { getCollections } from "../../../redux/actions/navigationActions";
 import { getProductsList } from "../../../redux/actions/productListActions";
 
@@ -39,50 +38,10 @@ const LeftSidebar = ({ products }) => {
 		setLayout(layout);
 	};
 
-	const getSortParams = (type, value) => {
-		setSortType(type);
-		setSortValue(value);
-	};
-
-	const getFilterSortParams = (sortType, sortValue) => {
-		setFilterSortType(sortType);
-		setFilterSortValue(sortValue);
-	};
-
-	const getPageProducts = () => {
-		return apiFilteredProducts.slice(offset, offset + pageLimit)
-	}
-
-	useEffect(() => {
-		let sortedProducts = getSortedProducts(apiProducts, sortType, sortValue);
-		const filterSortedProducts = getSortedProducts(
-			sortedProducts,
-			filterSortType,
-			filterSortValue
-		);
-		sortedProducts = filterSortedProducts;
-		setSortedProducts(sortedProducts);
-		setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-	}, [offset, apiProducts, filterSortType, filterSortValue]);
-
-	useEffect(async () => {
-		console.log("STATRT")
-		const collectionArray = JSON.parse(localStorage.getItem("navCollection"))
-		const response = await getProductsList(collectionArray);
-		if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
-			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
-			Router.push('/other/login');
-		} else {
-			const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
-			setApiProducts(response.data.items)
-		}
-	}, [products, localStorage.getItem('navCollection')])
-
-	useEffect(async () => {
-		console.log("SIDEEFFECT", sortValue)
+	const getSortParams = async (type, value) => {
 		let filtered = [];
 
-		if (sortValue === "all") {
+		if (value === "all") {
 			const response = await getProductsList();
 			if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
 				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
@@ -98,7 +57,7 @@ const LeftSidebar = ({ products }) => {
 			if (collections) {
 				collections.map((col, i) => {
 					col.fabrics.map((item, i) => {
-						if (item.name === sortValue) {
+						if (item.name === value) {
 							fabricId = item.id
 						}
 					})
@@ -118,13 +77,97 @@ const LeftSidebar = ({ products }) => {
 		}
 
 		setTotalLength(filtered.length);
-		setApiFilteredProducts(filtered)
-	}, [sortType, sortValue])
+		setApiFilteredProducts(filtered);
+	};
+
+	const getFilterSortParams = (sortType, sortValue) => {
+		setFilterSortType(sortType);
+		setFilterSortValue(sortValue);
+	};
+
+	const getPageProducts = () => {
+		return apiFilteredProducts.slice(offset, offset + pageLimit)
+	}
+
+	// useEffect(() => {
+	// 	let sortedProducts = getSortedProducts(apiProducts, sortType, sortValue);
+	// 	const filterSortedProducts = getSortedProducts(
+	// 		sortedProducts,
+	// 		filterSortType,
+	// 		filterSortValue
+	// 	);
+	// 	sortedProducts = filterSortedProducts;
+	// 	setSortedProducts(sortedProducts);
+	// 	setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
+	// }, [offset, apiProducts, filterSortType, filterSortValue]);
+
+	useEffect(async () => {
+		console.log("STATRT")
+		const collectionArray = JSON.parse(localStorage.getItem("navCollection"))
+		const response = await getProductsList(collectionArray);
+		if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
+			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+			Router.push('/other/login');
+		} else {
+			const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
+			setApiProducts(response.data.items)
+		}
+	}, [localStorage.getItem('navCollection')])
+
+	// useEffect(async () => {
+	// 	console.log("SIDEEFFECT", sortValue)
+	// 	let filtered = [];
+
+	// 	if (sortValue === "all") {
+	// 		const response = await getProductsList();
+	// 		if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
+	// 			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+	// 			Router.push('/other/login');
+	// 		} else {
+	// 			const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
+	// 			setApiProducts(response.data.items)
+	// 		}
+	// 	} else {
+
+	// 		let fabricId = "";
+
+	// 		if (collections) {
+	// 			collections.map((col, i) => {
+	// 				col.fabrics.map((item, i) => {
+	// 					if (item.name === sortValue) {
+	// 						fabricId = item.id
+	// 					}
+	// 				})
+	// 			})
+	// 			const filterArray = {
+	// 				fabricId: fabricId
+	// 			}
+	// 			const response = await getProductsList(filterArray);
+	// 			if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
+	// 				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+	// 				Router.push('/other/login');
+	// 			} else {
+	// 				const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
+	// 				setApiProducts(response.data.items)
+	// 			}
+	// 		}
+	// 	}
+
+	// 	setTotalLength(filtered.length);
+	// 	setApiFilteredProducts(filtered)
+	// }, [sortType, sortValue])
 
 	useEffect(async () => {
 		const response = await getCollections();
 		setCollections(response.data.collections)
+		console.log("$$$$$$$", JSON.parse(localStorage.getItem("navCollection")))
 	}, [])
+
+	const searchProduct = (searchKey) => {
+		const searchedProducts = apiProducts.filter((item) => item.productName.toLocaleLowerCase().includes(searchKey.toLocaleLowerCase()))
+		console.log("searchedProducts", searchedProducts)
+		setApiProducts(searchedProducts)
+	}
 
 	return (
 		<LayoutTwo>
@@ -172,6 +215,7 @@ const LeftSidebar = ({ products }) => {
 									products={apiProducts}
 									getSortParams={getSortParams}
 									collections={collections}
+									searchProduct={searchProduct}
 								/>
 							</Col>
 
