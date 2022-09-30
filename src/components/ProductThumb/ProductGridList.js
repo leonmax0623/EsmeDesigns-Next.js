@@ -25,6 +25,8 @@ const ProductGridList = ({
 }) => {
   const [modalShow, setModalShow] = useState(false);
 
+  console.log("ProductsList => ", product)
+
   const navigateSpecificProduct = async () => {
     const response = await getProductDetail(product.productId, product.productTypeId);
     if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
@@ -52,13 +54,13 @@ const ProductGridList = ({
             > */}
             <a className="image-wrap" onClick={navigateSpecificProduct}>
               <img
-                src={process.env.API_BASE_URL + product.picture.length > 0 ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
+                src={product.picture.length > 0 ? product.picture[0].url : '/assets/images/esme-images/products/1/1.jpg'}
                 className="img-fluid"
                 alt={product.productName}
               />
               {product.picture.length > 0 && product.picture.length > 1 ? (
                 <img
-                  src={process.env.API_BASE_URL + product.picture.length > 1 ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
+                  src={product.picture.length > 1 ? product.picture[1].url : '/assets/images/esme-images/products/2/1.jpg'}
                   className="img-fluid"
                   alt={product.productName}
                 />

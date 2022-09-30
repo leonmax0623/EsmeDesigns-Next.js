@@ -122,13 +122,13 @@ const ImageGalleryBottomThumb = ({
         <LightgalleryProvider >
           <div className="maximus">
             <Swiper {...gallerySwiperParams}>
-              {product.pictures &&
-                product.pictures.map((image, i) => {
+              {product.picture &&
+                product.picture.map((image, i) => {
                   return (
                     <div key={i}>
                       <LightgalleryItem
                         group="any"
-                        src={process.env.PUBLIC_URL + image.url}
+                        src={image.url}
                       >
                         <Tooltip
                           title="Click to enlarge"
@@ -171,13 +171,13 @@ const ImageGalleryBottomThumb = ({
       </div>
       <div className="product-small-image-wrapper">
         <Swiper {...thumbnailSwiperParams}>
-          {product.pictures &&
-            product.pictures.map((image, i) => {
+          {product.picture &&
+            product.picture.map((image, i) => {
               return (
                 <div key={i}>
                   <div className="single-image">
                     <img
-                      src={process.env.PUBLIC_URL + image.url}
+                      src={image.url}
                       className="img-fluid"
                       alt=""
                     />
