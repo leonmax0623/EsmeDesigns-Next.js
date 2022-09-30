@@ -14,7 +14,7 @@ const HeroSliderFive = ({ sliderData, spaceBottomClass }) => {
         addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
         Router.push('/other/login');
       } else {
-        Router.push('/shop/left-sidebar');
+        // Router.push('/shop/left-sidebar');
       }
     } else {
       addToast("Please log in!", { appearance: "error", autoDismiss: true });

@@ -488,8 +488,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						<Col lg={6} style={{ padding: "0px" }}>
 							<div style={{ alignItems: "baseline" }}>
 								<div className="header">
-									{bulkProductProps[0].styleAttributes.map((item, i) => {
-										return (
+									{bulkProductProps[0].styleAttributes.map((item, i) => item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0 &&
+										(
 											<Col lg={4} style={{ marginBottom: "10px" }}>
 												<div className="product-content__size-color">
 													<div className="bulk-container__settings__fabrics__container__title">
@@ -497,7 +497,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 														<div className="product-content__size__content">
 															<select
 																style={{ width: "100%", height: "37px", cursor: "pointer" }}
-																value={selectedAttr && selectedAttr.length > 1 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
+																// value={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
 																disabled={editBoolean}
 																onChange={(event) => {
 																	handleAttributeChange(event, item.styleAttrybutesName)
@@ -506,7 +506,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 																{item.styleAttrybutesValues &&
 																	item.styleAttrybutesValues.map((single, j) => {
 																		return (
-																			<option key={j} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
+																			<option key={j} selected={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName && single.styleAttrybutesValueName === selectedAttr[i].value} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
 																		);
 																	})
 																}
@@ -516,7 +516,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 												</div>
 											</Col>
 										)
-									})}
+									)}
 								</div>
 							</div>
 						</Col>
