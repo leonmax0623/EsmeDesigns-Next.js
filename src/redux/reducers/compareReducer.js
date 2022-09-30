@@ -7,6 +7,7 @@ const compareReducer = (state = initState, action) => {
     product = action.payload;
 
   if (action.type === ADD_TO_COMPARE) {
+    console.log("CompareActionADDED", product)
     const compareItem = compareItems.filter(item => item.productId === product.productId)[0];
     if (compareItem === undefined) {
       return [...compareItems, product];

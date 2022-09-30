@@ -225,26 +225,28 @@ const LeftSidebar = ({ products }) => {
 										contentPerPage={5}
 										siblingCount={1}
 									/> */}
-									<ReactPaginate
-										breakLabel="..."
-										nextLabel=""
-										onPageChange={handlePageClick}
-										pageRangeDisplayed={3}
-										pageCount={pageCount}
-										previousLabel=""
-										renderOnZeroPageCount={null}
-										pageLinkClassName="page-link"
-										previousClassName="page-item"
-										previousLinkClassName="page-link"
-										nextClassName="page-item"
-										nextLinkClassName="page-link"
-										breakClassName="page-item"
-										breakLinkClassName="page-link"
-										marginPagesDisplayed={2}
-										pageClassName="page-item"
-										activeClassName="active"
-										selectedPageRel="canonical"
-									/>
+									{pageCount > 1 && (
+										<ReactPaginate
+											breakLabel="..."
+											nextLabel=""
+											onPageChange={handlePageClick}
+											pageRangeDisplayed={3}
+											pageCount={pageCount}
+											previousLabel=""
+											renderOnZeroPageCount={null}
+											pageLinkClassName="page-link"
+											previousClassName="page-item"
+											previousLinkClassName="page-link"
+											nextClassName="page-item"
+											nextLinkClassName="page-link"
+											breakClassName="page-item"
+											breakLinkClassName="page-link"
+											marginPagesDisplayed={2}
+											pageClassName="page-item"
+											activeClassName="active"
+											selectedPageRel="canonical"
+										/>
+									)}
 								</div>
 							</Col>
 						</Row>

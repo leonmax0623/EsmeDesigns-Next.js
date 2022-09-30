@@ -51,31 +51,33 @@ const WishlistOverlay = ({
                             <IoIosClose />
                           </button>
                         </span>
-                        <div className="image">
-                          <Link
-                            href={`/shop/product-basic/[slug]?slug=${product.productName}`}
-                            as={
-                              process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
-                            }
-                          >
+                        {product.picture && product.picture.length > 0 && (
 
-                            <a>
-                              <img
-                                src={
-                                  process.env.PUBLIC_URL + product.pictures[0].url
-                                }
-                                className="img-fluid"
-                                alt=""
-                              />
-                            </a>
-                          </Link>
-                        </div>
+                          <div className="image">
+                            <Link
+                              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
+                              as={
+                                "/shop/product-basic/" + product.productName
+                              }
+                            >
+                              <a>
+                                <img
+                                  src={
+                                    product.picture[0].url
+                                  }
+                                  className="img-fluid"
+                                  alt=""
+                                />
+                              </a>
+                            </Link>
+                          </div>
+                        )}
                         <div className="content">
                           <h5>
                             <Link
                               href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                               as={
-                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                                "/shop/product-basic/" + product.productName
                               }
                             >
                               <a>{product.productName}</a>
@@ -96,7 +98,7 @@ const WishlistOverlay = ({
               <div className="wishlist-buttons">
                 <Link
                   href="/other/wishlist"
-                  as={process.env.PUBLIC_URL + "/other/wishlist"}
+                  as={"/other/wishlist"}
                 >
                   <a>view wishlist</a>
                 </Link>
