@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   IoIosArrowBack,
   IoIosArrowForward, IoIosHeartEmpty, IoMdExpand
@@ -13,10 +13,12 @@ const ImageGalleryBottomThumb = ({
   wishlistItem,
   addToast,
   addToWishlist,
-  deleteFromWishlist
+  deleteFromWishlist,
+  pictureColorId
 }) => {
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
+  const [activeSwiper, setActiveSwiper] = useState(0)
 
   // effect for swiper slider synchronize
   useEffect(() => {
@@ -53,6 +55,9 @@ const ImageGalleryBottomThumb = ({
   // }
 
   const thumbnailSwiperParams = {
+    // on: {
+    //   realIndexChange: (swiper) => console.log("RRRRRRRRRRR", swiper.realIndex)
+    // },
     getSwiper: getThumbnailSwiper,
     spaceBetween: 10,
     slidesPerView: 4,
@@ -66,6 +71,7 @@ const ImageGalleryBottomThumb = ({
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev"
     },
+
     renderPrevButton: () => (
       <button className="swiper-button-prev ht-swiper-button-nav">
         <IoIosArrowBack />
@@ -78,6 +84,32 @@ const ImageGalleryBottomThumb = ({
     )
 
   };
+
+  // useMemo(() => {
+  //   console.log("KaraRex")
+  //   let activeIndex = 0;
+  //   product.picture.forEach((image, i) => {
+  //     if (localStorage.getItem("imageFabricsColorId") && localStorage.getItem("imageFabricsColorId") === image.fabricsColorId) {
+  //       setActiveSwiper(i)
+  //       activeIndex = 1;
+  //     }
+  //   })
+  //   if (activeIndex === 0) setActiveSwiper(0);
+  // }, [localStorage.getItem("imageFabricsColorId")])
+
+
+  useMemo(() => {
+    let activeIndex = 0;
+    product.picture.forEach((image, i) => {
+      if (image.fabricsColorId === pictureColorId) {
+        setActiveSwiper(i)
+        activeIndex = 1;
+      }
+    })
+    if (activeIndex === 0) setActiveSwiper(0);
+  }, [pictureColorId])
+
+
   return (
     <Fragment>
       <div className="product-large-image-wrapper space-mb--30">
@@ -169,10 +201,11 @@ const ImageGalleryBottomThumb = ({
           </div>
         </LightgalleryProvider>
       </div>
-      <div className="product-small-image-wrapper">
-        <Swiper {...thumbnailSwiperParams}>
+      <div className="product-small-image-wrapper" >
+        <Swiper {...thumbnailSwiperParams} activeSlideKey={activeSwiper}>
           {product.picture &&
             product.picture.map((image, i) => {
+              // image.fabricsColorId === pictureColorId && setActiveSwiper(i)
               return (
                 <div key={i}>
                   <div className="single-image">

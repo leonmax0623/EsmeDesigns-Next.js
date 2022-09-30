@@ -20,7 +20,8 @@ const ProductDescription = ({
   addToWishlist,
   deleteFromWishlist,
   addToCompare,
-  deleteFromCompare
+  deleteFromCompare,
+  changePicture
 }) => {
   console.log("Maximus ProductDescription=>", product)
   const router = useRouter()
@@ -179,6 +180,11 @@ const ProductDescription = ({
     product
   );
 
+  const handleChangePicture = (colorId) => {
+    changePicture(colorId)
+    // localStorage.setItem("imageFabricsColorId", colorId)
+  }
+
   const myTest = (
     product,
     addToast,
@@ -222,7 +228,7 @@ const ProductDescription = ({
       )}
       <h2 className="product-content__title space-mb--20">{product.productName}</h2>
       <div className="product-content__price space-mb--20">
-        {parseInt(product.discountedPrice) > 0 ? (
+        {parseInt(product.discountedPrice) > 0 && parseInt(product.standardPrice) > parseInt(product.discountedPrice) ? (
           <Fragment>
             <span className="main-price discounted">${productPrice}</span>
             <span className="main-price">${discountedPrice}</span>
@@ -300,6 +306,7 @@ const ProductDescription = ({
                   value={selectedFabricsColor}
                   onChange={(event) => {
                     setSelectedFabricsColor(event.target.value);
+                    handleChangePicture(color.fabricsColorId)
                   }}
                 >
                   {product.fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
@@ -323,7 +330,7 @@ const ProductDescription = ({
                   return (
                     <Tooltip
                       title={
-                        color.fabricColorName
+                        `${color.fabricColorName}/${color.fabricsColorId}`
                       }
                       position="bottom"
                       trigger="mouseenter"
@@ -344,6 +351,7 @@ const ProductDescription = ({
                           onChange={() => {
                             setSelectedFabricsColor(color.fabricColorName);
                             setQuantityCount(1);
+                            handleChangePicture(color.fabricsColorId)
                           }}
                         />
                         <label
@@ -420,7 +428,7 @@ const ProductDescription = ({
                   return (
                     <Tooltip
                       title={
-                        color.fabricColorName
+                        `${color.fabricColorName}/${color.fabricsColorId}`
                       }
                       position="bottom"
                       trigger="mouseenter"
@@ -511,7 +519,7 @@ const ProductDescription = ({
                       return (
                         <Tooltip
                           title={
-                            color.fabricColorName
+                            `${color.fabricColorName}/${color.fabricsColorId}`
                           }
                           position="bottom"
                           trigger="mouseenter"
@@ -663,135 +671,122 @@ const ProductDescription = ({
       ) : (
         ""
       )}
-      {product.affiliateLink ? (
-        <div className="product-content__quality">
-          <div className="product-content__cart btn-hover">
-            <a
-              href={product.affiliateLink}
-              rel="noopener noreferrer"
-              target="_blank"
-              className="lezada-button lezada-button--medium"
+
+      <Fragment>
+        <div className="product-content__quantity space-mb--40">
+          <div className="product-content__quantity__title">Quantity</div>
+          <div className="cart-plus-minus">
+            <button
+              onClick={() =>
+                setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
+              }
+              className="qtybutton"
             >
-              Buy Now
-            </a>
+              -
+            </button>
+            <input
+              className="cart-plus-minus-box"
+              type="text"
+              value={quantityCount}
+              readOnly
+            />
+            <button
+              onClick={() =>
+                setQuantityCount(quantityCount + 1)
+              }
+              className="qtybutton"
+            >
+              +
+            </button>
           </div>
+          {product.showStock && (
+            <p style={{ marginLeft: "20px" }}>Products in Stock: <span>{productStock - productCartQty - quantityCount}</span><br />Out of Stocks:<span>{Math.abs(quantityCount - productStock - productCartQty)}</span></p>
+          )}
         </div>
-      ) : (
-        <Fragment>
-          <div className="product-content__quantity space-mb--40">
-            <div className="product-content__quantity__title">Quantity</div>
-            <div className="cart-plus-minus">
-              <button
-                onClick={() =>
-                  setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-                }
-                className="qtybutton"
-              >
-                -
-              </button>
-              <input
-                className="cart-plus-minus-box"
-                type="text"
-                value={quantityCount}
-                readOnly
-              />
-              <button
-                onClick={() =>
-                  setQuantityCount(quantityCount + 1)
-                }
-                className="qtybutton"
-              >
-                +
-              </button>
-            </div>
-            {product.showStock && (
-              <p style={{ marginLeft: "20px" }}>Products in Stock: <span>{productStock - productCartQty - quantityCount}</span><br />Out of Stocks:<span>{Math.abs(quantityCount - productStock - productCartQty)}</span></p>
-            )}
-          </div>
 
-          <div className="product-content__button-wrapper d-flex align-items-center">
-            <button
-              onClick={() =>
-                addToCart(
-                  product,
-                  addToast,
-                  quantityCount,
-                  selectedFabrics,
-                  selectedFabricsColor,
-                  selectedLining,
-                  selectedLiningFabricsColor,
-                  comboArray,
-                  selectedAttr,
-                  selectedSizeCategory,
-                  selectedCategorySizeValue,
-                  alterationSelected,
-                  styleOptionSelected
-                )
-                // myTest(
-                //   product,
-                //   addToast,
-                //   quantityCount,
-                //   selectedFabrics,
-                //   selectedFabricsColor,
-                //   selectedLining,
-                //   selectedLiningFabricsColor,
-                //   comboArray,
-                //   selectedAttr,
-                //   selectedCategorySizeValue,
-                //   alterationSelected,
-                //   styleOptionSelected
-                // )
-              }
-              className="lezada-button lezada-button--medium product-content__cart space-mr--10"
-            >
-              Add To Cart
-            </button>
-            <button
-              onClick={() =>
-                bulkOrder(
-                  product
-                )
-              }
-              className="lezada-button lezada-button--medium product-content__cart space-mr--10"
-            >
-              Bulk Order
-            </button>
-            <button
-              className={`product-content__wishlist space-mr--10 ${wishlistItem !== undefined ? "active" : ""
-                }`}
-              title={
-                wishlistItem !== undefined
-                  ? "Added to wishlist"
-                  : "Add to wishlist"
-              }
-              onClick={
-                wishlistItem !== undefined
-                  ? () => deleteFromWishlist(product, addToast)
-                  : () => addToWishlist(product, addToast)
-              }
-            >
-              <IoIosHeartEmpty />
-            </button>
+        <div className="product-content__button-wrapper d-flex align-items-center">
+          <button
+            onClick={() =>
+              addToCart(
+                product,
+                addToast,
+                quantityCount,
+                selectedFabrics,
+                selectedFabricsColor,
+                selectedLining,
+                selectedLiningFabricsColor,
+                comboArray,
+                selectedAttr,
+                selectedSizeCategory,
+                selectedCategorySizeValue,
+                alterationSelected,
+                styleOptionSelected
+              )
+              // myTest(
+              //   product,
+              //   addToast,
+              //   quantityCount,
+              //   selectedFabrics,
+              //   selectedFabricsColor,
+              //   selectedLining,
+              //   selectedLiningFabricsColor,
+              //   comboArray,
+              //   selectedAttr,
+              //   selectedCategorySizeValue,
+              //   alterationSelected,
+              //   styleOptionSelected
+              // )
+            }
+            className="lezada-button lezada-button--medium product-content__cart space-mr--10"
+          >
+            Add To Cart
+          </button>
+          <button
+            onClick={() =>
+              bulkOrder(
+                product
+              )
+            }
+            className="lezada-button lezada-button--medium product-content__cart space-mr--10"
+          >
+            Bulk Order
+          </button>
+          <button
+            className={`product-content__wishlist space-mr--10 ${wishlistItem !== undefined ? "active" : ""
+              }`}
+            title={
+              wishlistItem !== undefined
+                ? "Added to wishlist"
+                : "Add to wishlist"
+            }
+            onClick={
+              wishlistItem !== undefined
+                ? () => deleteFromWishlist(product, addToast)
+                : () => addToWishlist(product, addToast)
+            }
+          >
+            <IoIosHeartEmpty />
+          </button>
 
-            <button
-              className={`product-content__compare space-mr--10 ${compareItem !== undefined ? "active" : ""
-                }`}
-              title={
-                compareItem !== undefined
-                  ? "Added to compare"
-                  : "Add to compare"
-              }
-              onClick={
-                compareItem !== undefined
-                  ? () => deleteFromCompare(product, addToast)
-                  : () => addToCompare(product, addToast)
-              }
-            >
-              <IoIosShuffle />
-            </button>
-          </div>
+          <button
+            className={`product-content__compare space-mr--10 ${compareItem !== undefined ? "active" : ""
+              }`}
+            title={
+              compareItem !== undefined
+                ? "Added to compare"
+                : "Add to compare"
+            }
+            onClick={
+              compareItem !== undefined
+                ? () => deleteFromCompare(product, addToast)
+                : () => addToCompare(product, addToast)
+            }
+          >
+            <IoIosShuffle />
+          </button>
+        </div>
 
-          {/* <div className="product-content__other-info space-mt--50">
+        {/* <div className="product-content__other-info space-mt--50">
             <table>
               <tbody>
                 <tr className="single-info">
@@ -833,8 +828,7 @@ const ProductDescription = ({
               </tbody>
             </table>
           </div> */}
-        </Fragment>
-      )}
+      </Fragment>
     </div>
   );
 };
