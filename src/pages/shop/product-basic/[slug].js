@@ -41,28 +41,31 @@ const ProductBasic = ({
 
   const { addToast } = useToasts();
   // const discountedPrice = getDiscountPrice(
-  //   product.price,
+  //   product[0].price,
   //   product.discount
   // ).toFixed(2);
 
   // const productPrice = product.price.toFixed(2);
-  const discountedPrice = parseInt(product.discountedPrice);
-  const productPrice = parseInt(product.standardPrice);
+  const discountedPrice = parseInt(product[0].discountedPrice);
+  const productPrice = parseInt(product[0].standardPrice);
   const cartItem = cartItems.filter(
-    (cartItem) => cartItem.productId === product.productId
+    (cartItem) => cartItem.productId === product[0].productId
   )[0];
   const wishlistItem = wishlistItems.filter(
-    (wishlistItem) => wishlistItem.productId === product.productId
+    (wishlistItem) => wishlistItem.productId === product[0].productId
   )[0];
   const compareItem = compareItems.filter(
-    (compareItem) => compareItem.productId === product.productId
+    (compareItem) => compareItem.productId === product[0].productId
   )[0];
+
+  console.log("compareItem", compareItem)
+
 
   return (
     <LayoutTwo>
       {/* breadcrumb */}
       <BreadcrumbOne
-        pageTitle={product.productName}
+        pageTitle={product[0].productName}
         backgroundImage="/assets/images/esme-images/products_banner.png"
       >
         <ul className="breadcrumb__list">
@@ -79,7 +82,7 @@ const ProductBasic = ({
               <a>Shop</a>
             </Link>
           </li>
-          <li>{product.productName}</li>
+          <li>{product[0].productName}</li>
         </ul>
       </BreadcrumbOne>
 
@@ -197,7 +200,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ProductBasic);
 //   console.log("^^^^^^^^^^^^^", products)
 //   // get the paths we want to pre render based on products
 //   const paths = products.map((product) => ({
-//     params: { slug: product.productName }
+//     params: { slug: product[0].productName }
 //   }));
 
 //   return { paths, fallback: false };

@@ -1,15 +1,14 @@
-import { Fragment } from "react";
 import Link from "next/link";
+import { Fragment } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { IoIosShuffle, IoIosTrash } from "react-icons/io";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
-import { Container, Row, Col } from "react-bootstrap";
-import { IoIosShuffle, IoIosTrash } from "react-icons/io";
-import { LayoutTwo } from "../../components/Layout";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
-import { deleteFromCompare } from "../../redux/actions/compareActions";
-import { addToCart } from "../../redux/actions/cartActions";
+import { LayoutTwo } from "../../components/Layout";
 import { ProductRating } from "../../components/Product";
-import { getDiscountPrice } from "../../lib/product";
+import { addToCart } from "../../redux/actions/cartActions";
+import { deleteFromCompare } from "../../redux/actions/compareActions";
 
 const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
   const { addToast } = useToasts();
@@ -23,7 +22,7 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
       >
         <ul className="breadcrumb__list">
           <li>
-            <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+            <Link href="/" as={"/"}>
               <a>Home</a>
             </Link>
           </li>
@@ -59,27 +58,28 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
                                         <IoIosTrash />
                                       </button>
                                     </div>
-                                    <Link
-                                      href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                                      as={`${process.env.PUBLIC_URL}/shop/product-basic/${product.slug}`}
-                                    >
-                                      <a className="image">
-                                        <img
-                                          className="img-fluid"
-                                          src={
-                                            process.env.PUBLIC_URL +
-                                            product.thumbImage[0]
-                                          }
-                                          alt=""
-                                        />
-                                      </a>
-                                    </Link>
+                                    {product.picture && product.picture.length > 0 && (
+                                      <Link
+                                        href={`/shop/product-basic/[slug]?slug=${product.slug}`}
+                                        as={`/shop/product-basic/${product.productName}`}
+                                      >
+                                        <a className="image">
+                                          <img
+                                            className="img-fluid"
+                                            src={
+                                              product.picture[0].url
+                                            }
+                                            alt=""
+                                          />
+                                        </a>
+                                      </Link>
+                                    )}
                                     <div className="product-title">
                                       <Link
                                         href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                                        as={`${process.env.PUBLIC_URL}/shop/product-basic/${product.slug}`}
+                                        as={`/shop/product-basic/${product.productName}`}
                                       >
-                                        <a>{product.name}</a>
+                                        <a>{product.productName}</a>
                                       </Link>
                                     </div>
                                     <div className="compare-btn">
@@ -95,8 +95,8 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
                                       ) : product.variation &&
                                         product.variation.length >= 1 ? (
                                         <Link
-                                          href={`/shop/product-basic/[slug]?slug=${product.slug}`}
-                                          as={`${process.env.PUBLIC_URL}/shop/product-basic/${product.slug}`}
+                                          href={`/shop/product-basic/[slug]?slug=${product.productName}`}
+                                          as={`/shop/product-basic/${product.productName}`}
                                         >
                                           <a className="lezada-button lezada-button--primary">
                                             Select Option
@@ -108,11 +108,10 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
                                             addToCart(product, addToast)
                                           }
                                           className={`lezada-button lezada-button--primary
-                                            ${
-                                              cartItem !== undefined &&
+                                            ${cartItem !== undefined &&
                                               cartItem.quantity > 0
-                                                ? "active"
-                                                : ""
+                                              ? "active"
+                                              : ""
                                             }
                                           `}
                                           disabled={
@@ -121,7 +120,7 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
                                           }
                                         >
                                           {cartItem !== undefined &&
-                                          cartItem.quantity > 0
+                                            cartItem.quantity > 0
                                             ? "Added"
                                             : "Add to cart"}
                                         </button>
@@ -141,26 +140,20 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
                             <tr>
                               <th className="title-column">Price</th>
                               {compareItems.map((product, key) => {
-                                const discountedPrice = getDiscountPrice(
-                                  product.price,
-                                  product.discount
-                                ).toFixed(2);
-
-                                const productPrice = product.price.toFixed(2);
                                 return (
                                   <td className="product-price" key={key}>
                                     {product.discount > 0 ? (
                                       <Fragment>
                                         <span className="main-price discounted">
-                                          ${productPrice}
+                                          ${product.standardPrice}
                                         </span>
                                         <span className="main-price">
-                                          ${discountedPrice}
+                                          ${product.discountedPrice}
                                         </span>
                                       </Fragment>
                                     ) : (
                                       <span className="main-price">
-                                        ${productPrice}
+                                        ${product.standardPrice}
                                       </span>
                                     )}
                                   </td>
@@ -174,8 +167,8 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
                                 return (
                                   <td className="product-desc" key={i}>
                                     <p>
-                                      {product.shortDescription
-                                        ? product.shortDescription
+                                      {product.description
+                                        ? product.description
                                         : "N/A"}
                                     </p>
                                   </td>
@@ -212,7 +205,7 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
                         <p className="space-mb--30">No items to compare</p>
                         <Link
                           href="/shop/left-sidebar"
-                          as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                          as={"/shop/left-sidebar"}
                         >
                           <a className="lezada-button lezada-button--medium">
                             Add Items

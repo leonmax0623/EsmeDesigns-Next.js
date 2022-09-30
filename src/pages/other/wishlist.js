@@ -33,7 +33,7 @@ const Wishlist = ({
       >
         <ul className="breadcrumb__list">
           <li>
-            <Link href="/" as={process.env.PUBLIC_URL + "/"}>
+            <Link href="/" as={"/"}>
               <a>Home</a>
             </Link>
           </li>
@@ -69,29 +69,30 @@ const Wishlist = ({
                       return (
                         <tr key={i}>
                           <td className="product-thumbnail">
-                            <Link
-                              href={`/shop/product-basic/[slug]?slug=${product.productName}`}
-                              as={
-                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
-                              }
-                            >
-                              <a>
-                                <img
-                                  src={
-                                    process.env.PUBLIC_URL +
-                                    product.pictures[0].url
-                                  }
-                                  className="img-fluid"
-                                  alt=""
-                                />
-                              </a>
-                            </Link>
+                            {product.picture && product.picture.length > 0 && (
+                              <Link
+                                href={`/shop/product-basic/[slug]?slug=${product.productName}`}
+                                as={
+                                  "/shop/product-basic/" + product.productName
+                                }
+                              >
+                                <a>
+                                  <img
+                                    src={
+                                      product.pictures[0].url
+                                    }
+                                    className="img-fluid"
+                                    alt=""
+                                  />
+                                </a>
+                              </Link>
+                            )}
                           </td>
                           <td className="product-name">
                             <Link
                               href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                               as={
-                                process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                                "/shop/product-basic/" + product.productName
                               }
                             >
                               <a>{product.productName}</a>
@@ -119,7 +120,7 @@ const Wishlist = ({
                                 <Link
                                   href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                                   as={
-                                    process.env.PUBLIC_URL + "/shop/product-basic/" + product.productName
+                                    "/shop/product-basic/" + product.productName
                                   }
                                 >
                                   <a className="lezada-button lezada-button--medium">
@@ -194,7 +195,7 @@ const Wishlist = ({
                     <p className="space-mb--30">No items found in wishlist</p>
                     <Link
                       href="/shop/left-sidebar"
-                      as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                      as={"/shop/left-sidebar"}
                     >
                       <a className="lezada-button lezada-button--medium">
                         Shop Now
