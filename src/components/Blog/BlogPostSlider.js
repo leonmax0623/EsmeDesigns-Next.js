@@ -1,11 +1,10 @@
 import Link from "next/link";
-import Swiper from "react-id-swiper";
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import {
-  IoIosCalendar,
   IoIosArrowBack,
-  IoIosArrowForward,
+  IoIosArrowForward, IoIosCalendar
 } from "react-icons/io";
+import Swiper from "react-id-swiper";
 
 const BlogPostSlider = ({ blogData, spaceBottomClass }) => {
   const params = {
@@ -61,7 +60,7 @@ const BlogPostSlider = ({ blogData, spaceBottomClass }) => {
               </p>
               <Link
                 href="/blog/standard-left-sidebar"
-                as={process.env.PUBLIC_URL + "/blog/standard-left-sidebar"}
+                as={"/blog/standard-left-sidebar"}
               >
                 <a className="lezada-button lezada-button--medium">view all</a>
               </Link>
@@ -77,11 +76,11 @@ const BlogPostSlider = ({ blogData, spaceBottomClass }) => {
                         <div className="blog-grid-post__image space-mb--30">
                           <Link
                             href={single.url}
-                            as={process.env.PUBLIC_URL + single.url}
+                            as={single.url}
                           >
                             <a>
                               <img
-                                src={process.env.PUBLIC_URL + single.image}
+                                src={single.image}
                                 className="img-fluid"
                                 alt=""
                               />
@@ -96,7 +95,7 @@ const BlogPostSlider = ({ blogData, spaceBottomClass }) => {
                           <h2 className="post-title">
                             <Link
                               href={single.url}
-                              as={process.env.PUBLIC_URL + single.url}
+                              as={single.url}
                             >
                               <a>{single.title}</a>
                             </Link>
@@ -104,7 +103,7 @@ const BlogPostSlider = ({ blogData, spaceBottomClass }) => {
                           <p className="post-excerpt">{single.text}</p>
                           <Link
                             href={single.url}
-                            as={process.env.PUBLIC_URL + single.url}
+                            as={single.url}
                           >
                             <a className="blog-readmore-btn">read more</a>
                           </Link>
