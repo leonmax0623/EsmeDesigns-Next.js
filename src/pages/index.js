@@ -5,7 +5,7 @@ import { BlogPostSlider } from "../components/Blog";
 import { CountdownTimerSix } from "../components/Countdown";
 import { HeroSliderFive } from "../components/HeroSlider";
 import { LayoutEight } from "../components/Layout";
-import { ProductTabThree } from "../components/ProductTab";
+// import { ProductTabThree } from "../components/ProductTab";
 import blogData from "../data/blog-posts/blog-post-one.json";
 import heroSliderData from "../data/hero-sliders/hero-slider-five.json";
 import { getRealProducts } from "../lib/product";
@@ -56,11 +56,11 @@ const Perfumes = ({ newProducts, popularProducts, saleProducts }) => {
       />
 
       {/* product tab */}
-      <ProductTabThree
+      {/* <ProductTabThree
         newProducts={newProducts}
         popularProducts={popularProducts}
         saleProducts={saleProducts}
-      />
+      /> */}
 
       {/* blog post slider */}
       <BlogPostSlider blogData={blogData} spaceBottomClass="space-mb--r100" />

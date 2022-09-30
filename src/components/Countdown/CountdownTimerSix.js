@@ -25,7 +25,7 @@ const CountdownTimerSix = ({
                 <Col lg={3} xl={5}>
                   <div className="countdown-image text-center space-mb-mobile-only--50">
                     <img
-                      src={process.env.PUBLIC_URL + image}
+                      src={image}
                       className="img-fluid"
                       alt=""
                       style={{ width: "100%" }}
@@ -41,7 +41,7 @@ const CountdownTimerSix = ({
                         renderer={Renderer}
                       />
                     </div>
-                    <Link href={url} as={process.env.PUBLIC_URL + url}>
+                    <Link href={url} as={url}>
                       <a className="lezada-button lezada-button--medium lezada-button--icon--left">
                         <IoIosCart /> {buttonText}
                       </a>
