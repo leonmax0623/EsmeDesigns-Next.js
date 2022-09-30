@@ -14,7 +14,6 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
               <div className="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
                 <img
                   src={
-                    process.env.PUBLIC_URL +
                     "/assets/images/esme-images/dashboard_1.png"
                   }
                   className="img-fluid"
@@ -26,7 +25,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                   <p>
                     <Link
                       href="/shop/left-sidebar"
-                      as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                      as={"/shop/left-sidebar"}
                     >
                       <a>
                         Wooden <span>Chair</span>
@@ -35,7 +34,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                   </p>
                   <Link
                     href="/shop/left-sidebar"
-                    as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                    as={"/shop/left-sidebar"}
                   >
                     <a>Shop Now</a>
                   </Link>
@@ -43,7 +42,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
               </div>
               <Link
                 href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                as={"/shop/left-sidebar"}
               >
                 <a className="banner-link" />
               </Link>
@@ -54,7 +53,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
               <div className="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
                 <img
                   src={
-                    process.env.PUBLIC_URL +
+
                     "/assets/images/esme-images/dashboard_2.png"
                   }
                   className="img-fluid"
@@ -66,7 +65,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                   <p>
                     <Link
                       href="/shop/left-sidebar"
-                      as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                      as={"/shop/left-sidebar"}
                     >
                       <a>
                         Thumbler <span>Alarm Clock</span>
@@ -75,7 +74,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                   </p>
                   <Link
                     href="/shop/left-sidebar"
-                    as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                    as={"/shop/left-sidebar"}
                   >
                     <a>Shop Now</a>
                   </Link>
@@ -83,7 +82,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
               </div>
               <Link
                 href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                as={"/shop/left-sidebar"}
               >
                 <a className="banner-link" />
               </Link>
@@ -94,7 +93,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
               <div className="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
                 <img
                   src={
-                    process.env.PUBLIC_URL +
+
                     "/assets/images/esme-images/dashboard_3.png"
                   }
                   className="img-fluid"
@@ -106,7 +105,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                   <p>
                     <Link
                       href="/shop/left-sidebar"
-                      as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                      as={"/shop/left-sidebar"}
                     >
                       <a>
                         Home <span>Decoration</span>
@@ -115,7 +114,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
                   </p>
                   <Link
                     href="/shop/left-sidebar"
-                    as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                    as={"/shop/left-sidebar"}
                   >
                     <a>Shop Now</a>
                   </Link>
@@ -123,7 +122,7 @@ const HoverBannerOne = ({ spaceBottomClass }) => {
               </div>
               <Link
                 href="/shop/left-sidebar"
-                as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                as={"/shop/left-sidebar"}
               >
                 <a className="banner-link" />
               </Link>
