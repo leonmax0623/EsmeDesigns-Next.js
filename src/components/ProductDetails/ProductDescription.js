@@ -231,9 +231,6 @@ const ProductDescription = ({
           <span className="main-price">${productPrice} </span>
         )}
       </div>
-      <div className="product-content__description space-mb--30">
-        <p>{product.description}</p>
-      </div>
       {product.productCode && (
         <div className="product-content__size-color">
           <div className="product-content__size space-mb--20">
@@ -707,7 +704,9 @@ const ProductDescription = ({
                 +
               </button>
             </div>
-            <p style={{ marginLeft: "20px" }}>Products in Stock: <span>{productStock - productCartQty - quantityCount}</span><br />Out of Stocks:<span>{Math.abs(quantityCount - productStock - productCartQty)}</span></p>
+            {product.showStock && (
+              <p style={{ marginLeft: "20px" }}>Products in Stock: <span>{productStock - productCartQty - quantityCount}</span><br />Out of Stocks:<span>{Math.abs(quantityCount - productStock - productCartQty)}</span></p>
+            )}
           </div>
 
           <div className="product-content__button-wrapper d-flex align-items-center">
