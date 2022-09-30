@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
@@ -33,6 +33,8 @@ const ProductBasic = ({
   addToCompare,
   deleteFromCompare
 }) => {
+
+  const [pictureColorId, setPictureColorId] = useState("")
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");
   });
@@ -59,6 +61,10 @@ const ProductBasic = ({
   )[0];
 
   console.log("compareItem", compareItem)
+
+  const changePicture = (colorId) => {
+    setPictureColorId(colorId)
+  }
 
 
   return (
@@ -98,6 +104,7 @@ const ProductBasic = ({
                 addToast={addToast}
                 addToWishlist={addToWishlist}
                 deleteFromWishlist={deleteFromWishlist}
+                pictureColorId={pictureColorId}
               />
             </Col>
 
@@ -118,6 +125,7 @@ const ProductBasic = ({
                 deleteFromWishlist={deleteFromWishlist}
                 addToCompare={addToCompare}
                 deleteFromCompare={deleteFromCompare}
+                changePicture={changePicture}
               />
             </Col>
           </Row>

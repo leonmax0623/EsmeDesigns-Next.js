@@ -168,34 +168,16 @@ const ProductGridList = ({
                 </Link>
               </h3>
               {/* add to cart */}
-              {product.affiliateLink ? (
-                <a href={product.affiliateLink} target="_blank">
-                  Buy now
-                </a>
-              ) : product.variation && product.variation.length >= 1 ? (
-                <Link
-                  href={`/shop/product-basic/[slug]?slug=${product.productName}`}
-                  as={
-                    process.env.PUBLIC_URL +
-                    "/shop/product-basic/" +
-                    product.productName
-                  }
-                >
-                  <a>Select Option</a>
-                </Link>
-              ) : product.inStock && product.inStock > 0 ? (
-                <button
-                  onClick={() => addToCart(product, addToast)}
-                  disabled={
-                    cartItem !== undefined &&
-                    cartItem.quantity >= cartItem.inStock
-                  }
-                >
-                  {cartItem !== undefined ? "Added to cart" : "Add to cart"}
-                </button>
-              ) : (
-                <button disabled>Out of Stock</button>
-              )}
+
+              <button
+                onClick={() => addToCart(product, addToast)}
+                disabled={
+                  cartItem !== undefined &&
+                  cartItem.quantity >= cartItem.inStock
+                }
+              >
+                {cartItem !== undefined ? "Added to cart" : "Add to cart"}
+              </button>
             </div>
             <div className="price">
               {product.discount > 0 ? (

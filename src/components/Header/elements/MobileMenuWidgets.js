@@ -1,11 +1,7 @@
 import {
-  IoIosPhonePortrait,
-  IoMdMail,
-  IoLogoTwitter,
-  IoLogoFacebook,
+  IoIosPhonePortrait, IoLogoFacebook,
   IoLogoInstagram,
-  IoLogoPinterest,
-  IoMdPerson
+  IoLogoPinterest, IoLogoTwitter, IoMdMail, IoMdPerson
 } from "react-icons/io";
 
 import Link from "next/link";
@@ -18,8 +14,8 @@ const MobileMenuWidgets = () => {
           <li>
             <IoMdPerson />
             <Link
-              href="/other/login-register"
-              as={process.env.PUBLIC_URL + "/other/login-register"}
+              href="/other/login"
+              as={"/other/login"}
             >
               <a>Login / Register</a>
             </Link>

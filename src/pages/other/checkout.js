@@ -11,10 +11,17 @@ import { LayoutTwo } from "../../components/Layout";
 const Checkout = ({ cartItems }) => {
   let cartTotalPrice = 0;
   const [startDate, setStartDate] = useState(new Date());
+  const [rushOptions, setRushOptions] = useState([])
+  const [selectedRushOption, setSelectedRushOption] = useState("")
 
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");
   });
+  useEffect(() => {
+    setRushOptions(cartItems[0].rushOptions && cartItems[0].rushOptions.length > 0 ? cartItems[0].rushOptions : [])
+  }, []);
+
+  console.log("RushOptions", rushOptions)
 
   return (
     <LayoutTwo>
@@ -205,7 +212,7 @@ const Checkout = ({ cartItems }) => {
                         </div>
                       </div>
                     </div>
-                    <div style={{ display: "flex", marginTop: "20px" }}>
+                    <div style={{ display: "flex", marginTop: "20px", alignItems: "flex-end" }}>
                       <div className="col-md-4 col-12 space-mb--20">
                         <label>* Wear date</label>
                         <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}>
@@ -214,22 +221,20 @@ const Checkout = ({ cartItems }) => {
                       </div>
                       <div className="col-md-4 col-12 space-mb--20">
                         <label>* Lead Time</label>
-                        {/* <select
+                        <select
                           style={{ width: "100%", height: "37px", cursor: "pointer" }}
                           onChange={(event) => {
-                            // console.log("event", event.target.value)
-                            // setSelectedLining(event.target.value.split("/")[0])
-                            // setSelectedLiningFabricsColor(event.target.value.split("/")[1])
+                            setSelectedRushOption(event.target.value)
                           }}
                         >
-                          {product.sizeCategories &&
-                            product.sizeCategories[0].sizes.map((single, i) => {
+                          {rushOptions &&
+                            rushOptions.map((single, i) => {
                               return (
-                                <option key={i} value={single.sizeCode}>{single.sizeName}</option>
+                                <option key={i} value={single.rushId}>{single.rushName}</option>
                               );
                             })
                           }
-                        </select> */}
+                        </select>
                       </div>
                       <div className="col-md-4 col-12 space-mb--20">
                         <label>Estimated Ship Date</label>

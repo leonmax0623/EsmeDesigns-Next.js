@@ -83,55 +83,27 @@ const Compare = ({ cartItems, compareItems, addToCart, deleteFromCompare }) => {
                                       </Link>
                                     </div>
                                     <div className="compare-btn">
-                                      {product.affiliateLink ? (
-                                        <a
-                                          href={product.affiliateLink}
-                                          target="_blank"
-                                          className="lezada-button lezada-button--primary"
-                                        >
-                                          {" "}
-                                          Buy now{" "}
-                                        </a>
-                                      ) : product.variation &&
-                                        product.variation.length >= 1 ? (
-                                        <Link
-                                          href={`/shop/product-basic/[slug]?slug=${product.productName}`}
-                                          as={`/shop/product-basic/${product.productName}`}
-                                        >
-                                          <a className="lezada-button lezada-button--primary">
-                                            Select Option
-                                          </a>
-                                        </Link>
-                                      ) : product.stock && product.stock > 0 ? (
-                                        <button
-                                          onClick={() =>
-                                            addToCart(product, addToast)
-                                          }
-                                          className={`lezada-button lezada-button--primary
+                                      <button
+                                        onClick={() =>
+                                          addToCart(product, addToast)
+                                        }
+                                        className={`lezada-button lezada-button--primary
                                             ${cartItem !== undefined &&
-                                              cartItem.quantity > 0
-                                              ? "active"
-                                              : ""
-                                            }
-                                          `}
-                                          disabled={
-                                            cartItem !== undefined &&
                                             cartItem.quantity > 0
+                                            ? "active"
+                                            : ""
                                           }
-                                        >
-                                          {cartItem !== undefined &&
-                                            cartItem.quantity > 0
-                                            ? "Added"
-                                            : "Add to cart"}
-                                        </button>
-                                      ) : (
-                                        <button
-                                          disabled
-                                          className="active lezada-button lezada-button--primary"
-                                        >
-                                          Out of Stock
-                                        </button>
-                                      )}
+                                          `}
+                                        disabled={
+                                          cartItem !== undefined &&
+                                          cartItem.quantity > 0
+                                        }
+                                      >
+                                        {cartItem !== undefined &&
+                                          cartItem.quantity > 0
+                                          ? "Added"
+                                          : "Add to cart"}
+                                      </button>
                                     </div>
                                   </td>
                                 );
