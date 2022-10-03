@@ -1,6 +1,30 @@
+import Router from 'next/router';
+import { useState } from "react";
 import { MdClose } from "react-icons/md";
 
 const SearchOverlay = ({ activeStatus, getActiveStatus }) => {
+
+  const [searchKey, setSearchKey] = useState("")
+
+  const handleSearchKey = (e) => {
+    setSearchKey(e.target.value)
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchProduct(searchKey)
+    }
+  }
+
+  const searchProduct = async (searchKey) => {
+    const colName = "All bridesmaid";
+    const collectionArray = {
+      searchKey: searchKey
+    };
+    localStorage.setItem("navCollection", JSON.stringify(collectionArray));
+    Router.push(`/shop/left-sidebar/${colName}`);
+  }
+
   return (
     <div className={`search-overlay ${activeStatus ? "active" : ""}`}>
       {/*=======  close icon  =======*/}
@@ -16,9 +40,9 @@ const SearchOverlay = ({ activeStatus, getActiveStatus }) => {
       {/*=======  End of close icon  =======*/}
       {/*=======  search overlay content  =======*/}
       <div className="search-overlay__content">
-        <form className="space-mb--20">
-          <input type="search" placeholder="Search Products..." />
-        </form>
+        <div className="space-mb--20" style={{ fontSize: "67px", border: "none", borderBottom: "2px solid #333", background: "none" }}>
+          <input type="search" placeholder="Search products ..." onKeyPress={handleKeyPress} onChange={handleSearchKey} style={{ border: "none" }} />
+        </div>
         <div className="search-overlay__hint"># Hit enter to search</div>
       </div>
       {/*=======  End of search overlay content  =======*/}
