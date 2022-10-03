@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
-import Card from "react-bootstrap/Card";
+import { Col, Container, Row } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
-import { LayoutTwo } from "../../components/Layout";
+import Card from "react-bootstrap/Card";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
+import { LayoutTwo } from "../../components/Layout";
 
 const Faq = () => {
   return (
@@ -11,7 +11,7 @@ const Faq = () => {
       {/* breadcrumb */}
       <BreadcrumbOne
         pageTitle="F.A.Q"
-        backgroundImage="/assets/images/backgrounds/breadcrumb-bg-1.png"
+        backgroundImage="/assets/images/esme-images/products_banner.png"
       >
         <ul className="breadcrumb__list">
           <li>

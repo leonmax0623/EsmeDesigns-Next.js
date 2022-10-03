@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import ReactPaginate from 'react-paginate';
@@ -15,7 +15,6 @@ import { getCollections } from "../../../redux/actions/navigationActions";
 import { getProductsList } from "../../../redux/actions/productListActions";
 
 const LeftSidebar = ({ products }) => {
-	const router = useRouter();
 	const { addToast } = useToasts();
 
 	const [pageCount, setPageCount] = useState(0);
@@ -56,7 +55,6 @@ const LeftSidebar = ({ products }) => {
 				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
 				Router.push('/other/login');
 			} else {
-				const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
 				setApiProducts(response.data.items)
 				setTotalLength(response.data.totalItems);
 				setPageCount(response.data.pages);
@@ -81,7 +79,7 @@ const LeftSidebar = ({ products }) => {
 					addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
 					Router.push('/other/login');
 				} else {
-					const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
+
 					setApiProducts(response.data.items)
 					setTotalLength(response.data.totalItems);
 					setPageCount(response.data.pages);
@@ -109,7 +107,7 @@ const LeftSidebar = ({ products }) => {
 			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
 			Router.push('/other/login');
 		} else {
-			const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
+
 			setApiProducts(response.data.items)
 			setTotalLength(response.data.totalItems);
 			setPageCount(response.data.pages);
@@ -122,10 +120,22 @@ const LeftSidebar = ({ products }) => {
 		console.log("$$$$$$$", JSON.parse(localStorage.getItem("navCollection")))
 	}, [])
 
-	const searchProduct = (searchKey) => {
-		const searchedProducts = apiProducts.filter((item) => item.productName.toLocaleLowerCase().includes(searchKey.toLocaleLowerCase()))
-		console.log("searchedProducts", searchedProducts)
-		setApiProducts(searchedProducts)
+	const searchProduct = async (searchKey) => {
+		const collectionArray = {
+			searchKey: searchKey
+		};
+		localStorage.setItem("navCollection", JSON.stringify(collectionArray));
+
+		const response = await getProductsList(collectionArray, 1);
+		if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
+			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+			Router.push('/other/login');
+		} else {
+
+			setApiProducts(response.data.items)
+			setTotalLength(response.data.totalItems);
+			setPageCount(response.data.pages);
+		}
 	}
 
 	const handlePageClick = async (event) => {
@@ -141,7 +151,7 @@ const LeftSidebar = ({ products }) => {
 				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
 				Router.push('/other/login');
 			} else {
-				const aaa = response.data.items ? response.data.items.filter((item, i) => item.picture !== undefined) : '';
+
 				setApiProducts(response.data.items)
 				setTotalLength(response.data.totalItems);
 				setPageCount(response.data.pages);

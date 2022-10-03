@@ -25,8 +25,6 @@ const ProductGridList = ({
 }) => {
   const [modalShow, setModalShow] = useState(false);
 
-  console.log("ProductsList => ", product)
-
   const navigateSpecificProduct = async () => {
     const response = await getProductDetail(product.productId, product.productTypeId);
     if (response.data.errorText === 'accessToken expired' || localStorage.getItem('accessToken') === undefined) {
@@ -159,7 +157,6 @@ const ProductGridList = ({
                 <Link
                   href={`/shop/product-basic/[slug]?slug=${product.productName}`}
                   as={
-                    process.env.PUBLIC_URL +
                     "/shop/product-basic/" +
                     product.productName
                   }

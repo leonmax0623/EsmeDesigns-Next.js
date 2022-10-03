@@ -3,7 +3,6 @@ import Router from 'next/router';
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { getCollections } from "../../../redux/actions/navigationActions";
-
 const Navigation = () => {
   const [collections, setCollections] = useState('')
 
@@ -14,6 +13,8 @@ const Navigation = () => {
   }, [])
 
   const navigate = (colId, colName, fabricId, fabricName) => {
+    console.log("YYYYYYY", fabricId)
+    console.log("YYYYYYY", fabricName)
     // console.log("~~~~~~~~~~~!!!!!!!!!!!", colId, fabricId)
     const collectionArray = {
       collectionId: colId,
@@ -22,7 +23,11 @@ const Navigation = () => {
       fabricName: fabricName
     }
     localStorage.setItem('navCollection', JSON.stringify(collectionArray))
-    Router.push(`/shop/left-sidebar/${fabricName}`);
+    if (fabricId === undefined && fabricName === undefined) {
+      Router.push(`/shop/left-sidebar/${colName}`);
+    } else {
+      Router.push(`/shop/left-sidebar/${fabricName}`);
+    }
   }
 
   return (
@@ -31,7 +36,7 @@ const Navigation = () => {
         {collections && collections.map((col, i) => {
           return (
             <li key={i} className="position-relative">
-              <a>{col.name}</a>
+              <a onClick={() => navigate(col.id, col.name)}>{col.name} ({col.itemsCount})</a>
               <IoIosArrowDown />
               <ul className="sub-menu sub-menu--one-column">
                 {col && col.fabrics.map((item, j) => {
@@ -41,7 +46,7 @@ const Navigation = () => {
                         href={`/shop/left-sidebar/${item.name}`}
                         as={`/shop/left-sidebar/${item.name}`}
                       > */}
-                      <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name}</a>
+                      <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name} ({item.itemsCount})</a>
                       {/* </Link> */}
                     </li>
                   )
