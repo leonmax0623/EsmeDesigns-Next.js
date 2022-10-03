@@ -53,16 +53,16 @@ const ProductDescription = ({
         setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
       }
       if (product.fabrics && product.fabrics.length > 0) {
-        setSelectedFabricsColor(product.selectedFabricsColor ? product.selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
+        setSelectedFabricsColor(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
       }
 
-      if (product.selectedAlteration) {
-        setAlterationSelected(product.selectedAlteration)
-      }
+      // if (product.styleAlterations) {
+      //   setAlterationSelected(product.styleAlterations)
+      // }
 
-      if (product.selectedStyleOption) {
-        setStyleOptionSelected(product.selectedStyleOption)
-      }
+      // if (product.styleOptions) {
+      //   setStyleOptionSelected(product.styleOptions)
+      // }
 
       if (product.selectedAttr && product.selectedAttr.length > 1) {
         setSelectedAttr(product.selectedAttr);
@@ -88,11 +88,11 @@ const ProductDescription = ({
   const alterationOptions = [];
   product.styleAlterations && product.styleAlterations.map((single, i) => {
     let array = {
-      label: "",
-      value: ""
+      label: '',
+      value: ''
     };
     array.label = single.styleAlterationName;
-    array.value = single.price;
+    array.value = single.styleAlterationId;
     alterationOptions.push(array)
   });
 
@@ -103,7 +103,7 @@ const ProductDescription = ({
       value: ""
     };
     array.label = single.styleOptionName;
-    array.value = single.price;
+    array.value = single.styleOptionId;
     styleOptions.push(array)
   });
 
@@ -180,36 +180,9 @@ const ProductDescription = ({
     product
   );
 
-  const handleChangePicture = (colorId) => {
+  const handleChangePicture = (colorId, coloName) => {
     changePicture(colorId)
     // localStorage.setItem("imageFabricsColorId", colorId)
-  }
-
-  const myTest = (
-    product,
-    addToast,
-    quantityCount,
-    selectedFabrics,
-    selectedFabricsColor,
-    selectedLining,
-    selectedLiningFabricsColor,
-    comboArray,
-    selectedAttr,
-    selectedCategorySizeValue,
-    alterationSelected,
-    styleOptionSelected
-  ) => {
-    // console.log("Cart product", product)
-    // console.log("Cart quantityCount", quantityCount)
-    // console.log("Cart selectedFabrics", selectedFabrics)
-    // console.log("Cart selectedFabricsColor", selectedFabricsColor)
-    // console.log("Cart selectedLining", selectedLining)
-    // console.log("Cart selectedLiningFabricsColor", selectedLiningFabricsColor)
-    // console.log("Cart comboArray", comboArray)
-    // console.log("Cart selectedAttr", selectedAttr)
-    // console.log("Cart selectedSize", selectedCategorySizeValue)
-    // console.log("Cart alterationSelected", alterationSelected)
-    // console.log("Cart styleOptionSelected", styleOptionSelected)
   }
 
   return (
@@ -303,15 +276,15 @@ const ProductDescription = ({
               <div className="product-content__color__content">
                 <select
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                  value={selectedFabricsColor}
                   onChange={(event) => {
-                    setSelectedFabricsColor(event.target.value);
-                    handleChangePicture(color.fabricsColorId)
+                    // console.log("!!!!!!!!!", event.target.value.split("/")[1])
+                    setSelectedFabricsColor(event.target.value.split("/")[1]);
+                    handleChangePicture(event.target.value.split("/")[0], event.target.value.split("/")[1])
                   }}
                 >
                   {product.fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
                     return (
-                      <option key={i} value={color.fabricColorName}>{color.fabricColorName}</option>
+                      <option key={i} selected={selectedFabricsColor === color.fabricColorName} value={`${color.fabricsColorId}/${color.fabricColorName}`}>{color.fabricColorName}</option>
                     );
                   }) : "")}
                 </select>
@@ -350,8 +323,7 @@ const ProductDescription = ({
                           }
                           onChange={() => {
                             setSelectedFabricsColor(color.fabricColorName);
-                            setQuantityCount(1);
-                            handleChangePicture(color.fabricsColorId)
+                            handleChangePicture(color.fabricsColorId, color.fabricColorName)
                           }}
                         />
                         <label

@@ -60,9 +60,8 @@ const ProductBasic = ({
     (compareItem) => compareItem.productId === product[0].productId
   )[0];
 
-  console.log("compareItem", compareItem)
-
   const changePicture = (colorId) => {
+    console.log("@@@@@@@@", colorId)
     setPictureColorId(colorId)
   }
 

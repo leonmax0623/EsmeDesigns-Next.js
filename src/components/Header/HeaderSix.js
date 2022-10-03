@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import {
-  IoIosArrowDown, IoIosCart, IoIosHeartEmpty, IoIosMenu, IoIosSearch,
+  IoIosCart, IoIosHeartEmpty, IoIosMenu, IoIosSearch,
   IoMdPerson
 } from "react-icons/io";
 import { connect } from "react-redux";
@@ -69,7 +69,8 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
               <Col lg={4} className="d-none d-lg-block">
                 <div className="d-flex">
                   <div className="language-change change-dropdown">
-                    <span>English</span> <IoIosArrowDown />
+                    <span>English</span>{' '}
+                    {/* <IoIosArrowDown />
                     <ul>
                       <li>
                         <button>English</button>
@@ -77,11 +78,12 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                       <li>
                         <button>Deustch</button>
                       </li>
-                    </ul>
+                    </ul> */}
                   </div>
                   <span className="header-separator">|</span>
                   <div className="currency-change change-dropdown">
-                    <span>USD</span> <IoIosArrowDown />
+                    <span>USD</span>{' '}
+                    {/* <IoIosArrowDown />
                     <ul>
                       <li>
                         <button>USD</button>
@@ -89,7 +91,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
                       <li>
                         <button>EUR</button>
                       </li>
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
               </Col>

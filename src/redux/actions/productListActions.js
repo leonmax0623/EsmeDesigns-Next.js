@@ -7,6 +7,18 @@ export async function getProductsList(arr, pageIndex) {
     const userToken = cookies.get('accessToken')
     const tokenInStorage = localStorage.getItem('accessToken')
 
+    if (arr && arr.searchKey && arr.fabricId === undefined && arr.fabricName === undefined && arr.collectionId === undefined) {
+        const formData = {
+            feaMethod: 'getProductsList',
+            accessToken: tokenInStorage,
+            page: pageIndex,
+            pageSize: 24,
+            searchText: arr.searchKey
+        }
+        const result = await API.post('/', new URLSearchParams(formData))
+        return result;
+    }
+
     if (arr && arr.collectionId && arr.fabricId) {
         const formData = {
             feaMethod: 'getProductsList',
@@ -15,6 +27,17 @@ export async function getProductsList(arr, pageIndex) {
             pageSize: 24,
             idCollection: arr.collectionId,
             idCollectionFabric: arr.fabricId
+        }
+        const result = await API.post('/', new URLSearchParams(formData))
+        return result;
+    }
+    if (arr && arr.fabricId === undefined && arr.fabricName === undefined) {
+        const formData = {
+            feaMethod: 'getProductsList',
+            accessToken: tokenInStorage,
+            page: pageIndex,
+            pageSize: 24,
+            idCollection: arr.collectionId,
         }
         const result = await API.post('/', new URLSearchParams(formData))
         return result;

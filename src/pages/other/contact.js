@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Container, Row, Col } from "react-bootstrap";
-import { IoIosPin, IoIosCall, IoIosMail, IoIosClock } from "react-icons/io";
-import { LayoutTwo } from "../../components/Layout";
+import { Col, Container, Row } from "react-bootstrap";
+import { IoIosCall, IoIosClock, IoIosMail, IoIosPin } from "react-icons/io";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
+import { LayoutTwo } from "../../components/Layout";
 import {
   SectionTitleOne,
   SectionTitleTwo
@@ -14,7 +14,7 @@ const Contact = () => {
       {/* breadcrumb */}
       <BreadcrumbOne
         pageTitle="Contact"
-        backgroundImage="/assets/images/backgrounds/breadcrumb-bg-1.png"
+        backgroundImage="/assets/images/esme-images/products_banner.png"
       >
         <ul className="breadcrumb__list">
           <li>

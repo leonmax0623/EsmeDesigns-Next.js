@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+// import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { animateScroll } from "react-scroll";
-import { SubscribeEmailTwo } from "../Newsletter";
+// import { SubscribeEmailTwo } from "../Newsletter";
 
 const FooterTwo = ({ footerBgClass }) => {
   const [scroll, setScroll] = useState(0);
@@ -44,6 +44,7 @@ const FooterTwo = ({ footerBgClass }) => {
                 }
                 className="img-fluid"
                 alt=""
+                style={{ maxWidth: "300px" }}
               />
             </div>
 
@@ -105,7 +106,7 @@ const FooterTwo = ({ footerBgClass }) => {
             </nav>
           </Col>
 
-          <Col className="footer-single-widget space-mb--50">
+          {/* <Col className="footer-single-widget space-mb--50">
             <h5 className="footer-single-widget__title">USEFUL LINKS</h5>
             <nav className="footer-single-widget__nav">
               <ul>
@@ -171,18 +172,17 @@ const FooterTwo = ({ footerBgClass }) => {
                 </li>
               </ul>
             </nav>
-          </Col>
+          </Col> */}
 
-          <Col className="footer-single-widget space-mb--50">
+          {/* <Col className="footer-single-widget space-mb--50">
             <div className="footer-subscribe-widget">
               <h2 className="footer-subscribe-widget__title">Subscribe.</h2>
               <p className="footer-subscribe-widget__subtitle">
                 Subscribe to our newsletter to receive news on update.
               </p>
-              {/* email subscription */}
               <SubscribeEmailTwo mailchimpUrl="https://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef" />
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
       <button

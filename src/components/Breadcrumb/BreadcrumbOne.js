@@ -1,12 +1,11 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 const BreadcrumbOne = ({ children, backgroundImage, pageTitle, className }) => {
   return (
     <div
-      className={`breadcrumb-area space-pt--70 space-pb--70 ${
-        className ? className : ""
-      }`}
+      className={`breadcrumb-area space-pt--70 space-pb--70 ${className ? className : ""
+        }`}
       style={{
-        backgroundImage: `url("${process.env.PUBLIC_URL + backgroundImage}")`
+        backgroundImage: `url("${backgroundImage}")`
       }}
     >
       <Container>
