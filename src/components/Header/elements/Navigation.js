@@ -5,17 +5,29 @@ import { IoIosArrowDown } from "react-icons/io";
 import { getCollections } from "../../../redux/actions/navigationActions";
 const Navigation = () => {
   const [collections, setCollections] = useState('')
+  const [seasonsItems, setSeasonsItems] = useState('')
 
   useEffect(async () => {
     const response = await getCollections();
-    setCollections(response.data.collections)
-    // console.log("NAVIGATIONS => ", collections)
+    if (response.data.season) {
+      const navArray = response.data.collections;
+      let seasonArray = {
+        seasons: response.data.season
+      }
+      navArray.push(seasonArray)
+
+      let seasonsTotal = 0;
+      response.data.season.map(item => {
+        seasonsTotal += parseInt(item.itemsCount)
+      })
+      setSeasonsItems(seasonsTotal)
+      setCollections(navArray)
+    } else {
+      setCollections(response.data.collections)
+    }
   }, [])
 
   const navigate = (colId, colName, fabricId, fabricName) => {
-    console.log("YYYYYYY", fabricId)
-    console.log("YYYYYYY", fabricName)
-    // console.log("~~~~~~~~~~~!!!!!!!!!!!", colId, fabricId)
     const collectionArray = {
       collectionId: colId,
       collectionName: colName,
@@ -30,16 +42,25 @@ const Navigation = () => {
     }
   }
 
+  const navigateSeason = (seasonId, seasonName) => {
+    const collectionArray = {
+      seasonId: seasonId,
+      seasonName: seasonName
+    }
+    localStorage.setItem('navCollection', JSON.stringify(collectionArray))
+    Router.push(`/shop/left-sidebar/${seasonName}`);
+  }
+
   return (
     <nav className="header-content__navigation space-pr--15 space-pl--15 d-none d-lg-block">
       <ul>
         {collections && collections.map((col, i) => {
           return (
             <li key={i} className="position-relative">
-              <a onClick={() => navigate(col.id, col.name)}>{col.name} ({col.itemsCount})</a>
+              <a onClick={() => navigate(col.id, col.name)}>{col.name ? col.name : "Seasons"} ({col.itemsCount ? col.itemsCount : seasonsItems})</a>
               <IoIosArrowDown />
               <ul className="sub-menu sub-menu--one-column">
-                {col && col.fabrics.map((item, j) => {
+                {col && col.fabrics && col.fabrics.map((item, j) => {
                   return (
                     <li key={j}>
                       {/* <Link
@@ -48,6 +69,13 @@ const Navigation = () => {
                       > */}
                       <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name} ({item.itemsCount})</a>
                       {/* </Link> */}
+                    </li>
+                  )
+                })}
+                {col && !col.fabrics && col.seasons.map((item, z) => {
+                  return (
+                    <li key={z}>
+                      <a onClick={() => navigateSeason(item.id, item.name)}>{item.name} ({item.itemsCount})</a>
                     </li>
                   )
                 })}

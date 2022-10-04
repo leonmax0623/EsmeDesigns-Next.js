@@ -809,6 +809,10 @@ header {
 }
 
 .search-overlay {
+  @include respond(large-mobile) {
+    display: none;
+  }
+
   position: fixed;
   z-index: 999999;
   top: 0;

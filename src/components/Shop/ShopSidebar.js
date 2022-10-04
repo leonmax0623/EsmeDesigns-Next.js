@@ -7,7 +7,7 @@ import {
   getIndividualTags, getProducts
 } from "../../lib/product";
 
-const ShopSidebar = ({ collections, products, getSortParams, searchProduct }) => {
+const ShopSidebar = ({ collections, products, getSortParams, searchProduct, seasonsItems }) => {
   const navCollection = localStorage.getItem('navCollection');
   const categories = getIndividualCategories(collections);
   const colors = getIndividualColors(products);
@@ -77,6 +77,15 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct }) =>
     }
   }
 
+  const navigateSeason = (seasonId, seasonName) => {
+    const collectionArray = {
+      seasonId: seasonId,
+      seasonName: seasonName
+    }
+    localStorage.setItem('navCollection', JSON.stringify(collectionArray))
+    Router.push(`/shop/left-sidebar/${seasonName}`);
+  }
+
   return (
     <div className="shop-sidebar">
       <div className="single-sidebar-widget space-mb--40">
@@ -101,14 +110,21 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct }) =>
             <ul className="sub-menu sub-menu--one-column" style={{ visibility: "visible", opacity: "1", marginTop: "0px", boxShadow: "none", position: "unset", padding: "0px" }}>
               {collections && collections.map((col, i) =>
                 <li key={i}>
-                  <a onClick={() => navigate(col.id, col.name)}>{col.name} ({col.itemsCount})</a>
+                  <a onClick={() => navigate(col.id, col.name)}>{col.name ? col.name : "Seasons"} ({col.itemsCount ? col.itemsCount : seasonsItems})</a>
                   <IoIosArrowForward style={{ left: "75%" }} />
                   <ul className="sub-menu--one-column sub-menu--one-column--child-menu" style={{ left: "85%", boxShadow: "-2px 2px 81px -27px rgb(0 0 0 / 150%)" }}>
-                    {col && col.fabrics.map((item, j) =>
+                    {col && col.fabrics && col.fabrics.map((item, j) =>
                       <li key={j}>
                         <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name} ({item.itemsCount})</a>
                       </li>
                     )}
+                    {col && !col.fabrics && col.seasons.map((item, z) => {
+                      return (
+                        <li key={z}>
+                          <a onClick={() => navigateSeason(item.id, item.name)}>{item.name} ({item.itemsCount})</a>
+                        </li>
+                      )
+                    })}
                   </ul>
                 </li>
               )}

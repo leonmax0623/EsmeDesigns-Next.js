@@ -35,6 +35,7 @@ const LeftSidebar = ({ products }) => {
 	const [sortedProducts, setSortedProducts] = useState([]);
 	const [shopTopFilterStatus, setShopTopFilterStatus] = useState(false);
 	const [totalLength, setTotalLength] = useState(0);
+	const [seasonsItems, setSeasonsItems] = useState('')
 
 	const pageLimit = 24;
 
@@ -116,8 +117,22 @@ const LeftSidebar = ({ products }) => {
 
 	useEffect(async () => {
 		const response = await getCollections();
-		setCollections(response.data.collections)
-		console.log("$$$$$$$", JSON.parse(localStorage.getItem("navCollection")))
+		if (response.data.season) {
+			const navArray = response.data.collections;
+			let seasonArray = {
+				seasons: response.data.season
+			}
+			navArray.push(seasonArray)
+
+			let seasonsTotal = 0;
+			response.data.season.map(item => {
+				seasonsTotal += parseInt(item.itemsCount)
+			})
+			setSeasonsItems(seasonsTotal)
+			setCollections(navArray)
+		} else {
+			setCollections(response.data.collections)
+		}
 	}, [])
 
 	const searchProduct = async (searchKey) => {
@@ -207,6 +222,7 @@ const LeftSidebar = ({ products }) => {
 									getSortParams={getSortParams}
 									collections={collections}
 									searchProduct={searchProduct}
+									seasonsItems={seasonsItems}
 								/>
 							</Col>
 

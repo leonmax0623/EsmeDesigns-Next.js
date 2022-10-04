@@ -19,6 +19,18 @@ export async function getProductsList(arr, pageIndex) {
         return result;
     }
 
+    if (arr && arr.seasonId && arr.seasonName && arr.fabricName === undefined && arr.collectionId === undefined && arr.fabricId === undefined) {
+        const formData = {
+            feaMethod: 'getProductsList',
+            accessToken: tokenInStorage,
+            page: pageIndex,
+            pageSize: 24,
+            idSeason: arr.seasonId
+        }
+        const result = await API.post('/', new URLSearchParams(formData))
+        return result;
+    }
+
     if (arr && arr.collectionId && arr.fabricId) {
         const formData = {
             feaMethod: 'getProductsList',
