@@ -18,7 +18,8 @@ const ImageGalleryBottomThumb = ({
 }) => {
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
-  const [activeSwiper, setActiveSwiper] = useState(0)
+  const [activeSwiper, setActiveSwiper] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // effect for swiper slider synchronize
   useEffect(() => {
@@ -59,12 +60,13 @@ const ImageGalleryBottomThumb = ({
     //   realIndexChange: (swiper) => console.log("RRRRRRRRRRR", swiper.realIndex)
     // },
     getSwiper: getThumbnailSwiper,
+    // activeSlideKey: '2',
     spaceBetween: 10,
     slidesPerView: 4,
     loopedSlides: 4,
     touchRatio: 0.2,
     freeMode: true,
-    loop: true,
+    loop: false,
     slideToClickedSlide: true,
     centeredSlides: true,
     navigation: {
@@ -99,16 +101,29 @@ const ImageGalleryBottomThumb = ({
 
 
   useMemo(() => {
-    let activeIndex = 0;
+    console.log("PICTURE COLOR ID => ", pictureColorId)
     product.picture.forEach((image, i) => {
       if (image.fabricsColorId === pictureColorId) {
+        console.log("$$$$$$$$$$$$$$$$$", i)
         setActiveSwiper(i)
-        activeIndex = 1;
+        setActiveIndex(1);
       }
     })
-    if (activeIndex === 0) setActiveSwiper(0);
+    const pictureIndex = product.picture.findIndex(image => image.fabricsColorId === pictureColorId);
+    if (pictureIndex > -1) {
+      setActiveSwiper(pictureIndex);
+      setActiveIndex(1);
+    } else {
+      setActiveIndex(0);
+    }
+    // if (pictures.length > 0) {
+    //   setActiveSwiper(pictures[0]);
+    //   setActiveIndex(1);
+    // } else {
+    //   setActiveIndex(0);
+    // }
+    // if (activeIndex === 0) setActiveSwiper(null);
   }, [pictureColorId])
-
 
   return (
     <Fragment>
@@ -157,7 +172,7 @@ const ImageGalleryBottomThumb = ({
               {product.picture &&
                 product.picture.map((image, i) => {
                   return (
-                    <div key={i}>
+                    <div key={i} >
                       <LightgalleryItem
                         group="any"
                         src={image.url}
@@ -202,13 +217,13 @@ const ImageGalleryBottomThumb = ({
         </LightgalleryProvider>
       </div>
       <div className="product-small-image-wrapper" >
-        <Swiper {...thumbnailSwiperParams} activeSlideKey={activeSwiper}>
+
+        <Swiper {...thumbnailSwiperParams} activeSlideKey={activeIndex === 1 ? String(activeSwiper) : null}>
           {product.picture &&
             product.picture.map((image, i) => {
-              // image.fabricsColorId === pictureColorId && setActiveSwiper(i)
               return (
-                <div key={i}>
-                  <div className="single-image">
+                <div className="slide" key={String(i)}>
+                  <div className={`single-image maximus-${i}`}>
                     <img
                       src={image.url}
                       className="img-fluid"
