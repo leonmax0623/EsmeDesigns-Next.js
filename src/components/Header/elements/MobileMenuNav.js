@@ -1,14 +1,30 @@
 import Link from "next/link";
+import Router from 'next/router';
 import { useEffect, useState } from "react";
 import { getCollections } from "../../../redux/actions/navigationActions";
 
 const MobileMenuNav = ({ getActiveStatus }) => {
   const [collections, setCollections] = useState([])
+  const [seasonsItems, setSeasonsItems] = useState('')
 
   useEffect(async () => {
     const response = await getCollections();
-    setCollections(response.data.collections)
-    console.log("NAVIGATIONS MOBILE => ", response.data.collections)
+    if (response.data.season) {
+      const navArray = response.data.collections;
+      let seasonArray = {
+        seasons: response.data.season
+      }
+      navArray.push(seasonArray)
+
+      let seasonsTotal = 0;
+      response.data.season.map(item => {
+        seasonsTotal += parseInt(item.itemsCount)
+      })
+      setSeasonsItems(seasonsTotal)
+      setCollections(navArray)
+    } else {
+      setCollections(response.data.collections)
+    }
   }, [])
 
   useEffect(() => {
@@ -48,16 +64,36 @@ const MobileMenuNav = ({ getActiveStatus }) => {
   };
 
   const navigate = (colId, colName, fabricId, fabricName) => {
-    // console.log("~~~~~~~~~~~!!!!!!!!!!!", colId, fabricId)
+    if (!colId) {
+      navigateSeason(252, "Default season")
+    } else {
+      const collectionArray = {
+        collectionId: colId,
+        collectionName: colName,
+        fabricId: fabricId,
+        fabricName: fabricName
+      }
+      localStorage.setItem('navCollection', JSON.stringify(collectionArray))
+      if (fabricId === undefined && fabricName === undefined) {
+        localStorage.setItem('router', `/shop/left-sidebar/${colName}`)
+        Router.push(`/shop/left-sidebar/${colName}`);
+      } else {
+        localStorage.setItem('router', `/shop/left-sidebar/${fabricName}`)
+        Router.push(`/shop/left-sidebar/${fabricName}`);
+      }
+    }
+  }
+
+  const navigateSeason = (seasonId, seasonName) => {
     const collectionArray = {
-      collectionId: colId,
-      collectionName: colName,
-      fabricId: fabricId,
-      fabricName: fabricName
+      seasonId: seasonId,
+      seasonName: seasonName
     }
     localStorage.setItem('navCollection', JSON.stringify(collectionArray))
-    Router.push(`/shop/left-sidebar/${fabricName}`);
+    localStorage.setItem('router', `/shop/left-sidebar/${seasonName}`)
+    Router.push(`/shop/left-sidebar/${seasonName}`);
   }
+
 
   return (
     <nav
@@ -67,12 +103,19 @@ const MobileMenuNav = ({ getActiveStatus }) => {
       <ul>
         {collections && collections.map((col, i) =>
           <li key={i} className="menu-item-has-children">
-            <a>{col.name}</a>
+            <a style={{ fontSize: "14px" }} onClick={() => navigate(col.id, col.name)}>{col.name ? col.name : "Seasons"} ({col.itemsCount ? col.itemsCount : seasonsItems})</a>
             <ul className="mobile-sub-menu">
-              {col && col.fabrics.map((item, j) => {
+              {col && col.fabrics && col.fabrics.map((item, j) => {
                 return (
                   <li key={j}>
-                    <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name}</a>
+                    <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name} ({item.itemsCount})</a>
+                  </li>
+                )
+              })}
+              {col && !col.fabrics && col.seasons.map((item, z) => {
+                return (
+                  <li key={z}>
+                    <a onClick={() => navigateSeason(item.id, item.name)}>{item.name} ({item.itemsCount})</a>
                   </li>
                 )
               })}
@@ -81,7 +124,7 @@ const MobileMenuNav = ({ getActiveStatus }) => {
         )}
         <li className="menu-item-has-children">
           <Link href="/other/about" as={"/other/about"}>
-            <a>About</a>
+            <a style={{ fontSize: "14px" }}>About</a>
           </Link>
           <ul className="mobile-sub-menu">
 

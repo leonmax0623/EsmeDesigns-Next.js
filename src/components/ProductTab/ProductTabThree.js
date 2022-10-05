@@ -18,7 +18,13 @@ const ProductTabThree = ({ newProducts, popularProducts, saleProducts }) => {
         addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
         Router.push('/other/login');
       } else {
-        Router.push('/shop/left-sidebar');
+        const collectionArray = {
+          collectionId: "2339",
+          collectionName: "All bridesmaid",
+        }
+        localStorage.setItem('navCollection', JSON.stringify(collectionArray))
+        localStorage.setItem('router', '/shop/left-sidebar/All bridesmaid')
+        Router.push('/shop/left-sidebar/All bridesmaid');
       }
     } else {
       addToast("Please log in!", { appearance: "error", autoDismiss: true });

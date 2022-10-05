@@ -38,14 +38,14 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			if (bulkProductProps[0].selectedSize) {
 				setSelectedCategorySizeValue(bulkProductProps[0].selectedSize)
 			} else {
-				setSelectedCategorySizeValue(bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
+				setSelectedCategorySizeValue(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
 			}
 			if (bulkProductProps[0].selectedSizeCategory) {
 				setSizeCategory(bulkProductProps[0].selectedSizeCategory)
 				setSelectedSizeCategory(bulkProductProps[0].selectedSizeCategory)
 			} else {
-				setSizeCategory(bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
-				setSelectedSizeCategory(bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
+				setSizeCategory(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
+				setSelectedSizeCategory(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
 			}
 			if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
 				setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
@@ -68,7 +68,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
 			} else {
 				// console.log("False!!!!!", bulkProductProps[0].sizeCategories)
-				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories.map((each) => {
+				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories.map((each) => {
 
 					const sizes = each.sizes.map((eachSize) => {
 						return {
@@ -92,7 +92,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 1) {
 				setSelectedAttr(bulkProductProps[0].selectedAttr);
 			} else {
-				bulkProductProps[0].styleAttributes.map((item) => {
+				bulkProductProps[0].styleAttributes && bulkProductProps[0].styleAttributes.map((item) => {
 					setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
 				});
 			}
@@ -100,7 +100,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			if (bulkProductProps[0].comboArray) {
 				setComboArray(bulkProductProps[0].comboArray);
 			} else {
-				bulkProductProps[0].combos.map((item) => {
+				bulkProductProps[0].combos && bulkProductProps[0].combos.map((item) => {
 					setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColor[0].fabricColorName, rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB } } }]);
 				});
 			}
@@ -111,7 +111,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 	//custom
 	const alterationOptions = [];
-	bulkProductProps[0] && bulkProductProps[0].styleAlterations.map((single, i) => {
+	bulkProductProps[0] && bulkProductProps[0].styleAlterations && bulkProductProps[0].styleAlterations.length > 0 && bulkProductProps[0].styleAlterations.map((single, i) => {
 		let array = {
 			label: "",
 			value: ""
@@ -122,7 +122,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	});
 
 	const styleOptions = [];
-	bulkProductProps[0] && bulkProductProps[0].styleOptions.map((single, i) => {
+	bulkProductProps[0] && bulkProductProps[0].styleOptions && bulkProductProps[0].styleOptions.length > 0 && bulkProductProps[0].styleOptions.map((single, i) => {
 		let array = {
 			label: "",
 			value: ""
@@ -152,7 +152,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	useEffect(() => {
 		let sum = 0;
 		// console.log("YOU're here!", regularSizeArray)
-		if (JSON.parse(regularSizeArray).length > 0) {
+		if (regularSizeArray && JSON.parse(regularSizeArray).length > 0) {
 
 			JSON.parse(regularSizeArray).map((item) => {
 				if (selectedSizeCategory === item.sizeCategoryName) {
@@ -631,7 +631,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 									<div style={{ alignItems: "center" }}>
 										<div className="product-content__size__content" style={{ display: "flex", alignItems: "end" }}>
 											<Col lg={2} style={{ padding: "10px", padding: "0px" }}>
-												{bulkProductProps[0].sizeCategories.length > 0 && (
+												{bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && (
 													<select
 														style={{ width: "100%", height: "37px", cursor: "pointer" }}
 														disabled={editBoolean}

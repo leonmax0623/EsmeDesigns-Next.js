@@ -21,6 +21,7 @@ const MobileMenuSearch = () => {
       searchKey: searchKey
     };
     localStorage.setItem("navCollection", JSON.stringify(collectionArray));
+    localStorage.setItem('router', `/shop/left-sidebar/${colName}`)
     Router.push(`/shop/left-sidebar/${colName}`);
   }
   return (

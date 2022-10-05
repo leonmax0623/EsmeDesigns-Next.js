@@ -71,8 +71,10 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct, seas
     }
     localStorage.setItem('navCollection', JSON.stringify(collectionArray))
     if (fabricId === undefined && fabricName === undefined) {
+      localStorage.setItem('router', `/shop/left-sidebar/${colName}`)
       Router.push(`/shop/left-sidebar/${colName}`);
     } else {
+      localStorage.setItem('router', `/shop/left-sidebar/${fabricName}`)
       Router.push(`/shop/left-sidebar/${fabricName}`);
     }
   }
@@ -83,6 +85,7 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct, seas
       seasonName: seasonName
     }
     localStorage.setItem('navCollection', JSON.stringify(collectionArray))
+    localStorage.setItem('router', `/shop/left-sidebar/${seasonName}`)
     Router.push(`/shop/left-sidebar/${seasonName}`);
   }
 

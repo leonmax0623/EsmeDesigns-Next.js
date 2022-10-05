@@ -29,7 +29,12 @@ const Login = () => {
 				const cookie = response.data.accessToken;
 				localStorage.setItem('accessToken', cookie)
 				// cookies.set("accessToken", cookie, [{ maxAge: 3600000 }])
-				Router.push('/');
+				const previousRouter = localStorage.getItem('router')
+				if (previousRouter && previousRouter !== '') {
+					Router.push(previousRouter)
+				} else {
+					Router.push('/');
+				}
 				addToast("Successfully Logged In", { appearance: "success", autoDismiss: true });
 
 			})
