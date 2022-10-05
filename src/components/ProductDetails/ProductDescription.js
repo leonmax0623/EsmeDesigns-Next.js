@@ -109,6 +109,7 @@ const ProductDescription = ({
 
   const bulkOrder = (product) => {
     addToBulk(product);
+    localStorage.setItem('router', '/other/bulk')
     router.push('/other/bulk')
   }
 

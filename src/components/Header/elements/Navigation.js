@@ -6,10 +6,14 @@ import { getCollections } from "../../../redux/actions/navigationActions";
 const Navigation = () => {
   const [collections, setCollections] = useState('')
   const [seasonsItems, setSeasonsItems] = useState('')
+  const [newSeasonId, setNewSeasonId] = useState('')
+  const [newSeasonName, setNewSeasonName] = useState('')
 
   useEffect(async () => {
     const response = await getCollections();
     if (response.data.season) {
+      setNewSeasonId(response.data.season[0].id)
+      setNewSeasonName(response.data.season[0].name)
       const navArray = response.data.collections;
       let seasonArray = {
         seasons: response.data.season
@@ -28,17 +32,23 @@ const Navigation = () => {
   }, [])
 
   const navigate = (colId, colName, fabricId, fabricName) => {
-    const collectionArray = {
-      collectionId: colId,
-      collectionName: colName,
-      fabricId: fabricId,
-      fabricName: fabricName
-    }
-    localStorage.setItem('navCollection', JSON.stringify(collectionArray))
-    if (fabricId === undefined && fabricName === undefined) {
-      Router.push(`/shop/left-sidebar/${colName}`);
+    if (!colId) {
+      navigateSeason(newSeasonId, newSeasonName)
     } else {
-      Router.push(`/shop/left-sidebar/${fabricName}`);
+      const collectionArray = {
+        collectionId: colId,
+        collectionName: colName,
+        fabricId: fabricId,
+        fabricName: fabricName
+      }
+      localStorage.setItem('navCollection', JSON.stringify(collectionArray))
+      if (fabricId === undefined && fabricName === undefined) {
+        localStorage.setItem('router', `/shop/left-sidebar/${colName}`)
+        Router.push(`/shop/left-sidebar/${colName}`);
+      } else {
+        localStorage.setItem('router', `/shop/left-sidebar/${fabricName}`)
+        Router.push(`/shop/left-sidebar/${fabricName}`);
+      }
     }
   }
 
@@ -48,6 +58,7 @@ const Navigation = () => {
       seasonName: seasonName
     }
     localStorage.setItem('navCollection', JSON.stringify(collectionArray))
+    localStorage.setItem('router', `/shop/left-sidebar/${seasonName}`)
     Router.push(`/shop/left-sidebar/${seasonName}`);
   }
 

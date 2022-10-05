@@ -22,7 +22,10 @@ const SearchOverlay = ({ activeStatus, getActiveStatus }) => {
       searchKey: searchKey
     };
     localStorage.setItem("navCollection", JSON.stringify(collectionArray));
+    localStorage.setItem('router', `/shop/left-sidebar/${colName}`)
     Router.push(`/shop/left-sidebar/${colName}`);
+    getActiveStatus(false);
+    document.querySelector("body").classList.remove("overflow-hidden");
   }
 
   return (

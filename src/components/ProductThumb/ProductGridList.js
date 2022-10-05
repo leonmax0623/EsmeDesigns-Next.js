@@ -34,6 +34,7 @@ const ProductGridList = ({
       // console.log("TTTTTTT", response)
       const product = response.data;
       localStorage.setItem('specificProduct', JSON.stringify(product))
+      localStorage.setItem('router', `/shop/product-basic/${product.productName}`)
       Router.push(`/shop/product-basic/${product.productName}`);
     }
   }
