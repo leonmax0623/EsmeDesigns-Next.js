@@ -11,7 +11,9 @@ const CartOverlay = ({
   cartItems,
   deleteFromCart
 }) => {
-  let cartTotalPrice = 0;
+  let mainPrice = 0;
+  let extraPayPrice = 0;
+  let totalAmount = 0;
   console.log("MAXIMUS cartItems=>", cartItems)
   const { addToast } = useToasts();
   return (
@@ -42,11 +44,10 @@ const CartOverlay = ({
               <div className="cart-product-container">
                 <CustomScroll allowOuterScroll={true}>
                   {cartItems.map((product, i) => {
-                    if (product.totalItems) {
-                      cartTotalPrice += parseInt(product.discountedPrice) * product.totalItems;
-                    } else {
-                      cartTotalPrice += parseInt(product.discountedPrice) * product.quantity;
-                    }
+
+                    mainPrice += product.totalItems ? product.totalItems * parseInt(product.discountedPrice) : product.quantity * parseInt(product.discountedPrice)
+                    extraPayPrice += product.extraPrice;
+                    totalAmount += product.totalItems ? product.totalItems : product.quantity
                     return (
                       <div className="single-cart-product" key={i}>
                         <span className="cart-close-icon">
@@ -101,9 +102,27 @@ const CartOverlay = ({
               </div>
               {/*=======  subtotal calculation  =======*/}
               <p className="cart-subtotal">
-                <span className="subtotal-title">Subtotal:</span>
+                <span className="subtotal-title">Main Price:</span>
                 <span className="subtotal-amount">
-                  ${cartTotalPrice.toFixed(2)}
+                  ${mainPrice}
+                </span>
+              </p>
+              <p className="cart-subtotal">
+                <span className="subtotal-title">Extra Price:</span>
+                <span className="subtotal-amount">
+                  ${extraPayPrice}
+                </span>
+              </p>
+              <p className="cart-subtotal">
+                <span className="subtotal-title">Amount:</span>
+                <span className="subtotal-amount">
+                  ${totalAmount}
+                </span>
+              </p>
+              <p className="cart-subtotal">
+                <span className="subtotal-title">Total Price:</span>
+                <span className="subtotal-amount">
+                  ${extraPayPrice + mainPrice}
                 </span>
               </p>
               {/*=======  cart buttons  =======*/}

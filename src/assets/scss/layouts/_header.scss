@@ -1164,12 +1164,11 @@ header {
         font-weight: 600;
         line-height: 25px;
 
-        margin-top: 25px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        margin-top: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
 
         color: $black--two;
-        border-top: 1px solid $grey--ten;
         border-bottom: 1px solid $grey--ten;
 
         .subtotal-amount {
