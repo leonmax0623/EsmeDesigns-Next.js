@@ -40,6 +40,7 @@ const ProductDescription = ({
   );
   const [alterationSelected, setAlterationSelected] = useState([]);
   const [styleOptionSelected, setStyleOptionSelected] = useState([]);
+  const [extraPrice, setExtraPrice] = useState(0)
 
   useEffect(() => {
     if (product) {
@@ -189,6 +190,34 @@ const ProductDescription = ({
     changePicture(colorId)
     // localStorage.setItem("imageFabricsColorId", colorId)
   }
+
+  const handleStyleOption = (options) => {
+    let testExtra = 0;
+    setStyleOptionSelected(options)
+    const sum = sumExtraPrices(options);
+    let alterationSum = 0;
+    if (alterationSelected.length > 0) alterationSum = sumExtraPrices(alterationSelected);
+    setExtraPrice(sum + alterationSum);
+  }
+
+  const handleAlterationOption = (options) => {
+    let testExtra = 0;
+    setAlterationSelected(options)
+    const sum = sumExtraPrices(options);
+    let styleOptionSum = 0;
+    if (styleOptionSelected.length > 0) styleOptionSum = sumExtraPrices(styleOptionSelected);
+    setExtraPrice(sum + styleOptionSum);
+  }
+
+
+
+  const sumExtraPrices = (arr) => {
+    return arr.reduce((a, b) => { return a + parseInt(b.price) }, 0);
+  }
+
+  // const myTest = (val) => {
+  //   console.log("!!@#!@#@!#@!#@!#!@3", val)
+  // }
 
   return (
     <div className="product-content">
@@ -622,7 +651,7 @@ const ProductDescription = ({
               <MultiSelect
                 options={alterationOptions}
                 value={alterationSelected}
-                onChange={setAlterationSelected}
+                onChange={handleAlterationOption}
                 labelledBy="Select Alteration"
                 hasSelectAll={false}
               />
@@ -641,7 +670,7 @@ const ProductDescription = ({
               <MultiSelect
                 options={styleOptions}
                 value={styleOptionSelected}
-                onChange={setStyleOptionSelected}
+                onChange={handleStyleOption}
                 labelledBy="Select"
                 hasSelectAll={false}
               />
@@ -700,21 +729,11 @@ const ProductDescription = ({
                 selectedSizeCategory,
                 selectedCategorySizeValue,
                 alterationSelected,
-                styleOptionSelected
+                styleOptionSelected,
+                extraPrice
               )
               // myTest(
-              //   product,
-              //   addToast,
-              //   quantityCount,
-              //   selectedFabrics,
-              //   selectedFabricsColor,
-              //   selectedLining,
-              //   selectedLiningFabricsColor,
-              //   comboArray,
-              //   selectedAttr,
-              //   selectedCategorySizeValue,
-              //   alterationSelected,
-              //   styleOptionSelected
+              //   extraPrice
               // )
             }
             className="lezada-button lezada-button--medium product-content__cart space-mr--10"

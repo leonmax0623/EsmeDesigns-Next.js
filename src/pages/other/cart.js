@@ -19,9 +19,13 @@ const Cart = ({
   deleteAllFromCart
 }) => {
   const { addToast } = useToasts();
-  let cartTotalPrice = 0;
+  let mainPrice = 0;
+  let extraPayPrice = 0;
+  let totalAmount = 0;
   cartItems.map((item, i) => {
-    cartTotalPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
+    mainPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
+    extraPayPrice += item.extraPrice;
+    totalAmount += item.totalItems ? item.totalItems : item.quantity
   })
 
   useEffect(() => {
@@ -100,14 +104,26 @@ const Cart = ({
                   <table className="cart-calculation-table space-mb--40">
                     <tbody>
                       <tr>
-                        <th>SUBTOTAL</th>
+                        <th>MAIN COST</th>
                         <td className="subtotal">
-                          ${cartTotalPrice.toFixed(2)}
+                          ${mainPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>EXTRA COST</th>
+                        <td className="subtotal">
+                          ${extraPayPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>AMOUNT</th>
+                        <td className="subtotal">
+                          {totalAmount}
                         </td>
                       </tr>
                       <tr>
                         <th>TOTAL</th>
-                        <td className="total">${cartTotalPrice.toFixed(2)}</td>
+                        <td className="total">${extraPayPrice + mainPrice}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -178,7 +194,8 @@ const mapDispatchToProps = (dispatch) => {
       sizeCategory,
       selectedCategorySizeValue,
       alterationSelected,
-      styleOptionSelected
+      styleOptionSelected,
+      extraPrice
     ) => {
       dispatch(addToCart(
         item,
@@ -193,7 +210,8 @@ const mapDispatchToProps = (dispatch) => {
         sizeCategory,
         selectedCategorySizeValue,
         alterationSelected,
-        styleOptionSelected
+        styleOptionSelected,
+        extraPrice
       ));
     },
     decreaseQuantity: (item, addToast) => {

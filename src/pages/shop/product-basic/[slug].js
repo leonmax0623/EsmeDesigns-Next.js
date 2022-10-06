@@ -162,7 +162,8 @@ const mapDispatchToProps = (dispatch) => {
       selectedSizeCategory,
       selectedCategorySizeValue,
       alterationSelected,
-      styleOptionSelected
+      styleOptionSelected,
+      extraPrice
     ) => {
       dispatch(
         addToCart(
@@ -178,7 +179,8 @@ const mapDispatchToProps = (dispatch) => {
           selectedSizeCategory,
           selectedCategorySizeValue,
           alterationSelected,
-          styleOptionSelected
+          styleOptionSelected,
+          extraPrice
         )
       );
     },

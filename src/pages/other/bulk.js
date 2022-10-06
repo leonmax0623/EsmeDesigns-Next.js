@@ -23,10 +23,15 @@ const Bulk = ({
   const { addToast } = useToasts();
 
   const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId).reverse();
-  let cartTotalPrice = 0;
+  let mainPrice = 0;
+  let extraPayPrice = 0;
+  let totalAmount = 0;
   bulkOrders.map((item, i) => {
-    cartTotalPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
+    mainPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
+    extraPayPrice += item.extraPrice;
+    totalAmount += item.totalItems
   })
+
   const [newBulkProduct, setNewBulkProduct] = useState(bulkProduct)
   const addNewBulkOrder = () => {
     setNewBulkProduct(bulkProduct)
@@ -49,7 +54,8 @@ const Bulk = ({
     regularSizeArray,
     alterationSelected,
     styleOptionSelected,
-    totalItems
+    totalItems,
+    extraPrice
   ) => {
     addBulkToCart(
       bulkProduct,
@@ -63,7 +69,8 @@ const Bulk = ({
       regularSizeArray,
       alterationSelected,
       styleOptionSelected,
-      totalItems
+      totalItems,
+      extraPrice
     )
     setNewBulkProduct([])
   }
@@ -135,14 +142,26 @@ const Bulk = ({
                   <table className="cart-calculation-table space-mb--40">
                     <tbody>
                       <tr>
-                        <th>SUBTOTAL</th>
+                        <th>MAIN COST</th>
                         <td className="subtotal">
-                          ${cartTotalPrice.toFixed(2)}
+                          ${mainPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>EXTRA COST</th>
+                        <td className="subtotal">
+                          ${extraPayPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>AMOUNT</th>
+                        <td className="subtotal">
+                          ${totalAmount}
                         </td>
                       </tr>
                       <tr>
                         <th>TOTAL</th>
-                        <td className="total">${cartTotalPrice.toFixed(2)}</td>
+                        <td className="total">${extraPayPrice + mainPrice}</td>
                       </tr>
                     </tbody>
                   </table>
