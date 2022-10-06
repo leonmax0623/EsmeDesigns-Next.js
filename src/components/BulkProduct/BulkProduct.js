@@ -85,14 +85,21 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 			if (bulkProductProps[0].selectedAlteration) {
 				setAlterationSelected(bulkProductProps[0].selectedAlteration)
-
 			}
 
 			if (bulkProductProps[0].selectedStyleOption) {
 				setStyleOptionSelected(bulkProductProps[0].selectedStyleOption)
 			}
 
-			if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 1) {
+			if (bulkProductProps[0].selectedStyleOption && bulkProductProps[0].selectedAlteration) {
+				setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedStyleOption) + sumExtraPrices(bulkProductProps[0].selectedAlteration))
+			} else if (bulkProductProps[0].selectedStyleOption && bulkProductProps[0].selectedAlteration.length === 0) {
+				setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedStyleOption))
+			} else if (bulkProductProps[0].selectedAlteration && bulkProductProps[0].selectedStyleOption.length === 0) {
+				setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedAlteration))
+			}
+
+			if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 0) {
 				setSelectedAttr(bulkProductProps[0].selectedAttr);
 			} else {
 				bulkProductProps[0].styleAttributes && bulkProductProps[0].styleAttributes.map((item) => {
@@ -109,7 +116,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			}
 		}
 
-		setExtraPrice(testExtra)
+
 	}, [bulkProductProps]);
 
 
@@ -209,7 +216,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				break;
 			}
 		}
-
 		setSelectedAttr(array);
 	}
 
@@ -238,7 +244,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				regularSizeArray,
 				alterationSelected,
 				styleOptionSelected,
-				totalItems
+				totalItems,
+				extraPrice
 			})
 		} else {
 			addToCart(
@@ -254,7 +261,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				sizeCategory,
 				selectedCategorySizeValue,
 				alterationSelected,
-				styleOptionSelected
+				styleOptionSelected,
+				extraPrice
 			)
 		}
 	}
@@ -294,7 +302,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		setComboArray(array);
 	}
 
-	let testExtra = 0;
 
 	// testExtra += parseInt(styleOptionSelected[0].price)
 	// testExtra += parseInt(alterationSelected[0].price)
@@ -302,12 +309,28 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	// console.log("styleOptionSelected=>", styleOptionSelected[0].price)
 
 	const handleStyleOption = (options) => {
+		let testExtra = 0;
 		setStyleOptionSelected(options)
-		options.map((opt, i) => {
-			testExtra += parseInt(opt.price)
-		})
+		const sum = sumExtraPrices(options);
+		let alterationSum = 0;
+		if (alterationSelected.length > 0) alterationSum = sumExtraPrices(alterationSelected);
+		setExtraPrice(sum + alterationSum);
 	}
-	console.log("######", testExtra)
+
+	const handleAlterationOption = (options) => {
+		let testExtra = 0;
+		setAlterationSelected(options)
+		const sum = sumExtraPrices(options);
+		let styleOptionSum = 0;
+		if (styleOptionSelected.length > 0) styleOptionSum = sumExtraPrices(styleOptionSelected);
+		setExtraPrice(sum + styleOptionSum);
+	}
+
+
+
+	const sumExtraPrices = (arr) => {
+		return arr.reduce((a, b) => { return a + parseInt(b.price) }, 0);
+	}
 
 	return (
 		<div className="bulk-container">
@@ -524,7 +547,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 														<div className="product-content__size__content">
 															<select
 																style={{ width: "100%", height: "37px", cursor: "pointer" }}
-																// value={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
+																value={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
 																disabled={editBoolean}
 																onChange={(event) => {
 																	handleAttributeChange(event, item.styleAttrybutesName)
@@ -533,7 +556,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 																{item.styleAttrybutesValues &&
 																	item.styleAttrybutesValues.map((single, j) => {
 																		return (
-																			<option key={j} selected={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName && single.styleAttrybutesValueName === selectedAttr[i].value} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
+																			<option key={j} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
 																		);
 																	})
 																}
@@ -561,7 +584,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 												options={alterationOptions}
 												value={alterationSelected}
 												disabled={editBoolean ? true : false}
-												onChange={setAlterationSelected}
+												onChange={handleAlterationOption}
 												labelledBy="Select Alteration"
 												hasSelectAll={false}
 											/>
@@ -638,7 +661,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 												<span style={{ fontSize: "14px", textAlign: "center", color: "#333", margin: "10px 0px" }}>Total</span>
 												<input disabled style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} value={totalItems} />
 											</div>
-
 										</div>
 									</Col>
 								</div>
@@ -884,14 +906,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 					</Col>
 					<Col lg={6}>
 						<div className="price-table">
-							<div style={{ display: "flex", marginBottom: "10px", marginTop: "20px" }}>
-								<Col lg={3}><div className="product-content__size__title">Price: </div></Col>
-								<Col lg={3}><div className="product-content__size__content">
-									<span>${parseInt(bulkProductProps[0].standardPrice)}</span>
-								</div></Col>
-							</div>
 							<div style={{ display: "flex", marginBottom: "10px" }}>
-								<Col lg={3}><div className="product-content__size__title">Discount: </div></Col>
+								<Col lg={3}><div className="product-content__size__title">Price: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
 									<span>${parseInt(bulkProductProps[0].discountedPrice)}</span>
 								</div></Col>
@@ -899,7 +915,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<div style={{ display: "flex", marginBottom: "10px" }}>
 								<Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>${parseInt(extraPrice)}</span>
+									<span>${extraPrice}</span>
+								</div></Col>
+							</div>
+							<div style={{ display: "flex", marginBottom: "10px" }}>
+								<Col lg={3}><div className="product-content__size__title">Total Items: </div></Col>
+								<Col lg={3}><div className="product-content__size__content">
+									<span>{totalItems}</span>
 								</div></Col>
 							</div>
 							<div style={{ display: "flex", marginBottom: "20px" }}>
@@ -913,19 +935,17 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						<table className="cart-table">
 							<thead>
 								<tr>
-									<th className="product-name" style={{ fontSize: "14px", textAlign: "center" }}>
-										Price
-									</th>
-									<th className="product-price" style={{ fontSize: "14px", textAlign: "center" }}>Discounted</th>
+									<th className="product-price" style={{ fontSize: "14px", textAlign: "center" }}>Price</th>
 									<th className="product-quantity" style={{ fontSize: "14px", textAlign: "center" }}>Extras</th>
+									<th className="product-price" style={{ fontSize: "14px", textAlign: "center" }}>Amount</th>
 									<th className="product-subtotal" style={{ fontSize: "14px", textAlign: "center" }}>Total</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr style={{ textAlign: "center" }}>
-									<td style={{ paddingLeft: "0px" }}>${parseInt(bulkProductProps[0].standardPrice)}</td>
 									<td style={{ paddingLeft: "0px" }}>${parseInt(bulkProductProps[0].discountedPrice)}</td>
-									<td style={{ paddingLeft: "0px" }}>${parseInt(extraPrice)}</td>
+									<td style={{ paddingLeft: "0px" }}>${extraPrice}</td>
+									<td style={{ paddingLeft: "0px" }}>{totalItems}</td>
 									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice : 0)}</td>
 								</tr>
 							</tbody>

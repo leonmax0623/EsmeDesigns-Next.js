@@ -17,7 +17,8 @@ export const addToCart = (
   selectedSizeCategory,
   selectedCategorySizeValue,
   alterationSelected,
-  styleOptionSelected
+  styleOptionSelected,
+  extraPrice
 ) => {
 
   console.log("CART ITEMS =>>>", product)
@@ -41,6 +42,7 @@ export const addToCart = (
         selectedSize: selectedCategorySizeValue,
         selectedAlteration: alterationSelected,
         selectedStyleOption: styleOptionSelected,
+        extraPrice: extraPrice,
         regularOrder: true
       }
     });
@@ -68,7 +70,7 @@ export const addBulkToCart = (data) => {
         selectedStyleOption: data.styleOptionSelected,
         selectedAttr: data.selectedAttr,
         comboArray: data.comboArray,
-
+        extraPrice: data.extraPrice,
       }
     });
   };
