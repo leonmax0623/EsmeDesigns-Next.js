@@ -11,6 +11,7 @@ import { useToasts } from "react-toast-notifications";
 import { BreadcrumbOne } from "../../../components/Breadcrumb";
 import { LayoutTwo } from "../../../components/Layout";
 import { ShopHeader, ShopProducts, ShopSidebar } from "../../../components/Shop";
+import { getSortedProducts } from "../../../lib/product";
 import { getCollections } from "../../../redux/actions/navigationActions";
 import { getProductsList } from "../../../redux/actions/productListActions";
 
@@ -92,8 +93,8 @@ const LeftSidebar = ({ products }) => {
 	};
 
 	const getFilterSortParams = (sortType, sortValue) => {
-		setFilterSortType(sortType);
-		setFilterSortValue(sortValue);
+		const sortedProducts = getSortedProducts(apiProducts, sortType, sortValue);
+		setApiProducts(sortedProducts)
 	};
 
 	const getPageProducts = () => {
@@ -166,7 +167,6 @@ const LeftSidebar = ({ products }) => {
 				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
 				Router.push('/other/login');
 			} else {
-
 				setApiProducts(response.data.items)
 				setTotalLength(response.data.totalItems);
 				setPageCount(response.data.pages);

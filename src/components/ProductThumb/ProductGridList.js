@@ -178,10 +178,16 @@ const ProductGridList = ({
               </button>
             </div>
             <div className="price">
-              {product.discount > 0 ? (
+              {product.discountedPrice > 0 ? (
                 <Fragment>
-                  <span className="main-price discounted">${productPrice}</span>
-                  <span className="discounted-price">${discountedPrice}</span>
+                  {productPrice > discountedPrice ? (
+                    <>
+                      <span className="main-price discounted">${productPrice}</span>
+                      <span className="discounted-price">${discountedPrice}</span>
+                    </>
+                  ) : (
+                    <span className="discounted-price">${productPrice}</span>
+                  )}
                 </Fragment>
               ) : (
                 <span className="main-price">${productPrice}</span>

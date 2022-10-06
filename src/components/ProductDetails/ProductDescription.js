@@ -89,10 +89,12 @@ const ProductDescription = ({
   product.styleAlterations && product.styleAlterations.map((single, i) => {
     let array = {
       label: '',
-      value: ''
+      value: '',
+      price: ""
     };
-    array.label = single.styleAlterationName;
+    array.label = single.styleAlterationName + ' ' + `($${single.price})`;
     array.value = single.styleAlterationId;
+    array.price = single.price;
     alterationOptions.push(array)
   });
 
@@ -100,10 +102,12 @@ const ProductDescription = ({
   product.styleOptions && product.styleOptions.map((single, i) => {
     let array = {
       label: "",
-      value: ""
+      value: "",
+      price: ""
     };
-    array.label = single.styleOptionName;
+    array.label = single.styleOptionName + ' ' + `($${single.price})`;
     array.value = single.styleOptionId;
+    array.price = single.price;
     styleOptions.push(array)
   });
 
@@ -303,6 +307,7 @@ const ProductDescription = ({
                 {product.fabrics.map((single, i) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
                   return (
                     <Tooltip
+                      key={i}
                       title={
                         `${color.fabricColorName}/${color.fabricsColorId}`
                       }
@@ -400,6 +405,7 @@ const ProductDescription = ({
                 {product.lining.map((single, i) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
                   return (
                     <Tooltip
+                      key={i}
                       title={
                         `${color.fabricColorName}/${color.fabricsColorId}`
                       }
@@ -439,7 +445,7 @@ const ProductDescription = ({
       )}
       {(product.combos && product.combos.length > 0) ? product.combos.map((combo, comboIndex) => {
         return (
-          <>
+          <div key={comboIndex}>
             <div className="product-content__size-color">
               <div className="product-content__size space-mb--20">
                 <div className="product-content__size__title">{combo.combosName}</div>
@@ -452,7 +458,7 @@ const ProductDescription = ({
                     {combo.fabric &&
                       combo.fabric.map((item, i) => {
                         return (
-                          <option data-combo-index={comboIndex} data-fabric-index={i} value={item.fabricsName}>{item.fabricsName}</option>
+                          <option key={i} data-combo-index={comboIndex} data-fabric-index={i} value={item.fabricsName}>{item.fabricsName}</option>
                         );
                       })
                     }
@@ -473,7 +479,7 @@ const ProductDescription = ({
                     >
                       {combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColor.map((color, i) => {
                         return (
-                          <option data-combo-index={comboIndex} data-fabric-index={comboArray[comboIndex]?.fabric.fabric_index ?? 0} data-color-index={i} value={color.fabricColorName}>{color.fabricColorName}</option>
+                          <option key={i} data-combo-index={comboIndex} data-fabric-index={comboArray[comboIndex]?.fabric.fabric_index ?? 0} data-color-index={i} value={color.fabricColorName}>{color.fabricColorName}</option>
                         )
                       })}
                     </select>
@@ -491,6 +497,7 @@ const ProductDescription = ({
                     {combo.fabric[comboArray[comboIndex]?.fabric.fabric_index ?? 0].fabricsColor.map((color, i) => {
                       return (
                         <Tooltip
+                          key={i}
                           title={
                             `${color.fabricColorName}/${color.fabricsColorId}`
                           }
@@ -524,14 +531,14 @@ const ProductDescription = ({
                 </div>
               </div>
             </div>
-          </>
+          </div>
         );
       }) : (
         ""
       )}
       {product.styleAttributes && product.styleAttributes.length > 0 && product.styleAttributes.map((item, i) => {
         return (
-          <div className="product-content__size-color">
+          <div key={i} className="product-content__size-color">
             {item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0 && (
               <div className="product-content__size space-mb--20">
                 <div className="product-content__size__title">{item.styleAttrybutesName}</div>
