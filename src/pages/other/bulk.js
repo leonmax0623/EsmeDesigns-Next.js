@@ -144,24 +144,24 @@ const Bulk = ({
                       <tr>
                         <th>MAIN COST</th>
                         <td className="subtotal">
-                          ${mainPrice}
+                          ${mainPrice.toFixed(2)}
                         </td>
                       </tr>
                       <tr>
                         <th>EXTRA COST</th>
                         <td className="subtotal">
-                          ${extraPayPrice}
+                          ${extraPayPrice.toFixed(2)}
                         </td>
                       </tr>
                       <tr>
                         <th>AMOUNT</th>
                         <td className="subtotal">
-                          ${totalAmount}
+                          {totalAmount}
                         </td>
                       </tr>
                       <tr>
                         <th>TOTAL</th>
-                        <td className="total">${extraPayPrice + mainPrice}</td>
+                        <td className="total">${(extraPayPrice + mainPrice).toFixed(2)}</td>
                       </tr>
                     </tbody>
                   </table>

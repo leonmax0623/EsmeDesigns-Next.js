@@ -909,13 +909,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<div style={{ display: "flex", marginBottom: "10px" }}>
 								<Col lg={3}><div className="product-content__size__title">Price: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>${parseInt(bulkProductProps[0].discountedPrice)}</span>
+									<span>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</span>
 								</div></Col>
 							</div>
 							<div style={{ display: "flex", marginBottom: "10px" }}>
 								<Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>${extraPrice}</span>
+									<span>${extraPrice.toFixed(2)}</span>
 								</div></Col>
 							</div>
 							<div style={{ display: "flex", marginBottom: "10px" }}>
@@ -927,7 +927,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<div style={{ display: "flex", marginBottom: "20px" }}>
 								<Col lg={3}><div className="product-content__size__title">Total: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice}</span>
+									<span>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice).toFixed(2)}</span>
 								</div></Col>
 							</div>
 						</div>
@@ -943,10 +943,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							</thead>
 							<tbody>
 								<tr style={{ textAlign: "center" }}>
-									<td style={{ paddingLeft: "0px" }}>${parseInt(bulkProductProps[0].discountedPrice)}</td>
-									<td style={{ paddingLeft: "0px" }}>${extraPrice}</td>
-									<td style={{ paddingLeft: "0px" }}>{totalItems}</td>
-									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice : 0)}</td>
+									<td style={{ paddingLeft: "0px" }}>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</td>
+									<td style={{ paddingLeft: "0px" }}>${extraPrice.toFixed(2)}</td>
+									<td style={{ paddingLeft: "0px" }}>{bulkProductProps[0].totalItems ? totalItems : quantityCount}</td>
+									<td style={{ paddingLeft: "0px" }}>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice : 0)).toFixed(2)}</td>
 								</tr>
 							</tbody>
 						</table>

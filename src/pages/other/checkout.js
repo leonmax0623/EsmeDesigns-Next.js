@@ -10,6 +10,9 @@ import { LayoutTwo } from "../../components/Layout";
 
 const Checkout = ({ cartItems }) => {
   let cartTotalPrice = 0;
+  let mainPrice = 0;
+  let extraPayPrice = 0;
+  let totalAmount = 0;
   const [startDate, setStartDate] = useState(new Date());
   const [rushOptions, setRushOptions] = useState([])
   const [selectedRushOption, setSelectedRushOption] = useState("")
@@ -118,24 +121,25 @@ const Checkout = ({ cartItems }) => {
                                     parseInt(product.discountedPrice) * product.totalItems :
                                     cartTotalPrice +=
                                     parseInt(product.discountedPrice) * product.quantity;
+                                  extraPayPrice += product.extraPrice;
                                   return (
                                     <li key={i}>
                                       {product.productName} X {product.totalItems ? product.totalItems : product.quantity}{" "}
-                                      <span>${parseInt(product.discountedPrice)}</span>
+                                      <span>${(parseInt(product.discountedPrice) * (product.totalItems ? product.totalItems : product.quantity)).toFixed(2)}</span>
                                     </li>
                                   );
                                 })}
                               </ul>
                               <p>
-                                Sub Total{" "}
-                                <span>${cartTotalPrice.toFixed(2)}</span>
+                                Shipping Fee <span>$00.00</span>
                               </p>
                               <p>
-                                Shipping Fee <span>$00.00</span>
+                                Extra Price{" "}
+                                <span>${extraPayPrice.toFixed(2)}</span>
                               </p>
                               <h4>
                                 Grand Total{" "}
-                                <span>${cartTotalPrice.toFixed(2)}</span>
+                                <span>${(cartTotalPrice + extraPayPrice).toFixed(2)}</span>
                               </h4>
                             </div>
                           </div>
