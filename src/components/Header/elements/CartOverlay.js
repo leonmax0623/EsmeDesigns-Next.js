@@ -91,7 +91,7 @@ const CartOverlay = ({
                               {product.totalItems ? product.totalItems : product.quantity} x{" "}
                             </span>{" "}
                             <span className="discounted-price">
-                              ${parseInt(product.discountedPrice)}
+                              ${parseInt(product.discountedPrice).toFixed(2)}
                             </span>
                           </p>
                         </div>
@@ -104,25 +104,25 @@ const CartOverlay = ({
               <p className="cart-subtotal">
                 <span className="subtotal-title">Main Price:</span>
                 <span className="subtotal-amount">
-                  ${mainPrice}
+                  ${mainPrice.toFixed(2)}
                 </span>
               </p>
               <p className="cart-subtotal">
                 <span className="subtotal-title">Extra Price:</span>
                 <span className="subtotal-amount">
-                  ${extraPayPrice}
+                  ${extraPayPrice.toFixed(2)}
                 </span>
               </p>
               <p className="cart-subtotal">
                 <span className="subtotal-title">Amount:</span>
                 <span className="subtotal-amount">
-                  ${totalAmount}
+                  {totalAmount}
                 </span>
               </p>
               <p className="cart-subtotal">
                 <span className="subtotal-title">Total Price:</span>
                 <span className="subtotal-amount">
-                  ${extraPayPrice + mainPrice}
+                  ${(extraPayPrice + mainPrice).toFixed(2)}
                 </span>
               </p>
               {/*=======  cart buttons  =======*/}
