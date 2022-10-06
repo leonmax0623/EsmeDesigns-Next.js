@@ -31,10 +31,6 @@ const ProductGridWrapper = ({
     <Fragment>
       {products &&
         products.map((product) => {
-          // const discountedPrice = getDiscountPrice(
-          //   parseInt(product.standardPrice),
-          //   parseInt(product.discountedPrice)
-          // ).toFixed(2);
           const discountedPrice = parseInt(product.discountedPrice);
           // const productPrice = product.price.toFixed(2);
           const productPrice = parseInt(product.standardPrice);

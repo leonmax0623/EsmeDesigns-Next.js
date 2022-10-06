@@ -101,10 +101,8 @@ const ImageGalleryBottomThumb = ({
 
 
   useMemo(() => {
-    console.log("PICTURE COLOR ID => ", pictureColorId)
     product.picture.forEach((image, i) => {
       if (image.fabricsColorId === pictureColorId) {
-        console.log("$$$$$$$$$$$$$$$$$", i)
         setActiveSwiper(i)
         setActiveIndex(1);
       }

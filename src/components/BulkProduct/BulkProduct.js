@@ -30,6 +30,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 	const [regularSizeArray, setRegularSizeArray] = useState(JSON.stringify([]));
 
+	const [extraPrice, setExtraPrice] = useState(0)
+
 	useEffect(() => {
 		if (bulkProductProps[0]) {
 			if (bulkProductProps[0].totalItems) {
@@ -83,6 +85,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 			if (bulkProductProps[0].selectedAlteration) {
 				setAlterationSelected(bulkProductProps[0].selectedAlteration)
+
 			}
 
 			if (bulkProductProps[0].selectedStyleOption) {
@@ -105,7 +108,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				});
 			}
 		}
+
+		setExtraPrice(testExtra)
 	}, [bulkProductProps]);
+
 
 	// console.log("styleOptions/styleOptions=>", JSON.parse(regularSizeArray)[0])
 
@@ -114,10 +120,12 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	bulkProductProps[0] && bulkProductProps[0].styleAlterations && bulkProductProps[0].styleAlterations.length > 0 && bulkProductProps[0].styleAlterations.map((single, i) => {
 		let array = {
 			label: "",
-			value: ""
+			value: "",
+			price: ""
 		};
-		array.label = single.styleAlterationName;
-		array.value = single.price;
+		array.label = single.styleAlterationName + ' ' + `($${single.price})`;
+		array.value = single.styleAlterationId;
+		array.price = single.price;
 		alterationOptions.push(array)
 	});
 
@@ -125,15 +133,16 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	bulkProductProps[0] && bulkProductProps[0].styleOptions && bulkProductProps[0].styleOptions.length > 0 && bulkProductProps[0].styleOptions.map((single, i) => {
 		let array = {
 			label: "",
-			value: ""
+			value: "",
+			price: ""
 		};
-		array.label = single.styleOptionName;
-		array.value = single.price;
+		array.label = single.styleOptionName + ' ' + `($${single.price})`;
+		array.value = single.styleOptionId;
+		array.price = single.price;
 		styleOptions.push(array)
 	});
 
 	const handleRegularSizeArray = (e) => {
-
 		let result = e.target.value;
 		if (result === "" || result === NaN || totalItems === NaN) {
 			const index = e.target.dataset.position.split('-')
@@ -143,8 +152,11 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			result = 0;
 		} else {
 			const index = e.target.dataset.position.split('-')
+			console.log("!!!!! =>", result)
+			console.log(index)
 			let sizeArray = JSON.parse(regularSizeArray)
 			sizeArray[index[0]].sizes[index[1]].sizeCode = ((sizeArray[index[0]].sizes[index[1]].sizeCode * 0) + result).replace(/^0+/, '');
+			console.log('sizeArray', sizeArray)
 			setRegularSizeArray(JSON.stringify(sizeArray))
 		}
 	}
@@ -281,6 +293,21 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 		setComboArray(array);
 	}
+
+	let testExtra = 0;
+
+	// testExtra += parseInt(styleOptionSelected[0].price)
+	// testExtra += parseInt(alterationSelected[0].price)
+
+	// console.log("styleOptionSelected=>", styleOptionSelected[0].price)
+
+	const handleStyleOption = (options) => {
+		setStyleOptionSelected(options)
+		options.map((opt, i) => {
+			testExtra += parseInt(opt.price)
+		})
+	}
+	console.log("######", testExtra)
 
 	return (
 		<div className="bulk-container">
@@ -556,7 +583,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 											<MultiSelect
 												options={styleOptions}
 												value={styleOptionSelected}
-												onChange={setStyleOptionSelected}
+												onChange={handleStyleOption}
 												disabled={editBoolean}
 												labelledBy="Select"
 												hasSelectAll={false}
@@ -597,23 +624,16 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 									</Col>
 									<Col lg={10}>
 										<div className="inputs">
-											{JSON.parse(regularSizeArray).length > 0 && JSON.parse(regularSizeArray)[0].sizes.map((size, j) => {
-												return <div style={{ display: "flex", flexDirection: "column" }}>
-													<span style={{ fontSize: "14px", textAlign: "center", color: "#333", margin: "10px 0px" }}>{size.sizeName}</span>
-													<input style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`0-${j}`} name="amount" max="999" min="0" onChange={(e) => handleRegularSizeArray(e)} />
-												</div>
-											})}
-											{/* {selectedSizeCategory === "Specific Size" && JSON.parse(regularSizeArray).length > 1 && JSON.parse(regularSizeArray)[1].sizes.map((size, j) => {
-												return (
-													<>
-														<div style={{ display: "flex", flexDirection: "column" }}>
+											{JSON.parse(regularSizeArray).length > 0 && JSON.parse(regularSizeArray).map((item, i) => {
+												if (item.sizeCategoryName === selectedSizeCategory) {
+													return item.sizes.map((size, j) => {
+														return <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 															<span style={{ fontSize: "14px", textAlign: "center", color: "#333", margin: "10px 0px" }}>{size.sizeName}</span>
-
-															<input disabled={editBoolean} style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`1-${j}`} name="amount" max="999" min="0" onChange={(e) => handleRegularSizeArray(e)} />
+															<input style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} disabled={editBoolean} type="number" id={`size-${size.sizeName}`} value={size.sizeCode} data-position={`${i}-${j}`} name="amount" max="999" min="0" onChange={(e) => handleRegularSizeArray(e)} />
 														</div>
-													</>
-												)
-											})} */}
+													})
+												}
+											})}
 											<div style={{ display: "flex", flexDirection: "column" }}>
 												<span style={{ fontSize: "14px", textAlign: "center", color: "#333", margin: "10px 0px" }}>Total</span>
 												<input disabled style={{ width: "50px", textAlign: "center", margin: "0px 10px" }} value={totalItems} />
@@ -867,7 +887,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<div style={{ display: "flex", marginBottom: "10px", marginTop: "20px" }}>
 								<Col lg={3}><div className="product-content__size__title">Price: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>${bulkProductProps[0].standardPrice}</span>
+									<span>${parseInt(bulkProductProps[0].standardPrice)}</span>
 								</div></Col>
 							</div>
 							<div style={{ display: "flex", marginBottom: "10px" }}>
@@ -879,13 +899,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<div style={{ display: "flex", marginBottom: "10px" }}>
 								<Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>$0</span>
+									<span>${parseInt(extraPrice)}</span>
 								</div></Col>
 							</div>
 							<div style={{ display: "flex", marginBottom: "20px" }}>
 								<Col lg={3}><div className="product-content__size__title">Total: </div></Col>
 								<Col lg={3}><div className="product-content__size__content">
-									<span>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * bulkProductProps[0].totalItems : parseInt(bulkProductProps[0].discountedPrice) * bulkProductProps[0].quantity}</span>
+									<span>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice}</span>
 								</div></Col>
 							</div>
 						</div>
@@ -903,10 +923,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							</thead>
 							<tbody>
 								<tr style={{ textAlign: "center" }}>
-									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].standardPrice}</td>
+									<td style={{ paddingLeft: "0px" }}>${parseInt(bulkProductProps[0].standardPrice)}</td>
 									<td style={{ paddingLeft: "0px" }}>${parseInt(bulkProductProps[0].discountedPrice)}</td>
-									<td style={{ paddingLeft: "0px" }}>$0.00</td>
-									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * bulkProductProps[0].totalItems : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * bulkProductProps[0].quantity : 0)}</td>
+									<td style={{ paddingLeft: "0px" }}>${parseInt(extraPrice)}</td>
+									<td style={{ paddingLeft: "0px" }}>${bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice : 0)}</td>
 								</tr>
 							</tbody>
 						</table>

@@ -179,7 +179,7 @@ const ProductDescriptionTab = ({ product }) => {
                   </tr>
                   {sizes.map((size, i) => {
                     return (
-                      <tr>
+                      <tr key={i}>
                         <td>{size.id}</td>
                         <td>{size.description}</td>
                         <td>{size.size_0}</td>
@@ -215,7 +215,7 @@ const ProductDescriptionTab = ({ product }) => {
                   </tr>
                   {sizes.map((size, i) => {
                     return (
-                      <tr>
+                      <tr key={i}>
                         <td>{size.id}</td>
                         <td>{size.description}</td>
                         <td>{size.size_18}</td>

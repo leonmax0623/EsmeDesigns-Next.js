@@ -2,16 +2,12 @@ import Router from 'next/router';
 import { useEffect, useState } from "react";
 import { IoIosArrowForward, IoIosSearch } from "react-icons/io";
 import {
-  getIndividualCategories,
-  getIndividualColors,
-  getIndividualTags, getProducts
+  getIndividualCategories, getProducts
 } from "../../lib/product";
 
 const ShopSidebar = ({ collections, products, getSortParams, searchProduct, seasonsItems }) => {
   const navCollection = localStorage.getItem('navCollection');
   const categories = getIndividualCategories(collections);
-  const colors = getIndividualColors(products);
-  const tags = getIndividualTags(products);
   const popularProducts = getProducts(products, "perfumes", "popular", 3);
   const [searchKey, setSearchKey] = useState("")
 

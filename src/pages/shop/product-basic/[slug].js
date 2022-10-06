@@ -61,7 +61,6 @@ const ProductBasic = ({
   )[0];
 
   const changePicture = (colorId) => {
-    console.log("@@@@@@@@", colorId)
     setPictureColorId(colorId)
   }
 
