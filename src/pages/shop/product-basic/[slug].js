@@ -12,7 +12,7 @@ import {
 } from "../../../components/ProductDetails";
 // import products from "../../../data/real_products.json";
 import { addToBulk } from "../../../redux/actions/bulkActions";
-import { addToCart } from "../../../redux/actions/cartActions";
+import { addToCart, preventAddingToCart } from "../../../redux/actions/cartActions";
 import {
   addToCompare,
   deleteFromCompare
@@ -124,6 +124,7 @@ const ProductBasic = ({
                 addToCompare={addToCompare}
                 deleteFromCompare={deleteFromCompare}
                 changePicture={changePicture}
+                preventAddingToCart={preventAddingToCart}
               />
             </Col>
           </Row>
@@ -183,6 +184,9 @@ const mapDispatchToProps = (dispatch) => {
           extraPrice
         )
       );
+    },
+    preventAddingToCart: (item, addToast) => {
+      dispatch(preventAddingToCart(item, addToast))
     },
     addToBulk: (product) => {
       dispatch(addToBulk(product));

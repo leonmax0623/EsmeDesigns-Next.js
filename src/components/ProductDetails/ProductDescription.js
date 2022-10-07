@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from "react";
-import { IoIosHeartEmpty, IoIosShuffle } from "react-icons/io";
+import { Col } from "react-bootstrap";
+import { IoIosHeartEmpty, IoIosInformationCircleOutline, IoIosShuffle } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
 import { useDispatch } from 'react-redux';
 import { Tooltip } from "react-tippy";
@@ -21,7 +22,8 @@ const ProductDescription = ({
   deleteFromWishlist,
   addToCompare,
   deleteFromCompare,
-  changePicture
+  changePicture,
+  preventAddingToCart
 }) => {
   console.log("Maximus ProductDescription=>", product)
   const router = useRouter()
@@ -215,9 +217,68 @@ const ProductDescription = ({
     return arr.reduce((a, b) => { return a + parseInt(b.price) }, 0);
   }
 
-  // const myTest = (val) => {
-  //   console.log("!!@#!@#@!#@!#@!#!@3", val)
-  // }
+  const handleAddToCart = (
+    product,
+    addToast,
+    quantityCount,
+    selectedFabrics,
+    selectedFabricsColor,
+    selectedLining,
+    selectedLiningFabricsColor,
+    comboArray,
+    selectedAttr,
+    selectedSizeCategory,
+    selectedCategorySizeValue,
+    alterationSelected,
+    styleOptionSelected,
+    extraPrice
+  ) => {
+    if (cartItems.length === 0) {
+      localStorage.setItem("rushOptions", JSON.stringify(product.rushOptions))
+      addToCart(
+        product,
+        addToast,
+        quantityCount,
+        selectedFabrics,
+        selectedFabricsColor,
+        selectedLining,
+        selectedLiningFabricsColor,
+        comboArray,
+        selectedAttr,
+        selectedSizeCategory,
+        selectedCategorySizeValue,
+        alterationSelected,
+        styleOptionSelected,
+        extraPrice)
+    } else {
+      let commonRushOptions = JSON.parse(localStorage.getItem("rushOptions"));
+      const filteredOptions = commonRushOptions.filter(option => product.rushOptions.findIndex(bItem => bItem.rushId === option.rushId) >= 0)
+      console.log("Maximus commonRushOptions => ", commonRushOptions)
+      console.log("Maximus product.rushOptions => ", product.rushOptions)
+      console.log("Maximus => ", filteredOptions)
+      if (filteredOptions.length > 0) {
+        localStorage.setItem("rushOptions", JSON.stringify(filteredOptions))
+        addToCart(
+          product,
+          addToast,
+          quantityCount,
+          selectedFabrics,
+          selectedFabricsColor,
+          selectedLining,
+          selectedLiningFabricsColor,
+          comboArray,
+          selectedAttr,
+          selectedSizeCategory,
+          selectedCategorySizeValue,
+          alterationSelected,
+          styleOptionSelected,
+          extraPrice)
+      } else {
+        preventAddingToCart(product, addToast)
+      }
+    }
+
+  }
 
   return (
     <div className="product-content">
@@ -681,7 +742,7 @@ const ProductDescription = ({
         ""
       )}
 
-      <Fragment>
+      <Fragment class="descTable">
         <div className="product-content__quantity space-mb--40">
           <div className="product-content__quantity__title">Quantity</div>
           <div className="cart-plus-minus">
@@ -713,10 +774,81 @@ const ProductDescription = ({
           )}
         </div>
 
+        <div className="price-table descTableMob" style={{ padding: "10px 0px", border: "1px solid", marginBottom: "20px" }}>
+          <div style={{ display: "flex", marginBottom: "10px" }}>
+            <Col lg={3}><div className="product-content__size__title">Price: </div></Col>
+            <Col lg={3}><div className="product-content__size__content">
+              <span>${parseInt(product.discountedPrice).toFixed(2)}</span>
+            </div></Col>
+          </div>
+          <div style={{ display: "flex", marginBottom: "10px" }}>
+            <Col lg={3}><div className="product-content__size__title">Quantity: </div></Col>
+            <Col lg={3}><div className="product-content__size__content">
+              <span>{product.totalItems ? totalItems : quantityCount}</span>
+            </div></Col>
+          </div>
+          <div style={{ display: "flex", marginBottom: "10px" }}>
+            <Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
+            <Col lg={3}><div className="product-content__size__content">
+              <span>${extraPrice.toFixed(2)}</span>
+            </div></Col>
+          </div>
+          <div style={{ display: "flex" }}>
+            <Col lg={3}><div className="product-content__size__title">Total: </div></Col>
+            <Col lg={3}><div className="product-content__size__content">
+              <span>${(product.totalItems ? parseInt(product.discountedPrice) * totalItems + extraPrice : parseInt(product.discountedPrice) * quantityCount + extraPrice).toFixed(2)}</span>
+            </div></Col>
+          </div>
+        </div>
+
+        <table className="cart-table descTableDes" style={{ marginBottom: "30px" }}>
+          <thead>
+            <tr>
+              <th className="product-price" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>Price</th>
+              <th className="product-price" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>Quantity </th>
+              <th className="product-quantity" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>
+                Extras
+                {extraPrice > 0 && (
+                  <Tooltip
+                    interactive
+                    html={(
+                      <div style={{ textAlign: "left" }}>
+                        {alterationSelected.concat(styleOptionSelected).map((item, i) => {
+                          return (
+                            <p style={{ margin: "5px" }}>- {item.label}: ${item.price}</p>
+                          )
+                        })}
+                      </div>
+                    )}
+                    position="bottom"
+                    trigger="mouseenter"
+                    animation="shift"
+                    arrow={true}
+                    duration={200}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <IoIosInformationCircleOutline size={20} style={{ marginBottom: "15px" }} />
+                  </Tooltip>
+                )}
+
+              </th>
+              <th className="product-subtotal" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style={{ textAlign: "center" }}>
+              <td style={{ paddingLeft: "10px 0px" }}>${parseInt(product.discountedPrice).toFixed(2)}</td>
+              <td style={{ paddingLeft: "10px 0px" }}>{product.totalItems ? totalItems : quantityCount}</td>
+              <td style={{ paddingLeft: "10px 0px" }}>${extraPrice.toFixed(2)}</td>
+              <td style={{ paddingLeft: "10px 0px" }}>${(parseInt(product.discountedPrice) * quantityCount + extraPrice).toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
+
         <div className="product-content__button-wrapper d-flex align-items-center">
           <button
             onClick={() =>
-              addToCart(
+              handleAddToCart(
                 product,
                 addToast,
                 quantityCount,
@@ -732,9 +864,6 @@ const ProductDescription = ({
                 styleOptionSelected,
                 extraPrice
               )
-              // myTest(
-              //   extraPrice
-              // )
             }
             className="lezada-button lezada-button--medium product-content__cart space-mr--10"
           >
@@ -784,49 +913,6 @@ const ProductDescription = ({
             <IoIosShuffle />
           </button>
         </div>
-
-        {/* <div className="product-content__other-info space-mt--50">
-            <table>
-              <tbody>
-                <tr className="single-info">
-                  <td className="title">Product Code: </td>
-                  <td className="value">{product.productCode}</td>
-                </tr>
-                <tr className="single-info">
-                  <td className="title">Product Type: </td>
-                  <td className="value">
-                    {product.productType &&
-                      (
-                        <Link
-                          href="/shop/left-sidebar"
-                          as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-                        >
-                          <a>
-                            {product.productType}
-                          </a>
-                        </Link>
-                      )}
-                  </td>
-                </tr>
-                <tr className="single-info">
-                  <td className="title">Short Tag: </td>
-                  <td className="value">
-                    {product.shortTag &&
-                      (
-                        <Link
-                          href="/shop/left-sidebar"
-                          as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
-                        >
-                          <a>
-                            {product.shortTag}
-                          </a>
-                        </Link>
-                      )}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div> */}
       </Fragment>
     </div>
   );

@@ -17,6 +17,32 @@
   text-transform: none !important;
 }
 
+.descTableMob {
+  @include respond(extra-large-mobile) {
+    display: block;
+    text-align: center;
+  }
+
+  @include respond(large-mobile) {
+    display: block;
+    text-align: center;
+  }
+
+  display: none;
+}
+
+.descTableDes {
+  @include respond(extra-large-mobile) {
+    display: none;
+  }
+
+  @include respond(large-mobile) {
+    display: none;
+  }
+
+}
+
+
 .product-content {
   &__title {
     font-size: 34px;

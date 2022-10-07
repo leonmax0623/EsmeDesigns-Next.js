@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
 // import { connect } from "react-redux";
+import { Tooltip } from "react-tippy";
 import { useToasts } from "react-toast-notifications";
 // import {
 // 	addBulkToCart
@@ -845,7 +847,33 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 					)}
 				</Col>
 				<Col lg={12} className="bulk-container__settings__fabrics__footer">
-					<Col lg={6} style={{ padding: "0px" }}>
+					<div className="price-table" style={{ padding: "10px 0px", border: "1px solid", marginTop: "20px" }}>
+						<div style={{ display: "flex", marginBottom: "10px" }}>
+							<Col lg={3}><div className="product-content__size__title">Price: </div></Col>
+							<Col lg={3}><div className="product-content__size__content">
+								<span>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</span>
+							</div></Col>
+						</div>
+						<div style={{ display: "flex", marginBottom: "10px" }}>
+							<Col lg={3}><div className="product-content__size__title">Quantity: </div></Col>
+							<Col lg={3}><div className="product-content__size__content">
+								<span>{bulkProductProps[0].totalItems ? totalItems : quantityCount}</span>
+							</div></Col>
+						</div>
+						<div style={{ display: "flex", marginBottom: "10px" }}>
+							<Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
+							<Col lg={3}><div className="product-content__size__content">
+								<span>${extraPrice.toFixed(2)}</span>
+							</div></Col>
+						</div>
+						<div style={{ display: "flex", marginBottom: "10px" }}>
+							<Col lg={3}><div className="product-content__size__title">Total: </div></Col>
+							<Col lg={3}><div className="product-content__size__content">
+								<span>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice).toFixed(2)}</span>
+							</div></Col>
+						</div>
+					</div>
+					<Col lg={6} style={{ padding: "0px", marginBottom: "20px" }}>
 						{editBoolean ? (
 							<Col lg={12} style={{ display: "flex", marginTop: "20px", justifyContent: "center", padding: "0px" }}>
 								{bulkProductProps[0].selectedFabrics ? (
@@ -905,48 +933,46 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						)}
 					</Col>
 					<Col lg={6}>
-						<div className="price-table">
-							<div style={{ display: "flex", marginBottom: "10px" }}>
-								<Col lg={3}><div className="product-content__size__title">Price: </div></Col>
-								<Col lg={3}><div className="product-content__size__content">
-									<span>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</span>
-								</div></Col>
-							</div>
-							<div style={{ display: "flex", marginBottom: "10px" }}>
-								<Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
-								<Col lg={3}><div className="product-content__size__content">
-									<span>${extraPrice.toFixed(2)}</span>
-								</div></Col>
-							</div>
-							<div style={{ display: "flex", marginBottom: "10px" }}>
-								<Col lg={3}><div className="product-content__size__title">Total Items: </div></Col>
-								<Col lg={3}><div className="product-content__size__content">
-									<span>{totalItems}</span>
-								</div></Col>
-							</div>
-							<div style={{ display: "flex", marginBottom: "20px" }}>
-								<Col lg={3}><div className="product-content__size__title">Total: </div></Col>
-								<Col lg={3}><div className="product-content__size__content">
-									<span>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice).toFixed(2)}</span>
-								</div></Col>
-							</div>
-						</div>
+
 
 						<table className="cart-table">
 							<thead>
 								<tr>
-									<th className="product-price" style={{ fontSize: "14px", textAlign: "center" }}>Price</th>
-									<th className="product-quantity" style={{ fontSize: "14px", textAlign: "center" }}>Extras</th>
-									<th className="product-price" style={{ fontSize: "14px", textAlign: "center" }}>Amount</th>
-									<th className="product-subtotal" style={{ fontSize: "14px", textAlign: "center" }}>Total</th>
+									<th className="product-price" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>Price</th>
+									<th className="product-price" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>Quantity </th>
+									<th className="product-quantity" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>
+										Extras
+										<Tooltip
+											interactive
+											html={(
+												<div style={{ textAlign: "left" }}>
+													{alterationSelected.concat(styleOptionSelected).map((item, i) => {
+														return (
+															<p style={{ margin: "5px" }}>- {item.label}: ${item.price}</p>
+														)
+
+													})}
+												</div>
+											)}
+											position="bottom"
+											trigger="mouseenter"
+											animation="shift"
+											arrow={true}
+											duration={200}
+											style={{ cursor: "pointer" }}
+										>
+											<IoIosInformationCircleOutline size={20} style={{ marginBottom: "15px" }} />
+										</Tooltip>
+									</th>
+									<th className="product-subtotal" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>Total</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr style={{ textAlign: "center" }}>
-									<td style={{ paddingLeft: "0px" }}>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</td>
-									<td style={{ paddingLeft: "0px" }}>${extraPrice.toFixed(2)}</td>
-									<td style={{ paddingLeft: "0px" }}>{bulkProductProps[0].totalItems ? totalItems : quantityCount}</td>
-									<td style={{ paddingLeft: "0px" }}>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice : 0)).toFixed(2)}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>{bulkProductProps[0].totalItems ? totalItems : quantityCount}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>${extraPrice.toFixed(2)}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + extraPrice : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + extraPrice : 0)).toFixed(2)}</td>
 								</tr>
 							</tbody>
 						</table>
