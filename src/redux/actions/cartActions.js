@@ -75,6 +75,18 @@ export const addBulkToCart = (data) => {
     });
   };
 };
+
+export const preventAddingToCart = (item, addToast) => {
+
+  // return dispatch => {
+  if (addToast) {
+    addToast("Sorry, you cannot add the dress to the cart because of available shipping options. Place separated order please.", { appearance: "error", autoDismiss: true });
+  }
+  // };
+};
+
+
+
 //decrease from cart
 export const decreaseQuantity = (item, addToast) => {
   return dispatch => {

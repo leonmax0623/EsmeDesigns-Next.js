@@ -114,7 +114,7 @@ const CartOverlay = ({
                 </span>
               </p>
               <p className="cart-subtotal">
-                <span className="subtotal-title">Amount:</span>
+                <span className="subtotal-title">Quantity:</span>
                 <span className="subtotal-amount">
                   {totalAmount}
                 </span>

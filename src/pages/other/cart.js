@@ -116,7 +116,7 @@ const Cart = ({
                         </td>
                       </tr>
                       <tr>
-                        <th>AMOUNT</th>
+                        <th>QUANTITY</th>
                         <td className="subtotal">
                           {totalAmount}
                         </td>

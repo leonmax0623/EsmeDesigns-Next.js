@@ -358,9 +358,8 @@
   }
 
   td {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    padding-left: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
     @include respond(extra-large-mobile) {
       display: block;
