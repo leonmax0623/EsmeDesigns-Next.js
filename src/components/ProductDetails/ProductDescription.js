@@ -784,19 +784,19 @@ const ProductDescription = ({
           <div style={{ display: "flex", marginBottom: "10px" }}>
             <Col lg={3}><div className="product-content__size__title">Quantity: </div></Col>
             <Col lg={3}><div className="product-content__size__content">
-              <span>{product.totalItems ? totalItems : quantityCount}</span>
+              <span>{quantityCount}</span>
             </div></Col>
           </div>
           <div style={{ display: "flex", marginBottom: "10px" }}>
             <Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
             <Col lg={3}><div className="product-content__size__content">
-              <span>${extraPrice.toFixed(2)}</span>
+              <span>${(extraPrice * quantityCount).toFixed(2)}</span>
             </div></Col>
           </div>
           <div style={{ display: "flex" }}>
             <Col lg={3}><div className="product-content__size__title">Total: </div></Col>
             <Col lg={3}><div className="product-content__size__content">
-              <span>${(product.totalItems ? parseInt(product.discountedPrice) * totalItems + extraPrice : parseInt(product.discountedPrice) * quantityCount + extraPrice).toFixed(2)}</span>
+              <span>${parseInt(product.discountedPrice) * quantityCount + (extraPrice * quantityCount).toFixed(2)}</span>
             </div></Col>
           </div>
         </div>
@@ -838,9 +838,9 @@ const ProductDescription = ({
           <tbody>
             <tr style={{ textAlign: "center" }}>
               <td style={{ paddingLeft: "10px 0px" }}>${parseInt(product.discountedPrice).toFixed(2)}</td>
-              <td style={{ paddingLeft: "10px 0px" }}>{product.totalItems ? totalItems : quantityCount}</td>
-              <td style={{ paddingLeft: "10px 0px" }}>${extraPrice.toFixed(2)}</td>
-              <td style={{ paddingLeft: "10px 0px" }}>${(parseInt(product.discountedPrice) * quantityCount + extraPrice).toFixed(2)}</td>
+              <td style={{ paddingLeft: "10px 0px" }}>{quantityCount}</td>
+              <td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * quantityCount).toFixed(2)}</td>
+              <td style={{ paddingLeft: "10px 0px" }}>${(parseInt(product.discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</td>
             </tr>
           </tbody>
         </table>
