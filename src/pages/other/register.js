@@ -27,6 +27,9 @@ const Register = () => {
   const [password, setPassword] = useState("")
   const [passwordConfirm, setPasswordConfirm] = useState("")
   const [newsletterSubscribe, setNewsletterSubscribe] = useState(true)
+  const [divisionStateRequired, setDivisionStateRequired] = useState(true)
+  const [shippingStateRequired, setShippingStateRequired] = useState(true)
+  const [billingStateRequired, setBillingStateRequired] = useState(true)
 
   const [divisionAddressOne, setDivisionAddressOne] = useState("")
   const [divisionAddressTwo, setDivisionAddressTwo] = useState("")
@@ -56,23 +59,8 @@ const Register = () => {
   const [shippingRegionId, setShippingRegionId] = useState("3814")
 
   const handleRegister = (event) => {
-    event.preventDefault();
 
-    console.log("firstName", firstName)
-    console.log("lastName", lastName)
-    console.log("password", password)
-    console.log("email", email)
-    console.log("telephone", telephone)
-    console.log("wholesaleName", wholesaleName)
-    console.log("legalName", legalName)
-    console.log("divisionName", divisionName)
-    console.log("taxNumber", taxNumber)
-    console.log("divisionAddressOne", divisionAddressOne)
-    console.log("divisionAddressTwo", divisionAddressTwo)
-    console.log("divisionCity", divisionCity)
-    console.log("divisionZipCode", divisionZipCode)
-    console.log("divisionRegion", divisionRegionId)
-    console.log("divisionCountry", divisionCountry)
+    event.preventDefault();
 
     const parameters = {
       "username": firstName,
@@ -146,34 +134,79 @@ const Register = () => {
     setShippingStates(responseStates.data.territory)
   }, [])
 
+  useEffect(() => {
+    if (shippingCountry === "United States") {
+      setShippingStateRequired(true);
+    } else {
+      setShippingStateRequired(false)
+    }
+  }, [shippingCountry])
+
+  useEffect(() => {
+    if (billingCountry === "United States") {
+      setBillingStateRequired(true);
+    } else {
+      setBillingStateRequired(false)
+    }
+  }, [billingCountry])
+
+  useEffect(() => {
+    if (divisionCountry === "United States") {
+      setDivisionStateRequired(true);
+    } else {
+      setDivisionStateRequired(false)
+    }
+  }, [divisionCountry])
+
   const selectDivisionCountry = async (event) => {
-    console.log("countryid", event.target.value.split("/")[0])
+
     setDivisionCountryId(event.target.value.split("/")[0])
     setDivisionCountry(event.target.value.split("/")[1])
 
     const responseStates = await getStates(event.target.value.split("/")[0]);
-    console.log("responseStates =>", responseStates.data.territory)
     setDivisionStates(responseStates.data.territory)
   }
 
   const selectBillingCountry = async (event) => {
-    console.log("countryid", event.target.value.split("/")[0])
     setBillingCountryId(event.target.value.split("/")[0])
     setBillingCountry(event.target.value.split("/")[1])
 
     const responseStates = await getStates(event.target.value.split("/")[0]);
-    console.log("responseStates =>", responseStates.data.territory)
     setBillingStates(responseStates.data.territory)
   }
 
   const selectShippingCountry = async (event) => {
-    console.log("countryid", event.target.value.split("/")[0])
     setShippingCountryId(event.target.value.split("/")[0])
     setShippingCountry(event.target.value.split("/")[1])
 
     const responseStates = await getStates(event.target.value.split("/")[0]);
-    console.log("responseStates =>", responseStates.data.territory)
     setShippingStates(responseStates.data.territory)
+  }
+
+  const copyDivisionData = () => {
+    setBillingAddressOne(divisionAddressOne)
+    setBillingAddressTwo(divisionAddressTwo)
+    setBillingCity(divisionCity)
+    setBillingZipCode(divisionZipCode)
+    setBillingCountry(divisionCountry)
+    setBillingCountryId(divisionCountryId)
+    setBillingRegion(divisionRegion)
+    setBillingRegionId(divisionRegionId)
+  }
+
+  console.log("VVVVVVV", billingRegion)
+  console.log("VVVVVVV", billingRegionId)
+
+  const copyBillingData = () => {
+    setShippingAddressOne(billingAddressOne)
+    setShippingAddressTwo(billingAddressTwo)
+    setShippingCity(billingCity)
+    setShippingZipCode(billingZipCode)
+    setShippingCountry(billingCountry)
+    setShippingCountryId(billingCountryId)
+    setShippingRegion(billingRegion)
+    setShippingRegionId(billingRegionId)
+
   }
 
   return (
@@ -208,21 +241,27 @@ const Register = () => {
                     <label htmlFor="firstName">
                       <span className="required">*</span>{" "}First Name
                     </label>
-                    <input type="text" id="firstName" required onChange={e => setFirstName(e.target.value)} />
-                    <label htmlFor="email">
-                      <span className="required">*</span>{" "}E-Mail
-                    </label>
-                    <input type="email" id="email" required onChange={e => setEmail(e.target.value)} />
+                    <input type="text" id="firstName" required value={firstName} onChange={e => setFirstName(e.target.value)} />
                   </Col>
                   <Col lg={6}>
                     <label htmlFor="lastName">
                       <span className="required">*</span>{" "}Last Name
                     </label>
-                    <input type="text" id="lastName" required onChange={e => setLastName(e.target.value)} />
+                    <input type="text" id="lastName" required value={lastName} onChange={e => setLastName(e.target.value)} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6}>
+                    <label htmlFor="email">
+                      <span className="required">*</span>{" "}E-Mail
+                    </label>
+                    <input type="email" id="email" required value={email} onChange={e => setEmail(e.target.value)} />
+                  </Col>
+                  <Col lg={6}>
                     <label htmlFor="telephone">
                       <span className="required">*</span>{" "}Telephone
                     </label>
-                    <input type="text" id="telephone" required onChange={e => setTelephone(e.target.value)} />
+                    <input type="text" id="telephone" required value={telephone} onChange={e => setTelephone(e.target.value)} />
                   </Col>
                 </Row>
               </Col>
@@ -233,21 +272,27 @@ const Register = () => {
                     <label htmlFor="wholesaleName">
                       <span className="required">*</span>{" "}Wholesale Name
                     </label>
-                    <input type="text" id="wholesaleName" required onChange={e => setWholesaleName(e.target.value)} />
-                    <label htmlFor="divisionName">
-                      <span className="required">*</span>{" "}Division Name
-                    </label>
-                    <input type="text" id="divisionName" required onChange={e => setDivisionName(e.target.value)} />
+                    <input type="text" id="wholesaleName" required value={wholesaleName} onChange={e => setWholesaleName(e.target.value)} />
                   </Col>
                   <Col lg={6}>
                     <label htmlFor="legalName">
                       <span className="required">*</span>{" "}Legal Name
                     </label>
-                    <input type="text" id="legalName" required onChange={e => setLegalName(e.target.value)} />
+                    <input type="text" id="legalName" required value={legalName} onChange={e => setLegalName(e.target.value)} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6}>
+                    <label htmlFor="divisionName">
+                      <span className="required">*</span>{" "}Division Name
+                    </label>
+                    <input type="text" id="divisionName" required value={divisionName} onChange={e => setDivisionName(e.target.value)} />
+                  </Col>
+                  <Col lg={6}>
                     <label htmlFor="taxNumber">
                       <span className="required">*</span>{" "}Tax ID Number
                     </label>
-                    <input type="text" id="taxNumber" required onChange={e => setTaxNumber(e.target.value)} />
+                    <input type="text" id="taxNumber" required value={taxNumber} onChange={e => setTaxNumber(e.target.value)} />
                   </Col>
                 </Row>
               </Col>
@@ -258,40 +303,54 @@ const Register = () => {
                     <label htmlFor="divisionAddressOne">
                       <span className="required">*</span>{" "}Address
                     </label>
-                    <input type="text" id="divisionAddressOne" required onChange={e => setDivisionAddressOne(e.target.value)} />
+                    <input type="text" id="divisionAddressOne" required value={divisionAddressOne} onChange={e => setDivisionAddressOne(e.target.value)} />
+                  </Col>
+                  <Col lg={6}>
+                    <label htmlFor="divisionAddressTwo">
+                      Address 2
+                    </label>
+                    <input type="text" id="divisionAddressTwo" value={divisionAddressTwo} onChange={e => setDivisionAddressTwo(e.target.value)} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6}>
                     <label htmlFor="divisionCity">
                       <span className="required">*</span>{" "}City
                     </label>
-                    <input type="text" id="divisionCity" required onChange={e => setDivisionCity(e.target.value)} />
+                    <input type="text" id="divisionCity" required value={divisionCity} onChange={e => setDivisionCity(e.target.value)} />
+                  </Col>
+                  <Col lg={6}>
+                    <label htmlFor="divisionZipCode">
+                      <span className="required">*</span>{" "}Zip code
+                    </label>
+                    <input type="text" id="divisionZipCode" required value={divisionZipCode} onChange={e => setDivisionZipCode(e.target.value)} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6}>
                     <label htmlFor="divisionState">
-                      <span className="required">*</span>{" "}State
+                      <p>{divisionStateRequired && <span className="required">* </span>}State</p>
                     </label><br />
                     <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
                       onChange={(event) => {
-                        console.log("!!!!!!!!!", event.target.value.split("/")[0])
+                        console.log("!!!!!!!!!", event.target.value)
                         setDivisionRegionId(event.target.value.split("/")[0])
                         setDivisionRegion(event.target.value.split("/")[1])
                       }}
+                      value={`${divisionRegionId}/${divisionRegion}`}
                     >
+                      <option value="999/null" selected={divisionRegion === "null"}>-- Select the State --</option>
                       {divisionStates && divisionStates.length > 0 &&
                         divisionStates.map((state, j) => {
                           return (
-                            <option key={j} selected={state.id === divisionRegionId} value={`${state.id}/${state.name}`} >{state.name}</option>
+                            <option key={j} selected={state.name === divisionRegion} value={`${state.id}/${state.name}`} >{state.name}</option>
                           );
                         })
                       }
                     </select>
                   </Col>
                   <Col lg={6}>
-                    <label htmlFor="divisionAddressTwo">
-                      <span className="required">*</span>{" "}Address 2
-                    </label>
-                    <input type="text" id="divisionAddressTwo" required onChange={e => setDivisionAddressTwo(e.target.value)} />
-                    <label htmlFor="divisionZipCode">
-                      <span className="required">*</span>{" "}Zip code
-                    </label>
-                    <input type="text" id="divisionZipCode" required onChange={e => setDivisionZipCode(e.target.value)} />
                     <label htmlFor="divisionCountry">
                       <span className="required">*</span>{" "}Country
                     </label>
@@ -311,19 +370,42 @@ const Register = () => {
                 </Row>
               </Col>
               <Col lg={12} style={{ marginBottom: "30px" }}>
-                <h4>Billing Address</h4><hr />
+                <div>
+                  <a onClick={copyDivisionData}>Copy</a>
+                  <h4>Billing Address</h4><hr />
+                </div>
                 <Row>
                   <Col lg={6}>
                     <label htmlFor="billingAddressOne">
                       <span className="required">*</span>{" "}Address
                     </label>
-                    <input type="text" id="billingAddressOne" required onChange={e => setBillingAddressOne(e.target.value)} />
+                    <input type="text" id="billingAddressOne" required value={billingAddressOne} onChange={e => setBillingAddressOne(e.target.value)} />
+                  </Col>
+                  <Col lg={6}>
+                    <label htmlFor="billingAddressTwo">
+                      Address 2
+                    </label>
+                    <input type="text" id="billingAddressTwo" value={billingAddressTwo} onChange={e => setBillingAddressTwo(e.target.value)} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6}>
                     <label htmlFor="billingCity">
                       <span className="required">*</span>{" "}City
                     </label>
-                    <input type="text" id="billingCity" required onChange={e => setBillingCity(e.target.value)} />
+                    <input type="text" id="billingCity" required value={billingCity} onChange={e => setBillingCity(e.target.value)} />
+                  </Col>
+                  <Col lg={6}>
+                    <label htmlFor="billingZipCode">
+                      <span className="required">*</span>{" "}Zip code
+                    </label>
+                    <input type="text" id="billingZipCode" required value={billingZipCode} onChange={e => setBillingZipCode(e.target.value)} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6}>
                     <label htmlFor="billingState">
-                      <span className="required">*</span>{" "}State
+                      <p>{billingStateRequired && <span className="required">* </span>}State</p>
                     </label><br />
                     <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
@@ -331,7 +413,9 @@ const Register = () => {
                         setBillingRegionId(event.target.value.split("/")[0])
                         setBillingRegion(event.target.value.split("/")[1])
                       }}
+                      value={`${billingRegionId}/${billingRegion}`}
                     >
+                      <option value="999/null" selected={billingRegion === "null"}>-- Select the State --</option>
                       {billingStates && billingStates.length > 0 &&
                         billingStates.map((state, j) => {
                           return (
@@ -342,14 +426,6 @@ const Register = () => {
                     </select>
                   </Col>
                   <Col lg={6}>
-                    <label htmlFor="billingAddressTwo">
-                      <span className="required">*</span>{" "}Address 2
-                    </label>
-                    <input type="text" id="billingAddressTwo" required onChange={e => setBillingAddressTwo(e.target.value)} />
-                    <label htmlFor="billingZipCode">
-                      <span className="required">*</span>{" "}Zip code
-                    </label>
-                    <input type="text" id="billingZipCode" required onChange={e => setBillingZipCode(e.target.value)} />
                     <label htmlFor="billingCountry">
                       <span className="required">*</span>{" "}Country
                     </label>
@@ -369,19 +445,43 @@ const Register = () => {
                 </Row>
               </Col>
               <Col lg={12} style={{ marginBottom: "30px" }}>
-                <h4>Shipping Address</h4><hr />
+                <div>
+
+                  <a onClick={copyBillingData}>Copy</a>
+                  <h4>Shipping Address</h4><hr />
+                </div>
                 <Row>
                   <Col lg={6}>
                     <label htmlFor="shippingAddressOne">
                       <span className="required">*</span>{" "}Address
                     </label>
-                    <input type="text" id="shippingAddressOne" required onChange={e => setShippingAddressOne(e.target.value)} />
+                    <input type="text" id="shippingAddressOne" required value={shippingAddressOne} onChange={e => setShippingAddressOne(e.target.value)} />
+                  </Col>
+                  <Col lg={6}>
+                    <label htmlFor="shippingAddressTwo">
+                      Address 2
+                    </label>
+                    <input type="text" id="shippingAddressTwo" value={shippingAddressTwo} onChange={e => setShippingAddressTwo(e.target.value)} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6}>
                     <label htmlFor="shippingCity">
                       <span className="required">*</span>{" "}City
                     </label>
-                    <input type="text" id="shippingCity" required onChange={e => setShippingCity(e.target.value)} />
+                    <input type="text" id="shippingCity" required value={shippingCity} onChange={e => setShippingCity(e.target.value)} />
+                  </Col>
+                  <Col lg={6}>
+                    <label htmlFor="shippingZipCode">
+                      <span className="required">*</span>{" "}Zip code
+                    </label>
+                    <input type="text" id="shippingZipCode" required value={shippingZipCode} onChange={e => setShippingZipCode(e.target.value)} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6}>
                     <label htmlFor="shippingState">
-                      <span className="required">*</span>{" "}State
+                      <p>{shippingStateRequired && <span className="required">* </span>}State</p>
                     </label><br />
                     <select
                       style={{ width: "100%", height: "37px", cursor: "pointer" }}
@@ -390,6 +490,7 @@ const Register = () => {
                         setShippingRegion(event.target.value.split("/")[1])
                       }}
                     >
+                      <option value="999/null" selected={shippingRegion === "null"}>-- Select the State --</option>
                       {shippingStates && shippingStates.length > 0 &&
                         shippingStates.map((state, j) => {
                           return (
@@ -400,14 +501,6 @@ const Register = () => {
                     </select>
                   </Col>
                   <Col lg={6}>
-                    <label htmlFor="shippingAddressTwo">
-                      <span className="required">*</span>{" "}Address 2
-                    </label>
-                    <input type="text" id="shippingAddressTwo" required onChange={e => setShippingAddressTwo(e.target.value)} />
-                    <label htmlFor="shippingZipCode">
-                      <span className="required">*</span>{" "}Zip code
-                    </label>
-                    <input type="text" id="shippingZipCode" required onChange={e => setShippingZipCode(e.target.value)} />
                     <label htmlFor="shippingCountry">
                       <span className="required">*</span>{" "}Country
                     </label>
@@ -433,13 +526,13 @@ const Register = () => {
                     <label htmlFor="password">
                       <span className="required">*</span>{" "}Password
                     </label>
-                    <input type="password" id="password" required onChange={e => setPassword(e.target.value)} />
+                    <input type="password" id="password" required value={password} onChange={e => setPassword(e.target.value)} />
                   </Col>
                   <Col lg={6}>
                     <label htmlFor="passwordConfirm">
                       <span className="required">*</span>{" "}Password Confirm
                     </label>
-                    <input type="password" id="passwordConfirm" required onChange={e => setPasswordConfirm(e.target.value)} />
+                    <input type="password" id="passwordConfirm" required value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
                   </Col>
                 </Row>
               </Col>
@@ -454,12 +547,12 @@ const Register = () => {
                   <Col lg={6}>
                     <Row>
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <input type="radio" checked={newsletterSubscribe} id="contactChoice1" onChange={e => setNewsletterSubscribe(true)}
+                        <input type="radio" checked={newsletterSubscribe} id="contactChoice1" selected={newsletterSubscribe} onChange={e => setNewsletterSubscribe(true)}
                           name="contact" value="yes" style={{ cursor: "pointer" }} />
                         <label style={{ marginBottom: "0px", marginLeft: "10px" }} >Yes</label>
                       </div>
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <input type="radio" id="contactChoice2" onChange={e => setNewsletterSubscribe(false)}
+                        <input type="radio" id="contactChoice2" selected={!newsletterSubscribe} onChange={e => setNewsletterSubscribe(false)}
                           name="contact" value="no" style={{ marginLeft: "20px", cursor: "pointer" }} />
                         <label style={{ marginBottom: "0px", marginLeft: "10px" }} >No</label>
                       </div>
