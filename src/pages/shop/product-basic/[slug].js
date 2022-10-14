@@ -64,6 +64,13 @@ const ProductBasic = ({
     setPictureColorId(colorId)
   }
 
+  const disallowRush = (val) => {
+    if (val) {
+      addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
+    } else {
+      addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
+    }
+  }
 
   return (
     <LayoutTwo>
@@ -125,6 +132,7 @@ const ProductBasic = ({
                 deleteFromCompare={deleteFromCompare}
                 changePicture={changePicture}
                 preventAddingToCart={preventAddingToCart}
+                disallowRush={disallowRush}
               />
             </Col>
           </Row>
@@ -164,7 +172,10 @@ const mapDispatchToProps = (dispatch) => {
       selectedCategorySizeValue,
       alterationSelected,
       styleOptionSelected,
-      extraPrice
+      extraPrice,
+      wearDate,
+      shipDate,
+      selectedRushOption
     ) => {
       dispatch(
         addToCart(
@@ -181,13 +192,16 @@ const mapDispatchToProps = (dispatch) => {
           selectedCategorySizeValue,
           alterationSelected,
           styleOptionSelected,
-          extraPrice
+          extraPrice,
+          wearDate,
+          shipDate,
+          selectedRushOption
         )
       );
     },
-    preventAddingToCart: (item, addToast) => {
-      dispatch(preventAddingToCart(item, addToast))
-    },
+    // preventAddingToCart: (item, addToast) => {
+    //   dispatch(preventAddingToCart(item, addToast))
+    // },
     addToBulk: (product) => {
       dispatch(addToBulk(product));
     },

@@ -1,11 +1,15 @@
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
+import 'react-calendar/dist/Calendar.css';
+import 'react-date-picker/dist/DatePicker.css';
+import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { IoIosHeartEmpty, IoIosInformationCircleOutline, IoIosShuffle } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
 import { useDispatch } from 'react-redux';
 import { Tooltip } from "react-tippy";
 import { getProductCartQuantity } from "../../lib/product";
+
 import { ProductRating } from "../Product";
 
 const ProductDescription = ({
@@ -23,13 +27,21 @@ const ProductDescription = ({
   addToCompare,
   deleteFromCompare,
   changePicture,
-  preventAddingToCart
+  // preventAddingToCart,
+  disallowRush
 }) => {
   console.log("Maximus ProductDescription=>", product)
   const router = useRouter()
   const dispatch = useDispatch();
+
+  const [wearDate, setWearDate] = useState(new Date());
+  const [shipDate, setShipDate] = useState(new Date());
+  const [rushError, setRushError] = useState(true)
+
   //custom 
   const [selectedLining, setSelectedLining] = useState("");
+  const [selectedRushOptionId, setSelectedRushOptionId] = useState("999");
+  const [selectedRushOption, setSelectedRushOption] = useState("");
   const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState("");
   const [selectedFabrics, setSelectedFabrics] = useState("");
   const [selectedFabricsColor, setSelectedFabricsColor] = useState("");
@@ -211,11 +223,37 @@ const ProductDescription = ({
     setExtraPrice(sum + styleOptionSum);
   }
 
-
+  const handleRushDate = (e) => {
+    console.log("EEEEE", e)
+    setWearDate(e)
+  }
 
   const sumExtraPrices = (arr) => {
     return arr.reduce((a, b) => { return a + parseInt(b.price) }, 0);
   }
+
+  const handleSelectRushOption = (val) => {
+    const selectedOption = product.rushOptions.filter((option, i) => option.rushId === val);
+    const leadTime = selectedOption[0].leadTime;
+    const today = new Date();
+    const estimatedShipDate = new Date(today.getTime() + parseInt(leadTime) * 7 * 24 * 60 * 60 * 1000);
+    setShipDate(estimatedShipDate);
+    setSelectedRushOptionId(val);
+    setSelectedRushOption(selectedOption);
+  }
+
+  useEffect(() => {
+    if (selectedRushOptionId !== "999") {
+
+      if (shipDate.getTime() > wearDate.getTime()) {
+        disallowRush(true);
+        setRushError(true)
+      } else {
+        disallowRush(false);
+        setRushError(false)
+      }
+    }
+  }, [wearDate, selectedRushOptionId])
 
   const handleAddToCart = (
     product,
@@ -231,52 +269,59 @@ const ProductDescription = ({
     selectedCategorySizeValue,
     alterationSelected,
     styleOptionSelected,
-    extraPrice
+    extraPrice,
+    wearDate,
+    shipDate,
+    selectedRushOption
   ) => {
-    if (cartItems.length === 0) {
-      localStorage.setItem("rushOptions", JSON.stringify(product.rushOptions))
-      addToCart(
-        product,
-        addToast,
-        quantityCount,
-        selectedFabrics,
-        selectedFabricsColor,
-        selectedLining,
-        selectedLiningFabricsColor,
-        comboArray,
-        selectedAttr,
-        selectedSizeCategory,
-        selectedCategorySizeValue,
-        alterationSelected,
-        styleOptionSelected,
-        extraPrice)
-    } else {
-      let commonRushOptions = JSON.parse(localStorage.getItem("rushOptions"));
-      const filteredOptions = commonRushOptions.filter(option => product.rushOptions.findIndex(bItem => bItem.rushId === option.rushId) >= 0)
-      console.log("Maximus commonRushOptions => ", commonRushOptions)
-      console.log("Maximus product.rushOptions => ", product.rushOptions)
-      console.log("Maximus => ", filteredOptions)
-      if (filteredOptions.length > 0) {
-        localStorage.setItem("rushOptions", JSON.stringify(filteredOptions))
-        addToCart(
-          product,
-          addToast,
-          quantityCount,
-          selectedFabrics,
-          selectedFabricsColor,
-          selectedLining,
-          selectedLiningFabricsColor,
-          comboArray,
-          selectedAttr,
-          selectedSizeCategory,
-          selectedCategorySizeValue,
-          alterationSelected,
-          styleOptionSelected,
-          extraPrice)
-      } else {
-        preventAddingToCart(product, addToast)
-      }
-    }
+    // if (cartItems.length === 0) {
+    // localStorage.setItem("rushOptions", JSON.stringify(product.rushOptions))
+    addToCart(
+      product,
+      addToast,
+      quantityCount,
+      selectedFabrics,
+      selectedFabricsColor,
+      selectedLining,
+      selectedLiningFabricsColor,
+      comboArray,
+      selectedAttr,
+      selectedSizeCategory,
+      selectedCategorySizeValue,
+      alterationSelected,
+      styleOptionSelected,
+      extraPrice,
+      wearDate,
+      shipDate,
+      selectedRushOption
+    )
+    // } else {
+    //   let commonRushOptions = JSON.parse(localStorage.getItem("rushOptions"));
+    //   const filteredOptions = commonRushOptions.filter(option => product.rushOptions.findIndex(bItem => bItem.rushId === option.rushId) >= 0)
+    //   console.log("Maximus commonRushOptions => ", commonRushOptions)
+    //   console.log("Maximus product.rushOptions => ", product.rushOptions)
+    //   console.log("Maximus => ", filteredOptions)
+    //   if (filteredOptions.length > 0) {
+    //     localStorage.setItem("rushOptions", JSON.stringify(filteredOptions))
+    //     addToCart(
+    //       product,
+    //       addToast,
+    //       quantityCount,
+    //       selectedFabrics,
+    //       selectedFabricsColor,
+    //       selectedLining,
+    //       selectedLiningFabricsColor,
+    //       comboArray,
+    //       selectedAttr,
+    //       selectedSizeCategory,
+    //       selectedCategorySizeValue,
+    //       alterationSelected,
+    //       styleOptionSelected,
+    //       extraPrice)
+    //   } else {
+    //     preventAddingToCart(product, addToast)
+    //   }
+    // }
 
   }
 
@@ -774,6 +819,48 @@ const ProductDescription = ({
           )}
         </div>
 
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Wear date</div>
+            <div className="product-content__size__content">
+              <DatePicker onChange={handleRushDate} value={wearDate} />
+            </div>
+          </div>
+        </div>
+
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Lead time</div>
+            <div className="product-content__size__content">
+              <select
+                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                onChange={(event) => {
+                  handleSelectRushOption(event.target.value)
+                }}
+                selected={selectedRushOptionId}
+              >
+                <option key={999} value="999">-- Select the rush option --</option>
+                {product.rushOptions &&
+                  product.rushOptions.map((single, i) => {
+                    return (
+                      <option key={i} value={single.rushId}>{single.rushName}</option>
+                    );
+                  })
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="product-content__size-color">
+          <div className="product-content__size space-mb--20">
+            <div className="product-content__size__title">Estimated ship date</div>
+            <div className="product-content__size__content">
+              <DatePicker disabled value={shipDate} />
+            </div>
+          </div>
+        </div>
+
         <div className="price-table descTableMob" style={{ padding: "10px 0px", border: "1px solid", marginBottom: "20px" }}>
           <div style={{ display: "flex", marginBottom: "10px" }}>
             <Col lg={3}><div className="product-content__size__title">Price: </div></Col>
@@ -800,6 +887,8 @@ const ProductDescription = ({
             </div></Col>
           </div>
         </div>
+
+
 
         <table className="cart-table descTableDes" style={{ marginBottom: "30px" }}>
           <thead>
@@ -847,6 +936,7 @@ const ProductDescription = ({
 
         <div className="product-content__button-wrapper d-flex align-items-center">
           <button
+            disabled={rushError}
             onClick={() =>
               handleAddToCart(
                 product,
@@ -862,7 +952,10 @@ const ProductDescription = ({
                 selectedCategorySizeValue,
                 alterationSelected,
                 styleOptionSelected,
-                extraPrice
+                extraPrice,
+                wearDate,
+                shipDate,
+                selectedRushOption
               )
             }
             className="lezada-button lezada-button--medium product-content__cart space-mr--10"

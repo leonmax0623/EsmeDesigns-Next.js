@@ -18,7 +18,10 @@ export const addToCart = (
   selectedCategorySizeValue,
   alterationSelected,
   styleOptionSelected,
-  extraPrice
+  extraPrice,
+  wearDate,
+  shipDate,
+  selectedRushOption
 ) => {
 
   console.log("CART ITEMS =>>>", product)
@@ -43,6 +46,9 @@ export const addToCart = (
         selectedAlteration: alterationSelected,
         selectedStyleOption: styleOptionSelected,
         extraPrice: extraPrice,
+        wearDate: wearDate,
+        shipDate: shipDate,
+        selectedRushOption: selectedRushOption,
         regularOrder: true
       }
     });
@@ -71,19 +77,22 @@ export const addBulkToCart = (data) => {
         selectedAttr: data.selectedAttr,
         comboArray: data.comboArray,
         extraPrice: data.extraPrice,
+        wearDate: data.wearDate,
+        shipDate: data.shipDate,
+        selectedRushOption: data.selectedRushOption,
       }
     });
   };
 };
 
-export const preventAddingToCart = (item, addToast) => {
+// export const preventAddingToCart = (item, addToast) => {
 
-  // return dispatch => {
-  if (addToast) {
-    addToast("Sorry, you cannot add the dress to the cart because of available shipping options. Place separated order please.", { appearance: "error", autoDismiss: true });
-  }
-  // };
-};
+//   // return dispatch => {
+//   if (addToast) {
+//     addToast("Sorry, you cannot add the dress to the cart because of available shipping options. Place separated order please.", { appearance: "error", autoDismiss: true });
+//   }
+//   // };
+// };
 
 
 

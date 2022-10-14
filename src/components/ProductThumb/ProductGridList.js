@@ -167,15 +167,15 @@ const ProductGridList = ({
               </h3>
               {/* add to cart */}
 
-              <button
-                onClick={() => addToCart(product, addToast)}
-                disabled={
-                  cartItem !== undefined &&
-                  cartItem.quantity >= cartItem.inStock
+              <Link
+                href={`/shop/product-basic/[slug]?slug=${product.productName}`}
+                as={
+                  "/shop/product-basic/" +
+                  product.productName
                 }
               >
                 {cartItem !== undefined ? "Added to cart" : "Add to cart"}
-              </button>
+              </Link>
             </div>
             <div className="price">
               {product.discountedPrice > 0 ? (

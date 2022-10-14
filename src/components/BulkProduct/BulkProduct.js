@@ -1,9 +1,12 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Col } from "react-bootstrap";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
 // import { connect } from "react-redux";
+import 'react-calendar/dist/Calendar.css';
+import 'react-date-picker/dist/DatePicker.css';
+import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { Tooltip } from "react-tippy";
 import { useToasts } from "react-toast-notifications";
 // import {
@@ -14,6 +17,11 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	console.log("BulkProductPage/bulkProductProps => ", bulkProductProps[0])
 	const { addToast } = useToasts();
 	let cartTotalPrice = 0;
+	const [wearDate, setWearDate] = useState(new Date());
+	const [shipDate, setShipDate] = useState(new Date());
+	const [rushError, setRushError] = useState(true);
+	const [selectedRushOptionId, setSelectedRushOptionId] = useState("999");
+	const [selectedRushOption, setSelectedRushOption] = useState("");
 	//custom 
 	const [selectedLining, setSelectedLining] = useState("");
 	const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState("");
@@ -32,7 +40,25 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 	const [regularSizeArray, setRegularSizeArray] = useState(JSON.stringify([]));
 
-	const [extraPrice, setExtraPrice] = useState(0)
+	const [extraPrice, setExtraPrice] = useState(0);
+
+	useMemo(() => {
+		if (bulkProductProps[0].wearDate) {
+			setWearDate(new Date(bulkProductProps[0].wearDate))
+		}
+	}, [bulkProductProps[0].wearDate])
+
+	useMemo(() => {
+		if (bulkProductProps[0].shipDate) {
+			setShipDate(new Date(bulkProductProps[0].shipDate))
+		}
+	}, [bulkProductProps[0].shipDate])
+
+	useMemo(() => {
+		if (bulkProductProps[0].selectedRushOption) {
+			setSelectedRushOptionId(bulkProductProps[0].selectedRushOption[0].rushId)
+		}
+	}, [bulkProductProps[0].selectedRushOption])
 
 	useEffect(() => {
 		if (bulkProductProps[0]) {
@@ -221,6 +247,77 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		setSelectedAttr(array);
 	}
 
+	const handleSelectRushOption = (val) => {
+		const selectedOption = bulkProductProps[0].rushOptions.filter((option, i) => option.rushId === val);
+		const leadTime = selectedOption[0].leadTime;
+		const today = new Date();
+		const estimatedShipDate = new Date(today.getTime() + parseInt(leadTime) * 7 * 24 * 60 * 60 * 1000);
+		setShipDate(estimatedShipDate);
+		setSelectedRushOptionId(val);
+		setSelectedRushOption(selectedOption)
+	}
+
+	const formatDate = (date) => {
+		var d = new Date(date),
+			month = '' + (d.getMonth() + 1),
+			day = '' + d.getDate(),
+			year = d.getFullYear();
+
+		if (month.length < 2)
+			month = '0' + month;
+		if (day.length < 2)
+			day = '0' + day;
+
+		return [month, day, year].join('-');
+	}
+
+	const handleRushDate = (e) => {
+		console.log("``````````````````````EEEEE", typeof e)
+		setWearDate(e)
+	}
+
+	const disallowRush = (val) => {
+		if (val) {
+			addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
+		} else {
+			addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
+		}
+	}
+
+
+
+	useEffect(() => {
+		if (bulkProductProps[0].wearDate) {
+			console.log("111")
+			if (selectedRushOptionId !== "999") {
+				console.log("222")
+				if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
+					disallowRush(true);
+					console.log("333")
+					setRushError(true)
+				} else {
+					console.log("444")
+					disallowRush(false);
+					setRushError(false)
+				}
+			}
+		} else {
+			console.log("555")
+			if (selectedRushOptionId !== "999") {
+				console.log("666")
+				if (shipDate.getTime() > wearDate.getTime()) {
+					console.log("777")
+					disallowRush(true);
+					setRushError(true)
+				} else {
+					console.log("888")
+					disallowRush(false);
+					setRushError(false)
+				}
+			}
+		}
+	}, [wearDate, selectedRushOptionId])
+
 	const [productStock, setProductStock] = useState(
 		bulkProductProps[0].inStock ? bulkProductProps[0].inStock : 0
 	);
@@ -247,7 +344,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				alterationSelected,
 				styleOptionSelected,
 				totalItems,
-				extraPrice
+				extraPrice,
+				wearDate,
+				shipDate,
+				selectedRushOption
 			})
 		} else {
 			addToCart(
@@ -264,7 +364,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				selectedCategorySizeValue,
 				alterationSelected,
 				styleOptionSelected,
-				extraPrice
+				extraPrice,
+				wearDate,
+				shipDate,
+				selectedRushOption
 			)
 		}
 	}
@@ -846,6 +949,56 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						</>
 					)}
 				</Col>
+
+				<Col lg={12} className="bulk-container__settings__fabrics" style={{ marginTop: "20px", alignItems: "center" }}>
+					<Col lg={4} style={{ marginBottom: "10px" }}>
+						<div className="product-content__size-color">
+							<div className="bulk-container__settings__fabrics__container__title">
+								<div className="product-content__size__title bulk-container__settings__fabrics__container__title__header">Wear Date</div>
+								<div className="product-content__size__content">
+									<DatePicker onChange={setWearDate} disabled={editBoolean} value={wearDate} style={{ height: "37px", width: "100%" }} />
+								</div>
+							</div>
+						</div>
+					</Col>
+					<Col lg={4} style={{ marginBottom: "10px" }}>
+						<div className="product-content__size-color">
+							<div className="bulk-container__settings__fabrics__container__title">
+								<div className="product-content__size__title bulk-container__settings__fabrics__container__title__header">Lead Time</div>
+								<div className="product-content__size__content">
+									<select
+										disabled={editBoolean}
+										style={{ width: "100%", height: "37px", cursor: "pointer" }}
+										onChange={(event) => {
+											handleSelectRushOption(event.target.value)
+										}}
+										selected={selectedRushOptionId}
+									>
+										<option key={999} value="999">-- Select the rush option --</option>
+										{bulkProductProps[0].rushOptions &&
+											bulkProductProps[0].rushOptions.map((single, i) => {
+												return (
+													<option key={i} selected={selectedRushOptionId === single.rushId} value={single.rushId}>{single.rushName}</option>
+												);
+											})
+										}
+									</select>
+								</div>
+							</div>
+						</div>
+					</Col>
+					<Col lg={4} style={{ marginBottom: "10px" }}>
+						<div className="product-content__size-color">
+							<div className="bulk-container__settings__fabrics__container__title">
+								<div className="product-content__size__title bulk-container__settings__fabrics__container__title__header">Ship Date</div>
+								<div className="product-content__size__content">
+									<DatePicker disabled value={shipDate} style={{ height: "37px", width: "100%" }} />
+								</div>
+							</div>
+						</div>
+					</Col>
+				</Col>
+
 				<Col lg={12} className="bulk-container__settings__fabrics__footer">
 					<div className="price-table" style={{ padding: "10px 0px", border: "1px solid", marginTop: "20px" }}>
 						<div style={{ display: "flex", marginBottom: "10px" }}>
@@ -912,7 +1065,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							<Col lg={12} style={{ display: "flex", marginTop: "20px", justifyContent: "center", padding: "0px" }}>
 								{bulkProductProps[0].selectedFabrics ? (
 									<button
-										className="lezada-button lezada-button--medium"
+										className="lezada-button lezada-button--medium product-content__cart space-mr--10"
+										disabled={rushError}
 										onClick={() =>
 											handleBulkOrder()
 										}
@@ -921,7 +1075,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 									</button>
 								) : (
 									<button
-										className="lezada-button lezada-button--medium"
+										className="lezada-button lezada-button--medium product-content__cart space-mr--10"
+										disabled={rushError}
 										onClick={() =>
 											handleBulkOrder()
 										}
@@ -933,8 +1088,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						)}
 					</Col>
 					<Col lg={6}>
-
-
 						<table className="cart-table">
 							<thead>
 								<tr>

@@ -140,10 +140,6 @@ const CartOverlay = ({
                   <a>checkout</a>
                 </Link>
               </div>
-              {/*=======  free shipping text  =======*/}
-              <p className="free-shipping-text">
-                Free Shipping on All Orders Over $100!
-              </p>
             </div>
           ) : (
             "No items found in cart"
