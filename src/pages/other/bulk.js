@@ -55,7 +55,10 @@ const Bulk = ({
     alterationSelected,
     styleOptionSelected,
     totalItems,
-    extraPrice
+    extraPrice,
+    wearDate,
+    shipDate,
+    selectedRushOption
   ) => {
     addBulkToCart(
       bulkProduct,
@@ -70,7 +73,10 @@ const Bulk = ({
       alterationSelected,
       styleOptionSelected,
       totalItems,
-      extraPrice
+      extraPrice,
+      wearDate,
+      shipDate,
+      selectedRushOption
     )
     setNewBulkProduct([])
   }

@@ -24,6 +24,8 @@ const Wishlist = ({
     document.querySelector("body").classList.remove("overflow-hidden");
   });
 
+  console.log("wishlistItems", wishlistItems)
+
   return (
     <LayoutTwo>
       {/* breadcrumb */}
@@ -79,7 +81,7 @@ const Wishlist = ({
                                 <a>
                                   <img
                                     src={
-                                      product.pictures[0].url
+                                      product.picture[0].url
                                     }
                                     className="img-fluid"
                                     alt=""

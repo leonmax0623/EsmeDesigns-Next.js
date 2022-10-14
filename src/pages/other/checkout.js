@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 import { IoMdCash } from "react-icons/io";
 import { connect } from "react-redux";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
@@ -13,9 +12,7 @@ const Checkout = ({ cartItems }) => {
   let mainPrice = 0;
   let extraPayPrice = 0;
   let totalAmount = 0;
-  const [startDate, setStartDate] = useState(new Date());
-  const [rushOptions, setRushOptions] = useState([])
-  const [selectedRushOption, setSelectedRushOption] = useState("")
+
 
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");
@@ -214,37 +211,6 @@ const Checkout = ({ cartItems }) => {
 
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", marginTop: "20px", alignItems: "flex-end" }}>
-                      <div className="col-md-4 col-12 space-mb--20">
-                        <label>* Wear date</label>
-                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}>
-                          <div style={{ color: "red" }}>Don't forget to check the weather!</div>
-                        </DatePicker>
-                      </div>
-                      <div className="col-md-4 col-12 space-mb--20">
-                        <label>* Lead Time</label>
-                        <select
-                          style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                          onChange={(event) => {
-                            setSelectedRushOption(event.target.value)
-                          }}
-                        >
-                          {rushOptions &&
-                            rushOptions.map((single, i) => {
-                              return (
-                                <option key={i} value={single.rushId}>{single.rushName}</option>
-                              );
-                            })
-                          }
-                        </select>
-                      </div>
-                      <div className="col-md-4 col-12 space-mb--20">
-                        <label>Estimated Ship Date</label>
-                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}>
-                          <div style={{ color: "red" }}>Don't forget to check the weather!</div>
-                        </DatePicker>
                       </div>
                     </div>
                     <div className="lezada-form lezada-form--review">
