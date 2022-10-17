@@ -17,11 +17,9 @@ const Checkout = ({ cartItems }) => {
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");
   });
-  useEffect(() => {
-    setRushOptions(JSON.parse(localStorage.getItem("rushOptions")))
-  }, []);
-
-  console.log("RushOptions", rushOptions)
+  // useEffect(() => {
+  //   setRushOptions(JSON.parse(localStorage.getItem("rushOptions")))
+  // }, []);
 
   return (
     <LayoutTwo>

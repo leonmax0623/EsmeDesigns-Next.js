@@ -2,7 +2,7 @@ import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import { IoIosStar, IoIosStarOutline } from "react-icons/io";
 
-const ProductDescriptionTab = ({ product }) => {
+const ProductDescriptionTab = ({ product, allowReviews, showReviews, allowRating }) => {
   const sizes = [{
     id: 1,
     description: "Bust",
@@ -132,6 +132,8 @@ const ProductDescriptionTab = ({ product }) => {
   }
   ]
 
+  console.log("Showresdfasdf", showReviews)
+
   return (
     <div className="product-description-tab space-pt--r100 space-mt--r100 border-top--grey">
       <Tab.Container defaultActiveKey="description">
@@ -237,11 +239,11 @@ const ProductDescriptionTab = ({ product }) => {
           <Tab.Pane eventKey="reviews">
             <div className="product-description-tab__review">
               <h2 className="review-title space-mb--20">
-                {product.reviewsList ? product.reviewsList.length : ""} reviews on{" "}
+                {product.reviewList ? product.reviewList.length : ""} reviews on{" "}
                 {product.productName}
               </h2>
               {/*=======  single review  =======*/}
-              {product.reviewsList && product.reviewsList.map((review, i) => {
+              {showReviews === "True" && product.reviewList && product.reviewList.map((review, i) => {
                 return (
                   <div className="single-review">
                     <div className="single-review__image">
@@ -275,59 +277,63 @@ const ProductDescriptionTab = ({ product }) => {
                 )
               })}
 
-              {/*=======  End of single review  =======*/}
-              <h2 className="review-title space-mb--20">Add a review</h2>
-              <p className="text-center">
-                Your email address will not be published. Required fields are
-                marked *
-              </p>
-              {/*=======  review form  =======*/}
-              <div className="lezada-form lezada-form--review">
-                <form>
-                  <div className="row">
-                    <div className="col-lg-6 space-mb--20">
-                      <input type="text" placeholder="Name *" required />
-                    </div>
-                    <div className="col-lg-6 space-mb--20">
-                      <input type="email" placeholder="Email *" required />
-                    </div>
-                    <div className="col-lg-12 space-mb--20">
-                      <span className="rating-title space-mr--20">
-                        YOUR RATING
-                      </span>
-                      <span className="product-rating">
-                        <IoIosStarOutline />
-                        <IoIosStarOutline />
-                        <IoIosStarOutline />
-                        <IoIosStarOutline />
-                        <IoIosStarOutline />
-                      </span>
-                    </div>
-                    <div className="col-lg-12 space-mb--20">
-                      <textarea
-                        cols={30}
-                        rows={10}
-                        placeholder="Your review *"
-                        defaultValue={""}
-                      />
-                    </div>
-                    <div className="col-lg-12 text-center">
-                      <button
-                        type="submit"
-                        className="lezada-button lezada-button--medium"
-                      >
-                        submit
-                      </button>
-                    </div>
+              {allowRating !== "None" && allowReviews !== "None" && (
+                <>
+                  {/*=======  End of single review  =======*/}
+                  <h2 h2 className="review-title space-mb--20">Add a review</h2>
+                  <p className="text-center">
+                    Your email address will not be published. Required fields are
+                    marked *
+                  </p>
+                  {/*=======  review form  =======*/}
+                  <div className="lezada-form lezada-form--review">
+                    <form>
+                      <div className="row">
+                        <div className="col-lg-6 space-mb--20">
+                          <input type="text" placeholder="Name *" required />
+                        </div>
+                        <div className="col-lg-6 space-mb--20">
+                          <input type="email" placeholder="Email *" required />
+                        </div>
+                        <div className="col-lg-12 space-mb--20">
+                          <span className="rating-title space-mr--20">
+                            YOUR RATING
+                          </span>
+                          <span className="product-rating">
+                            <IoIosStarOutline />
+                            <IoIosStarOutline />
+                            <IoIosStarOutline />
+                            <IoIosStarOutline />
+                            <IoIosStarOutline />
+                          </span>
+                        </div>
+                        <div className="col-lg-12 space-mb--20">
+                          <textarea
+                            cols={30}
+                            rows={10}
+                            placeholder="Your review *"
+                            defaultValue={""}
+                          />
+                        </div>
+                        <div className="col-lg-12 text-center">
+                          <button
+                            type="submit"
+                            className="lezada-button lezada-button--medium"
+                          >
+                            submit
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
-                </form>
-              </div>
+                </>
+              )}
               {/*=======  End of review form  =======*/}
             </div>
           </Tab.Pane>
         </Tab.Content>
       </Tab.Container>
-    </div>
+    </div >
   );
 };
 

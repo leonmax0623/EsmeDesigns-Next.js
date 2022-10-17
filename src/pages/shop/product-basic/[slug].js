@@ -11,8 +11,9 @@ import {
   ProductDescriptionTab
 } from "../../../components/ProductDetails";
 // import products from "../../../data/real_products.json";
+import API from '../../../api';
 import { addToBulk } from "../../../redux/actions/bulkActions";
-import { addToCart, preventAddingToCart } from "../../../redux/actions/cartActions";
+import { addToCart } from "../../../redux/actions/cartActions";
 import {
   addToCompare,
   deleteFromCompare
@@ -33,6 +34,29 @@ const ProductBasic = ({
   addToCompare,
   deleteFromCompare
 }) => {
+
+  const [allowRating, setAllowRating] = useState("");
+  const [allowReviews, setAllowReviews] = useState("");
+  const [showRating, setShowRating] = useState("");
+  const [showReviews, setShowReviews] = useState("");
+
+  useEffect(() => {
+    const formData = {
+      feaMethod: 'getConfig'
+    }
+
+    API.post('/', new URLSearchParams(formData))
+      .then(response => {
+        console.log("Response => ", response)
+        setAllowRating(response.data.allowRating)
+        setAllowReviews(response.data.allowReviews)
+        setShowRating(response.data.showRating)
+        setShowReviews(response.data.showReviews)
+      })
+      .catch(error => {
+        console.log("Error", error)
+      });
+  }, [])
 
   const [pictureColorId, setPictureColorId] = useState("")
   useEffect(() => {
@@ -131,15 +155,16 @@ const ProductBasic = ({
                 addToCompare={addToCompare}
                 deleteFromCompare={deleteFromCompare}
                 changePicture={changePicture}
-                preventAddingToCart={preventAddingToCart}
+                // preventAddingToCart={preventAddingToCart}
                 disallowRush={disallowRush}
+                showRating={showRating}
               />
             </Col>
           </Row>
           <Row>
             <Col>
               {/* product description tab */}
-              <ProductDescriptionTab product={product[0]} />
+              <ProductDescriptionTab product={product[0]} showReviews={showReviews} allowRating={allowRating} allowReviews={allowReviews} />
             </Col>
           </Row>
         </Container>
