@@ -4,7 +4,7 @@ import { Col } from "react-bootstrap";
 import 'react-calendar/dist/Calendar.css';
 import 'react-date-picker/dist/DatePicker.css';
 import DatePicker from "react-date-picker/dist/entry.nostyle";
-import { IoIosHeartEmpty, IoIosInformationCircleOutline, IoIosShuffle } from "react-icons/io";
+import { IoIosHeartEmpty, IoIosInformationCircleOutline } from "react-icons/io";
 import { MultiSelect } from "react-multi-select-component";
 import { useDispatch } from 'react-redux';
 import { Tooltip } from "react-tippy";
@@ -18,17 +18,18 @@ const ProductDescription = ({
   discountedPrice,
   cartItems,
   wishlistItem,
-  compareItem,
+  // compareItem,
   addToast,
   addToCart,
   addToBulk,
   addToWishlist,
   deleteFromWishlist,
-  addToCompare,
-  deleteFromCompare,
+  // addToCompare,
+  // deleteFromCompare,
   changePicture,
   // preventAddingToCart,
-  disallowRush
+  disallowRush,
+  showRating
 }) => {
   console.log("Maximus ProductDescription=>", product)
   const router = useRouter()
@@ -327,13 +328,13 @@ const ProductDescription = ({
 
   return (
     <div className="product-content">
-      {product.reviewsList && product.reviewsList.length > 0 ? (
+      {showRating === "True" && product.reviewList && product.reviewList.length > 0 ? (
         <div className="product-content__rating-wrap d-block d-sm-flex space-mb--20">
           <div className="product-content__rating space-mr--20">
-            <ProductRating ratingValue={product.reviewsList.reduce((ac, a) => parseInt(a.rating) + ac, 0) / product.reviewsList.length} />
+            <ProductRating ratingValue={product.reviewList.reduce((ac, a) => parseInt(a.rating) + ac, 0) / product.reviewList.length} />
           </div>
           <div className="product-content__rating-count">
-            <a href="#">( {product.reviewsList.length} customer reviews )</a>
+            <a href="#">( {product.reviewList.length} customer reviews )</a>
           </div>
         </div>
       ) : (
@@ -989,7 +990,7 @@ const ProductDescription = ({
             <IoIosHeartEmpty />
           </button>
 
-          <button
+          {/* <button
             className={`product-content__compare space-mr--10 ${compareItem !== undefined ? "active" : ""
               }`}
             title={
@@ -1004,7 +1005,7 @@ const ProductDescription = ({
             }
           >
             <IoIosShuffle />
-          </button>
+          </button> */}
         </div>
       </Fragment>
     </div>
