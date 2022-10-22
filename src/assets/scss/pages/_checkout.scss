@@ -1,4 +1,3 @@
-
 /*=============================================
 =            checkout            =
 =============================================*/
@@ -14,6 +13,16 @@
 
   text-decoration: underline;
   text-transform: capitalize;
+}
+
+.react-date-picker {
+  width: 100% !important;
+  height: 37px !important;
+
+  input {
+    padding: 0px 5px !important;
+    border: none !important
+  }
 }
 
 /*-- Checkout Form --*/
@@ -43,6 +52,7 @@
     border-bottom: 2px solid $grey--eleven;
     border-radius: 0;
     background-color: $white;
+
     &::after {
       right: 20px;
 
@@ -52,6 +62,7 @@
       border-width: 1px;
       border-color: $grey--seven;
     }
+
     & .current {
       line-height: 23px;
 
@@ -59,6 +70,7 @@
 
       color: $grey--seven;
     }
+
     & .list {
       width: 100%;
     }
@@ -80,6 +92,7 @@
     border: 1px solid $grey--six;
     border-radius: 0;
     background-color: $white;
+
     &[type="checkbox"] {
       width: auto;
     }
@@ -97,7 +110,7 @@
     & input[type="checkbox"] {
       display: none;
 
-      & + label {
+      &+label {
         font-size: 14px;
         font-weight: 400;
         line-height: 20px;
@@ -108,6 +121,7 @@
         padding-left: 30px;
 
         color: $black;
+
         &::before {
           position: absolute;
           top: 0;
@@ -123,6 +137,7 @@
 
           border: 2px solid $grey--six;
         }
+
         &::after {
           font-size: 12px;
           line-height: 20px;
@@ -143,10 +158,11 @@
         }
       }
 
-      &:checked + label {
+      &:checked+label {
         &::before {
           border: 2px solid $black;
         }
+
         &::after {
           opacity: 1;
         }
@@ -161,7 +177,7 @@
 
   background-color: $grey--twentyTwo;
 
-// Responsive
+  // Responsive
 
   @include respond(small-mobile) {
     padding: 30px;
@@ -172,21 +188,26 @@
     line-height: 23px;
 
     flex-basis: 18px;
+
     &:first-child {
       margin-top: 0;
       margin-bottom: 25px;
     }
+
     &:last-child {
       margin-top: 15px;
       margin-bottom: 0;
     }
+
     & span {
       display: block;
       float: right;
     }
   }
+
   & ul {
     border-bottom: 1px solid $grey--six;
+
     & li {
       font-size: 14px;
       font-weight: 500;
@@ -197,6 +218,7 @@
       margin-bottom: 16px;
 
       color: $grey--seven;
+
       & span {
         float: right;
 
@@ -204,6 +226,7 @@
       }
     }
   }
+
   & p {
     font-size: 14px;
     font-weight: 600;
@@ -214,6 +237,7 @@
 
     color: $grey--twentyThree;
     border-bottom: 1px solid $grey--six;
+
     & span {
       float: right;
     }
@@ -226,7 +250,7 @@
 
   background-color: $grey--twentyTwo;
 
-// Responsive
+  // Responsive
 
   @include respond(small-mobile) {
     padding: 30px;
@@ -236,16 +260,21 @@
 /*-- Single Payment Method --*/
 .single-method {
   margin-bottom: 20px;
+  cursor: pointer;
+
   &:last-child {
     margin-bottom: 0;
   }
+
   & input[type="radio"] {
     display: none;
+    cursor: pointer;
 
-    & + label {
+    &+label {
       font-size: 14px;
       font-weight: 400;
       line-height: 20px;
+      cursor: pointer;
 
       position: relative;
 
@@ -253,8 +282,10 @@
       padding-left: 30px;
 
       color: $black;
+
       &::before {
         position: absolute;
+        cursor: pointer;
         top: 0;
         left: 0;
 
@@ -268,7 +299,9 @@
 
         border: 2px solid $grey--six;
       }
+
       &::after {
+        cursor: pointer;
         position: absolute;
         top: 5px;
         left: 5px;
@@ -287,11 +320,14 @@
       }
     }
 
-    &:checked + label {
+    &:checked+label {
       &::before {
+        cursor: pointer;
         border: 2px solid $black;
       }
+
       &::after {
+        cursor: pointer;
         opacity: 1;
       }
     }
@@ -299,11 +335,13 @@
 
   & input[type="checkbox"] {
     display: none;
+    cursor: pointer;
 
-    & + label {
+    &+label {
       font-size: 14px;
       font-weight: 400;
       line-height: 20px;
+      cursor: pointer;
 
       position: relative;
 
@@ -311,7 +349,9 @@
       padding-left: 30px;
 
       color: $grey--seven;
+
       &::before {
+        cursor: pointer;
         position: absolute;
         top: 0;
         left: 0;
@@ -326,7 +366,9 @@
 
         border: 2px solid $grey--six;
       }
+
       &::after {
+        cursor: pointer;
         position: absolute;
         top: 4px;
         left: 4px;
@@ -345,12 +387,15 @@
       }
     }
 
-    &:checked + label {
+    &:checked+label {
       &::before {
+        cursor: pointer;
         border: 2px solid $black;
       }
+
       &::after {
         opacity: 1;
+        cursor: pointer;
       }
     }
   }
@@ -391,4 +436,3 @@
 }
 
 /*=====  End of checkout  ======*/
-

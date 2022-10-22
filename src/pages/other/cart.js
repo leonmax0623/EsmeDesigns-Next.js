@@ -112,7 +112,7 @@ const Cart = ({
                       <tr>
                         <th>EXTRA COST</th>
                         <td className="subtotal">
-                          ${extraPayPrice.toFixed(2)}
+                          ${(extraPayPrice * totalAmount).toFixed(2)}
                         </td>
                       </tr>
                       <tr>
@@ -123,14 +123,14 @@ const Cart = ({
                       </tr>
                       <tr>
                         <th>TOTAL</th>
-                        <td className="total">${(extraPayPrice + mainPrice).toFixed(2)}</td>
+                        <td className="total">${(extraPayPrice * totalAmount + mainPrice).toFixed(2)}</td>
                       </tr>
                     </tbody>
                   </table>
                   <div className="cart-calculation-button text-center">
                     <Link
                       href="/other/checkout"
-                      as={process.env.PUBLIC_URL + "/other/checkout"}
+                      as={"/other/checkout"}
                     >
                       <a className="lezada-button lezada-button--medium">
                         proceed to checkout

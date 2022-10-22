@@ -25,8 +25,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	//custom 
 	const [selectedLining, setSelectedLining] = useState("");
 	const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState("");
+	const [selectedLiningFabricsColorId, setSelectedLiningFabricsColorId] = useState("");
 	const [selectedFabrics, setSelectedFabrics] = useState("");
 	const [selectedFabricsColor, setSelectedFabricsColor] = useState("");
+	const [selectedFabricsColorId, setSelectedFabricsColorId] = useState("");
 	const [selectedSize, setSelectedSize] = useState("");
 	const [alterationSelected, setAlterationSelected] = useState([]);
 	const [styleOptionSelected, setStyleOptionSelected] = useState([]);
@@ -82,12 +84,14 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			}
 			if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
 				setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricColorName)
+				setSelectedLiningFabricsColorId(bulkProductProps[0].selectedLiningFabricsColorId ? bulkProductProps[0].selectedLiningFabricsColorId : bulkProductProps[0].lining[0].fabricsColor[0].fabricsColorId)
 			}
 			if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
 				setSelectedFabrics(bulkProductProps[0].selectedFabrics ? bulkProductProps[0].selectedFabrics : bulkProductProps[0].fabrics[0].fabricsId)
 			}
 			if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
 				setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorName)
+				setSelectedFabricsColorId(bulkProductProps[0].selectedFabricsColorId ? bulkProductProps[0].selectedFabricsColorId : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorsId)
 			}
 			if (bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0) {
 				setSelectedSize(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
@@ -335,8 +339,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				addToast,
 				selectedFabrics,
 				selectedFabricsColor,
+				selectedFabricsColorId,
 				selectedLining,
 				selectedLiningFabricsColor,
+				selectedLiningFabricsColorId,
 				comboArray,
 				selectedAttr,
 				selectedSizeCategory,
@@ -356,8 +362,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				quantityCount,
 				selectedFabrics,
 				selectedFabricsColor,
+				selectedFabricsColorId,
 				selectedLining,
 				selectedLiningFabricsColor,
+				selectedLiningFabricsColorId,
 				comboArray,
 				selectedAttr,
 				sizeCategory,
@@ -431,7 +439,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		setExtraPrice(sum + styleOptionSum);
 	}
 
-
+	console.log("EXTRA PRICES=>", extraPrice)
 
 	const sumExtraPrices = (arr) => {
 		return arr.reduce((a, b) => { return a + parseInt(b.price) }, 0);
@@ -456,6 +464,15 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							alt=""
 						/>
 					</a>
+				</Link>
+				<Link
+					className="product-name"
+					href={`/shop/product-basic/[slug]?slug=${bulkProductProps[0].productName}`}
+					as={
+						"/shop/product-basic/" + bulkProductProps[0].productName
+					}
+				>
+					<a style={{ marginTop: "10px", fontWeight: "400", fontSize: "16px" }}>{bulkProductProps[0].productCode}</a>
 				</Link>
 				<Link
 					className="product-name"
@@ -513,12 +530,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 													value={selectedFabricsColor}
 													disabled={editBoolean}
 													onChange={(event) => {
-														setSelectedFabricsColor(event.target.value);
+														setSelectedFabricsColor(event.target.value.split("/")[1]);
+														setSelectedFabricsColorId(event.target.value.split("/")[0])
 													}}
 												>
 													{bulkProductProps[0].fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
 														return (
-															<option key={i} value={color.fabricColorName}>{color.fabricColorName}</option>
+															<option key={i} value={`${color.fabricsColorId}/${color.fabricColorName}`}>{color.fabricColorName}</option>
 														);
 													}) : "")}
 												</select>
@@ -570,12 +588,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 													value={selectedLiningFabricsColor}
 													disabled={editBoolean}
 													onChange={(event) => {
-														setSelectedLiningFabricsColor(event.target.value);
+														setSelectedLiningFabricsColor(event.target.value.split("/")[1]);
+														setSelectedLiningFabricsColorId(event.target.value.split("/")[0])
 													}}
 												>
 													{bulkProductProps[0].lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
 														return (
-															<option key={i} value={color.fabricColorName}>{color.fabricColorName}</option>
+															<option key={i} value={`${color.fabricsColorId}/${color.fabricColorName}`}>{color.fabricColorName}</option>
 														);
 													}) : "")}
 												</select>
@@ -1016,13 +1035,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 						<div style={{ display: "flex", marginBottom: "10px" }}>
 							<Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
 							<Col lg={3}><div className="product-content__size__content">
-								<span>${(extraPrice * totalItems).toFixed(2)}</span>
+								<span>${(extraPrice * (bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</span>
 							</div></Col>
 						</div>
 						<div style={{ display: "flex", marginBottom: "10px" }}>
 							<Col lg={3}><div className="product-content__size__title">Total: </div></Col>
 							<Col lg={3}><div className="product-content__size__content">
-								<span>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * totalItems)).toFixed(2)}</span>
+								<span>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</span>
 							</div></Col>
 						</div>
 					</div>
@@ -1126,8 +1145,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 								<tr style={{ textAlign: "center" }}>
 									<td style={{ paddingLeft: "10px 0px" }}>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</td>
 									<td style={{ paddingLeft: "10px 0px" }}>{bulkProductProps[0].totalItems ? totalItems : quantityCount}</td>
-									<td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * totalItems).toFixed(2)}</td>
-									<td style={{ paddingLeft: "10px 0px" }}>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * totalItems) : 0)).toFixed(2)}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * (bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount) : 0)).toFixed(2)}</td>
 								</tr>
 							</tbody>
 						</table>

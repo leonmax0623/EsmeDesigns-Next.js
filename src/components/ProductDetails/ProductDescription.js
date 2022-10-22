@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Col } from "react-bootstrap";
 import 'react-calendar/dist/Calendar.css';
 import 'react-date-picker/dist/DatePicker.css';
@@ -44,8 +44,10 @@ const ProductDescription = ({
   const [selectedRushOptionId, setSelectedRushOptionId] = useState("999");
   const [selectedRushOption, setSelectedRushOption] = useState("");
   const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState("");
+  const [selectedLiningFabricsColorId, setSelectedLiningFabricsColorId] = useState("");
   const [selectedFabrics, setSelectedFabrics] = useState("");
   const [selectedFabricsColor, setSelectedFabricsColor] = useState("");
+  const [selectedFabricsColorId, setSelectedFabricsColorId] = useState("");
   const [selectedSizeCategory, setSelectedSizeCategory] = useState(
     product.sizeCategories && product.sizeCategories.length > 0 ? product.sizeCategories[0].sizeCategoryName : ""
   );
@@ -57,20 +59,43 @@ const ProductDescription = ({
   const [styleOptionSelected, setStyleOptionSelected] = useState([]);
   const [extraPrice, setExtraPrice] = useState(0)
 
+  useMemo(() => {
+    if (product.lining && product.lining.length > 0) {
+      setSelectedLining(product.selectedLining ? product.selectedLining : product.lining[0].fabricsId)
+      setSelectedLiningFabricsColor(product.selectedLiningFabricsColor ? product.selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricColorName)
+      setSelectedLiningFabricsColorId(product.selectedLiningFabricsColors ? product.selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricsColorId)
+    }
+  }, [product.lining])
+
+  useMemo(() => {
+    if (product.fabrics && product.fabrics.length > 0) {
+      setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
+      setSelectedFabricsColor(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
+      setSelectedFabricsColorId(product.fabrics[0].fabricsColor[0].fabricsColorId)
+
+    }
+  }, [product.fabrics])
+
   useEffect(() => {
     if (product) {
-      if (product.lining && product.lining.length > 0) {
-        setSelectedLining(product.selectedLining ? product.selectedLining : product.lining[0].fabricsId)
-      }
-      if (product.lining && product.lining.length > 0) {
-        setSelectedLiningFabricsColor(product.selectedLiningFabricsColor ? product.selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricColorName)
-      }
-      if (product.fabrics && product.fabrics.length > 0) {
-        setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
-      }
-      if (product.fabrics && product.fabrics.length > 0) {
-        setSelectedFabricsColor(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
-      }
+      // if (product.lining && product.lining.length > 0) {
+      //   setSelectedLining(product.selectedLining ? product.selectedLining : product.lining[0].fabricsId)
+      // }
+      // if (product.lining && product.lining.length > 0) {
+      //   setSelectedLiningFabricsColor(product.selectedLiningFabricsColor ? product.selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricColorName)
+      // }
+      // if (product.lining && product.lining.length > 0) {
+      //   setSelectedLiningFabricsColorId(product.selectedLiningFabricsColors ? product.selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricsColorId)
+      // }
+      // if (product.fabrics && product.fabrics.length > 0) {
+      //   setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
+      // }
+      // if (product.fabrics && product.fabrics.length > 0) {
+      //   setSelectedFabricsColor(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
+      // }
+      // if (product.fabrics && product.fabrics.length > 0) {
+      //   setSelectedFabricsColorId(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricsColorId)
+      // }
 
       // if (product.styleAlterations) {
       //   setAlterationSelected(product.styleAlterations)
@@ -262,8 +287,10 @@ const ProductDescription = ({
     quantityCount,
     selectedFabrics,
     selectedFabricsColor,
+    selectedFabricsColorId,
     selectedLining,
     selectedLiningFabricsColor,
+    selectedLiningFabricsColorId,
     comboArray,
     selectedAttr,
     selectedSizeCategory,
@@ -283,8 +310,10 @@ const ProductDescription = ({
       quantityCount,
       selectedFabrics,
       selectedFabricsColor,
+      selectedFabricsColorId,
       selectedLining,
       selectedLiningFabricsColor,
+      selectedLiningFabricsColorId,
       comboArray,
       selectedAttr,
       selectedSizeCategory,
@@ -391,6 +420,7 @@ const ProductDescription = ({
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 value={selectedFabrics}
                 onChange={(event) => {
+                  console.log("KKKKKKK", event.target.value)
                   setSelectedFabrics(event.target.value)
                   setSelectedFabricsColor(product.fabrics.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
                 }}
@@ -420,6 +450,7 @@ const ProductDescription = ({
                   onChange={(event) => {
                     // console.log("!!!!!!!!!", event.target.value.split("/")[1])
                     setSelectedFabricsColor(event.target.value.split("/")[1]);
+                    setSelectedFabricsColorId(event.target.value.split("/")[0]);
                     handleChangePicture(event.target.value.split("/")[0], event.target.value.split("/")[1])
                   }}
                 >
@@ -465,6 +496,7 @@ const ProductDescription = ({
                           }
                           onChange={() => {
                             setSelectedFabricsColor(color.fabricColorName);
+                            setSelectedFabricsColorId(color.fabricsColorId);
                             handleChangePicture(color.fabricsColorId, color.fabricColorName)
                           }}
                         />
@@ -518,12 +550,13 @@ const ProductDescription = ({
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
                   value={selectedLiningFabricsColor}
                   onChange={(event) => {
-                    setSelectedLiningFabricsColor(event.target.value);
+                    setSelectedLiningFabricsColor(event.target.value.split("/")[1]);
+                    setSelectedLiningFabricsColorId(event.target.value.split("/")[0]);
                   }}
                 >
                   {product.lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
                     return (
-                      <option key={i} value={color.fabricColorName}>{color.fabricColorName}</option>
+                      <option key={i} value={`${color.fabricsColorId}/${color.fabricColorName}`}>{color.fabricColorName}</option>
                     );
                   }) : "")}
                 </select>
@@ -563,6 +596,7 @@ const ProductDescription = ({
                           }
                           onChange={() => {
                             setSelectedLiningFabricsColor(color.fabricColorName);
+                            setSelectedLiningFabricsColorId(color.fabricsColorId);
                             setQuantityCount(1);
                           }}
                         />
@@ -945,8 +979,10 @@ const ProductDescription = ({
                 quantityCount,
                 selectedFabrics,
                 selectedFabricsColor,
+                selectedFabricsColorId,
                 selectedLining,
                 selectedLiningFabricsColor,
+                selectedLiningFabricsColorId,
                 comboArray,
                 selectedAttr,
                 selectedSizeCategory,
