@@ -133,6 +133,69 @@ const Checkout = ({ cartItems }) => {
     return [year, month, day].join('-');
   }
 
+  let itemsArray = [];
+
+  cartItems.map((product, i) => {
+    let comboArr = [];
+    let attrArr = [];
+
+    product.selectedAttr.map((attr, i) => {
+      let temp = {};
+      temp.styleAttrybutesId = attr.attrId;
+      temp.styleAttrybutesValueId = attr.valueId;
+
+      attrArr = [...attrArr, temp]
+
+      return attrArr
+    })
+
+    product.comboArray.map((data, i) => {
+      let temp = {};
+
+      temp.combosId = data.comboId
+      temp.combosfabricsId = data.fabric.fabric_id
+      temp.combosfabricsColorId = data.fabric.color.color_id;
+      comboArr = [...comboArr, temp];
+
+      return comboArr;
+    })
+    itemsArray = [...itemsArray, {
+      "itemsId": "",
+      "productTypeId": product.productTypeId,
+      "productId": product.productId,
+      "selfFabricsId": product.selectedFabrics,
+      "selfFabricsColorId": product.selectedFabricsColorId,
+      "liningFabricsId": product.selectedLining,
+      "liningFabricsColorId": product.selectedLiningFabricsColorId,
+      "combos": comboArr,
+      "sizeCategoryId": product.selectedSizeCategoryId,
+      "sizes": [
+        {
+          "sizeId": product.selectedSizeId,
+          "amount": product.quantity
+        }
+      ],
+      "styleAlterations": [
+        {
+          "styleAlterationId": product.selectedAlteration[0].id
+        }
+      ],
+      "styleAttributes": attrArr,
+      "styleOptions": [
+        {
+          "styleOptionId": product.selectedStyleOption[0].id
+        }
+      ],
+      "rushId": product.selectedRushOption[0].rushId,
+      "wearDate": product.wearDate,
+      "estimatedShipDate": product.shipDate
+    }];
+
+    return itemsArray;
+  })
+
+  console.log("itemsArray", itemsArray)
+
   const confirmOrder = (event) => {
     event.preventDefault();
     console.log("Billing Company", billingCompany)
@@ -172,43 +235,42 @@ const Checkout = ({ cartItems }) => {
       addToast("Please select the Shipping Method!", { appearance: "error", autoDismiss: true });
     }
 
+    let parameters = {
+      "ordersId": "",
+      "ordersType": "WS",
+      "ordersSubType": "F",
+      "storeNumber": storeNumber,
+      "clientsOrderDate": formatDate(orderDate),
+      "clientsPoNumber": poNumber,
+      "eventsId": eventId,
+      "eventsHostEmail": "",
+      "customersName": customerName,
+      "customersRole": "",
+      "customersNotes": orderNote,
+      "billingCompany": billingCompany,
+      "billingStreet": billingStreetOne,
+      "billingStreet2": billingStreetTwo,
+      "billingCity": billingCity,
+      "billingZipCode": billingZipCode,
+      "billingState": selectedBillingStateId,
+      "billingCountry": billingCountryId,
+      "shippingToName": shippingToName,
+      "shippingPhoneNumber": shippingPhoneNumber,
+      "shippingCompany": shippingCompany,
+      "shippingStreet": shippingStreetOne,
+      "shippingStreet2": shippingStreetTwo,
+      "shippingCity": shippingCity,
+      "shippingZipCode": shippingZipCode,
+      "shippingState": selectedShippingStateId,
+      "shippingCountry": shippingCountryId,
+      "shippingMethodId": selectedShippingMethod,
+      "paymentMethodsId": selectedBillingMethod,
+      "finalized": "True",
+      "items": itemsArray
+    }
+
+
     if (shippingPhoneNumber !== "" && selectedShippingMethod !== "" && selectedBillingMethod !== "") {
-
-
-      const parameters = {
-        "ordersId": "",
-        "ordersType": "WS",
-        "ordersSubType": "F",
-        "storeNumber": storeNumber,
-        "clientsOrderDate": formatDate(orderDate),
-        "clientsPoNumber": poNumber,
-        "eventsId": eventId,
-        "eventsHostEmail": "",
-        "customersName": customerName,
-        "customersRole": "",
-        "customersNotes": orderNote,
-        "billingCompany": billingCompany,
-        "billingStreet": billingStreetOne,
-        "billingStreet2": billingStreetTwo,
-        "billingCity": billingCity,
-        "billingZipCode": billingZipCode,
-        "billingState": selectedBillingStateId,
-        "billingCountry": billingCountryId,
-        "shippingToName": shippingToName,
-        "shippingPhoneNumber": shippingPhoneNumber,
-        "shippingCompany": shippingCompany,
-        "shippingStreet": shippingStreetOne,
-        "shippingStreet2": shippingStreetTwo,
-        "shippingCity": shippingCity,
-        "shippingZipCode": shippingZipCode,
-        "shippingState": selectedShippingStateId,
-        "shippingCountry": shippingCountryId,
-        "shippingMethodId": selectedShippingMethod,
-        "paymentMethodsId": selectedBillingMethod,
-        "finalized": "True",
-        "items": cartItems
-      }
-
       const tokenInStorage = localStorage.getItem('accessToken')
 
       const formData = {
@@ -234,8 +296,8 @@ const Checkout = ({ cartItems }) => {
         .catch(error => {
           console.log('error', error);
         });
-
     }
+
   }
 
 
@@ -264,8 +326,6 @@ const Checkout = ({ cartItems }) => {
                 <div className="lezada-form">
                   <form className="checkout-form">
                     <div className="row row-40">
-                      {JSON.stringify(cartItems)}
-
                       <div className="col-lg-6 space-mb--20">
                         {/* Billing Address */}
                         <div id="billing-form" className="space-mb--40">
@@ -441,7 +501,7 @@ const Checkout = ({ cartItems }) => {
                                     <input
                                       type="radio"
                                       id={item.shippingMethodsId}
-                                      name="payment-method"
+                                      name="shipping-method"
                                       defaultValue={item.shippingMethodsId}
                                       onChange={e => setSelectedShippingMethod(e.target.defaultValue)}
                                     />

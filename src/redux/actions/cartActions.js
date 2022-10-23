@@ -17,7 +17,9 @@ export const addToCart = (
   comboArray,
   selectedAttr,
   selectedSizeCategory,
+  selectedSizeCategoryId,
   selectedCategorySizeValue,
+  selectedCategorySizeValueId,
   alterationSelected,
   styleOptionSelected,
   extraPrice,
@@ -26,7 +28,7 @@ export const addToCart = (
   selectedRushOption
 ) => {
 
-  console.log("CART ITEMS =>>>", selectedFabricsColorId)
+  console.log("CART ITEMS =>>>", selectedCategorySizeValueId)
 
   return dispatch => {
     if (addToast) {
@@ -46,7 +48,9 @@ export const addToCart = (
         comboArray: comboArray,
         selectedAttr: selectedAttr,
         selectedSizeCategory: selectedSizeCategory,
+        selectedSizeCategoryId: selectedSizeCategoryId,
         selectedSize: selectedCategorySizeValue,
+        selectedSizeId: selectedCategorySizeValueId,
         selectedAlteration: alterationSelected,
         selectedStyleOption: styleOptionSelected,
         extraPrice: extraPrice,
