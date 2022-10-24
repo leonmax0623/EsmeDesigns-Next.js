@@ -35,6 +35,9 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
 	const [totalItems, setTotalItems] = useState(0);
 	const [selectedSizeCategory, setSelectedSizeCategory] = useState("")
+	const [selectedSizeCategoryId, setSelectedSizeCategoryId] = useState(
+		bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 ? bulkProductProps[0].sizeCategories[0].sizeCategoryId : ""
+	);
 
 	const [sizeCategory, setSizeCategory] = useState("");
 
@@ -43,6 +46,16 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	const [regularSizeArray, setRegularSizeArray] = useState(JSON.stringify([]));
 
 	const [extraPrice, setExtraPrice] = useState(0);
+	const [productStock, setProductStock] = useState(
+		bulkProductProps[0].inStock ? bulkProductProps[0].inStock : 0
+	);
+	const [quantityCount, setQuantityCount] = useState(bulkProductProps[0].quantity ? bulkProductProps[0].quantity : 1);
+
+	const [comboArray, setComboArray] = useState([])
+
+	const [editBoolean, setEditBoolean] = useState(bulkProductProps[0].selectedFabrics ? true : false)
+
+	const [selectedAttr, setSelectedAttr] = useState([]);
 
 	useMemo(() => {
 		if (bulkProductProps[0].wearDate) {
@@ -105,7 +118,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories.map((each) => {
 
 					const sizes = each.sizes.map((eachSize) => {
+						console.log("HELOO", eachSize)
 						return {
+							sizeId: eachSize.sizeId,
+							price: eachSize.price,
 							sizeCode: 0,
 							sizeName: eachSize.sizeName
 						}
@@ -130,26 +146,48 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			} else if (bulkProductProps[0].selectedAlteration && bulkProductProps[0].selectedStyleOption.length === 0) {
 				setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedAlteration))
 			}
-
-			if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 0) {
-				setSelectedAttr(bulkProductProps[0].selectedAttr);
-			} else {
-				bulkProductProps[0].styleAttributes && bulkProductProps[0].styleAttributes.map((item) => {
-					setSelectedAttr((old) => [...old, { attr: item.styleAttrybutesName, value: item.styleAttrybutesValues[0].styleAttrybutesValueName }]);
-				});
-			}
-
-			if (bulkProductProps[0].comboArray) {
-				setComboArray(bulkProductProps[0].comboArray);
-			} else {
-				bulkProductProps[0].combos && bulkProductProps[0].combos.map((item) => {
-					setComboArray((old) => [...old, { combo: item.combosName, fabric: { fabric_index: 0, fabric_name: item.fabric[0].fabricsName, color: { color_name: item.fabric[0].fabricsColor[0].fabricColorName, rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB } } }]);
-				});
-			}
 		}
 
-
 	}, [bulkProductProps]);
+
+	useMemo(() => {
+		if (bulkProductProps[0].comboArray) {
+			setComboArray(bulkProductProps[0].comboArray);
+		} else {
+			let comboTempArray = []
+			bulkProductProps[0].combos && bulkProductProps[0].combos.map((item) => {
+				comboTempArray[comboTempArray.length] = {
+					combo: item.combosName,
+					comboId: item.combosId,
+					fabric: {
+						fabric_index: 0,
+						fabric_name: item.fabric[0].fabricsName,
+						fabric_id: item.fabric[0].fabricsId,
+						color: {
+							color_name: item.fabric[0].fabricsColor[0].fabricColorName,
+							color_id: item.fabric[0].fabricsColor[0].fabricsColorId,
+							rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB
+						}
+					}
+				}
+			});
+			setComboArray(comboTempArray);
+		}
+	}, [bulkProductProps[0].comboArray])
+
+	useMemo(() => {
+		if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 0) {
+			setSelectedAttr(bulkProductProps[0].selectedAttr);
+		} else {
+			let selectedAttrArray = []
+			bulkProductProps[0].styleAttributes.length > 0 && bulkProductProps[0].styleAttributes.map((item) => {
+				if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
+					selectedAttrArray[selectedAttrArray.length] = { attr: item.styleAttrybutesName, attrId: item.styleAttrybutesId, value: item.styleAttrybutesValues[0].styleAttrybutesValueName, valueId: item.styleAttrybutesValues[0].styleAttrybutesValueId }
+				}
+			});
+			setSelectedAttr(selectedAttrArray);
+		}
+	}, [bulkProductProps[0].styleAttributes])
 
 
 	// console.log("styleOptions/styleOptions=>", JSON.parse(regularSizeArray)[0])
@@ -160,11 +198,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		let array = {
 			label: "",
 			value: "",
-			price: ""
+			price: "",
+			id: ''
 		};
 		array.label = single.styleAlterationName + ' ' + `($${single.price})`;
 		array.value = single.styleAlterationId;
 		array.price = single.price;
+		array.id = single.styleAlterationId;
 		alterationOptions.push(array)
 	});
 
@@ -173,11 +213,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		let array = {
 			label: "",
 			value: "",
-			price: ""
+			price: "",
+			id: ''
 		};
 		array.label = single.styleOptionName + ' ' + `($${single.price})`;
 		array.value = single.styleOptionId;
 		array.price = single.price;
+		array.id = single.styleOptionId;
 		styleOptions.push(array)
 	});
 
@@ -236,12 +278,11 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		document.querySelector("body").classList.remove("overflow-hidden");
 	});
 
-	const [selectedAttr, setSelectedAttr] = useState([]);
+
 
 	const handleAttributeChange = (event, attribute) => {
-		let array = [...selectedAttr];
-
-		for (let i = 0; i < array.length; i += 1) {
+		let array = JSON.parse(JSON.stringify(selectedAttr));//[...selectedAttr];
+		for (let i = 0; i < array.length; i++) {
 			if (array[i].attr === attribute) {
 				array[i].value = event.target.value;
 
@@ -261,20 +302,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		setSelectedRushOption(selectedOption)
 	}
 
-	const formatDate = (date) => {
-		var d = new Date(date),
-			month = '' + (d.getMonth() + 1),
-			day = '' + d.getDate(),
-			year = d.getFullYear();
-
-		if (month.length < 2)
-			month = '0' + month;
-		if (day.length < 2)
-			day = '0' + day;
-
-		return [month, day, year].join('-');
-	}
-
 	const handleRushDate = (e) => {
 		console.log("``````````````````````EEEEE", typeof e)
 		setWearDate(e)
@@ -288,9 +315,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		}
 	}
 
-
-
-	useEffect(() => {
+	useMemo(() => {
 		if (bulkProductProps[0].wearDate) {
 			console.log("111")
 			if (selectedRushOptionId !== "999") {
@@ -322,14 +347,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		}
 	}, [wearDate, selectedRushOptionId])
 
-	const [productStock, setProductStock] = useState(
-		bulkProductProps[0].inStock ? bulkProductProps[0].inStock : 0
-	);
-	const [quantityCount, setQuantityCount] = useState(bulkProductProps[0].quantity ? bulkProductProps[0].quantity : 1);
 
-	const [comboArray, setComboArray] = useState([])
-
-	const [editBoolean, setEditBoolean] = useState(bulkProductProps[0].selectedFabrics ? true : false)
 
 	const handleBulkOrder = () => {
 		setEditBoolean(true)
@@ -346,6 +364,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				comboArray,
 				selectedAttr,
 				selectedSizeCategory,
+				selectedSizeCategoryId,
 				regularSizeArray,
 				alterationSelected,
 				styleOptionSelected,
@@ -524,19 +543,18 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 										<div className="product-content__size__title"></div>
 										<div className="product-content__size__content">
 											<div className="product-content__color__content">
-
 												<select
 													style={{ width: "100%", height: "37px", cursor: "pointer" }}
-													value={selectedFabricsColor}
 													disabled={editBoolean}
 													onChange={(event) => {
+														// console.log("!!!!!!!!!", event.target.value.split("/")[1])
 														setSelectedFabricsColor(event.target.value.split("/")[1]);
-														setSelectedFabricsColorId(event.target.value.split("/")[0])
+														setSelectedFabricsColorId(event.target.value.split("/")[0]);
 													}}
 												>
 													{bulkProductProps[0].fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
 														return (
-															<option key={i} value={`${color.fabricsColorId}/${color.fabricColorName}`}>{color.fabricColorName}</option>
+															<option key={i} selected={selectedFabricsColor === color.fabricColorName} value={`${color.fabricsColorId}/${color.fabricColorName}`}>{color.fabricColorName}</option>
 														);
 													}) : "")}
 												</select>
@@ -757,13 +775,14 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 												disabled={editBoolean}
 												value={selectedSizeCategory}
 												onChange={(event) => {
-													setSelectedSizeCategory(event.target.value)
-													handleResetSizeArrayInput(event.target.value)
+													setSelectedSizeCategory(event.target.value.split("/")[1])
+													handleResetSizeArrayInput(event.target.value.split("/")[1])
+													setSelectedSizeCategoryId(event.target.value.split("/")[0])
 												}}
 											>
 												{JSON.parse(regularSizeArray).length > 0 ? JSON.parse(regularSizeArray).map((category, i) => {
 													return (
-														<option value={category.sizeCategoryName}>{category.sizeCategoryName}</option>
+														<option value={`${category.sizeCategoryId}/${category.sizeCategoryName}`}>{category.sizeCategoryName}</option>
 													)
 												}) : ""}
 											</select>

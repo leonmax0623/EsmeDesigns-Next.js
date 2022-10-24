@@ -20,6 +20,8 @@ const Bulk = ({
   deleteAllFromCart
 }) => {
 
+  console.log("#########################", bulkProduct)
+
   const { addToast } = useToasts();
 
   const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId).reverse();
@@ -47,8 +49,10 @@ const Bulk = ({
     addToast,
     selectedFabrics,
     selectedFabricsColor,
+    selectedFabricsColorId,
     selectedLining,
     selectedLiningFabricsColor,
+    selectedLiningFabricsColorId,
     comboArray,
     selectedAttr,
     regularSizeArray,
@@ -60,13 +64,16 @@ const Bulk = ({
     shipDate,
     selectedRushOption
   ) => {
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     addBulkToCart(
       bulkProduct,
       addToast,
       selectedFabrics,
       selectedFabricsColor,
+      selectedFabricsColorId,
       selectedLining,
       selectedLiningFabricsColor,
+      selectedLiningFabricsColorId,
       comboArray,
       selectedAttr,
       regularSizeArray,

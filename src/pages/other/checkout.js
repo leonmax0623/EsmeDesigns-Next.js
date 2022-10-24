@@ -11,10 +11,11 @@ import { useToasts } from "react-toast-notifications";
 import API from '../../api';
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { LayoutTwo } from "../../components/Layout";
+import { deleteAllFromCart } from "../../redux/actions/cartActions";
 import { getCheckoutOptions } from "../../redux/actions/checkoutOptions";
 import { getStates, getTerritories } from "../../redux/actions/territoryAction";
 
-const Checkout = ({ cartItems }) => {
+const Checkout = ({ cartItems, deleteAllFromCart }) => {
   const { addToast } = useToasts();
   let cartTotalPrice = 0;
   let mainPrice = 0;
@@ -138,6 +139,7 @@ const Checkout = ({ cartItems }) => {
   cartItems.map((product, i) => {
     let comboArr = [];
     let attrArr = [];
+    let sizeArr = [];
 
     product.selectedAttr.map((attr, i) => {
       let temp = {};
@@ -149,6 +151,24 @@ const Checkout = ({ cartItems }) => {
       return attrArr
     })
 
+    product.regularSizeArray.map((size, i) => {
+      if (size.sizeCategoryId === product.selectedSizeCategoryId) {
+        size.sizes.map((item, i) => {
+          if (item.sizeCode !== 0) {
+            let temp = {};
+            temp.sizeId = item.sizeId;
+            temp.amount = item.sizeCode;
+
+            sizeArr = [...sizeArr, temp]
+          }
+        })
+      }
+
+      return sizeArr
+    })
+
+    console.log("sizeArrsizeArrsizeArr", sizeArr)
+
     product.comboArray.map((data, i) => {
       let temp = {};
 
@@ -159,38 +179,67 @@ const Checkout = ({ cartItems }) => {
 
       return comboArr;
     })
-    itemsArray = [...itemsArray, {
-      "itemsId": "",
-      "productTypeId": product.productTypeId,
-      "productId": product.productId,
-      "selfFabricsId": product.selectedFabrics,
-      "selfFabricsColorId": product.selectedFabricsColorId,
-      "liningFabricsId": product.selectedLining,
-      "liningFabricsColorId": product.selectedLiningFabricsColorId,
-      "combos": comboArr,
-      "sizeCategoryId": product.selectedSizeCategoryId,
-      "sizes": [
-        {
-          "sizeId": product.selectedSizeId,
-          "amount": product.quantity
-        }
-      ],
-      "styleAlterations": [
-        {
-          "styleAlterationId": product.selectedAlteration[0].id
-        }
-      ],
-      "styleAttributes": attrArr,
-      "styleOptions": [
-        {
-          "styleOptionId": product.selectedStyleOption[0].id
-        }
-      ],
-      "rushId": product.selectedRushOption[0].rushId,
-      "wearDate": product.wearDate,
-      "estimatedShipDate": product.shipDate
-    }];
 
+    if (product.totalItems) {
+      itemsArray = [...itemsArray, {
+        "itemsId": "",
+        "productTypeId": product.productTypeId,
+        "productId": product.productId,
+        "selfFabricsId": product.selectedFabrics,
+        "selfFabricsColorId": product.selectedFabricsColorId,
+        "liningFabricsId": product.selectedLining,
+        "liningFabricsColorId": product.selectedLiningFabricsColorId,
+        "combos": comboArr,
+        "sizeCategoryId": product.selectedSizeCategoryId,
+        "sizes": sizeArr,
+        "styleAlterations": [
+          {
+            "styleAlterationId": product.selectedAlteration[0] ? product.selectedAlteration[0].id : null
+          }
+        ],
+        "styleAttributes": attrArr,
+        "styleOptions": [
+          {
+            "styleOptionId": product.selectedStyleOption[0].id
+          }
+        ],
+        "rushId": product.selectedRushOption[0].rushId,
+        "wearDate": product.wearDate,
+        "estimatedShipDate": product.shipDate
+      }];
+    } else {
+      itemsArray = [...itemsArray, {
+        "itemsId": "",
+        "productTypeId": product.productTypeId,
+        "productId": product.productId,
+        "selfFabricsId": product.selectedFabrics,
+        "selfFabricsColorId": product.selectedFabricsColorId,
+        "liningFabricsId": product.selectedLining,
+        "liningFabricsColorId": product.selectedLiningFabricsColorId,
+        "combos": comboArr,
+        "sizeCategoryId": product.selectedSizeCategoryId,
+        "sizes": [
+          {
+            "sizeId": product.selectedSizeId,
+            "amount": product.quantity
+          }
+        ],
+        "styleAlterations": [
+          {
+            "styleAlterationId": product.selectedAlteration[0] ? product.selectedAlteration[0].id : null
+          }
+        ],
+        "styleAttributes": attrArr,
+        "styleOptions": [
+          {
+            "styleOptionId": product.selectedStyleOption[0].id
+          }
+        ],
+        "rushId": product.selectedRushOption[0].rushId,
+        "wearDate": product.wearDate,
+        "estimatedShipDate": product.shipDate
+      }];
+    }
     return itemsArray;
   })
 
@@ -283,8 +332,9 @@ const Checkout = ({ cartItems }) => {
         .then(response => {
           console.log('response', response);
           if (response.data.errorCode === "0") {
-            addToast("Successfully Registered", { appearance: "success", autoDismiss: true });
-            // Router.push('/other/login');
+            addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
+            deleteAllFromCart(addToast)
+            Router.push('/');
           } else {
             addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
           }
@@ -662,4 +712,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Checkout);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteAllFromCart: (addToast) => {
+      dispatch(deleteAllFromCart(addToast));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

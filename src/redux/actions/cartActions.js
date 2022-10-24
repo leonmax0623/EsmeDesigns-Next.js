@@ -64,6 +64,20 @@ export const addToCart = (
 };
 
 export const addBulkToCart = (data) => {
+  const formatDate = (date) => {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+  console.log("JJJJJJJJ", data.selectedSizeCategoryId)
   return dispatch => {
     if (data.addToast) {
       data.addToast("Added To Cart", { appearance: "success", autoDismiss: true });
@@ -75,9 +89,12 @@ export const addBulkToCart = (data) => {
         totalItems: data.totalItems,
         selectedFabrics: data.selectedFabrics,
         selectedFabricsColor: data.selectedFabricsColor,
+        selectedFabricsColorId: data.selectedFabricsColorId,
         selectedLining: data.selectedLining,
         selectedLiningFabricsColor: data.selectedLiningFabricsColor,
+        selectedLiningFabricsColorId: data.selectedLiningFabricsColorId,
         selectedSizeCategory: data.selectedSizeCategory,
+        selectedSizeCategoryId: data.selectedSizeCategoryId,
         regularSizeArray: JSON.parse(data.regularSizeArray),
         // specificSizeArray: JSON.parse(specificSizeArray),
         selectedAlteration: data.alterationSelected,
@@ -85,8 +102,8 @@ export const addBulkToCart = (data) => {
         selectedAttr: data.selectedAttr,
         comboArray: data.comboArray,
         extraPrice: data.extraPrice,
-        wearDate: data.wearDate,
-        shipDate: data.shipDate,
+        wearDate: formatDate(data.wearDate),
+        shipDate: formatDate(data.shipDate),
         selectedRushOption: data.selectedRushOption,
       }
     });
