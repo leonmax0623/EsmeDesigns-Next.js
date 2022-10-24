@@ -1,25 +1,355 @@
 import Link from "next/link";
-import { useEffect } from "react";
+import Router from 'next/router';
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-
+import 'react-calendar/dist/Calendar.css';
+import 'react-date-picker/dist/DatePicker.css';
+import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { IoMdCash } from "react-icons/io";
 import { connect } from "react-redux";
+import { useToasts } from "react-toast-notifications";
+import API from '../../api';
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { LayoutTwo } from "../../components/Layout";
+import { deleteAllFromCart } from "../../redux/actions/cartActions";
+import { getCheckoutOptions } from "../../redux/actions/checkoutOptions";
+import { getStates, getTerritories } from "../../redux/actions/territoryAction";
 
-const Checkout = ({ cartItems }) => {
+const Checkout = ({ cartItems, deleteAllFromCart }) => {
+  const { addToast } = useToasts();
   let cartTotalPrice = 0;
   let mainPrice = 0;
   let extraPayPrice = 0;
   let totalAmount = 0;
+  const [orderDate, setOrderDate] = useState(new Date());
 
+  const [billingMethods, setBillingMethods] = useState("");
+  const [selectedBillingMethod, setSelectedBillingMethod] = useState("");
+  const [billingCompany, setBillingCompany] = useState("");
+  const [billingCity, setBillingCity] = useState("");
+  const [billingCountry, setBillingCountry] = useState("");
+  const [billingCountryId, setBillingCountryId] = useState("");
+  const [selectedBillingState, setSelectedBillingState] = useState("");
+  const [selectedBillingStateId, setSelectedBillingStateId] = useState("");
+  const [billingStates, setBillingStates] = useState("");
+  const [billingZipCode, setBillingZipCode] = useState("");
+  const [billingStreetOne, setBillingStreetOne] = useState("");
+  const [billingStreetTwo, setBillingStreetTwo] = useState("");
+
+  const [shippingMethods, setShippingMethods] = useState("");
+  const [selectedShippingMethod, setSelectedShippingMethod] = useState("");
+  const [shippingCompany, setShippingCompany] = useState("");
+  const [shippingCity, setShippingCity] = useState("");
+  const [shippingCountry, setShippingCountry] = useState("");
+  const [shippingCountryId, setShippingCountryId] = useState("");
+  const [shippingStates, setShippingStates] = useState("");
+  const [selectedShippingState, setSelectedShippingState] = useState("");
+  const [selectedShippingStateId, setSelectedShippingStateId] = useState("");
+  const [shippingZipCode, setShippingZipCode] = useState("");
+  const [shippingStreetOne, setShippingStreetOne] = useState("");
+  const [shippingStreetTwo, setShippingStreetTwo] = useState("");
+  const [shippingToName, setShippingToName] = useState("");
+  const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
+
+  const [storeNumber, setStoreNumber] = useState("");
+  const [eventId, setEventId] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [poNumber, setPoNumber] = useState("");
+  const [orderNote, setOrderNote] = useState("");
+
+  const [territories, setTerritories] = useState([])
 
   useEffect(() => {
     document.querySelector("body").classList.remove("overflow-hidden");
   });
-  // useEffect(() => {
-  //   setRushOptions(JSON.parse(localStorage.getItem("rushOptions")))
-  // }, []);
+
+  useEffect(async () => {
+
+    const response = await getCheckoutOptions();
+    if (response.data.errorText === 'accessToken expired') {
+      addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+      Router.push('/other/login');
+    } else {
+      setBillingMethods(response.data.paymentMethods)
+      setShippingMethods(response.data.shippingMethods)
+      console.log("CheckoutOptions", response.data)
+    }
+
+    setBillingCompany(response.data.billingCompany)
+    setBillingCity(response.data.billingCity)
+    setBillingCountryId(response.data.billingCountry)
+    setSelectedBillingStateId(response.data.billingState)
+    setBillingStreetOne(response.data.billingStreet)
+    setBillingStreetTwo(response.data.billingStreet2)
+    setBillingZipCode(response.data.billingZipCode)
+
+    setShippingCompany(response.data.shippingCompany)
+    setShippingCity(response.data.shippingCity)
+    setShippingCountryId(response.data.shippingCountry)
+    setSelectedShippingStateId(response.data.shippingState)
+    setShippingStreetOne(response.data.shippingStreet)
+    setShippingStreetTwo(response.data.shippingStreet2)
+    setShippingZipCode(response.data.shippingZipCode)
+    setShippingToName(response.data.shippingToName)
+    setShippingPhoneNumber(response.data.shippingPhoneNumber)
+
+    const responseCountries = await getTerritories();
+    setTerritories(responseCountries.data.territory)
+
+    const billingRes = await getStates(response.data.billingCountry);
+    setBillingStates(billingRes.data.territory)
+
+    const shippingRes = await getStates(response.data.shippingCountry);
+    setShippingStates(shippingRes.data.territory)
+
+  }, [cartItems])
+
+  const selectBillingCountry = async (event) => {
+    setBillingCountryId(event.target.value.split("/")[0])
+    setBillingCountry(event.target.value.split("/")[1])
+
+    const responseStates = await getStates(event.target.value.split("/")[0]);
+    setBillingStates(responseStates.data.territory)
+  }
+
+  const selectShippingCountry = async (event) => {
+    setShippingCountryId(event.target.value.split("/")[0])
+    setShippingCountry(event.target.value.split("/")[1])
+
+    const responseStates = await getStates(event.target.value.split("/")[0]);
+    setShippingStates(responseStates.data.territory)
+  }
+
+  const formatDate = (date) => {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  let itemsArray = [];
+
+  cartItems.map((product, i) => {
+    let comboArr = [];
+    let attrArr = [];
+    let sizeArr = [];
+
+    product.selectedAttr.map((attr, i) => {
+      let temp = {};
+      temp.styleAttrybutesId = attr.attrId;
+      temp.styleAttrybutesValueId = attr.valueId;
+
+      attrArr = [...attrArr, temp]
+
+      return attrArr
+    })
+
+    product.regularSizeArray.map((size, i) => {
+      if (size.sizeCategoryId === product.selectedSizeCategoryId) {
+        size.sizes.map((item, i) => {
+          if (item.sizeCode !== 0) {
+            let temp = {};
+            temp.sizeId = item.sizeId;
+            temp.amount = item.sizeCode;
+
+            sizeArr = [...sizeArr, temp]
+          }
+        })
+      }
+
+      return sizeArr
+    })
+
+    console.log("sizeArrsizeArrsizeArr", sizeArr)
+
+    product.comboArray.map((data, i) => {
+      let temp = {};
+
+      temp.combosId = data.comboId
+      temp.combosfabricsId = data.fabric.fabric_id
+      temp.combosfabricsColorId = data.fabric.color.color_id;
+      comboArr = [...comboArr, temp];
+
+      return comboArr;
+    })
+
+    if (product.totalItems) {
+      itemsArray = [...itemsArray, {
+        "itemsId": "",
+        "productTypeId": product.productTypeId,
+        "productId": product.productId,
+        "selfFabricsId": product.selectedFabrics,
+        "selfFabricsColorId": product.selectedFabricsColorId,
+        "liningFabricsId": product.selectedLining,
+        "liningFabricsColorId": product.selectedLiningFabricsColorId,
+        "combos": comboArr,
+        "sizeCategoryId": product.selectedSizeCategoryId,
+        "sizes": sizeArr,
+        "styleAlterations": [
+          {
+            "styleAlterationId": product.selectedAlteration[0] ? product.selectedAlteration[0].id : null
+          }
+        ],
+        "styleAttributes": attrArr,
+        "styleOptions": [
+          {
+            "styleOptionId": product.selectedStyleOption[0].id
+          }
+        ],
+        "rushId": product.selectedRushOption[0].rushId,
+        "wearDate": product.wearDate,
+        "estimatedShipDate": product.shipDate
+      }];
+    } else {
+      itemsArray = [...itemsArray, {
+        "itemsId": "",
+        "productTypeId": product.productTypeId,
+        "productId": product.productId,
+        "selfFabricsId": product.selectedFabrics,
+        "selfFabricsColorId": product.selectedFabricsColorId,
+        "liningFabricsId": product.selectedLining,
+        "liningFabricsColorId": product.selectedLiningFabricsColorId,
+        "combos": comboArr,
+        "sizeCategoryId": product.selectedSizeCategoryId,
+        "sizes": [
+          {
+            "sizeId": product.selectedSizeId,
+            "amount": product.quantity
+          }
+        ],
+        "styleAlterations": [
+          {
+            "styleAlterationId": product.selectedAlteration[0] ? product.selectedAlteration[0].id : null
+          }
+        ],
+        "styleAttributes": attrArr,
+        "styleOptions": [
+          {
+            "styleOptionId": product.selectedStyleOption[0].id
+          }
+        ],
+        "rushId": product.selectedRushOption[0].rushId,
+        "wearDate": product.wearDate,
+        "estimatedShipDate": product.shipDate
+      }];
+    }
+    return itemsArray;
+  })
+
+  console.log("itemsArray", itemsArray)
+
+  const confirmOrder = (event) => {
+    event.preventDefault();
+    console.log("Billing Company", billingCompany)
+    console.log("Billing City", billingCity)
+    console.log("Billing CountryId", billingCountryId)
+    console.log("electedBillingStateId", selectedBillingStateId)
+    console.log("billingZipCode", billingZipCode)
+    console.log("billingStreetOne", billingStreetOne)
+    console.log("billingStreetTwo", billingStreetTwo)
+    console.log("shippingCompany", shippingCompany)
+    console.log("shippingCity", shippingCity)
+    console.log("shippingCountryId", shippingCountryId)
+    console.log("selectedShippingStateId", selectedShippingStateId)
+    console.log("shippingZipCode", shippingZipCode)
+    console.log("shippingStreetOne", shippingStreetOne)
+    console.log("shippingStreetTwo", shippingStreetTwo)
+    console.log("shippingToName", shippingToName)
+    console.log("shippingPhoneNumber", shippingPhoneNumber)
+    console.log("storeNumber", storeNumber)
+    console.log("eventId", eventId)
+    console.log("customerName", customerName)
+    console.log("poNumber", poNumber)
+    console.log("orderNote", orderNote)
+    console.log("orderDate", formatDate(orderDate))
+    console.log("billingMethodID", selectedBillingMethod)
+    console.log("shippingMethodID", selectedShippingMethod)
+
+    if (shippingPhoneNumber === "" || shippingPhoneNumber === null) {
+      addToast("Shipping Phone Number is missing!", { appearance: "error", autoDismiss: true });
+    }
+
+    if (selectedBillingMethod === "") {
+      addToast("Please select the Billing Method!", { appearance: "error", autoDismiss: true });
+    }
+
+    if (selectedShippingMethod === "") {
+      addToast("Please select the Shipping Method!", { appearance: "error", autoDismiss: true });
+    }
+
+    let parameters = {
+      "ordersId": "",
+      "ordersType": "WS",
+      "ordersSubType": "F",
+      "storeNumber": storeNumber,
+      "clientsOrderDate": formatDate(orderDate),
+      "clientsPoNumber": poNumber,
+      "eventsId": eventId,
+      "eventsHostEmail": "",
+      "customersName": customerName,
+      "customersRole": "",
+      "customersNotes": orderNote,
+      "billingCompany": billingCompany,
+      "billingStreet": billingStreetOne,
+      "billingStreet2": billingStreetTwo,
+      "billingCity": billingCity,
+      "billingZipCode": billingZipCode,
+      "billingState": selectedBillingStateId,
+      "billingCountry": billingCountryId,
+      "shippingToName": shippingToName,
+      "shippingPhoneNumber": shippingPhoneNumber,
+      "shippingCompany": shippingCompany,
+      "shippingStreet": shippingStreetOne,
+      "shippingStreet2": shippingStreetTwo,
+      "shippingCity": shippingCity,
+      "shippingZipCode": shippingZipCode,
+      "shippingState": selectedShippingStateId,
+      "shippingCountry": shippingCountryId,
+      "shippingMethodId": selectedShippingMethod,
+      "paymentMethodsId": selectedBillingMethod,
+      "finalized": "True",
+      "items": itemsArray
+    }
+
+
+    if (shippingPhoneNumber !== "" && selectedShippingMethod !== "" && selectedBillingMethod !== "") {
+      const tokenInStorage = localStorage.getItem('accessToken')
+
+      const formData = {
+        "feaMethod": "upsertOrder",
+        "accessToken": tokenInStorage,
+        "parameters": JSON.stringify(parameters)
+      }
+
+      API.post('/', new URLSearchParams(formData))
+        .then(response => {
+          console.log('response', response);
+          if (response.data.errorCode === "0") {
+            addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
+            deleteAllFromCart(addToast)
+            Router.push('/');
+          } else {
+            addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+          }
+          // const cookie = response.data.accessToken;
+          // localStorage.setItem('accessToken', cookie)
+          // cookies.set("accessToken", cookie, [{ maxAge: 3600000 }])
+          // Router.push('/');
+        })
+        .catch(error => {
+          console.log('error', error);
+        });
+    }
+
+  }
+
 
   return (
     <LayoutTwo>
@@ -46,62 +376,231 @@ const Checkout = ({ cartItems }) => {
                 <div className="lezada-form">
                   <form className="checkout-form">
                     <div className="row row-40">
-                      <div className="col-lg-7 space-mb--20">
+                      <div className="col-lg-6 space-mb--20">
                         {/* Billing Address */}
                         <div id="billing-form" className="space-mb--40">
                           <h4 className="checkout-title">Billing Address</h4>
                           <div className="row">
+                            <div className="col-md-12 col-12 space-mb--20">
+                              <label>Billing Company*</label>
+                              <input type="text" placeholder="Billing Company" value={billingCompany} onChange={e => setBillingCompany(e.target.value)} />
+                            </div>
+
                             <div className="col-md-6 col-12 space-mb--20">
-                              <label>First Name*</label>
-                              <input type="text" placeholder="First Name" />
-                            </div>
-                            <div className="col-md-6 col-12 space-mb--20">
-                              <label>Last Name*</label>
-                              <input type="text" placeholder="Last Name" />
-                            </div>
-                            <div className="col-md-6 col-12 space-mb--20">
-                              <label>Email Address*</label>
-                              <input type="email" placeholder="Email Address" />
-                            </div>
-                            <div className="col-md-6 col-12 space-mb--20">
-                              <label>Phone no*</label>
-                              <input type="text" placeholder="Phone number" />
-                            </div>
-                            <div className="col-12 space-mb--20">
-                              <label>Company Name</label>
-                              <input type="text" placeholder="Company Name" />
-                            </div>
-                            <div className="col-12 space-mb--20">
-                              <label>Address*</label>
-                              <input type="text" placeholder="Address line 1" />
-                              <input type="text" placeholder="Address line 2" />
-                            </div>
-                            <div className="col-md-6 col-12 space-mb--20">
-                              <label>Country*</label>
-                              <select>
-                                <option>Bangladesh</option>
-                                <option>China</option>
-                                <option>Australia</option>
-                                <option>India</option>
-                                <option>Japan</option>
+                              <label>Billing Country*</label>
+                              <select
+                                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                                onChange={selectBillingCountry}
+                              >
+                                {territories && territories.length > 0 &&
+                                  territories.map((single, j) => {
+                                    return (
+                                      <option key={j} selected={single.id === billingCountryId} value={`${single.id}/${single.name}`} >{single.name}</option>
+                                    );
+                                  })
+                                }
                               </select>
                             </div>
                             <div className="col-md-6 col-12 space-mb--20">
-                              <label>Town/City*</label>
-                              <input type="text" placeholder="Town/City" />
+                              <label>Billing State*</label>
+                              <select
+                                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                                onChange={(event) => {
+                                  setSelectedBillingStateId(event.target.value.split("/")[0])
+                                  setSelectedBillingState(event.target.value.split("/")[1])
+                                }}
+                              >
+                                <option value="999/null" selected={selectedBillingState === "null"}>-- Select the State --</option>
+                                {billingStates && billingStates.length > 0 &&
+                                  billingStates.map((state, j) => {
+                                    return (
+                                      <option key={j} selected={state.id === selectedBillingStateId} value={`${state.id}/${state.name}`} >{state.name}</option>
+                                    );
+                                  })
+                                }
+                              </select>
                             </div>
                             <div className="col-md-6 col-12 space-mb--20">
-                              <label>State*</label>
-                              <input type="text" placeholder="State" />
+                              <label>Billing City*</label>
+                              <input type="text" value={billingCity} onChange={e => setBillingCity(e.target.value)} placeholder="Billing City" />
                             </div>
-                            <div className="col-md-6 col-12 space-mb--20">
-                              <label>Zip Code*</label>
-                              <input type="text" placeholder="Zip Code" />
+                            <div className="col-md-6 space-mb--20">
+                              <label>Billing ZipCode</label>
+                              <input type="text" value={billingZipCode} onChange={e => setBillingZipCode(e.target.value)} placeholder="Billing ZipCode" />
+                            </div>
+                            <div className="col-md-6 space-mb--20">
+                              <label>Billing Street 1</label>
+                              <input type="text" value={billingStreetOne} onChange={e => setBillingStreetOne(e.target.value)} placeholder="Billing Street" />
+                            </div>
+                            <div className="col-md-6 space-mb--20">
+                              <label>Billing Street 2</label>
+                              <input type="text" value={billingStreetTwo} onChange={e => setBillingStreetTwo(e.target.value)} placeholder="Billing Street" />
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-5">
+                      <div className="col-lg-6 space-mb--20">
+                        {/* Billing Address */}
+                        <div className="col-12">
+                          <h4 className="checkout-title">Billing Methods</h4>
+                          <div className="checkout-payment-method">
+                            {billingMethods && billingMethods.map((item, i) => {
+                              return (
+                                <>
+                                  <div key={i} className="single-method">
+                                    <input
+                                      type="radio"
+                                      id={item.paymentMethodsId}
+                                      name="payment-method"
+                                      defaultValue={item.paymentMethodsId}
+                                      onChange={e => setSelectedBillingMethod(e.target.defaultValue)}
+                                    />
+                                    <label htmlFor={item.paymentMethodsId}>
+                                      {item.paymentMethodsName}
+                                    </label>
+                                    <br />
+                                  </div>
+                                  <p style={{ paddingLeft: "20px" }}>{item.paymentMethodsDescription}</p>
+                                </>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 space-mb--20">
+                        {/* Billing Address */}
+                        <div id="billing-form" className="space-mb--40">
+                          <h4 className="checkout-title">Shipping Address</h4>
+                          <div className="row">
+
+                            <div className="col-md-12 col-12 space-mb--20">
+                              <label>Shipping Company*</label>
+                              <input type="text" value={shippingCompany} onChange={e => setShippingCompany(e.target.value)} placeholder="Shipping Company" />
+                            </div>
+                            <div className="col-md-6 col-12 space-mb--20">
+                              <label>Shipping To Name*</label>
+                              <input type="text" value={shippingToName} onChange={e => setShippingToName(e.target.value)} placeholder="Shipping to Name" />
+                            </div>
+                            <div className="col-md-6 col-12 space-mb--20">
+                              <label>Shipping Phone Number*</label>
+                              <input type="text" value={shippingPhoneNumber} required onChange={e => setShippingPhoneNumber(e.target.value)} placeholder="Shipping to Phone Number" />
+                            </div>
+
+                            <div className="col-md-6 col-12 space-mb--20">
+                              <label>Shipping Country*</label>
+                              <select
+                                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                                onChange={selectShippingCountry}
+                              >
+                                {territories && territories.length > 0 &&
+                                  territories.map((single, j) => {
+                                    return (
+                                      <option key={j} selected={single.id === shippingCountryId} value={`${single.id}/${single.name}`} >{single.name}</option>
+                                    );
+                                  })
+                                }
+                              </select>
+                            </div>
+                            <div className="col-md-6 col-12 space-mb--20">
+                              <label>Shipping State*</label>
+                              <select
+                                style={{ width: "100%", height: "37px", cursor: "pointer" }}
+                                onChange={(event) => {
+                                  setSelectedShippingStateId(event.target.value.split("/")[0])
+                                  setSelectedShippingState(event.target.value.split("/")[1])
+                                }}
+                              >
+                                <option value="999/null" selected={selectedShippingState === "null"}>-- Select the State --</option>
+                                {shippingStates && shippingStates.length > 0 &&
+                                  shippingStates.map((state, j) => {
+                                    return (
+                                      <option key={j} selected={state.id === selectedShippingStateId} value={`${state.id}/${state.name}`} >{state.name}</option>
+                                    );
+                                  })
+                                }
+                              </select>
+                            </div>
+                            <div className="col-md-6 col-12 space-mb--20">
+                              <label>Shipping City*</label>
+                              <input type="text" value={shippingCity} onChange={e => setShippingCity(e.target.value)} placeholder="Shipping City" />
+                            </div>
+                            <div className="col-md-6 space-mb--20">
+                              <label>Shipping ZipCode</label>
+                              <input type="text" value={shippingZipCode} onChange={e => setShippingZipCode(e.target.value)} placeholder="Shipping ZipCode" />
+                            </div>
+                            <div className="col-md-6 space-mb--20">
+                              <label>Shipping Street 1</label>
+                              <input type="text" value={shippingStreetOne} onChange={e => setShippingStreetOne(e.target.value)} placeholder="Shipping Street" />
+                            </div>
+                            <div className="col-md-6 space-mb--20">
+                              <label>Shipping Street 2</label>
+                              <input type="text" value={shippingStreetTwo} onChange={e => setShippingStreetTwo(e.target.value)} placeholder="Shipping Street" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 space-mb--20">
+                        {/* Billing Address */}
+                        <div className="col-12">
+                          <h4 className="checkout-title">Shipping Methods</h4>
+                          <div className="checkout-payment-method">
+                            {shippingMethods && shippingMethods.map((item, i) => {
+                              return (
+                                <>
+                                  <div key={i} className="single-method">
+                                    <input
+                                      type="radio"
+                                      id={item.shippingMethodsId}
+                                      name="shipping-method"
+                                      defaultValue={item.shippingMethodsId}
+                                      onChange={e => setSelectedShippingMethod(e.target.defaultValue)}
+                                    />
+                                    <label htmlFor={item.shippingMethodsId}>
+                                      {item.shippingMethodsName}
+                                    </label>
+                                    <br />
+                                  </div>
+                                  <p style={{ paddingLeft: "20px" }}>Delivery Time: {item.deliveryTime}</p>
+                                  <p style={{ paddingLeft: "20px" }}>Price: {item.price}</p>
+                                </>
+                              )
+                            })}
+                          </div>
+                          {/* <button className="lezada-button lezada-button--medium space-mt--20">
+                            Place order
+                          </button> */}
+
+                        </div>
+                      </div>
+                      <div className="col-lg-6 space-mb--20">
+                        {/* Billing Address */}
+                        <div id="billing-form" className="space-mb--40">
+                          <h4 className="checkout-title">General Info</h4>
+                          <div className="row">
+                            <div className="col-md-6 col-12 space-mb--20">
+                              <label>Store Numer</label>
+                              <input type="text" value={storeNumber} onChange={e => setStoreNumber(e.target.value)} placeholder="Store Numer" />
+                            </div>
+                            <div className="col-md-6 space-mb--20">
+                              <label>Event ID</label>
+                              <input type="text" value={eventId} onChange={e => setEventId(e.target.value)} placeholder="Event ID" />
+                            </div>
+                            <div className="col-md-6 space-mb--20">
+                              <label>Order's Date</label>
+                              <DatePicker onChange={setOrderDate} value={orderDate} />
+                            </div>
+                            <div className="col-md-6 space-mb--20">
+                              <label>PO Number</label>
+                              <input type="text" value={poNumber} onChange={e => setPoNumber(e.target.value)} placeholder="PO Number" />
+                            </div>
+                            <div className="col-md-6 col-12 space-mb--20">
+                              <label>Customer's Name</label>
+                              <input type="text" value={customerName} onChange={e => setCustomerName(e.target.value)} placeholder="Customer's Name" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-6">
                         <div className="row">
                           {/* Cart Total */}
                           <div className="col-12 space-mb--50">
@@ -116,7 +615,7 @@ const Checkout = ({ cartItems }) => {
                                     parseInt(product.discountedPrice) * product.totalItems :
                                     cartTotalPrice +=
                                     parseInt(product.discountedPrice) * product.quantity;
-                                  extraPayPrice += product.extraPrice;
+                                  extraPayPrice += (product.totalItems ? product.totalItems : product.quantity) * product.extraPrice;
                                   return (
                                     <li key={i}>
                                       {product.productName} X {product.totalItems ? product.totalItems : product.quantity}{" "}
@@ -139,97 +638,31 @@ const Checkout = ({ cartItems }) => {
                             </div>
                           </div>
                           {/* Payment Method */}
-                          <div className="col-12">
-                            <h4 className="checkout-title">Payment Method</h4>
-                            <div className="checkout-payment-method">
-                              <div className="single-method">
-                                <input
-                                  type="radio"
-                                  id="payment_check"
-                                  name="payment-method"
-                                  defaultValue="check"
-                                />
-                                <label htmlFor="payment_check">
-                                  Check Payment
-                                </label>
-                              </div>
-                              <div className="single-method">
-                                <input
-                                  type="radio"
-                                  id="payment_bank"
-                                  name="payment-method"
-                                  defaultValue="bank"
-                                />
-                                <label htmlFor="payment_bank">
-                                  Direct Bank Transfer
-                                </label>
-                              </div>
-                              <div className="single-method">
-                                <input
-                                  type="radio"
-                                  id="payment_cash"
-                                  name="payment-method"
-                                  defaultValue="cash"
-                                />
-                                <label htmlFor="payment_cash">
-                                  Cash on Delivery
-                                </label>
-                              </div>
-                              <div className="single-method">
-                                <input
-                                  type="radio"
-                                  id="payment_paypal"
-                                  name="payment-method"
-                                  defaultValue="paypal"
-                                />
-                                <label htmlFor="payment_paypal">Paypal</label>
-                              </div>
-                              <div className="single-method">
-                                <input
-                                  type="radio"
-                                  id="payment_payoneer"
-                                  name="payment-method"
-                                  defaultValue="payoneer"
-                                />
-                                <label htmlFor="payment_payoneer">
-                                  Payoneer
-                                </label>
-                              </div>
-                              <div className="single-method">
-                                <input type="checkbox" id="accept_terms" />
-                                <label htmlFor="accept_terms">
-                                  I’ve read and accept the terms &amp;
-                                  conditions
-                                </label>
-                              </div>
-                            </div>
-                            <button className="lezada-button lezada-button--medium space-mt--20">
-                              Place order
-                            </button>
 
-                          </div>
                         </div>
                       </div>
+
                     </div>
                     <div className="lezada-form lezada-form--review">
                       <form>
                         <div className="row">
                           <div className="col-lg-12 space-mb--20">
                             <span className="rating-title space-mr--20">
-                              Add Comments About Your Order
+                              Order's Note
                             </span>
                           </div>
                           <div className="col-lg-12 space-mb--20">
                             <textarea
                               cols={30}
                               rows={10}
+                              value={orderNote}
                               placeholder="Add Comments About Your Order"
-                              defaultValue={""}
+                              onChange={e => setOrderNote(e.target.value)}
                             />
                           </div>
                           <div className="col-lg-12 text-center">
                             <button
-                              type="submit"
+                              onClick={confirmOrder}
                               className="lezada-button lezada-button--medium"
                             >
                               Confirm Order
@@ -279,4 +712,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Checkout);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteAllFromCart: (addToast) => {
+      dispatch(deleteAllFromCart(addToast));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

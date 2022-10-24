@@ -11,6 +11,13 @@ import heroSliderData from "../data/hero-sliders/hero-slider-five.json";
 import { getRealProducts } from "../lib/product";
 
 const Perfumes = ({ newProducts, popularProducts, saleProducts }) => {
+
+  // fetch('https://example.com/index.html')
+  //   .then(text => {
+  //     console.log("MAXIMUS TEXT FILE", text);
+  //   })
+
+
   return (
     <LayoutEight>
       {/* hero slider with banner */}
