@@ -25,7 +25,9 @@ export const addToCart = (
   extraPrice,
   wearDate,
   shipDate,
-  selectedRushOption
+  selectedRushOption,
+  itemsId,
+  ordersId
 ) => {
 
   console.log("CART ITEMS =>>>", selectedCategorySizeValueId)
@@ -57,6 +59,8 @@ export const addToCart = (
         wearDate: wearDate,
         shipDate: shipDate,
         selectedRushOption: selectedRushOption,
+        itemsId: itemsId,
+        ordersId: ordersId,
         regularOrder: true
       }
     });
@@ -77,7 +81,7 @@ export const addBulkToCart = (data) => {
 
     return [year, month, day].join('-');
   }
-  console.log("JJJJJJJJ", data.selectedSizeCategoryId)
+  console.log("JJJJJJJJ", data)
   return dispatch => {
     if (data.addToast) {
       data.addToast("Added To Cart", { appearance: "success", autoDismiss: true });
@@ -105,6 +109,8 @@ export const addBulkToCart = (data) => {
         wearDate: formatDate(data.wearDate),
         shipDate: formatDate(data.shipDate),
         selectedRushOption: data.selectedRushOption,
+        itemsId: data.tempItemsId,
+        ordersId: data.tempOrdersId
       }
     });
   };

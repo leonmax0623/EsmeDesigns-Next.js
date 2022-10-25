@@ -187,15 +187,26 @@ const mapDispatchToProps = (dispatch) => {
       quantityCount,
       selectedFabrics,
       selectedFabricsColor,
+      selectedFabricsColorId,
       selectedLining,
       selectedLiningFabricsColor,
+      selectedLiningFabricsColorId,
       comboArray,
       selectedAttr,
-      sizeCategory,
+      selectedSizeCategory,
+      selectedSizeCategoryId,
       selectedCategorySizeValue,
+      selectedCategorySizeValueId,
       alterationSelected,
       styleOptionSelected,
-      extraPrice
+      extraPrice,
+      wearDate,
+      shipDate,
+      selectedRushOption,
+      itemsId,
+      ordersId
+
+
     ) => {
       dispatch(addToCart(
         item,
@@ -203,15 +214,24 @@ const mapDispatchToProps = (dispatch) => {
         quantityCount,
         selectedFabrics,
         selectedFabricsColor,
+        selectedFabricsColorId,
         selectedLining,
         selectedLiningFabricsColor,
+        selectedLiningFabricsColorId,
         comboArray,
         selectedAttr,
-        sizeCategory,
+        selectedSizeCategory,
+        selectedSizeCategoryId,
         selectedCategorySizeValue,
+        selectedCategorySizeValueId,
         alterationSelected,
         styleOptionSelected,
-        extraPrice
+        extraPrice,
+        wearDate,
+        shipDate,
+        selectedRushOption,
+        itemsId,
+        ordersId
       ));
     },
     decreaseQuantity: (item, addToast) => {
