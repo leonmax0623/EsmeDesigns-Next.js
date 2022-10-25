@@ -62,9 +62,12 @@ const Bulk = ({
     extraPrice,
     wearDate,
     shipDate,
-    selectedRushOption
+    selectedRushOption,
+    itemsId,
+    ordersId
   ) => {
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    console.log("РАДа", itemsId)
+    console.log("РАДа", ordersId)
     addBulkToCart(
       bulkProduct,
       addToast,
@@ -83,7 +86,9 @@ const Bulk = ({
       extraPrice,
       wearDate,
       shipDate,
-      selectedRushOption
+      selectedRushOption,
+      itemsId,
+      ordersId
     )
     setNewBulkProduct([])
   }
@@ -229,6 +234,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBulkToCart: (data) => {
+      console.log("ЛООО", data)
       dispatch(
         addBulkToCart(data)
       );

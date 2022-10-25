@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Router from 'next/router';
 import { useEffect, useMemo, useState } from "react";
 import { Col } from "react-bootstrap";
 import { IoIosInformationCircleOutline } from "react-icons/io";
@@ -9,6 +10,8 @@ import 'react-date-picker/dist/DatePicker.css';
 import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { Tooltip } from "react-tippy";
 import { useToasts } from "react-toast-notifications";
+import API from '../../api';
+import { getCheckoutOptions } from "../../redux/actions/checkoutOptions";
 // import {
 // 	addBulkToCart
 // } from "../../redux/actions/cartActions";
@@ -20,7 +23,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	const [wearDate, setWearDate] = useState(new Date());
 	const [shipDate, setShipDate] = useState(new Date());
 	const [rushError, setRushError] = useState(true);
-	const [selectedRushOptionId, setSelectedRushOptionId] = useState("999");
+	const [selectedRushOptionId, setSelectedRushOptionId] = useState("");
 	const [selectedRushOption, setSelectedRushOption] = useState("");
 	//custom 
 	const [selectedLining, setSelectedLining] = useState("");
@@ -57,6 +60,27 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 	const [selectedAttr, setSelectedAttr] = useState([]);
 
+	const [itemsId, setItemsId] = useState("")
+	const [ordersId, setOrdersId] = useState("")
+
+	const [billingCompany, setBillingCompany] = useState("");
+	const [billingCity, setBillingCity] = useState("");
+	const [billingCountryId, setBillingCountryId] = useState("");
+	const [selectedBillingStateId, setSelectedBillingStateId] = useState("");
+	const [billingZipCode, setBillingZipCode] = useState("");
+	const [billingStreetOne, setBillingStreetOne] = useState("");
+	const [billingStreetTwo, setBillingStreetTwo] = useState("");
+
+	const [shippingCompany, setShippingCompany] = useState("");
+	const [shippingCity, setShippingCity] = useState("");
+	const [shippingCountryId, setShippingCountryId] = useState("");
+	const [selectedShippingStateId, setSelectedShippingStateId] = useState("");
+	const [shippingZipCode, setShippingZipCode] = useState("");
+	const [shippingStreetOne, setShippingStreetOne] = useState("");
+	const [shippingStreetTwo, setShippingStreetTwo] = useState("");
+	const [shippingToName, setShippingToName] = useState("");
+	const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
+
 	useMemo(() => {
 		if (bulkProductProps[0].wearDate) {
 			setWearDate(new Date(bulkProductProps[0].wearDate))
@@ -71,9 +95,14 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 	useMemo(() => {
 		if (bulkProductProps[0].selectedRushOption) {
+			console.log("~~~~~~~~~~~~~~~~~", bulkProductProps[0].selectedRushOption[0])
 			setSelectedRushOptionId(bulkProductProps[0].selectedRushOption[0].rushId)
+		} else {
+			setSelectedRushOptionId(bulkProductProps[0].rushOptions[0].rushId)
+			setSelectedRushOption([bulkProductProps[0].rushOptions[0]])
 		}
-	}, [bulkProductProps[0].selectedRushOption])
+
+	}, [bulkProductProps])
 
 	useEffect(() => {
 		if (bulkProductProps[0]) {
@@ -118,7 +147,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories.map((each) => {
 
 					const sizes = each.sizes.map((eachSize) => {
-						console.log("HELOO", eachSize)
 						return {
 							sizeId: eachSize.sizeId,
 							price: eachSize.price,
@@ -223,6 +251,21 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		styleOptions.push(array)
 	});
 
+	const formatDate = (date) => {
+		var d = new Date(date),
+			month = '' + (d.getMonth() + 1),
+			day = '' + d.getDate(),
+			year = d.getFullYear();
+
+		if (month.length < 2)
+			month = '0' + month;
+		if (day.length < 2)
+			day = '0' + day;
+
+		return [year, month, day].join('-');
+	}
+
+
 	const handleRegularSizeArray = (e) => {
 		let result = e.target.value;
 		if (result === "" || result === NaN || totalItems === NaN) {
@@ -233,11 +276,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			result = 0;
 		} else {
 			const index = e.target.dataset.position.split('-')
-			console.log("!!!!! =>", result)
-			console.log(index)
 			let sizeArray = JSON.parse(regularSizeArray)
 			sizeArray[index[0]].sizes[index[1]].sizeCode = ((sizeArray[index[0]].sizes[index[1]].sizeCode * 0) + result).replace(/^0+/, '');
-			console.log('sizeArray', sizeArray)
 			setRegularSizeArray(JSON.stringify(sizeArray))
 		}
 	}
@@ -293,6 +333,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	}
 
 	const handleSelectRushOption = (val) => {
+		console.log("````````````", val)
 		const selectedOption = bulkProductProps[0].rushOptions.filter((option, i) => option.rushId === val);
 		const leadTime = selectedOption[0].leadTime;
 		const today = new Date();
@@ -303,103 +344,359 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	}
 
 	const handleRushDate = (e) => {
-		console.log("``````````````````````EEEEE", typeof e)
 		setWearDate(e)
 	}
 
-	const disallowRush = (val) => {
-		if (val) {
-			addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
-		} else {
-			addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
-		}
-	}
+
 
 	useMemo(() => {
+
+		const disallowRush = (val) => {
+			if (val) {
+				("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
+			} else {
+				addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
+			}
+		}
+
 		if (bulkProductProps[0].wearDate) {
-			console.log("111")
 			if (selectedRushOptionId !== "999") {
-				console.log("222")
 				if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
 					disallowRush(true);
-					console.log("333")
 					setRushError(true)
 				} else {
-					console.log("444")
 					disallowRush(false);
 					setRushError(false)
 				}
 			}
 		} else {
-			console.log("555")
 			if (selectedRushOptionId !== "999") {
-				console.log("666")
 				if (shipDate.getTime() > wearDate.getTime()) {
-					console.log("777")
 					disallowRush(true);
 					setRushError(true)
 				} else {
-					console.log("888")
 					disallowRush(false);
 					setRushError(false)
 				}
 			}
 		}
-	}, [wearDate, selectedRushOptionId])
+	}, [selectedRushOptionId])
 
+	useMemo(() => {
 
-
-	const handleBulkOrder = () => {
-		setEditBoolean(true)
-		if (!bulkProductProps[0].regularOrder) {
-			addBulkToCart({
-				bulkProduct: bulkProductProps[0],
-				addToast,
-				selectedFabrics,
-				selectedFabricsColor,
-				selectedFabricsColorId,
-				selectedLining,
-				selectedLiningFabricsColor,
-				selectedLiningFabricsColorId,
-				comboArray,
-				selectedAttr,
-				selectedSizeCategory,
-				selectedSizeCategoryId,
-				regularSizeArray,
-				alterationSelected,
-				styleOptionSelected,
-				totalItems,
-				extraPrice,
-				wearDate,
-				shipDate,
-				selectedRushOption
-			})
-		} else {
-			addToCart(
-				bulkProductProps[0],
-				addToast,
-				quantityCount,
-				selectedFabrics,
-				selectedFabricsColor,
-				selectedFabricsColorId,
-				selectedLining,
-				selectedLiningFabricsColor,
-				selectedLiningFabricsColorId,
-				comboArray,
-				selectedAttr,
-				sizeCategory,
-				selectedCategorySizeValue,
-				alterationSelected,
-				styleOptionSelected,
-				extraPrice,
-				wearDate,
-				shipDate,
-				selectedRushOption
-			)
+		const disallowRush = (val) => {
+			if (val) {
+				addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
+			} else {
+				addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
+			}
 		}
+
+		if (bulkProductProps[0].wearDate) {
+			if (selectedRushOptionId !== "999") {
+				if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
+					disallowRush(true);
+					setRushError(true)
+				} else {
+					disallowRush(false);
+					setRushError(false)
+				}
+			}
+		} else {
+			if (selectedRushOptionId !== "999") {
+				if (shipDate.getTime() > wearDate.getTime()) {
+					disallowRush(true);
+					setRushError(true)
+				} else {
+					disallowRush(false);
+					setRushError(false)
+				}
+			}
+		}
+	}, [wearDate])
+
+	useEffect(async () => {
+
+		const response = await getCheckoutOptions();
+		if (response.data.errorText === 'accessToken expired') {
+			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+			Router.push('/other/login');
+		} else {
+
+			setBillingCompany(response.data.billingCompany)
+			setBillingCity(response.data.billingCity)
+			setBillingCountryId(response.data.billingCountry)
+			setSelectedBillingStateId(response.data.billingState)
+			setBillingStreetOne(response.data.billingStreet)
+			setBillingStreetTwo(response.data.billingStreet2)
+			setBillingZipCode(response.data.billingZipCode)
+
+			setShippingCompany(response.data.shippingCompany)
+			setShippingCity(response.data.shippingCity)
+			setShippingCountryId(response.data.shippingCountry)
+			setSelectedShippingStateId(response.data.shippingState)
+			setShippingStreetOne(response.data.shippingStreet)
+			setShippingStreetTwo(response.data.shippingStreet2)
+			setShippingZipCode(response.data.shippingZipCode)
+			setShippingToName(response.data.shippingToName)
+			setShippingPhoneNumber(response.data.shippingPhoneNumber)
+		}
+
+	}, [bulkProductProps])
+
+	let itemsArray = [];
+
+	let comboArr = [];
+	let attrArr = [];
+	let sizeArr = [];
+
+	selectedAttr.map((attr, i) => {
+		let temp = {};
+		temp.styleAttrybutesId = attr.attrId;
+		temp.styleAttrybutesValueId = attr.valueId;
+
+		attrArr = [...attrArr, temp]
+
+		return attrArr
+	})
+
+	comboArray.map((data, i) => {
+		let temp = {};
+
+		temp.combosId = data.comboId
+		temp.combosfabricsId = data.fabric.fabric_id
+		temp.combosfabricsColorId = data.fabric.color.color_id;
+		comboArr = [...comboArr, temp];
+
+		return comboArr;
+	})
+
+	JSON.parse(regularSizeArray).map((size, i) => {
+		if (size.sizeCategoryId === selectedSizeCategoryId) {
+			size.sizes.map((item, i) => {
+				if (item.sizeCode !== 0) {
+					let temp = {};
+					temp.sizeId = item.sizeId;
+					temp.amount = item.sizeCode;
+
+					sizeArr = [...sizeArr, temp]
+				}
+			})
+		}
+
+		return sizeArr
+	})
+
+	if (alterationSelected[0] && styleOptionSelected[0]) {
+		itemsArray = [{
+			"itemsId": "",
+			"productTypeId": bulkProductProps[0].productTypeId,
+			"productId": bulkProductProps[0].productId,
+			"selfFabricsId": selectedFabrics,
+			"selfFabricsColorId": selectedFabricsColorId,
+			"liningFabricsId": selectedLining,
+			"liningFabricsColorId": selectedLiningFabricsColorId,
+			"combos": comboArr,
+			"sizeCategoryId": selectedSizeCategoryId,
+			"sizes": sizeArr,
+			"styleAlterations": [
+				{
+					"styleAlterationId": alterationSelected[0].id
+				}
+			],
+			"styleAttributes": attrArr,
+			"styleOptions": [
+				{
+					"styleOptionId": styleOptionSelected[0].id
+				}
+			],
+			"rushId": selectedRushOptionId,
+			"wearDate": formatDate(wearDate),
+			"estimatedShipDate": formatDate(shipDate)
+		}];
+	} else {
+		itemsArray = [{
+			"itemsId": "",
+			"productTypeId": bulkProductProps[0].productTypeId,
+			"productId": bulkProductProps[0].productId,
+			"selfFabricsId": selectedFabrics,
+			"selfFabricsColorId": selectedFabricsColorId,
+			"liningFabricsId": selectedLining,
+			"liningFabricsColorId": selectedLiningFabricsColorId,
+			"combos": comboArr,
+			"sizeCategoryId": selectedSizeCategoryId,
+			"sizes": sizeArr,
+			"styleAttributes": attrArr,
+			"rushId": selectedRushOptionId,
+			"wearDate": formatDate(wearDate),
+			"estimatedShipDate": formatDate(shipDate)
+		}];
 	}
 
+	if (alterationSelected[0] && !styleOptionSelected[0]) {
+		itemsArray = [{
+			"itemsId": "",
+			"productTypeId": bulkProductProps[0].productTypeId,
+			"productId": bulkProductProps[0].productId,
+			"selfFabricsId": selectedFabrics,
+			"selfFabricsColorId": selectedFabricsColorId,
+			"liningFabricsId": selectedLining,
+			"liningFabricsColorId": selectedLiningFabricsColorId,
+			"combos": comboArr,
+			"sizeCategoryId": selectedSizeCategoryId,
+			"sizes": sizeArr,
+			"styleAlterations": [
+				{
+					"styleAlterationId": alterationSelected[0].id
+				}
+			],
+			"styleAttributes": attrArr,
+			"rushId": selectedRushOptionId,
+			"wearDate": formatDate(wearDate),
+			"estimatedShipDate": formatDate(shipDate)
+		}];
+	}
+
+	if (!alterationSelected[0] && styleOptionSelected[0]) {
+		itemsArray = [{
+			"itemsId": "",
+			"productTypeId": bulkProductProps[0].productTypeId,
+			"productId": bulkProductProps[0].productId,
+			"selfFabricsId": selectedFabrics,
+			"selfFabricsColorId": selectedFabricsColorId,
+			"liningFabricsId": selectedLining,
+			"liningFabricsColorId": selectedLiningFabricsColorId,
+			"combos": comboArr,
+			"sizeCategoryId": selectedSizeCategoryId,
+			"sizes": sizeArr,
+			"styleOptions": [
+				{
+					"styleOptionId": styleOptionSelected[0].id
+				}
+			],
+			"styleAttributes": attrArr,
+			"rushId": selectedRushOptionId,
+			"wearDate": formatDate(wearDate),
+			"estimatedShipDate": formatDate(shipDate)
+		}];
+	}
+
+	console.log("selectedRushOption", selectedRushOption)
+
+	const handleBulkOrder = () => {
+
+		let parameters = {
+			"ordersId": "",
+			"ordersType": "WS",
+			"ordersSubType": "F",
+			"billingCompany": billingCompany,
+			"billingStreet": billingStreetOne,
+			"billingStreet2": billingStreetTwo,
+			"billingCity": billingCity,
+			"billingZipCode": billingZipCode,
+			"billingState": selectedBillingStateId,
+			"billingCountry": billingCountryId,
+			"shippingToName": shippingToName,
+			"shippingPhoneNumber": shippingPhoneNumber ? shippingPhoneNumber : "",
+			"shippingCompany": shippingCompany,
+			"shippingStreet": shippingStreetOne,
+			"shippingStreet2": shippingStreetTwo,
+			"shippingCity": shippingCity,
+			"shippingZipCode": shippingZipCode,
+			"shippingState": selectedShippingStateId,
+			"shippingCountry": shippingCountryId,
+			"finalized": "False",
+			"items": itemsArray
+		}
+
+		const tokenInStorage = localStorage.getItem('accessToken')
+
+		const formData = {
+			"feaMethod": "upsertOrder",
+			"accessToken": tokenInStorage,
+			"parameters": JSON.stringify(parameters)
+		}
+
+		API.post('/', new URLSearchParams(formData))
+			.then(response => {
+				console.log('response', response);
+				if (response.data.errorCode === "0") {
+					addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
+					setItemsId(response.data.items[0].itemsId)
+					setOrdersId(response.data.ordersId)
+
+					let tempItemsId = response.data.items[0].itemsId;
+					let tempOrdersId = response.data.ordersId;
+					console.log('response.data.items[0]', response.data.items[0]);
+
+					setEditBoolean(true)
+					if (!bulkProductProps[0].regularOrder) {
+						addBulkToCart({
+							bulkProduct: bulkProductProps[0],
+							addToast,
+							selectedFabrics,
+							selectedFabricsColor,
+							selectedFabricsColorId,
+							selectedLining,
+							selectedLiningFabricsColor,
+							selectedLiningFabricsColorId,
+							comboArray,
+							selectedAttr,
+							selectedSizeCategory,
+							selectedSizeCategoryId,
+							regularSizeArray,
+							alterationSelected,
+							styleOptionSelected,
+							totalItems,
+							extraPrice,
+							wearDate,
+							shipDate,
+							selectedRushOption,
+							tempItemsId,
+							tempOrdersId
+						})
+					} else {
+						addToCart(
+							bulkProductProps[0],
+							addToast,
+							quantityCount,
+							selectedFabrics,
+							selectedFabricsColor,
+							selectedFabricsColorId,
+							selectedLining,
+							selectedLiningFabricsColor,
+							selectedLiningFabricsColorId,
+							comboArray,
+							selectedAttr,
+							sizeCategory,
+							selectedCategorySizeValue,
+							alterationSelected,
+							styleOptionSelected,
+							extraPrice,
+							wearDate,
+							shipDate,
+							selectedRushOption,
+							tempItemsId,
+							tempOrdersId
+						)
+					}
+
+					// Router.push('/other/cart');
+				} else {
+					addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+				}
+			})
+			.catch(error => {
+				console.log('error', error);
+			});
+
+
+
+	}
+	console.log("dddd", selectedRushOptionId)
+
 	const editOrder = () => {
+		console.log("HHHHHHHH", selectedRushOptionId)
 		setEditBoolean(false)
 	}
 
@@ -458,7 +755,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		setExtraPrice(sum + styleOptionSum);
 	}
 
-	console.log("EXTRA PRICES=>", extraPrice)
 
 	const sumExtraPrices = (arr) => {
 		return arr.reduce((a, b) => { return a + parseInt(b.price) }, 0);
@@ -1010,13 +1306,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 										onChange={(event) => {
 											handleSelectRushOption(event.target.value)
 										}}
-										selected={selectedRushOptionId}
+										value={selectedRushOptionId}
 									>
-										<option key={999} value="999">-- Select the rush option --</option>
+										{/* <option key={999} value="999">-- Select the rush option --</option> */}
 										{bulkProductProps[0].rushOptions &&
 											bulkProductProps[0].rushOptions.map((single, i) => {
 												return (
-													<option key={i} selected={selectedRushOptionId === single.rushId} value={single.rushId}>{single.rushName}</option>
+													<option key={i} value={single.rushId}>{single.rushName}</option>
 												);
 											})
 										}

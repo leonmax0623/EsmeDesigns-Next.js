@@ -151,23 +151,24 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
       return attrArr
     })
 
-    product.regularSizeArray.map((size, i) => {
-      if (size.sizeCategoryId === product.selectedSizeCategoryId) {
-        size.sizes.map((item, i) => {
-          if (item.sizeCode !== 0) {
-            let temp = {};
-            temp.sizeId = item.sizeId;
-            temp.amount = item.sizeCode;
+    if (product.regularSizeArray) {
 
-            sizeArr = [...sizeArr, temp]
-          }
-        })
-      }
+      product.regularSizeArray.map((size, i) => {
+        if (size.sizeCategoryId === product.selectedSizeCategoryId) {
+          size.sizes.map((item, i) => {
+            if (item.sizeCode !== 0) {
+              let temp = {};
+              temp.sizeId = item.sizeId;
+              temp.amount = item.sizeCode;
 
-      return sizeArr
-    })
+              sizeArr = [...sizeArr, temp]
+            }
+          })
+        }
 
-    console.log("sizeArrsizeArrsizeArr", sizeArr)
+        return sizeArr
+      })
+    }
 
     product.comboArray.map((data, i) => {
       let temp = {};
