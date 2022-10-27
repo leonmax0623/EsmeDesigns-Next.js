@@ -37,7 +37,7 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct, seas
     for (let i = 0; i < offCanvasNavSubMenu.length; i++) {
       offCanvasNavSubMenu[i].insertAdjacentHTML(
         "beforebegin",
-        "<span class='menu-expand'><i></i></span>"
+        "<span className='menu-expand'><i></i></span>"
       );
     }
 

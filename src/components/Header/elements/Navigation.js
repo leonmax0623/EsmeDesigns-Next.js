@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Router from 'next/router';
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { getCollections } from "../../../redux/actions/navigationActions";
 const Navigation = () => {
@@ -9,7 +9,7 @@ const Navigation = () => {
   const [newSeasonId, setNewSeasonId] = useState('')
   const [newSeasonName, setNewSeasonName] = useState('')
 
-  useEffect(async () => {
+  useMemo(async () => {
     const response = await getCollections();
     if (response.data.season) {
       setNewSeasonId(response.data.season[0].id)

@@ -32,6 +32,14 @@ const Cart = ({
     document.querySelector("body").classList.remove("overflow-hidden");
   });
 
+  const disallowRush = (val) => {
+    if (val) {
+      addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
+    } else {
+      addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
+    }
+  }
+
   return (
     <LayoutTwo>
       {/* breadcrumb */}
@@ -60,7 +68,7 @@ const Cart = ({
                 <div className="cart-table">
                   {cartItems && cartItems.map((order, i) => {
                     return (
-                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart} addToCart={addToCart}></BulkProduct>
+                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart} addToCart={addToCart} addToast={addToast} disallowRush={disallowRush}></BulkProduct>
                     )
                   })}
                 </div>

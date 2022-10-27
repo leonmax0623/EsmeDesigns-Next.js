@@ -30,7 +30,21 @@ export const addToCart = (
   ordersId
 ) => {
 
-  console.log("CART ITEMS =>>>", selectedCategorySizeValueId)
+  const formatDate = (date) => {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  console.log("CART ITEMS =>>>", selectedCategorySizeValue)
 
   return dispatch => {
     if (addToast) {
@@ -56,8 +70,8 @@ export const addToCart = (
         selectedAlteration: alterationSelected,
         selectedStyleOption: styleOptionSelected,
         extraPrice: extraPrice,
-        wearDate: wearDate,
-        shipDate: shipDate,
+        wearDate: formatDate(wearDate),
+        shipDate: formatDate(shipDate),
         selectedRushOption: selectedRushOption,
         itemsId: itemsId,
         ordersId: ordersId,

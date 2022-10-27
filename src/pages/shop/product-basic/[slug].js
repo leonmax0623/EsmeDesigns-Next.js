@@ -47,7 +47,6 @@ const ProductBasic = ({
 
     API.post('/', new URLSearchParams(formData))
       .then(response => {
-        console.log("Response => ", response)
         setAllowRating(response.data.allowRating)
         setAllowReviews(response.data.allowReviews)
         setShowRating(response.data.showRating)

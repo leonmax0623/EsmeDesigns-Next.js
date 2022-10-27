@@ -132,8 +132,6 @@ const ProductDescriptionTab = ({ product, allowReviews, showReviews, allowRating
   }
   ]
 
-  console.log("Showresdfasdf", showReviews)
-
   return (
     <div className="product-description-tab space-pt--r100 space-mt--r100 border-top--grey">
       <Tab.Container defaultActiveKey="description">
