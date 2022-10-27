@@ -32,7 +32,7 @@ const ProductDescription = ({
   disallowRush,
   showRating
 }) => {
-  console.log("Maximus ProductDescription=>", product)
+  // console.log("Maximus ProductDescription=>", product)
   const router = useRouter()
   const dispatch = useDispatch();
 
@@ -40,14 +40,10 @@ const ProductDescription = ({
   const [shipDate, setShipDate] = useState(new Date());
   const [rushError, setRushError] = useState(true)
   const [comboArray, setComboArray] = useState([])
-
-  const [itemsId, setItemsId] = useState("")
-  const [ordersId, setOrdersId] = useState("")
-
   //custom 
   const [selectedLining, setSelectedLining] = useState("");
   const [selectedRushOptionId, setSelectedRushOptionId] = useState(product.rushOptions ? product.rushOptions[0].rushId : "");
-  const [selectedRushOption, setSelectedRushOption] = useState(product.rushOptions ? product.rushOptions[0] : "");
+  const [selectedRushOption, setSelectedRushOption] = useState(product.rushOptions ? [product.rushOptions[0]] : "");
   const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState("");
   const [selectedLiningFabricsColorId, setSelectedLiningFabricsColorId] = useState("");
   const [selectedFabrics, setSelectedFabrics] = useState("");
@@ -374,7 +370,6 @@ const ProductDescription = ({
     selectedRushOption
   ) => {
 
-    console.log("`````````````````", selectedAttr)
     // if (cartItems.length === 0) {
     // localStorage.setItem("rushOptions", JSON.stringify(product.rushOptions))
 
@@ -405,11 +400,9 @@ const ProductDescription = ({
       return comboArr;
     })
 
-    console.log("JJJJJJJJJJJJ", selectedRushOption)
-
     if (alterationSelected[0] && styleOptionSelected[0]) {
       itemsArray = [{
-        "itemsId": itemsId ? itemsId : "",
+        "itemsId": "",
         "productTypeId": product.productTypeId,
         "productId": product.productId,
         "selfFabricsId": selectedFabrics,
@@ -420,7 +413,7 @@ const ProductDescription = ({
         "sizeCategoryId": selectedSizeCategoryId,
         "sizes": [
           {
-            "sizeId": selectedCategorySizeValueId,
+            "sizeId": setSelectedCategorySizeValueId,
             "amount": quantityCount
           }
         ],
@@ -443,7 +436,7 @@ const ProductDescription = ({
 
     if (alterationSelected[0] && !styleOptionSelected[0]) {
       itemsArray = [{
-        "itemsId": itemsId ? itemsId : "",
+        "itemsId": "",
         "productTypeId": product.productTypeId,
         "productId": product.productId,
         "selfFabricsId": selectedFabrics,
@@ -472,7 +465,7 @@ const ProductDescription = ({
 
     if (!alterationSelected[0] && styleOptionSelected[0]) {
       itemsArray = [{
-        "itemsId": itemsId ? itemsId : "",
+        "itemsId": "",
         "productTypeId": product.productTypeId,
         "productId": product.productId,
         "selfFabricsId": selectedFabrics,
@@ -501,7 +494,7 @@ const ProductDescription = ({
 
     if (!alterationSelected[0] && !styleOptionSelected[0]) {
       itemsArray = [{
-        "itemsId": itemsId ? itemsId : "",
+        "itemsId": "",
         "productTypeId": product.productTypeId,
         "productId": product.productId,
         "selfFabricsId": selectedFabrics,
@@ -524,7 +517,7 @@ const ProductDescription = ({
     }
 
     let parameters = {
-      "ordersId": ordersId ? ordersId : "",
+      "ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
       "ordersType": "WS",
       "ordersSubType": "F",
       "billingCompany": billingCompany,
@@ -557,10 +550,19 @@ const ProductDescription = ({
 
     API.post('/', new URLSearchParams(formData))
       .then(response => {
-        console.log('response', response);
+        console.log('====DescriptionResponse====', response);
         if (response.data.errorCode === "0") {
-          setItemsId(response.data.items[0].itemsId)
-          setOrdersId(response.data.ordersId)
+
+          let tempOrdersId = "";
+
+          let tempItemsId = response.data.items[0].itemsId;
+
+          if (localStorage.getItem("OrderId")) {
+            tempOrdersId = localStorage.getItem("OrderId")
+          } else {
+            localStorage.setItem("OrderId", response.data.ordersId)
+            tempOrdersId = response.data.ordersId;
+          }
 
           addToCart(
             product,
@@ -584,12 +586,12 @@ const ProductDescription = ({
             wearDate,
             shipDate,
             selectedRushOption,
-            response.data.items[0].itemsId,
-            response.data.ordersId
+            tempItemsId,
+            tempOrdersId
           )
 
           addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
-          // Router.push('/other/cart');
+          Router.push('/other/cart');
         } else {
           addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
         }
@@ -668,7 +670,6 @@ const ProductDescription = ({
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 value={selectedFabrics}
                 onChange={(event) => {
-                  console.log("KKKKKKK", event.target.value)
                   setSelectedFabrics(event.target.value)
                   setSelectedFabricsColor(product.fabrics.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
                 }}
