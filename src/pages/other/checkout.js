@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Router from 'next/router';
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import 'react-calendar/dist/Calendar.css';
 import 'react-date-picker/dist/DatePicker.css';
@@ -63,7 +63,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
     document.querySelector("body").classList.remove("overflow-hidden");
   });
 
-  useEffect(async () => {
+  useMemo(async () => {
 
     const response = await getCheckoutOptions();
     if (response.data.errorText === 'accessToken expired') {
@@ -102,7 +102,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
     const shippingRes = await getStates(response.data.shippingCountry);
     setShippingStates(shippingRes.data.territory)
 
-  }, [cartItems])
+  }, [])
 
   const selectBillingCountry = async (event) => {
     setBillingCountryId(event.target.value.split("/")[0])
@@ -151,8 +151,13 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
       return attrArr
     })
 
-    if (product.regularSizeArray) {
+    if (product.regularOrder) {
 
+      sizeArr = [{
+        "sizeId": product.selectedCategorySizeValueId,
+        "amount": product.quantityCount
+      }]
+    } else {
       product.regularSizeArray.map((size, i) => {
         if (size.sizeCategoryId === product.selectedSizeCategoryId) {
           size.sizes.map((item, i) => {
@@ -181,8 +186,8 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
       return comboArr;
     })
 
-    if (product.totalItems) {
-      itemsArray = [...itemsArray, {
+    if (product.selectedStyleOption[0] && product.selectedAlteration[0]) {
+      itemsArray = [{
         "itemsId": "",
         "productTypeId": product.productTypeId,
         "productId": product.productId,
@@ -195,7 +200,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
         "sizes": sizeArr,
         "styleAlterations": [
           {
-            "styleAlterationId": product.selectedAlteration[0] ? product.selectedAlteration[0].id : null
+            "styleAlterationId": product.selectedAlteration[0].id
           }
         ],
         "styleAttributes": attrArr,
@@ -205,11 +210,11 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
           }
         ],
         "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": product.wearDate,
-        "estimatedShipDate": product.shipDate
+        "wearDate": formatDate(product.wearDate),
+        "estimatedShipDate": formatDate(product.shipDate)
       }];
     } else {
-      itemsArray = [...itemsArray, {
+      itemsArray = [{
         "itemsId": "",
         "productTypeId": product.productTypeId,
         "productId": product.productId,
@@ -219,26 +224,59 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
         "liningFabricsColorId": product.selectedLiningFabricsColorId,
         "combos": comboArr,
         "sizeCategoryId": product.selectedSizeCategoryId,
-        "sizes": [
-          {
-            "sizeId": product.selectedSizeId,
-            "amount": product.quantity
-          }
-        ],
+        "sizes": sizeArr,
+        "styleAttributes": attrArr,
+        "rushId": product.selectedRushOption[0].rushId,
+        "wearDate": formatDate(product.wearDate),
+        "estimatedShipDate": formatDate(product.shipDate)
+      }];
+    }
+
+    if (product.selectedAlteration[0] && !product.selectedStyleOption[0]) {
+      itemsArray = [{
+        "itemsId": "",
+        "productTypeId": product.productTypeId,
+        "productId": product.productId,
+        "selfFabricsId": product.selectedFabrics,
+        "selfFabricsColorId": product.selectedFabricsColorId,
+        "liningFabricsId": product.selectedLining,
+        "liningFabricsColorId": product.selectedLiningFabricsColorId,
+        "combos": comboArr,
+        "sizeCategoryId": product.selectedSizeCategoryId,
+        "sizes": sizeArr,
         "styleAlterations": [
           {
-            "styleAlterationId": product.selectedAlteration[0] ? product.selectedAlteration[0].id : null
+            "styleAlterationId": product.selectedAlteration[0].id
           }
         ],
         "styleAttributes": attrArr,
+        "rushId": product.selectedRushOption[0].rushId,
+        "wearDate": formatDate(wearDate),
+        "estimatedShipDate": formatDate(shipDate)
+      }];
+    }
+
+    if (!product.selectedAlteration[0] && product.selectedStyleOption[0]) {
+      itemsArray = [{
+        "itemsId": "",
+        "productTypeId": product.productTypeId,
+        "productId": product.productId,
+        "selfFabricsId": product.selectedFabrics,
+        "selfFabricsColorId": product.selectedFabricsColorId,
+        "liningFabricsId": product.selectedLining,
+        "liningFabricsColorId": product.selectedLiningFabricsColorId,
+        "combos": comboArr,
+        "sizeCategoryId": product.selectedSizeCategoryId,
+        "sizes": sizeArr,
         "styleOptions": [
           {
             "styleOptionId": product.selectedStyleOption[0].id
           }
         ],
+        "styleAttributes": attrArr,
         "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": product.wearDate,
-        "estimatedShipDate": product.shipDate
+        "wearDate": formatDate(product.wearDate),
+        "estimatedShipDate": formatDate(product.shipDate)
       }];
     }
     return itemsArray;

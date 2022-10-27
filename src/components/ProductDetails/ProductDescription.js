@@ -46,14 +46,15 @@ const ProductDescription = ({
 
   //custom 
   const [selectedLining, setSelectedLining] = useState("");
-  const [selectedRushOptionId, setSelectedRushOptionId] = useState("999");
-  const [selectedRushOption, setSelectedRushOption] = useState("");
+  const [selectedRushOptionId, setSelectedRushOptionId] = useState(product.rushOptions ? product.rushOptions[0].rushId : "");
+  const [selectedRushOption, setSelectedRushOption] = useState(product.rushOptions ? product.rushOptions[0] : "");
   const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState("");
   const [selectedLiningFabricsColorId, setSelectedLiningFabricsColorId] = useState("");
   const [selectedFabrics, setSelectedFabrics] = useState("");
   const [selectedFabricsColor, setSelectedFabricsColor] = useState("");
   const [selectedFabricsColorId, setSelectedFabricsColorId] = useState("");
   const [selectedAttr, setSelectedAttr] = useState([]);
+  const [selectedAttrValue, setSelectedAttrValue] = useState([]);
   const [selectedSizeCategory, setSelectedSizeCategory] = useState(
     product.sizeCategories && product.sizeCategories.length > 0 ? product.sizeCategories[0].sizeCategoryName : ""
   );
@@ -138,54 +139,16 @@ const ProductDescription = ({
     }
   }, [product.comboArray])
 
-  console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHH", comboArray)
-
   useMemo(() => {
-    if (product.selectedAttr && product.selectedAttr.length > 0) {
-      setSelectedAttr(product.selectedAttr);
-    } else {
-      let selectedAttrArray = []
-      product.styleAttributes.length > 0 && product.styleAttributes.map((item) => {
-        if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
-          selectedAttrArray[selectedAttrArray.length] = { attr: item.styleAttrybutesName, attrId: item.styleAttrybutesId, value: item.styleAttrybutesValues[0].styleAttrybutesValueName, valueId: item.styleAttrybutesValues[0].styleAttrybutesValueId }
-        }
-      });
-      setSelectedAttr(selectedAttrArray);
-    }
-  }, [product.styleAttributes])
 
-  // useEffect(() => {
-  //   if (product) {
-  //     // if (product.lining && product.lining.length > 0) {
-  //     //   setSelectedLining(product.selectedLining ? product.selectedLining : product.lining[0].fabricsId)
-  //     // }
-  //     // if (product.lining && product.lining.length > 0) {
-  //     //   setSelectedLiningFabricsColor(product.selectedLiningFabricsColor ? product.selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricColorName)
-  //     // }
-  //     // if (product.lining && product.lining.length > 0) {
-  //     //   setSelectedLiningFabricsColorId(product.selectedLiningFabricsColors ? product.selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricsColorId)
-  //     // }
-  //     // if (product.fabrics && product.fabrics.length > 0) {
-  //     //   setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
-  //     // }
-  //     // if (product.fabrics && product.fabrics.length > 0) {
-  //     //   setSelectedFabricsColor(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
-  //     // }
-  //     // if (product.fabrics && product.fabrics.length > 0) {
-  //     //   setSelectedFabricsColorId(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricsColorId)
-  //     // }
-
-  //     // if (product.styleAlterations) {
-  //     //   setAlterationSelected(product.styleAlterations)
-  //     // }
-
-  //     // if (product.styleOptions) {
-  //     //   setStyleOptionSelected(product.styleOptions)
-  //     // }
-
-
-  //   }
-  // }, [product]);
+    let selectedAttrArray = []
+    product.styleAttributes.length > 0 && product.styleAttributes.map((item) => {
+      if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
+        selectedAttrArray[selectedAttrArray.length] = { attr: item.styleAttrybutesName, attrId: item.styleAttrybutesId, value: item.styleAttrybutesValues[0].styleAttrybutesValueName, valueId: item.styleAttrybutesValues[0].styleAttrybutesValueId }
+      }
+    });
+    setSelectedAttr(selectedAttrArray);
+  }, [product.selectedAttr])
 
   //custom
   const alterationOptions = [];
@@ -232,6 +195,7 @@ const ProductDescription = ({
 
   const handleAttributeChange = (event, attribute) => {
     let array = JSON.parse(JSON.stringify(selectedAttr));//[...selectedAttr];
+    console.log("MAXIMUS=>", array)
     for (let i = 0; i < array.length; i++) {
       if (array[i].attr === attribute) {
         array[i].value = event.target.value;
@@ -239,8 +203,8 @@ const ProductDescription = ({
         break;
       }
     }
-
     setSelectedAttr(array);
+
   }
 
 
@@ -357,7 +321,7 @@ const ProductDescription = ({
 
 
 
-  useEffect(async () => {
+  useMemo(async () => {
 
     const response = await getCheckoutOptions();
     if (response.data.errorText === 'accessToken expired') {
@@ -384,7 +348,7 @@ const ProductDescription = ({
       setShippingPhoneNumber(response.data.shippingPhoneNumber)
     }
 
-  }, [product])
+  }, [])
 
   const handleAddToCart = (
     product,
@@ -409,6 +373,8 @@ const ProductDescription = ({
     shipDate,
     selectedRushOption
   ) => {
+
+    console.log("`````````````````", selectedAttr)
     // if (cartItems.length === 0) {
     // localStorage.setItem("rushOptions", JSON.stringify(product.rushOptions))
 
@@ -439,6 +405,8 @@ const ProductDescription = ({
       return comboArr;
     })
 
+    console.log("JJJJJJJJJJJJ", selectedRushOption)
+
     if (alterationSelected[0] && styleOptionSelected[0]) {
       itemsArray = [{
         "itemsId": itemsId ? itemsId : "",
@@ -467,7 +435,7 @@ const ProductDescription = ({
             "styleOptionId": styleOptionSelected[0].id
           }
         ],
-        "rushId": selectedRushOption[0].rushId,
+        "rushId": selectedRushOptionId,
         "wearDate": wearDate,
         "estimatedShipDate": shipDate
       }];
@@ -496,7 +464,7 @@ const ProductDescription = ({
           }
         ],
         "styleAttributes": attrArr,
-        "rushId": selectedRushOption[0].rushId,
+        "rushId": selectedRushOptionId,
         "wearDate": wearDate,
         "estimatedShipDate": shipDate
       }];
@@ -525,7 +493,7 @@ const ProductDescription = ({
           }
         ],
         "styleAttributes": attrArr,
-        "rushId": selectedRushOption[0].rushId,
+        "rushId": selectedRushOptionId,
         "wearDate": wearDate,
         "estimatedShipDate": shipDate
       }];
@@ -549,7 +517,7 @@ const ProductDescription = ({
           }
         ],
         "styleAttributes": attrArr,
-        "rushId": selectedRushOption[0].rushId,
+        "rushId": selectedRushOptionId,
         "wearDate": wearDate,
         "estimatedShipDate": shipDate
       }];
@@ -995,7 +963,6 @@ const ProductDescription = ({
                 <div className="product-content__size__content">
                   <select
                     style={{ width: "100%", height: "37px", cursor: "pointer" }}
-                    value={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
                     onChange={(event) => {
                       handleAttributeChange(event, item.styleAttrybutesName)
                     }}
@@ -1003,7 +970,7 @@ const ProductDescription = ({
                     {item.styleAttrybutesValues &&
                       item.styleAttrybutesValues.map((single, j) => {
                         return (
-                          <option key={j} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
+                          <option key={j} selected={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName && selectedAttr[i].value === single.styleAttrybutesValueName} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
                         );
                       })
                     }
@@ -1023,14 +990,14 @@ const ProductDescription = ({
               <select
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 onChange={(event) => {
-                  setSelectedSizeCategory(event.target.value.split("/")[1])
-                  setSelectedSizeCategoryId(event.target.value.split("/")[0])
+                  setSelectedSizeCategory(event.target.value.split("::")[1])
+                  setSelectedSizeCategoryId(event.target.value.split("::")[0])
                 }}
               >
                 {product.sizeCategories &&
                   product.sizeCategories.map((size, i) => {
                     return (
-                      <option key={i} value={`${size.sizeCategoryId}/${size.sizeCategoryName}`}>{size.sizeCategoryName}</option>
+                      <option key={i} value={`${size.sizeCategoryId}::${size.sizeCategoryName}`}>{size.sizeCategoryName}</option>
                     );
                   })
                 }
@@ -1050,13 +1017,13 @@ const ProductDescription = ({
                 <select
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
                   onChange={(event) => {
-                    setSelectedCategorySizeValue(event.target.value.split("/")[1]);
-                    setSelectedCategorySizeValueId(event.target.value.split("/")[0]);
+                    setSelectedCategorySizeValue(event.target.value.split("::")[1]);
+                    setSelectedCategorySizeValueId(event.target.value.split("::")[0]);
                   }}
                 >
                   {product.sizeCategories.map((single, j) => single.sizeCategoryName === selectedSizeCategory ? single.sizes.map((size, i) => {
                     return (
-                      <option key={i} value={`${size.sizeId}/${size.sizeName}`}>{size.sizeName}</option>
+                      <option key={i} value={`${size.sizeId}::${size.sizeName}`}>{size.sizeName}</option>
                     );
                   }) : "")}
                 </select>
@@ -1104,7 +1071,7 @@ const ProductDescription = ({
         ""
       )}
 
-      <Fragment class="descTable">
+      <div className="descTable">
         <div className="product-content__quantity space-mb--40">
           <div className="product-content__quantity__title">Quantity</div>
           <div className="cart-plus-minus">
@@ -1326,7 +1293,7 @@ const ProductDescription = ({
             <IoIosShuffle />
           </button> */}
         </div>
-      </Fragment>
+      </div>
     </div>
   );
 };

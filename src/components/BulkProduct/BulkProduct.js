@@ -9,16 +9,14 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-date-picker/dist/DatePicker.css';
 import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { Tooltip } from "react-tippy";
-import { useToasts } from "react-toast-notifications";
 import API from '../../api';
 import { getCheckoutOptions } from "../../redux/actions/checkoutOptions";
 // import {
 // 	addBulkToCart
 // } from "../../redux/actions/cartActions";
 
-const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCart }) => {
+const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, deleteFromCart, disallowRush }) => {
 	console.log("BulkProductPage/bulkProductProps => ", bulkProductProps[0])
-	const { addToast } = useToasts();
 	let cartTotalPrice = 0;
 	const [wearDate, setWearDate] = useState(new Date());
 	const [shipDate, setShipDate] = useState(new Date());
@@ -38,13 +36,12 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	const [selectedFabric, setSelectedFabric] = useState({ combo: 0, fabric: 0, color: 0 });
 	const [totalItems, setTotalItems] = useState(0);
 	const [selectedSizeCategory, setSelectedSizeCategory] = useState("")
-	const [selectedSizeCategoryId, setSelectedSizeCategoryId] = useState(
-		bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 ? bulkProductProps[0].sizeCategories[0].sizeCategoryId : ""
-	);
+	const [selectedSizeCategoryId, setSelectedSizeCategoryId] = useState("");
 
 	const [sizeCategory, setSizeCategory] = useState("");
 
 	const [selectedCategorySizeValue, setSelectedCategorySizeValue] = useState("");
+	const [selectedCategorySizeValueId, setSelectedCategorySizeValueId] = useState("");
 
 	const [regularSizeArray, setRegularSizeArray] = useState(JSON.stringify([]));
 
@@ -95,14 +92,13 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 	useMemo(() => {
 		if (bulkProductProps[0].selectedRushOption) {
-			console.log("~~~~~~~~~~~~~~~~~", bulkProductProps[0].selectedRushOption[0])
 			setSelectedRushOptionId(bulkProductProps[0].selectedRushOption[0].rushId)
 		} else {
 			setSelectedRushOptionId(bulkProductProps[0].rushOptions[0].rushId)
 			setSelectedRushOption([bulkProductProps[0].rushOptions[0]])
 		}
 
-	}, [bulkProductProps])
+	}, [bulkProductProps[0].rushOptions])
 
 	useEffect(() => {
 		if (bulkProductProps[0]) {
@@ -114,6 +110,11 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			} else {
 				setSelectedCategorySizeValue(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
 			}
+			if (bulkProductProps[0].selectedSizeId) {
+				setSelectedCategorySizeValueId(bulkProductProps[0].selectedSizeId)
+			} else {
+				setSelectedCategorySizeValueId(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeId)
+			}
 			if (bulkProductProps[0].selectedSizeCategory) {
 				setSizeCategory(bulkProductProps[0].selectedSizeCategory)
 				setSelectedSizeCategory(bulkProductProps[0].selectedSizeCategory)
@@ -121,20 +122,12 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				setSizeCategory(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
 				setSelectedSizeCategory(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
 			}
-			if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
-				setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
+			if (bulkProductProps[0].selectedSizeCategoryId) {
+				setSelectedSizeCategoryId(bulkProductProps[0].selectedSizeCategoryId)
+			} else {
+				setSelectedSizeCategoryId(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryId)
 			}
-			if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
-				setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricColorName)
-				setSelectedLiningFabricsColorId(bulkProductProps[0].selectedLiningFabricsColorId ? bulkProductProps[0].selectedLiningFabricsColorId : bulkProductProps[0].lining[0].fabricsColor[0].fabricsColorId)
-			}
-			if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
-				setSelectedFabrics(bulkProductProps[0].selectedFabrics ? bulkProductProps[0].selectedFabrics : bulkProductProps[0].fabrics[0].fabricsId)
-			}
-			if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
-				setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorName)
-				setSelectedFabricsColorId(bulkProductProps[0].selectedFabricsColorId ? bulkProductProps[0].selectedFabricsColorId : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorsId)
-			}
+
 			if (bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0) {
 				setSelectedSize(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
 			}
@@ -177,6 +170,25 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		}
 
 	}, [bulkProductProps]);
+
+	useMemo(() => {
+		if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
+			setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
+			setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricColorName)
+			setSelectedLiningFabricsColorId(bulkProductProps[0].selectedLiningFabricsColors ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricsColorId)
+		}
+
+	}, [bulkProductProps[0].lining])
+
+	useMemo(() => {
+		if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
+			setSelectedFabrics(bulkProductProps[0].selectedFabrics ? bulkProductProps[0].selectedFabrics : bulkProductProps[0].fabrics[0].fabricsId)
+			setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorName)
+			setSelectedFabricsColorId(bulkProductProps[0].selectedFabricsColorId ? bulkProductProps[0].selectedFabricsColorId : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricsColorId)
+
+		}
+
+	}, [bulkProductProps[0].fabrics])
 
 	useMemo(() => {
 		if (bulkProductProps[0].comboArray) {
@@ -333,7 +345,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	}
 
 	const handleSelectRushOption = (val) => {
-		console.log("````````````", val)
 		const selectedOption = bulkProductProps[0].rushOptions.filter((option, i) => option.rushId === val);
 		const leadTime = selectedOption[0].leadTime;
 		const today = new Date();
@@ -348,17 +359,9 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	}
 
 
-
+	console.log('=================page=============')
 	useMemo(() => {
-
-		const disallowRush = (val) => {
-			if (val) {
-				("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
-			} else {
-				addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
-			}
-		}
-
+		if (!selectedRushOptionId || editBoolean) return;
 		if (bulkProductProps[0].wearDate) {
 			if (selectedRushOptionId !== "999") {
 				if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
@@ -380,42 +383,9 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 				}
 			}
 		}
-	}, [selectedRushOptionId])
+	}, [selectedRushOptionId, wearDate])
 
-	useMemo(() => {
-
-		const disallowRush = (val) => {
-			if (val) {
-				addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
-			} else {
-				addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
-			}
-		}
-
-		if (bulkProductProps[0].wearDate) {
-			if (selectedRushOptionId !== "999") {
-				if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
-					disallowRush(true);
-					setRushError(true)
-				} else {
-					disallowRush(false);
-					setRushError(false)
-				}
-			}
-		} else {
-			if (selectedRushOptionId !== "999") {
-				if (shipDate.getTime() > wearDate.getTime()) {
-					disallowRush(true);
-					setRushError(true)
-				} else {
-					disallowRush(false);
-					setRushError(false)
-				}
-			}
-		}
-	}, [wearDate])
-
-	useEffect(async () => {
+	useMemo(async () => {
 
 		const response = await getCheckoutOptions();
 		if (response.data.errorText === 'accessToken expired') {
@@ -442,7 +412,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			setShippingPhoneNumber(response.data.shippingPhoneNumber)
 		}
 
-	}, [bulkProductProps])
+	}, [])
 
 	let itemsArray = [];
 
@@ -471,21 +441,30 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		return comboArr;
 	})
 
-	JSON.parse(regularSizeArray).map((size, i) => {
-		if (size.sizeCategoryId === selectedSizeCategoryId) {
-			size.sizes.map((item, i) => {
-				if (item.sizeCode !== 0) {
-					let temp = {};
-					temp.sizeId = item.sizeId;
-					temp.amount = item.sizeCode;
 
-					sizeArr = [...sizeArr, temp]
-				}
-			})
-		}
 
-		return sizeArr
-	})
+	if (bulkProductProps[0].regularOrder) {
+		sizeArr = [{
+			"sizeId": selectedCategorySizeValueId,
+			"amount": quantityCount
+		}]
+	} else {
+		JSON.parse(regularSizeArray).map((size, i) => {
+			if (size.sizeCategoryId === selectedSizeCategoryId) {
+				size.sizes.map((item, i) => {
+					if (item.sizeCode !== 0) {
+						let temp = {};
+						temp.sizeId = item.sizeId;
+						temp.amount = item.sizeCode;
+
+						sizeArr = [...sizeArr, temp]
+					}
+				})
+			}
+
+			return sizeArr
+		})
+	}
 
 	if (alterationSelected[0] && styleOptionSelected[0]) {
 		itemsArray = [{
@@ -581,7 +560,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 		}];
 	}
 
-	console.log("selectedRushOption", selectedRushOption)
 
 	const handleBulkOrder = () => {
 
@@ -609,6 +587,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			"items": itemsArray
 		}
 
+
 		const tokenInStorage = localStorage.getItem('accessToken')
 
 		const formData = {
@@ -616,10 +595,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 			"accessToken": tokenInStorage,
 			"parameters": JSON.stringify(parameters)
 		}
+		console.log("LLLLLLLLLLL", parameters)
 
 		API.post('/', new URLSearchParams(formData))
 			.then(response => {
-				console.log('response', response);
 				if (response.data.errorCode === "0") {
 					addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
 					setItemsId(response.data.items[0].itemsId)
@@ -627,7 +606,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 					let tempItemsId = response.data.items[0].itemsId;
 					let tempOrdersId = response.data.ordersId;
-					console.log('response.data.items[0]', response.data.items[0]);
 
 					setEditBoolean(true)
 					if (!bulkProductProps[0].regularOrder) {
@@ -668,8 +646,10 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 							selectedLiningFabricsColorId,
 							comboArray,
 							selectedAttr,
-							sizeCategory,
+							selectedSizeCategory,
+							selectedSizeCategoryId,
 							selectedCategorySizeValue,
+							selectedCategorySizeValueId,
 							alterationSelected,
 							styleOptionSelected,
 							extraPrice,
@@ -693,10 +673,8 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 
 
 	}
-	console.log("dddd", selectedRushOptionId)
 
 	const editOrder = () => {
-		console.log("HHHHHHHH", selectedRushOptionId)
 		setEditBoolean(false)
 	}
 
@@ -732,10 +710,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 	}
 
 
-	// testExtra += parseInt(styleOptionSelected[0].price)
-	// testExtra += parseInt(alterationSelected[0].price)
-
-	// console.log("styleOptionSelected=>", styleOptionSelected[0].price)
 
 	const handleStyleOption = (options) => {
 		let testExtra = 0;
@@ -985,7 +959,6 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 														<div className="product-content__size__content">
 															<select
 																style={{ width: "100%", height: "37px", cursor: "pointer" }}
-																value={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName ? selectedAttr[i].value : ""}
 																disabled={editBoolean}
 																onChange={(event) => {
 																	handleAttributeChange(event, item.styleAttrybutesName)
@@ -994,7 +967,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 																{item.styleAttrybutesValues &&
 																	item.styleAttrybutesValues.map((single, j) => {
 																		return (
-																			<option key={j} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
+																			<option key={j} selected={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName && selectedAttr[i].value === single.styleAttrybutesValueName} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
 																		);
 																	})
 																}
@@ -1069,7 +1042,7 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 											<select
 												style={{ width: "100%", height: "37px", cursor: "pointer" }}
 												disabled={editBoolean}
-												value={selectedSizeCategory}
+												value={`${selectedSizeCategoryId}/${selectedSizeCategory}`}
 												onChange={(event) => {
 													setSelectedSizeCategory(event.target.value.split("/")[1])
 													handleResetSizeArrayInput(event.target.value.split("/")[1])
@@ -1116,15 +1089,16 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 													<select
 														style={{ width: "100%", height: "37px", cursor: "pointer" }}
 														disabled={editBoolean}
-														value={sizeCategory}
 														onChange={(event) => {
-															setSizeCategory(event.target.value)
+															setSelectedSizeCategory(event.target.value.split("::")[1])
+															setSelectedSizeCategoryId(event.target.value.split("::")[0])
 														}}
+														value={`${selectedSizeCategoryId}::${selectedSizeCategory}`}
 													>
-														{bulkProductProps[0].sizeCategories.length > 0 &&
+														{bulkProductProps[0].sizeCategories &&
 															bulkProductProps[0].sizeCategories.map((size, i) => {
 																return (
-																	<option key={i} value={size.sizeCategoryName}>{size.sizeCategoryName}</option>
+																	<option key={i} value={`${size.sizeCategoryId}::${size.sizeCategoryName}`}>{size.sizeCategoryName}</option>
 																);
 															})
 														}
@@ -1141,14 +1115,15 @@ const BulkProduct = ({ addToCart, addBulkToCart, bulkProductProps, deleteFromCar
 																	<select
 																		style={{ width: "100%", height: "37px", cursor: "pointer" }}
 																		disabled={editBoolean}
-																		value={selectedCategorySizeValue}
 																		onChange={(event) => {
-																			setSelectedCategorySizeValue(event.target.value);
+																			setSelectedCategorySizeValue(event.target.value.split("::")[1]);
+																			setSelectedCategorySizeValueId(event.target.value.split("::")[0]);
 																		}}
+																		value={`${selectedCategorySizeValueId}::${selectedCategorySizeValue}`}
 																	>
-																		{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === sizeCategory ? single.sizes.map((size, i) => {
+																		{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === selectedSizeCategory ? single.sizes.map((size, i) => {
 																			return (
-																				<option key={i} value={size.sizeName}>{size.sizeName}</option>
+																				<option key={i} value={`${size.sizeId}::${size.sizeName}`}>{size.sizeName}</option>
 																			);
 																		}) : "")}
 																	</select>

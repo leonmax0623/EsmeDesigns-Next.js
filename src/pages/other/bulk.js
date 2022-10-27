@@ -44,6 +44,14 @@ const Bulk = ({
     if (bulkOrders && bulkOrders.length == 0) setNewBulkProduct(bulkProduct)
   });
 
+  const disallowRush = (val) => {
+    if (val) {
+      addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
+    } else {
+      addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
+    }
+  }
+
   const handleAddBulkToCart = (
     bulkProduct,
     addToast,
@@ -128,11 +136,11 @@ const Bulk = ({
                     </button>
                   </div>
                   {newBulkProduct && newBulkProduct.length >= 1 ? (
-                    <BulkProduct bulkProductProps={newBulkProduct} addBulkToCart={handleAddBulkToCart} ></BulkProduct>
+                    <BulkProduct bulkProductProps={newBulkProduct} addBulkToCart={handleAddBulkToCart} addToast={addToast} disallowRush={disallowRush}></BulkProduct>
                   ) : ''}
                   {bulkOrders && bulkOrders.length > 0 ? bulkOrders.map((order, i) => {
                     return (
-                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart}></BulkProduct>
+                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart} addToast={addToast} disallowRush={disallowRush}></BulkProduct>
                     )
                   }) : ''}
                 </div>
