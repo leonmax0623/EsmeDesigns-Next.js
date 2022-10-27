@@ -4,6 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { IoMdCart } from "react-icons/io";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
+import API from '../../api';
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { BulkProduct } from "../../components/BulkProduct";
 import { LayoutTwo } from "../../components/Layout";
@@ -37,6 +38,41 @@ const Cart = ({
       addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
     } else {
       addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
+    }
+  }
+
+  const handleDeleteAllProducts = () => {
+
+    if (localStorage.getItem("OrderId") && localStorage.getItem("OrderId") !== "") {
+      let parameters = {
+        "ordersId": localStorage.getItem("OrderId"),
+      }
+
+      const tokenInStorage = localStorage.getItem('accessToken')
+
+      const formData = {
+        "feaMethod": "deleteOrder",
+        "accessToken": tokenInStorage,
+        "parameters": JSON.stringify(parameters)
+      }
+
+      API.post('/', new URLSearchParams(formData))
+        .then(response => {
+          if (response.data.errorCode === "0") {
+            addToast("Order was successfully removed!", { appearance: "success", autoDismiss: true });
+            // Router.push('/other/cart');
+            deleteAllFromCart(addToast)
+            localStorage.removeItem("OrderId")
+          } else {
+            addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+          }
+        })
+        .catch(error => {
+          console.log('error', error);
+        });
+
+    } else {
+      addToast("Please Order the products and add to cart!", { appearance: "error", autoDismiss: true });
     }
   }
 
@@ -98,7 +134,7 @@ const Cart = ({
                     <Col lg={5} className="text-left text-lg-right">
                       <button
                         className="lezada-button lezada-button--medium"
-                        onClick={() => deleteAllFromCart(addToast)}
+                        onClick={handleDeleteAllProducts}
                       >
                         clear cart
                       </button>

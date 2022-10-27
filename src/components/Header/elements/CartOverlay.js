@@ -3,6 +3,7 @@ import CustomScroll from "react-custom-scroll";
 import { IoIosClose } from "react-icons/io";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
+import API from '../../../api';
 import { deleteFromCart } from "../../../redux/actions/cartActions";
 
 const CartOverlay = ({
@@ -16,6 +17,47 @@ const CartOverlay = ({
   let totalAmount = 0;
   console.log("MAXIMUS cartItems=>", cartItems)
   const { addToast } = useToasts();
+
+  const handleDeleteProduct = (product, addToast) => {
+
+    if (localStorage.getItem("OrderId") && localStorage.getItem("OrderId") !== "") {
+      let parameters = {
+        "ordersId": localStorage.getItem("OrderId"),
+        "itemsIds": [
+          {
+            "itemsId": product.itemsId
+          }
+        ]
+      }
+
+      const tokenInStorage = localStorage.getItem('accessToken')
+
+      const formData = {
+        "feaMethod": "deleteOrder",
+        "accessToken": tokenInStorage,
+        "parameters": JSON.stringify(parameters)
+      }
+
+      API.post('/', new URLSearchParams(formData))
+        .then(response => {
+          if (response.data.errorCode === "0") {
+            addToast("Order was successfully removed!", { appearance: "success", autoDismiss: true });
+            // Router.push('/other/cart');
+            deleteFromCart(product, addToast)
+            localStorage.removeItem("OrderId")
+          } else {
+            addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+          }
+        })
+        .catch(error => {
+          console.log('error', error);
+        });
+
+    } else {
+      addToast("Please Order the products and add to cart!", { appearance: "error", autoDismiss: true });
+    }
+  }
+
   return (
     <div className={`cart-overlay ${activeStatus ? "active" : ""}`}>
       <div
@@ -52,7 +94,7 @@ const CartOverlay = ({
                       <div className="single-cart-product" key={i}>
                         <span className="cart-close-icon">
                           <button
-                            onClick={() => deleteFromCart(product, addToast)}
+                            onClick={() => handleDeleteProduct(product, addToast)}
                           >
                             <IoIosClose />
                           </button>

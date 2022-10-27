@@ -140,6 +140,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
     let comboArr = [];
     let attrArr = [];
     let sizeArr = [];
+    let products = {};
 
     product.selectedAttr.map((attr, i) => {
       let temp = {};
@@ -147,16 +148,15 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
       temp.styleAttrybutesValueId = attr.valueId;
 
       attrArr = [...attrArr, temp]
-
-      return attrArr
     })
 
     if (product.regularOrder) {
 
       sizeArr = [{
-        "sizeId": product.selectedCategorySizeValueId,
-        "amount": product.quantityCount
+        "sizeId": product.selectedSizeId,
+        "amount": product.quantity
       }]
+
     } else {
       product.regularSizeArray.map((size, i) => {
         if (size.sizeCategoryId === product.selectedSizeCategoryId) {
@@ -170,8 +170,6 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
             }
           })
         }
-
-        return sizeArr
       })
     }
 
@@ -182,13 +180,11 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
       temp.combosfabricsId = data.fabric.fabric_id
       temp.combosfabricsColorId = data.fabric.color.color_id;
       comboArr = [...comboArr, temp];
-
-      return comboArr;
     })
 
     if (product.selectedStyleOption[0] && product.selectedAlteration[0]) {
-      itemsArray = [{
-        "itemsId": "",
+      products = {
+        "itemsId": product.itemsId,
         "productTypeId": product.productTypeId,
         "productId": product.productId,
         "selfFabricsId": product.selectedFabrics,
@@ -210,12 +206,12 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
           }
         ],
         "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": formatDate(product.wearDate),
-        "estimatedShipDate": formatDate(product.shipDate)
-      }];
+        "wearDate": product.wearDate,
+        "estimatedShipDate": product.shipDate
+      };
     } else {
-      itemsArray = [{
-        "itemsId": "",
+      products = {
+        "itemsId": product.itemsId,
         "productTypeId": product.productTypeId,
         "productId": product.productId,
         "selfFabricsId": product.selectedFabrics,
@@ -227,14 +223,14 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
         "sizes": sizeArr,
         "styleAttributes": attrArr,
         "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": formatDate(product.wearDate),
-        "estimatedShipDate": formatDate(product.shipDate)
-      }];
+        "wearDate": product.wearDate,
+        "estimatedShipDate": product.shipDate
+      };
     }
 
     if (product.selectedAlteration[0] && !product.selectedStyleOption[0]) {
-      itemsArray = [{
-        "itemsId": "",
+      products = {
+        "itemsId": product.itemsId,
         "productTypeId": product.productTypeId,
         "productId": product.productId,
         "selfFabricsId": product.selectedFabrics,
@@ -251,14 +247,14 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
         ],
         "styleAttributes": attrArr,
         "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": formatDate(wearDate),
-        "estimatedShipDate": formatDate(shipDate)
-      }];
+        "wearDate": product.wearDate,
+        "estimatedShipDate": product.shipDate
+      };
     }
 
     if (!product.selectedAlteration[0] && product.selectedStyleOption[0]) {
-      itemsArray = [{
-        "itemsId": "",
+      products = {
+        "itemsId": product.itemsId,
         "productTypeId": product.productTypeId,
         "productId": product.productId,
         "selfFabricsId": product.selectedFabrics,
@@ -275,41 +271,19 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
         ],
         "styleAttributes": attrArr,
         "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": formatDate(product.wearDate),
-        "estimatedShipDate": formatDate(product.shipDate)
-      }];
+        "wearDate": product.wearDate,
+        "estimatedShipDate": product.shipDate
+      };
     }
-    return itemsArray;
+    itemsArray = [...itemsArray, products]
+    console.log("=====================Item=============", products)
   })
 
   console.log("itemsArray", itemsArray)
 
+
   const confirmOrder = (event) => {
     event.preventDefault();
-    console.log("Billing Company", billingCompany)
-    console.log("Billing City", billingCity)
-    console.log("Billing CountryId", billingCountryId)
-    console.log("electedBillingStateId", selectedBillingStateId)
-    console.log("billingZipCode", billingZipCode)
-    console.log("billingStreetOne", billingStreetOne)
-    console.log("billingStreetTwo", billingStreetTwo)
-    console.log("shippingCompany", shippingCompany)
-    console.log("shippingCity", shippingCity)
-    console.log("shippingCountryId", shippingCountryId)
-    console.log("selectedShippingStateId", selectedShippingStateId)
-    console.log("shippingZipCode", shippingZipCode)
-    console.log("shippingStreetOne", shippingStreetOne)
-    console.log("shippingStreetTwo", shippingStreetTwo)
-    console.log("shippingToName", shippingToName)
-    console.log("shippingPhoneNumber", shippingPhoneNumber)
-    console.log("storeNumber", storeNumber)
-    console.log("eventId", eventId)
-    console.log("customerName", customerName)
-    console.log("poNumber", poNumber)
-    console.log("orderNote", orderNote)
-    console.log("orderDate", formatDate(orderDate))
-    console.log("billingMethodID", selectedBillingMethod)
-    console.log("shippingMethodID", selectedShippingMethod)
 
     if (shippingPhoneNumber === "" || shippingPhoneNumber === null) {
       addToast("Shipping Phone Number is missing!", { appearance: "error", autoDismiss: true });
@@ -324,7 +298,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
     }
 
     let parameters = {
-      "ordersId": "",
+      "ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
       "ordersType": "WS",
       "ordersSubType": "F",
       "storeNumber": storeNumber,
@@ -372,6 +346,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
           console.log('response', response);
           if (response.data.errorCode === "0") {
             addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
+            localStorage.removeItem("OrderId")
             deleteAllFromCart(addToast)
             Router.push('/');
           } else {

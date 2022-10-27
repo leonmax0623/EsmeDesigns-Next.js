@@ -16,7 +16,6 @@ import { getCheckoutOptions } from "../../redux/actions/checkoutOptions";
 // } from "../../redux/actions/cartActions";
 
 const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, deleteFromCart, disallowRush }) => {
-	console.log("BulkProductPage/bulkProductProps => ", bulkProductProps[0])
 	let cartTotalPrice = 0;
 	const [wearDate, setWearDate] = useState(new Date());
 	const [shipDate, setShipDate] = useState(new Date());
@@ -53,12 +52,11 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	const [comboArray, setComboArray] = useState([])
 
+	const [editedProductItemId, setEditedProductItemId] = useState("");
+
 	const [editBoolean, setEditBoolean] = useState(bulkProductProps[0].selectedFabrics ? true : false)
 
 	const [selectedAttr, setSelectedAttr] = useState([]);
-
-	const [itemsId, setItemsId] = useState("")
-	const [ordersId, setOrdersId] = useState("")
 
 	const [billingCompany, setBillingCompany] = useState("");
 	const [billingCity, setBillingCity] = useState("");
@@ -358,8 +356,6 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		setWearDate(e)
 	}
 
-
-	console.log('=================page=============')
 	useMemo(() => {
 		if (!selectedRushOptionId || editBoolean) return;
 		if (bulkProductProps[0].wearDate) {
@@ -468,7 +464,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	if (alterationSelected[0] && styleOptionSelected[0]) {
 		itemsArray = [{
-			"itemsId": "",
+			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
 			"productTypeId": bulkProductProps[0].productTypeId,
 			"productId": bulkProductProps[0].productId,
 			"selfFabricsId": selectedFabrics,
@@ -495,7 +491,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		}];
 	} else {
 		itemsArray = [{
-			"itemsId": "",
+			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
 			"productTypeId": bulkProductProps[0].productTypeId,
 			"productId": bulkProductProps[0].productId,
 			"selfFabricsId": selectedFabrics,
@@ -514,7 +510,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	if (alterationSelected[0] && !styleOptionSelected[0]) {
 		itemsArray = [{
-			"itemsId": "",
+			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
 			"productTypeId": bulkProductProps[0].productTypeId,
 			"productId": bulkProductProps[0].productId,
 			"selfFabricsId": selectedFabrics,
@@ -538,7 +534,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	if (!alterationSelected[0] && styleOptionSelected[0]) {
 		itemsArray = [{
-			"itemsId": "",
+			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
 			"productTypeId": bulkProductProps[0].productTypeId,
 			"productId": bulkProductProps[0].productId,
 			"selfFabricsId": selectedFabrics,
@@ -561,10 +557,11 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	}
 
 
+
 	const handleBulkOrder = () => {
 
 		let parameters = {
-			"ordersId": "",
+			"ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
 			"ordersType": "WS",
 			"ordersSubType": "F",
 			"billingCompany": billingCompany,
@@ -595,17 +592,27 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			"accessToken": tokenInStorage,
 			"parameters": JSON.stringify(parameters)
 		}
-		console.log("LLLLLLLLLLL", parameters)
+
 
 		API.post('/', new URLSearchParams(formData))
 			.then(response => {
+				console.log("============BulkResponse===========", response)
 				if (response.data.errorCode === "0") {
 					addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
-					setItemsId(response.data.items[0].itemsId)
-					setOrdersId(response.data.ordersId)
+					let tempOrdersId = "";
+					let tempItemsId = "";
+					if (bulkProductProps[0].itemsId && bulkProductProps[0].itemsId !== "") {
+						tempItemsId = bulkProductProps[0].itemsId;
+					} else {
+						tempItemsId = response.data.items[0].itemsId;
+					}
 
-					let tempItemsId = response.data.items[0].itemsId;
-					let tempOrdersId = response.data.ordersId;
+					if (localStorage.getItem("OrderId")) {
+						tempOrdersId = localStorage.getItem("OrderId")
+					} else {
+						localStorage.setItem("OrderId", response.data.ordersId)
+						tempOrdersId = response.data.ordersId;
+					}
 
 					setEditBoolean(true)
 					if (!bulkProductProps[0].regularOrder) {
@@ -679,7 +686,38 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	}
 
 	const removeOrder = () => {
-		deleteFromCart(bulkProductProps[0], addToast)
+		let parameters = {
+			"ordersId": bulkProductProps[0].ordersId,
+			"itemsIds": [
+				{
+					"itemsId": bulkProductProps[0].itemsId
+				}
+			]
+		}
+
+
+		const tokenInStorage = localStorage.getItem('accessToken')
+
+		const formData = {
+			"feaMethod": "deleteOrdersItems",
+			"accessToken": tokenInStorage,
+			"parameters": JSON.stringify(parameters)
+		}
+
+		API.post('/', new URLSearchParams(formData))
+			.then(response => {
+				if (response.data.errorCode === "0") {
+					addToast("Order was successfully removed!", { appearance: "success", autoDismiss: true });
+					// Router.push('/other/cart');
+					deleteFromCart(bulkProductProps[0], addToast)
+				} else {
+					addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+				}
+			})
+			.catch(error => {
+				console.log('error', error);
+			});
+
 	}
 
 	const handleComboFabricChange = (combo_name) => (e) => {
@@ -1346,7 +1384,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 												editOrder()
 											}
 										>
-											Edit Order
+											Edit Item
 										</button>
 										<button
 											style={{ marginLeft: "20px" }}
@@ -1355,7 +1393,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 												removeOrder()
 											}
 										>
-											Remove Order
+											Remove Item
 										</button>
 									</>
 								) : (
@@ -1380,7 +1418,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 											handleBulkOrder()
 										}
 									>
-										Save Edited Order
+										Save Edited Item
 									</button>
 								) : (
 									<button
@@ -1390,7 +1428,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 											handleBulkOrder()
 										}
 									>
-										Save Order
+										Save Item
 									</button>
 								)}
 							</Col>
