@@ -44,9 +44,9 @@ export const addToCart = (
     return [year, month, day].join('-');
   }
 
-  console.log("CART ITEMS =>>>", selectedCategorySizeValue)
 
   return dispatch => {
+    console.log("<<==== CART ITEMS ====>>", ordersId)
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }

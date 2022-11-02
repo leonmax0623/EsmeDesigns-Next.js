@@ -17,11 +17,11 @@ import { getCheckoutOptions } from "../../redux/actions/checkoutOptions";
 
 const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, deleteFromCart, disallowRush }) => {
 	let cartTotalPrice = 0;
-	const [wearDate, setWearDate] = useState(new Date());
-	const [shipDate, setShipDate] = useState(new Date());
+	let tempWearDate = localStorage.getItem("previous_wearDate")
+	// const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date());
 	const [rushError, setRushError] = useState(true);
 	const [selectedRushOptionId, setSelectedRushOptionId] = useState("");
-	const [selectedRushOption, setSelectedRushOption] = useState("");
+	const [selectedRushOption, setSelectedRushOption] = useState(bulkProductProps[0].rushOptions ? [bulkProductProps[0].rushOptions[0]] : "");
 	//custom 
 	const [selectedLining, setSelectedLining] = useState("");
 	const [selectedLiningFabricsColor, setSelectedLiningFabricsColor] = useState("");
@@ -76,6 +76,13 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [shippingToName, setShippingToName] = useState("");
 	const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
 
+
+	const [shipDate, setShipDate] = useState(new Date(
+		parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 + new Date().getTime() + 1 * 24 * 60 * 60 * 1000
+	));
+	const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date(
+		parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 + new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+	));
 	useMemo(() => {
 		if (bulkProductProps[0].wearDate) {
 			setWearDate(new Date(bulkProductProps[0].wearDate))
@@ -92,11 +99,15 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		if (bulkProductProps[0].selectedRushOption) {
 			setSelectedRushOptionId(bulkProductProps[0].selectedRushOption[0].rushId)
 		} else {
+
 			setSelectedRushOptionId(bulkProductProps[0].rushOptions[0].rushId)
-			setSelectedRushOption([bulkProductProps[0].rushOptions[0]])
+			// setSelectedRushOption([bulkProductProps[0].rushOptions[0]])
 		}
 
 	}, [bulkProductProps[0].rushOptions])
+
+	console.log("==selectedRushOption==selectedRushOption==selectedRushOption", selectedRushOption)
+
 
 	useEffect(() => {
 		if (bulkProductProps[0]) {
@@ -334,12 +345,16 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		let array = JSON.parse(JSON.stringify(selectedAttr));//[...selectedAttr];
 		for (let i = 0; i < array.length; i++) {
 			if (array[i].attr === attribute) {
+				var index = event.target.selectedIndex;
+				var optionElement = event.target.childNodes[index];
+				let attrId = optionElement.getAttribute('data-attr-id');
 				array[i].value = event.target.value;
-
+				array[i].valueId = attrId;
 				break;
 			}
 		}
 		setSelectedAttr(array);
+
 	}
 
 	const handleSelectRushOption = (val) => {
@@ -356,7 +371,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		setWearDate(e)
 	}
 
-	useMemo(() => {
+	useEffect(() => {
 		if (!selectedRushOptionId || editBoolean) return;
 		if (bulkProductProps[0].wearDate) {
 			if (selectedRushOptionId !== "999") {
@@ -560,6 +575,10 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	const handleBulkOrder = () => {
 
+		console.log("TOTAL TESTING=>>>", selectedFabrics)
+		console.log("TOTAL TESTING=>>>", selectedFabricsColor)
+		console.log("TOTAL TESTING=>>>", selectedFabricsColorId)
+
 		let parameters = {
 			"ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
 			"ordersType": "WS",
@@ -614,11 +633,13 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 						tempOrdersId = response.data.ordersId;
 					}
 
+					let tempNull = null;
+
 					setEditBoolean(true)
 					if (!bulkProductProps[0].regularOrder) {
 						addBulkToCart({
 							bulkProduct: bulkProductProps[0],
-							addToast,
+							tempNull,
 							selectedFabrics,
 							selectedFabricsColor,
 							selectedFabricsColorId,
@@ -643,7 +664,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 					} else {
 						addToCart(
 							bulkProductProps[0],
-							addToast,
+							null,
 							quantityCount,
 							selectedFabrics,
 							selectedFabricsColor,
@@ -667,6 +688,8 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 							tempOrdersId
 						)
 					}
+
+					localStorage.setItem("previous_wearDate", wearDate)
 
 					// Router.push('/other/cart');
 				} else {
@@ -709,7 +732,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 				if (response.data.errorCode === "0") {
 					addToast("Order was successfully removed!", { appearance: "success", autoDismiss: true });
 					// Router.push('/other/cart');
-					deleteFromCart(bulkProductProps[0], addToast)
+					deleteFromCart(bulkProductProps[0], null)
 				} else {
 					addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
 				}
@@ -742,7 +765,9 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		var colorId = optionElement.getAttribute('data-color-index');
 
 		array[comboId].fabric.color.color_name = e.target.value;
+		array[comboId].fabric.color.color_id = bulkProductProps[0].combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorId;
 		array[comboId].fabric.color.rgb = bulkProductProps[0].combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorRGB;
+		console.log("========>>", bulkProductProps[0].combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorRGB)
 
 		setComboArray(array);
 	}
@@ -911,7 +936,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 											<div className="product-content__color__content">
 												<select
 													style={{ width: "100%", height: "37px", cursor: "pointer" }}
-													value={selectedLiningFabricsColor}
+													// value={selectedLiningFabricsColor}
 													disabled={editBoolean}
 													onChange={(event) => {
 														setSelectedLiningFabricsColor(event.target.value.split("/")[1]);
@@ -920,7 +945,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 												>
 													{bulkProductProps[0].lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
 														return (
-															<option key={i} value={`${color.fabricsColorId}/${color.fabricColorName}`}>{color.fabricColorName}</option>
+															<option key={i} selected={selectedLiningFabricsColor === color.fabricColorName} value={`${color.fabricsColorId}/${color.fabricColorName}`}>{color.fabricColorName}</option>
 														);
 													}) : "")}
 												</select>
@@ -1005,7 +1030,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 																{item.styleAttrybutesValues &&
 																	item.styleAttrybutesValues.map((single, j) => {
 																		return (
-																			<option key={j} selected={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName && selectedAttr[i].value === single.styleAttrybutesValueName} value={single.styleAttrybutesValueName} > {single.styleAttrybutesValueName}</option>
+																			<option key={j} selected={selectedAttr && selectedAttr.length > 0 && selectedAttr[i].attr === item.styleAttrybutesName && selectedAttr[i].value === single.styleAttrybutesValueName} value={single.styleAttrybutesValueName} data-attr-id={single.styleAttrybutesValueId}> {single.styleAttrybutesValueName}</option>
 																		);
 																	})
 																}

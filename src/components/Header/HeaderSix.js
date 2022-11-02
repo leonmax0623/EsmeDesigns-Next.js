@@ -25,6 +25,9 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems }) => {
     false
   );
 
+
+
+
   let totalOrders = 0
 
   cartItems.map((item, i) => {
