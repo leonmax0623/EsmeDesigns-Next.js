@@ -194,8 +194,8 @@ const Cart = ({
                   <div className="item-empty-area__text">
                     <p className="space-mb--30">No items found in cart</p>
                     <Link
-                      href="/shop/left-sidebar"
-                      as={process.env.PUBLIC_URL + "/shop/left-sidebar"}
+                      href="/shop/left-sidebar/All bridesmaid"
+                      as={"/shop/left-sidebar/All bridesmaid"}
                     >
                       <a className="lezada-button lezada-button--medium">
                         Shop Now
