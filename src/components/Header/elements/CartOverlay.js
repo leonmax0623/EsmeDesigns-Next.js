@@ -33,7 +33,7 @@ const CartOverlay = ({
       const tokenInStorage = localStorage.getItem('accessToken')
 
       const formData = {
-        "feaMethod": "deleteOrder",
+        "feaMethod": "deleteOrdersItems",
         "accessToken": tokenInStorage,
         "parameters": JSON.stringify(parameters)
       }
@@ -43,8 +43,7 @@ const CartOverlay = ({
           if (response.data.errorCode === "0") {
             addToast("Order was successfully removed!", { appearance: "success", autoDismiss: true });
             // Router.push('/other/cart');
-            deleteFromCart(product, addToast)
-            localStorage.removeItem("OrderId")
+            deleteFromCart(product, null)
           } else {
             addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
           }

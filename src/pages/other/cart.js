@@ -249,8 +249,6 @@ const mapDispatchToProps = (dispatch) => {
       selectedRushOption,
       itemsId,
       ordersId
-
-
     ) => {
       dispatch(addToCart(
         item,
