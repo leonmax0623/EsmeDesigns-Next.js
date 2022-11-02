@@ -16,6 +16,7 @@ import { getCheckoutOptions } from "../../redux/actions/checkoutOptions";
 // } from "../../redux/actions/cartActions";
 
 const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, deleteFromCart, disallowRush }) => {
+	console.log("~~~~~~~~bulkProductProps~~~~~~~~~", bulkProductProps[0])
 	let cartTotalPrice = 0;
 	let tempWearDate = localStorage.getItem("previous_wearDate")
 	// const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date());
@@ -48,7 +49,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [productStock, setProductStock] = useState(
 		bulkProductProps[0].inStock ? bulkProductProps[0].inStock : 0
 	);
-	const [quantityCount, setQuantityCount] = useState(bulkProductProps[0].quantity ? bulkProductProps[0].quantity : 1);
+	const [quantityCount, setQuantityCount] = useState(bulkProductProps[0].quantity ? bulkProductProps[0].quantity : 0);
 
 	const [comboArray, setComboArray] = useState([])
 
@@ -80,6 +81,8 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [shipDate, setShipDate] = useState(new Date());
 	const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date());
 
+	const [myTestValue, setMyTestValue] = useState(false);
+
 	useMemo(() => {
 		if (bulkProductProps[0].wearDate) {
 			setWearDate(new Date(bulkProductProps[0].wearDate))
@@ -103,7 +106,6 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	}, [bulkProductProps[0].rushOptions])
 
-	console.log("==selectedRushOption==selectedRushOption==selectedRushOption", selectedRushOption)
 
 
 	useEffect(() => {
@@ -285,8 +287,10 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 
 	const handleRegularSizeArray = (e) => {
+
+		console.log("=========EmptryCheck=======", e.target.value)
 		let result = e.target.value;
-		if (result === "" || result === NaN || totalItems === NaN) {
+		if (result === "" || result === 0 || result === "0" || result === "000" || result === "00" || result === NaN || totalItems === NaN) {
 			const index = e.target.dataset.position.split('-')
 			let sizeArray = JSON.parse(regularSizeArray)
 			sizeArray[index[0]].sizes[index[1]].sizeCode = 0;
@@ -369,8 +373,6 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	}
 
 	useEffect(() => {
-		const estimatedShipDate = new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000);
-		setShipDate(estimatedShipDate);
 		if (!selectedRushOptionId || editBoolean) return;
 		if (bulkProductProps[0].wearDate) {
 			if (selectedRushOptionId !== "999") {
@@ -1386,19 +1388,19 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 						<div style={{ display: "flex", marginBottom: "10px" }}>
 							<Col lg={3}><div className="product-content__size__title">Quantity: </div></Col>
 							<Col lg={3}><div className="product-content__size__content">
-								<span>{bulkProductProps[0].totalItems ? totalItems : quantityCount}</span>
+								<span>{!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? totalItems : quantityCount}</span>
 							</div></Col>
 						</div>
 						<div style={{ display: "flex", marginBottom: "10px" }}>
 							<Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
 							<Col lg={3}><div className="product-content__size__content">
-								<span>${(extraPrice * (bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</span>
+								<span>${(extraPrice * (!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</span>
 							</div></Col>
 						</div>
 						<div style={{ display: "flex", marginBottom: "10px" }}>
 							<Col lg={3}><div className="product-content__size__title">Total: </div></Col>
 							<Col lg={3}><div className="product-content__size__content">
-								<span>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</span>
+								<span>${(!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</span>
 							</div></Col>
 						</div>
 					</div>
@@ -1501,9 +1503,9 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 							<tbody>
 								<tr style={{ textAlign: "center" }}>
 									<td style={{ paddingLeft: "10px 0px" }}>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</td>
-									<td style={{ paddingLeft: "10px 0px" }}>{bulkProductProps[0].totalItems ? totalItems : quantityCount}</td>
-									<td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * (bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</td>
-									<td style={{ paddingLeft: "10px 0px" }}>${(bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : (bulkProductProps[0].quantity ? parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount) : 0)).toFixed(2)}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>{!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? totalItems : quantityCount}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * (!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</td>
+									<td style={{ paddingLeft: "10px 0px" }}>${(!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</td>
 								</tr>
 							</tbody>
 						</table>

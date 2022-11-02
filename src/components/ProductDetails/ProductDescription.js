@@ -318,8 +318,6 @@ const ProductDescription = ({
   }
 
   useMemo(() => {
-    const estimatedShipDate = new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000);
-    setShipDate(estimatedShipDate);
     if (selectedRushOptionId !== "999") {
 
       if (shipDate.getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > wearDate.getTime()) {

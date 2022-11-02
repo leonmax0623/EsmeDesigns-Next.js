@@ -21,8 +21,6 @@ const Bulk = ({
   deleteAllFromCart
 }) => {
 
-  console.log("#########################", bulkProduct)
-
   const { addToast } = useToasts();
 
   const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId).reverse();
