@@ -77,12 +77,9 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
 
 
-	const [shipDate, setShipDate] = useState(new Date(
-		parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 + new Date().getTime() + 1 * 24 * 60 * 60 * 1000
-	));
-	const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date(
-		parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 + new Date().getTime() + 7 * 24 * 60 * 60 * 1000
-	));
+	const [shipDate, setShipDate] = useState(new Date());
+	const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date());
+
 	useMemo(() => {
 		if (bulkProductProps[0].wearDate) {
 			setWearDate(new Date(bulkProductProps[0].wearDate))
@@ -372,10 +369,12 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	}
 
 	useEffect(() => {
+		const estimatedShipDate = new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000);
+		setShipDate(estimatedShipDate);
 		if (!selectedRushOptionId || editBoolean) return;
 		if (bulkProductProps[0].wearDate) {
 			if (selectedRushOptionId !== "999") {
-				if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
+				if (new Date(shipDate).getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > new Date(wearDate).getTime()) {
 					disallowRush(true);
 					setRushError(true)
 				} else {
@@ -385,7 +384,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			}
 		} else {
 			if (selectedRushOptionId !== "999") {
-				if (shipDate.getTime() > wearDate.getTime()) {
+				if (shipDate.getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > wearDate.getTime()) {
 					disallowRush(true);
 					setRushError(true)
 				} else {
@@ -705,6 +704,11 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	}
 
 	const editOrder = () => {
+		console.log("MMMMMM===", wearDate)
+		console.log("MMMMMM===", shipDate)
+		if (new Date(shipDate).getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 < new Date(wearDate).getTime()) {
+			setRushError(false);
+		}
 		setEditBoolean(false)
 	}
 
