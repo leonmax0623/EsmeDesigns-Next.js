@@ -78,8 +78,8 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
 
 
-	const [shipDate, setShipDate] = useState(new Date());
-	const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date());
+	const [shipDate, setShipDate] = useState(new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000));
+	const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : "");
 
 	const [myTestValue, setMyTestValue] = useState(false);
 
@@ -375,7 +375,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	useEffect(() => {
 		if (!selectedRushOptionId || editBoolean) return;
 		if (bulkProductProps[0].wearDate) {
-			if (selectedRushOptionId !== "999") {
+			if (wearDate !== "") {
 				if (new Date(shipDate).getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > new Date(wearDate).getTime()) {
 					disallowRush(true);
 					setRushError(true)
@@ -385,7 +385,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 				}
 			}
 		} else {
-			if (selectedRushOptionId !== "999") {
+			if (wearDate !== "") {
 				if (shipDate.getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > wearDate.getTime()) {
 					disallowRush(true);
 					setRushError(true)
@@ -478,101 +478,77 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		})
 	}
 
-	if (alterationSelected[0] && styleOptionSelected[0]) {
-		itemsArray = [{
-			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
-			"productTypeId": bulkProductProps[0].productTypeId,
-			"productId": bulkProductProps[0].productId,
-			"selfFabricsId": selectedFabrics,
-			"selfFabricsColorId": selectedFabricsColorId,
-			"liningFabricsId": selectedLining,
-			"liningFabricsColorId": selectedLiningFabricsColorId,
-			"combos": comboArr,
-			"sizeCategoryId": selectedSizeCategoryId,
-			"sizes": sizeArr,
-			"styleAlterations": [
-				{
-					"styleAlterationId": alterationSelected[0].id
-				}
-			],
-			"styleAttributes": attrArr,
-			"styleOptions": [
-				{
-					"styleOptionId": styleOptionSelected[0].id
-				}
-			],
-			"rushId": selectedRushOptionId,
-			"wearDate": formatDate(wearDate),
-			"estimatedShipDate": formatDate(shipDate)
-		}];
-	} else {
-		itemsArray = [{
-			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
-			"productTypeId": bulkProductProps[0].productTypeId,
-			"productId": bulkProductProps[0].productId,
-			"selfFabricsId": selectedFabrics,
-			"selfFabricsColorId": selectedFabricsColorId,
-			"liningFabricsId": selectedLining,
-			"liningFabricsColorId": selectedLiningFabricsColorId,
-			"combos": comboArr,
-			"sizeCategoryId": selectedSizeCategoryId,
-			"sizes": sizeArr,
-			"styleAttributes": attrArr,
-			"rushId": selectedRushOptionId,
-			"wearDate": formatDate(wearDate),
-			"estimatedShipDate": formatDate(shipDate)
-		}];
+	let alterationOptionsArray = [];
+
+	if (alterationSelected.length > 0) {
+		alterationSelected.map((item, i) => {
+			let temp = {
+				styleAlterationId: item.id
+			}
+			alterationOptionsArray = [...alterationOptionsArray, temp]
+		})
 	}
 
-	if (alterationSelected[0] && !styleOptionSelected[0]) {
-		itemsArray = [{
-			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
-			"productTypeId": bulkProductProps[0].productTypeId,
-			"productId": bulkProductProps[0].productId,
-			"selfFabricsId": selectedFabrics,
-			"selfFabricsColorId": selectedFabricsColorId,
-			"liningFabricsId": selectedLining,
-			"liningFabricsColorId": selectedLiningFabricsColorId,
-			"combos": comboArr,
-			"sizeCategoryId": selectedSizeCategoryId,
-			"sizes": sizeArr,
-			"styleAlterations": [
-				{
-					"styleAlterationId": alterationSelected[0].id
-				}
-			],
-			"styleAttributes": attrArr,
-			"rushId": selectedRushOptionId,
-			"wearDate": formatDate(wearDate),
-			"estimatedShipDate": formatDate(shipDate)
-		}];
+	let styleOptionsArray = [];
+
+	if (styleOptionSelected.length > 0) {
+		styleOptionSelected.map((item, i) => {
+			let temp = {
+				styleOptionId: item.id
+			}
+			styleOptionsArray = [...styleOptionsArray, temp]
+		})
 	}
 
-	if (!alterationSelected[0] && styleOptionSelected[0]) {
-		itemsArray = [{
-			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
-			"productTypeId": bulkProductProps[0].productTypeId,
-			"productId": bulkProductProps[0].productId,
-			"selfFabricsId": selectedFabrics,
-			"selfFabricsColorId": selectedFabricsColorId,
-			"liningFabricsId": selectedLining,
-			"liningFabricsColorId": selectedLiningFabricsColorId,
-			"combos": comboArr,
-			"sizeCategoryId": selectedSizeCategoryId,
-			"sizes": sizeArr,
-			"styleOptions": [
-				{
-					"styleOptionId": styleOptionSelected[0].id
-				}
-			],
-			"styleAttributes": attrArr,
-			"rushId": selectedRushOptionId,
-			"wearDate": formatDate(wearDate),
-			"estimatedShipDate": formatDate(shipDate)
-		}];
+	itemsArray = {
+		"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
+		"productTypeId": bulkProductProps[0].productTypeId,
+		"productId": bulkProductProps[0].productId,
+		"selfFabricsId": selectedFabrics,
+		"selfFabricsColorId": selectedFabricsColorId,
+		"liningFabricsId": selectedLining,
+		"liningFabricsColorId": selectedLiningFabricsColorId,
+		"combos": comboArr,
+		"sizeCategoryId": selectedSizeCategoryId,
+		"sizes": sizeArr,
+		"styleAlterations": alterationOptionsArray,
+		"styleAttributes": attrArr,
+		"styleOptions": styleOptionsArray,
+		"rushId": selectedRushOptionId,
+		"wearDate": formatDate(wearDate),
+		"estimatedShipDate": formatDate(shipDate)
+	};
+
+	if (selectedFabrics === "") {
+		delete itemsArray['selfFabricsId'];
 	}
-
-
+	if (selectedFabricsColorId === "") {
+		delete itemsArray['selfFabricsColorId'];
+	}
+	if (selectedLining === "") {
+		delete itemsArray['liningFabricsId'];
+	}
+	if (selectedLiningFabricsColorId === "") {
+		delete itemsArray['liningFabricsColorId'];
+	}
+	if (comboArr.length === 0) {
+		delete itemsArray['combos'];
+	}
+	if (sizeArr.length === 0) {
+		delete itemsArray['sizes'];
+	}
+	if (alterationOptionsArray.length === 0) {
+		delete itemsArray['styleAlterations'];
+	}
+	if (attrArr.length === 0) {
+		delete itemsArray['styleAttributes'];
+	}
+	if (styleOptionsArray.length === 0) {
+		delete itemsArray['styleOptions'];
+	}
+	if (selectedRushOptionId === "") {
+		delete itemsArray['rushId'];
+	}
 
 	const handleBulkOrder = () => {
 
@@ -601,7 +577,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			"shippingState": selectedShippingStateId,
 			"shippingCountry": shippingCountryId,
 			"finalized": "False",
-			"items": itemsArray
+			"items": [itemsArray]
 		}
 
 
@@ -612,6 +588,36 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			"accessToken": tokenInStorage,
 			"parameters": JSON.stringify(parameters)
 		}
+
+		itemsArray = {
+			"itemsId": bulkProductProps[0].itemsId ? bulkProductProps[0].itemsId : "",
+			"productTypeId": bulkProductProps[0].productTypeId,
+			"productId": bulkProductProps[0].productId,
+			"selfFabricsId": selectedFabrics,
+			"selfFabricsColorId": selectedFabricsColorId,
+			"liningFabricsId": selectedLining,
+			"liningFabricsColorId": selectedLiningFabricsColorId,
+			"combos": comboArr,
+			"sizeCategoryId": selectedSizeCategoryId,
+			"sizes": sizeArr,
+			"styleAlterations": alterationOptionsArray,
+			"styleAttributes": attrArr,
+			"styleOptions": styleOptionsArray,
+			"rushId": selectedRushOptionId,
+			"wearDate": formatDate(wearDate),
+			"estimatedShipDate": formatDate(shipDate)
+		};
+
+		const formDataPrice = {
+			"feaMethod": "getPrice",
+			"accessToken": tokenInStorage,
+			"parameters": JSON.stringify(itemsArray)
+		}
+
+		API.post('/', new URLSearchParams(formDataPrice))
+			.then(response => {
+				console.log("~~~~~~~~~~~~", response)
+			})
 
 
 		API.post('/', new URLSearchParams(formData))
