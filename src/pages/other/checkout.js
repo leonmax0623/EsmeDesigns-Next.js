@@ -22,6 +22,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
   let extraPayPrice = 0;
   let totalAmount = 0;
   const [orderDate, setOrderDate] = useState(new Date());
+  const [shippingFee, setShippingFee] = useState("")
 
   const [billingMethods, setBillingMethods] = useState("");
   const [selectedBillingMethod, setSelectedBillingMethod] = useState("");
@@ -60,8 +61,28 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
   const [territories, setTerritories] = useState([])
 
   useEffect(() => {
-    document.querySelector("body").classList.remove("overflow-hidden");
-  });
+    if (billingMethods.length > 0) {
+      setSelectedBillingMethod(
+        billingMethods.filter(item => item.isDefault === "True")[0].paymentMethodsId
+      )
+    }
+  }, [billingMethods]);
+
+  useEffect(() => {
+    if (shippingMethods.length > 0) {
+      setSelectedShippingMethod(
+        shippingMethods.filter(item => item.isDefault === "True")[0].shippingMethodsId
+      )
+      setShippingFee(
+        shippingMethods.filter(item => item.isDefault === "True")[0].price
+      )
+    }
+  }, [shippingMethods]);
+
+  // useEffect(() => {
+  //   setShippingFee(selectedShippingMethod.price)
+  // }, [selectedShippingMethod])
+
 
   useMemo(async () => {
 
@@ -182,105 +203,82 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
       comboArr = [...comboArr, temp];
     })
 
-    if (product.selectedStyleOption[0] && product.selectedAlteration[0]) {
-      products = {
-        "itemsId": product.itemsId,
-        "productTypeId": product.productTypeId,
-        "productId": product.productId,
-        "selfFabricsId": product.selectedFabrics,
-        "selfFabricsColorId": product.selectedFabricsColorId,
-        "liningFabricsId": product.selectedLining,
-        "liningFabricsColorId": product.selectedLiningFabricsColorId,
-        "combos": comboArr,
-        "sizeCategoryId": product.selectedSizeCategoryId,
-        "sizes": sizeArr,
-        "styleAlterations": [
-          {
-            "styleAlterationId": product.selectedAlteration[0].id
-          }
-        ],
-        "styleAttributes": attrArr,
-        "styleOptions": [
-          {
-            "styleOptionId": product.selectedStyleOption[0].id
-          }
-        ],
-        "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": product.wearDate,
-        "estimatedShipDate": product.shipDate
-      };
-    } else {
-      products = {
-        "itemsId": product.itemsId,
-        "productTypeId": product.productTypeId,
-        "productId": product.productId,
-        "selfFabricsId": product.selectedFabrics,
-        "selfFabricsColorId": product.selectedFabricsColorId,
-        "liningFabricsId": product.selectedLining,
-        "liningFabricsColorId": product.selectedLiningFabricsColorId,
-        "combos": comboArr,
-        "sizeCategoryId": product.selectedSizeCategoryId,
-        "sizes": sizeArr,
-        "styleAttributes": attrArr,
-        "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": product.wearDate,
-        "estimatedShipDate": product.shipDate
-      };
+    let alterationOptionsArray = [];
+
+    if (product.selectedAlteration.length > 0) {
+      product.selectedAlteration.map((item, i) => {
+        let temp = {
+          styleAlterationId: item.id
+        }
+        alterationOptionsArray = [...alterationOptionsArray, temp]
+      })
     }
 
-    if (product.selectedAlteration[0] && !product.selectedStyleOption[0]) {
-      products = {
-        "itemsId": product.itemsId,
-        "productTypeId": product.productTypeId,
-        "productId": product.productId,
-        "selfFabricsId": product.selectedFabrics,
-        "selfFabricsColorId": product.selectedFabricsColorId,
-        "liningFabricsId": product.selectedLining,
-        "liningFabricsColorId": product.selectedLiningFabricsColorId,
-        "combos": comboArr,
-        "sizeCategoryId": product.selectedSizeCategoryId,
-        "sizes": sizeArr,
-        "styleAlterations": [
-          {
-            "styleAlterationId": product.selectedAlteration[0].id
-          }
-        ],
-        "styleAttributes": attrArr,
-        "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": product.wearDate,
-        "estimatedShipDate": product.shipDate
-      };
+    let styleOptionsArray = [];
+
+    if (product.selectedStyleOption.length > 0) {
+      product.selectedStyleOption.map((item, i) => {
+        let temp = {
+          styleOptionId: item.id
+        }
+        styleOptionsArray = [...styleOptionsArray, temp]
+      })
     }
 
-    if (!product.selectedAlteration[0] && product.selectedStyleOption[0]) {
-      products = {
-        "itemsId": product.itemsId,
-        "productTypeId": product.productTypeId,
-        "productId": product.productId,
-        "selfFabricsId": product.selectedFabrics,
-        "selfFabricsColorId": product.selectedFabricsColorId,
-        "liningFabricsId": product.selectedLining,
-        "liningFabricsColorId": product.selectedLiningFabricsColorId,
-        "combos": comboArr,
-        "sizeCategoryId": product.selectedSizeCategoryId,
-        "sizes": sizeArr,
-        "styleOptions": [
-          {
-            "styleOptionId": product.selectedStyleOption[0].id
-          }
-        ],
-        "styleAttributes": attrArr,
-        "rushId": product.selectedRushOption[0].rushId,
-        "wearDate": product.wearDate,
-        "estimatedShipDate": product.shipDate
-      };
+    products = {
+      "itemsId": product.itemsId,
+      "productTypeId": product.productTypeId,
+      "productId": product.productId,
+      "selfFabricsId": product.selectedFabrics,
+      "selfFabricsColorId": product.selectedFabricsColorId,
+      "liningFabricsId": product.selectedLining,
+      "liningFabricsColorId": product.selectedLiningFabricsColorId,
+      "combos": comboArr,
+      "sizeCategoryId": product.selectedSizeCategoryId,
+      "sizes": sizeArr,
+      "styleAlterations": alterationOptionsArray,
+      "styleAttributes": attrArr,
+      "styleOptions": styleOptionsArray,
+      "rushId": product.selectedRushOption[0].rushId,
+      "wearDate": product.wearDate,
+      "estimatedShipDate": product.shipDate
+    };
+
+    if (product.selectedFabrics === "") {
+      delete products['selfFabricsId'];
     }
+    if (product.selectedFabricsColorId === "") {
+      delete products['selfFabricsColorId'];
+    }
+    if (product.selectedLining === "") {
+      delete products['liningFabricsId'];
+    }
+    if (product.selectedLiningFabricsColorId === "") {
+      delete products['liningFabricsColorId'];
+    }
+    if (comboArr.length === 0) {
+      delete products['combos'];
+    }
+    if (sizeArr.length === 0) {
+      delete products['sizes'];
+    }
+    if (alterationOptionsArray.length === 0) {
+      delete products['styleAlterations'];
+    }
+    if (attrArr.length === 0) {
+      delete products['styleAttributes'];
+    }
+    if (styleOptionsArray.length === 0) {
+      delete products['styleOptions'];
+    }
+    if (product.selectedRushOption.length === 0) {
+      delete products['rushId'];
+    }
+
+    console.log("~~~~~~~~~~~Total TEST ```````````", products)
+
     itemsArray = [...itemsArray, products]
-    console.log("=====================Item=============", products)
   })
-
-  console.log("itemsArray", itemsArray)
-
 
   const confirmOrder = (event) => {
     event.preventDefault();
@@ -347,10 +345,10 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
           if (response.data.errorCode === "0") {
             addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
             localStorage.removeItem("OrderId")
-            deleteAllFromCart(addToast)
+            deleteAllFromCart(null)
             Router.push('/');
           } else {
-            addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+            addToast(response.data.errorText, { appearance: "error", autoDismiss: true });
           }
           // const cookie = response.data.accessToken;
           // localStorage.setItem('accessToken', cookie)
@@ -466,6 +464,8 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
                                       type="radio"
                                       id={item.paymentMethodsId}
                                       name="payment-method"
+                                      // checked={item.isDefault === "True"}
+                                      defaultChecked={item.isDefault === "True"}
                                       defaultValue={item.paymentMethodsId}
                                       onChange={e => setSelectedBillingMethod(e.target.defaultValue)}
                                     />
@@ -567,6 +567,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
                                       id={item.shippingMethodsId}
                                       name="shipping-method"
                                       defaultValue={item.shippingMethodsId}
+                                      defaultChecked={item.isDefault === "True"}
                                       onChange={e => setSelectedShippingMethod(e.target.defaultValue)}
                                     />
                                     <label htmlFor={item.shippingMethodsId}>
@@ -639,7 +640,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
                                 })}
                               </ul>
                               <p>
-                                Shipping Fee <span>$00.00</span>
+                                Shipping Fee <span>${shippingFee ? parseInt(shippingFee).toFixed(2) : 0.00}</span>
                               </p>
                               <p>
                                 Extra Price{" "}
@@ -647,7 +648,7 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
                               </p>
                               <h4>
                                 Grand Total{" "}
-                                <span>${(cartTotalPrice + extraPayPrice).toFixed(2)}</span>
+                                <span>${(cartTotalPrice + extraPayPrice + parseInt(shippingFee)).toFixed(2)}</span>
                               </h4>
                             </div>
                           </div>

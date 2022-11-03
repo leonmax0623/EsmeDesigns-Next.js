@@ -93,8 +93,8 @@ const ProductDescription = ({
   const [shippingToName, setShippingToName] = useState("");
   const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
 
-  const [shipDate, setShipDate] = useState(new Date());
-  const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date());
+  const [shipDate, setShipDate] = useState(new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000));
+  const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : "");
 
 
   useMemo(() => {
@@ -318,7 +318,7 @@ const ProductDescription = ({
   }
 
   useMemo(() => {
-    if (selectedRushOptionId !== "999") {
+    if (wearDate !== "") {
 
       if (shipDate.getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > wearDate.getTime()) {
         disallowRush(true);
@@ -440,105 +440,56 @@ const ProductDescription = ({
       })
     }
 
+    itemsArray = {
+      "itemsId": "",
+      "productTypeId": product.productTypeId,
+      "productId": product.productId,
+      "selfFabricsId": selectedFabrics,
+      "selfFabricsColorId": selectedFabricsColorId,
+      "liningFabricsId": selectedLining,
+      "liningFabricsColorId": selectedLiningFabricsColorId,
+      "combos": comboArr,
+      "sizeCategoryId": selectedSizeCategoryId,
+      "sizes": [
+        {
+          "sizeId": selectedCategorySizeValueId,
+          "amount": quantityCount
+        }
+      ],
+      "styleAlterations": alterationOptionsArray,
+      "styleAttributes": attrArr,
+      "styleOptions": styleOptionsArray,
+      "rushId": selectedRushOptionId,
+      "wearDate": wearDate,
+      "estimatedShipDate": shipDate
+    };
 
-    if (alterationSelected[0] && styleOptionSelected[0]) {
-      itemsArray = [{
-        "itemsId": "",
-        "productTypeId": product.productTypeId,
-        "productId": product.productId,
-        "selfFabricsId": selectedFabrics,
-        "selfFabricsColorId": selectedFabricsColorId,
-        "liningFabricsId": selectedLining ? selectedLining : null,
-        "liningFabricsColorId": selectedLiningFabricsColorId ? selectedLiningFabricsColorId : null,
-        "combos": comboArr.length > 0 ? comboArr : null,
-        "sizeCategoryId": selectedSizeCategoryId,
-        "sizes": [
-          {
-            "sizeId": selectedCategorySizeValueId,
-            "amount": quantityCount
-          }
-        ],
-        "styleAlterations": alterationOptionsArray,
-        "styleAttributes": attrArr,
-        "styleOptions": styleOptionsArray,
-        "rushId": selectedRushOptionId,
-        "wearDate": wearDate,
-        "estimatedShipDate": shipDate
-      }];
+    if (selectedFabrics === "") {
+      delete itemsArray['selfFabricsId'];
     }
-
-    if (alterationSelected[0] && !styleOptionSelected[0]) {
-      itemsArray = [{
-        "itemsId": "",
-        "productTypeId": product.productTypeId,
-        "productId": product.productId,
-        "selfFabricsId": selectedFabrics,
-        "selfFabricsColorId": selectedFabricsColorId,
-        "liningFabricsId": selectedLining ? selectedLining : null,
-        "liningFabricsColorId": selectedLiningFabricsColorId ? selectedLiningFabricsColorId : null,
-        "combos": comboArr.length > 0 ? comboArr : null,
-        "sizeCategoryId": selectedSizeCategoryId,
-        "sizes": [
-          {
-            "sizeId": selectedCategorySizeValueId,
-            "amount": quantityCount
-          }
-        ],
-        "styleAlterations": alterationOptionsArray,
-        "styleAttributes": attrArr,
-        "rushId": selectedRushOptionId,
-        "wearDate": wearDate,
-        "estimatedShipDate": shipDate
-      }];
+    if (selectedFabricsColorId === "") {
+      delete itemsArray['selfFabricsColorId'];
     }
-
-    if (!alterationSelected[0] && styleOptionSelected[0]) {
-      itemsArray = [{
-        "itemsId": "",
-        "productTypeId": product.productTypeId,
-        "productId": product.productId,
-        "selfFabricsId": selectedFabrics,
-        "selfFabricsColorId": selectedFabricsColorId,
-        "liningFabricsId": selectedLining ? selectedLining : null,
-        "liningFabricsColorId": selectedLiningFabricsColorId ? selectedLiningFabricsColorId : null,
-        "combos": comboArr.length > 0 ? comboArr : null,
-        "sizeCategoryId": selectedSizeCategoryId,
-        "sizes": [
-          {
-            "sizeId": selectedCategorySizeValueId,
-            "amount": quantityCount
-          }
-        ],
-        "styleOptions": styleOptionsArray,
-        "styleAttributes": attrArr,
-        "rushId": selectedRushOptionId,
-        "wearDate": wearDate,
-        "estimatedShipDate": shipDate
-      }];
+    if (selectedLining === "") {
+      delete itemsArray['liningFabricsId'];
     }
-
-    if (!alterationSelected[0] && !styleOptionSelected[0]) {
-      itemsArray = [{
-        "itemsId": "",
-        "productTypeId": product.productTypeId,
-        "productId": product.productId,
-        "selfFabricsId": selectedFabrics,
-        "selfFabricsColorId": selectedFabricsColorId,
-        "liningFabricsId": selectedLining ? selectedLining : null,
-        "liningFabricsColorId": selectedLiningFabricsColorId ? selectedLiningFabricsColorId : null,
-        "combos": comboArr.length > 0 ? comboArr : null,
-        "sizeCategoryId": selectedSizeCategoryId,
-        "sizes": [
-          {
-            "sizeId": selectedCategorySizeValueId,
-            "amount": quantityCount
-          }
-        ],
-        "styleAttributes": attrArr,
-        "rushId": selectedRushOptionId,
-        "wearDate": wearDate,
-        "estimatedShipDate": shipDate
-      }];
+    if (selectedLiningFabricsColorId === "") {
+      delete itemsArray['liningFabricsColorId'];
+    }
+    if (comboArr.length === 0) {
+      delete itemsArray['combos'];
+    }
+    if (alterationOptionsArray.length === 0) {
+      delete itemsArray['styleAlterations'];
+    }
+    if (attrArr.length === 0) {
+      delete itemsArray['styleAttributes'];
+    }
+    if (styleOptionsArray.length === 0) {
+      delete itemsArray['styleOptions'];
+    }
+    if (selectedRushOptionId === "") {
+      delete itemsArray['rushId'];
     }
 
     console.log("=======itemsArray==========", itemsArray)
@@ -564,7 +515,7 @@ const ProductDescription = ({
       "shippingState": selectedShippingStateId,
       "shippingCountry": shippingCountryId,
       "finalized": "False",
-      "items": itemsArray
+      "items": [itemsArray]
     }
 
     const tokenInStorage = localStorage.getItem('accessToken')
