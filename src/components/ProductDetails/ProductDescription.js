@@ -32,7 +32,6 @@ const ProductDescription = ({
   disallowRush,
   showRating
 }) => {
-  console.log("Maximus ProductDescription=>", product)
   const router = useRouter()
   const dispatch = useDispatch();
 
@@ -263,6 +262,9 @@ const ProductDescription = ({
     return [year, month, day].join('-');
   }
 
+  console.log("<===WearDate===>", formatDate(wearDate))
+  console.log("<===ESD===>", formatDate(shipDate))
+
   const productCartQty = getProductCartQuantity(
     cartItems,
     product
@@ -320,7 +322,7 @@ const ProductDescription = ({
   useMemo(() => {
     if (wearDate !== "") {
 
-      if (shipDate.getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > wearDate.getTime()) {
+      if (shipDate.getTime() > wearDate.getTime()) {
         disallowRush(true);
         setRushError(true)
       } else {

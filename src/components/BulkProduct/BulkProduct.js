@@ -237,8 +237,23 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		}
 	}, [bulkProductProps[0].styleAttributes])
 
+	const formatDate = (date) => {
+		var d = new Date(date),
+			month = '' + (d.getMonth() + 1),
+			day = '' + d.getDate(),
+			year = d.getFullYear();
 
-	// console.log("styleOptions/styleOptions=>", JSON.parse(regularSizeArray)[0])
+		if (month.length < 2)
+			month = '0' + month;
+		if (day.length < 2)
+			day = '0' + day;
+
+		return [year, month, day].join('-');
+	}
+
+
+	console.log("<===WearDate===>", formatDate(wearDate))
+	console.log("<===ESD===>", formatDate(shipDate))
 
 	//custom
 	const alterationOptions = [];
@@ -271,19 +286,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		styleOptions.push(array)
 	});
 
-	const formatDate = (date) => {
-		var d = new Date(date),
-			month = '' + (d.getMonth() + 1),
-			day = '' + d.getDate(),
-			year = d.getFullYear();
 
-		if (month.length < 2)
-			month = '0' + month;
-		if (day.length < 2)
-			day = '0' + day;
-
-		return [year, month, day].join('-');
-	}
 
 
 	const handleRegularSizeArray = (e) => {
@@ -376,7 +379,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		if (!selectedRushOptionId || editBoolean) return;
 		if (bulkProductProps[0].wearDate) {
 			if (wearDate !== "") {
-				if (new Date(shipDate).getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > new Date(wearDate).getTime()) {
+				if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
 					disallowRush(true);
 					setRushError(true)
 				} else {
@@ -386,7 +389,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			}
 		} else {
 			if (wearDate !== "") {
-				if (shipDate.getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000 > wearDate.getTime()) {
+				if (shipDate.getTime() > wearDate.getTime()) {
 					disallowRush(true);
 					setRushError(true)
 				} else {
