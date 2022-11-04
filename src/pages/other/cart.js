@@ -35,7 +35,7 @@ const Cart = ({
 
   const disallowRush = (val) => {
     if (val) {
-      addToast("Sorry, you cannot add the dress to the cart because it has different lead time than the others. Place separated order please.", { appearance: "error", autoDismiss: true });
+      addToast("Sorry, you cannot add the item to the cart because 'Wear Date' is earlier than 'Estimated Ship Date'", { appearance: "error", autoDismiss: true });
     } else {
       addToast("Now you can add the product to your cart!", { appearance: "success", autoDismiss: true });
     }

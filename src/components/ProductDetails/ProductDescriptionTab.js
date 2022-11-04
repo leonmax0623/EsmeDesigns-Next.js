@@ -1,8 +1,16 @@
+import { useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import { IoIosStar, IoIosStarOutline } from "react-icons/io";
+import Rating from 'react-rating';
+import { useToasts } from "react-toast-notifications";
+import API from '../../api';
 
 const ProductDescriptionTab = ({ product, allowReviews, showReviews, allowRating }) => {
+  const { addToast } = useToasts();
+  const [ratings, setRaings] = useState(5);
+  const [reviewDescription, setReviewDescription] = useState("")
+
   const sizes = [{
     id: 1,
     description: "Bust",
@@ -132,6 +140,72 @@ const ProductDescriptionTab = ({ product, allowReviews, showReviews, allowRating
   }
   ]
 
+  const handleRaings = (value) => {
+    setRaings(value)
+  }
+
+  const handleSetReviewContent = (e) => {
+    console.log("===E===", e.target.value)
+    setReviewDescription(e.target.value)
+  }
+
+  const submitReview = (e) => {
+    e.preventDefault();
+
+    console.log("===ratings===", ratings)
+    console.log("===reviewDescription===", reviewDescription)
+
+    const tokenInStorage = localStorage.getItem('accessToken')
+
+    const formData = {
+      "feaMethod": "addProductsReview",
+      "accessToken": tokenInStorage,
+      "productId": product.productId,
+      "productTypeId": product.productTypeId,
+      "rating": ratings,
+      "review": reviewDescription,
+      "reviewersName": ""
+    }
+
+    API.post('/', new URLSearchParams(formData))
+      .then(response => {
+        console.log('response', response);
+        if (response.data.errorCode === "0") {
+          addToast("Reveiew was successfully sent!", { appearance: "success", autoDismiss: true });
+        } else {
+          addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+        }
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
+
+    const ratingsFormData = {
+      "feaMethod": "setProductsRating",
+      "accessToken": tokenInStorage,
+      "productId": product.productId,
+      "productTypeId": product.productTypeId,
+      "rating": ratings,
+    }
+
+    API.post('/', new URLSearchParams(ratingsFormData))
+      .then(response => {
+        console.log('response', response);
+        if (response.data.errorCode === "0") {
+          addToast("Ratings was successfully sent!", { appearance: "success", autoDismiss: true });
+        } else {
+          addToast(response.data.errorText, { appearance: "error", autoDismiss: true });
+        }
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
+  }
+
+  const isAdmin = localStorage.getItem('isAdmin')
+  console.log("===isAdmin===", typeof isAdmin)
+
+
   return (
     <div className="product-description-tab space-pt--r100 space-mt--r100 border-top--grey">
       <Tab.Container defaultActiveKey="description">
@@ -241,7 +315,7 @@ const ProductDescriptionTab = ({ product, allowReviews, showReviews, allowRating
                 {product.productName}
               </h2>
               {/*=======  single review  =======*/}
-              {showReviews === "True" && product.reviewList && product.reviewList.map((review, i) => {
+              {showReviews === "Users" && product.reviewList && product.reviewList.map((review, i) => {
                 return (
                   <div className="single-review">
                     <div className="single-review__image">
@@ -275,34 +349,35 @@ const ProductDescriptionTab = ({ product, allowReviews, showReviews, allowRating
                 )
               })}
 
-              {allowRating !== "None" && allowReviews !== "None" && (
+              {isAdmin !== "False" && allowReviews === "Admin" && (
                 <>
                   {/*=======  End of single review  =======*/}
                   <h2 h2 className="review-title space-mb--20">Add a review</h2>
-                  <p className="text-center">
-                    Your email address will not be published. Required fields are
-                    marked *
-                  </p>
                   {/*=======  review form  =======*/}
                   <div className="lezada-form lezada-form--review">
                     <form>
                       <div className="row">
-                        <div className="col-lg-6 space-mb--20">
-                          <input type="text" placeholder="Name *" required />
-                        </div>
-                        <div className="col-lg-6 space-mb--20">
-                          <input type="email" placeholder="Email *" required />
-                        </div>
+                        {allowReviews === "All" && (
+                          <>
+                            <div className="col-lg-6 space-mb--20">
+                              <input type="text" placeholder="Name *" required />
+                            </div>
+                            <div className="col-lg-6 space-mb--20">
+                              <input type="email" placeholder="Email *" required />
+                            </div>
+                          </>
+                        )}
                         <div className="col-lg-12 space-mb--20">
                           <span className="rating-title space-mr--20">
                             YOUR RATING
                           </span>
                           <span className="product-rating">
-                            <IoIosStarOutline />
-                            <IoIosStarOutline />
-                            <IoIosStarOutline />
-                            <IoIosStarOutline />
-                            <IoIosStarOutline />
+                            <Rating
+                              emptySymbol={<IoIosStarOutline />}
+                              fullSymbol={<IoIosStar style={{ color: "#f5cc26" }} />}
+                              onClick={handleRaings}
+                              initialRating={ratings}
+                            />
                           </span>
                         </div>
                         <div className="col-lg-12 space-mb--20">
@@ -310,13 +385,13 @@ const ProductDescriptionTab = ({ product, allowReviews, showReviews, allowRating
                             cols={30}
                             rows={10}
                             placeholder="Your review *"
-                            defaultValue={""}
+                            onChange={handleSetReviewContent}
                           />
                         </div>
                         <div className="col-lg-12 text-center">
                           <button
-                            type="submit"
                             className="lezada-button lezada-button--medium"
+                            onClick={submitReview}
                           >
                             submit
                           </button>

@@ -28,6 +28,7 @@ const Login = () => {
 			.then(response => {
 				const cookie = response.data.accessToken;
 				localStorage.setItem('accessToken', cookie)
+				localStorage.setItem('isAdmin', response.data.isAdmin)
 				// cookies.set("accessToken", cookie, [{ maxAge: 3600000 }])
 				const previousRouter = localStorage.getItem('router')
 				if (previousRouter && previousRouter !== '') {

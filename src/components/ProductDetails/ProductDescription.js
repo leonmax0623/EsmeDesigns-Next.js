@@ -36,6 +36,7 @@ const ProductDescription = ({
   const dispatch = useDispatch();
 
   let tempWearDate = localStorage.getItem("previous_wearDate")
+  console.log("===showRating===", showRating)
 
 
 
@@ -587,7 +588,7 @@ const ProductDescription = ({
 
   return (
     <div className="product-content">
-      {showRating === "True" && product.reviewList && product.reviewList.length > 0 ? (
+      {showRating === "Users" && product.reviewList && product.reviewList.length > 0 ? (
         <div className="product-content__rating-wrap d-block d-sm-flex space-mb--20">
           <div className="product-content__rating space-mr--20">
             <ProductRating ratingValue={product.reviewList.reduce((ac, a) => parseInt(a.rating) + ac, 0) / product.reviewList.length} />
