@@ -1,14 +1,22 @@
 import { v4 as uuidv4 } from "uuid";
-import {
-  ADD_TO_CART,
-  DECREASE_QUANTITY, DELETE_ALL_FROM_CART, DELETE_FROM_CART
-} from "../actions/cartActions";
+import { ADD_CLONE_ORDER_TO_CART, ADD_TO_CART, DECREASE_QUANTITY, DELETE_ALL_FROM_CART, DELETE_FROM_CART } from "../actions/cartActions";
 
 const initState = [];
 
 const cartReducer = (state = initState, action) => {
   const cartItems = state,
     product = action.payload;
+
+  if (action.type === ADD_CLONE_ORDER_TO_CART) {
+    console.log("~~~~~CLONE``````````", action.payload)
+    const cloningItem = cartItems.filter((item, i) => item.itemsId === product.cloningItemsId)[0];
+    let tempClone = { ...cloningItem }
+    delete tempClone['cartItemId'];
+    delete tempClone['itemsId']
+    return [
+      ...cartItems, { ...tempClone, itemsId: product.selfItemsId, cartItemId: uuidv4() }
+    ];
+  }
 
   if (action.type === ADD_TO_CART) {
     // for non variant products
@@ -87,6 +95,8 @@ const cartReducer = (state = initState, action) => {
       }
     }
   }
+
+
 
   if (action.type === DECREASE_QUANTITY) {
     if (product.quantity === 1) {

@@ -19,6 +19,7 @@ const CartOverlay = ({
   const { addToast } = useToasts();
 
   const handleDeleteProduct = (product, addToast) => {
+    console.log("CartOverlay ====>", product.itemsId)
 
     if (localStorage.getItem("OrderId") && localStorage.getItem("OrderId") !== "") {
       let parameters = {

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import { LightgalleryProvider, LightgalleryItem } from "react-lightgallery";
-import { IoMdExpand, IoIosHeartEmpty } from "react-icons/io";
+import { IoIosHeartEmpty, IoMdExpand } from "react-icons/io";
+import { LightgalleryItem, LightgalleryProvider } from "react-lightgallery";
 import { Tooltip } from "react-tippy";
 
 const ImageGallerySticky = ({
@@ -39,15 +39,13 @@ const ImageGallerySticky = ({
             duration={200}
           >
             <button
-              className=""
               onClick={
                 wishlistItem !== undefined
                   ? () => deleteFromWishlist(product, addToast)
                   : () => addToWishlist(product, addToast)
               }
-              className={`wishlist-icon ${
-                wishlistItem !== undefined ? "active" : ""
-              }`}
+              className={`wishlist-icon ${wishlistItem !== undefined ? "active" : ""
+                }`}
             >
               <IoIosHeartEmpty />
             </button>
