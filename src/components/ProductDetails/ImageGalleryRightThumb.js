@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from "react";
-import { LightgalleryProvider, LightgalleryItem } from "react-lightgallery";
+import { Col, Row } from "react-bootstrap";
+import { IoIosHeartEmpty, IoMdExpand } from "react-icons/io";
 import Swiper from "react-id-swiper";
-import { IoMdExpand, IoIosHeartEmpty } from "react-icons/io";
+import { LightgalleryItem, LightgalleryProvider } from "react-lightgallery";
 import { Tooltip } from "react-tippy";
-import { Row, Col } from "react-bootstrap";
 
 const ImageGalleryRightThumb = ({
   product,
@@ -130,15 +130,13 @@ const ImageGalleryRightThumb = ({
                 duration={200}
               >
                 <button
-                  className=""
                   onClick={
                     wishlistItem !== undefined
                       ? () => deleteFromWishlist(product, addToast)
                       : () => addToWishlist(product, addToast)
                   }
-                  className={`wishlist-icon ${
-                    wishlistItem !== undefined ? "active" : ""
-                  }`}
+                  className={`wishlist-icon ${wishlistItem !== undefined ? "active" : ""
+                    }`}
                 >
                   <IoIosHeartEmpty />
                 </button>

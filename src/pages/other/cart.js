@@ -8,7 +8,7 @@ import API from '../../api';
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { BulkProduct } from "../../components/BulkProduct";
 import { LayoutTwo } from "../../components/Layout";
-import { addBulkToCart, addToCart, decreaseQuantity, deleteAllFromCart, deleteFromCart } from "../../redux/actions/cartActions";
+import { addBulkToCart, addToCart, cloneBulkOrder, decreaseQuantity, deleteAllFromCart, deleteFromCart } from "../../redux/actions/cartActions";
 
 const Cart = ({
   cartItems,
@@ -17,7 +17,8 @@ const Cart = ({
   decreaseQuantity,
   addToCart,
   deleteFromCart,
-  deleteAllFromCart
+  deleteAllFromCart,
+  cloneBulkOrder
 }) => {
   const { addToast } = useToasts();
   let mainPrice = 0;
@@ -104,7 +105,7 @@ const Cart = ({
                 <div className="cart-table">
                   {cartItems && cartItems.map((order, i) => {
                     return (
-                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart} addToCart={addToCart} addToast={addToast} disallowRush={disallowRush}></BulkProduct>
+                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart} addToCart={addToCart} addToast={addToast} disallowRush={disallowRush} cloneOrder={cloneBulkOrder} cartItems={cartItems}></BulkProduct>
                     )
                   })}
                 </div>
@@ -284,6 +285,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteAllFromCart: (addToast) => {
       dispatch(deleteAllFromCart(addToast));
+    },
+    cloneBulkOrder: (productId) => {
+      dispatch(cloneBulkOrder(productId))
     }
   };
 };

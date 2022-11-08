@@ -2,6 +2,7 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
+export const ADD_CLONE_ORDER_TO_CART = "ADD_CLONE_ORDER_TO_CART";
 
 //add to cart
 export const addToCart = (
@@ -126,6 +127,18 @@ export const addBulkToCart = (data) => {
         itemsId: data.tempItemsId,
         ordersId: data.tempOrdersId
       }
+    });
+  };
+};
+
+export const cloneBulkOrder = (data) => {
+
+  console.log("CLONE ITEM===>", data)
+  return dispatch => {
+
+    dispatch({
+      type: ADD_CLONE_ORDER_TO_CART,
+      payload: data
     });
   };
 };

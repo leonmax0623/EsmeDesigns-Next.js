@@ -36,9 +36,6 @@ const ProductDescription = ({
   const dispatch = useDispatch();
 
   let tempWearDate = localStorage.getItem("previous_wearDate")
-  console.log("===showRating===", showRating)
-
-
 
   const [rushError, setRushError] = useState(true)
   const [comboArray, setComboArray] = useState([])
@@ -233,7 +230,6 @@ const ProductDescription = ({
     array[comboId].fabric.color.color_name = e.target.value;
     array[comboId].fabric.color.color_id = product.combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorId;
     array[comboId].fabric.color.rgb = product.combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorRGB;
-    console.log("========>>", product.combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorRGB)
 
     setComboArray(array);
   }
@@ -262,9 +258,6 @@ const ProductDescription = ({
 
     return [year, month, day].join('-');
   }
-
-  console.log("<===WearDate===>", formatDate(wearDate))
-  console.log("<===ESD===>", formatDate(shipDate))
 
   const productCartQty = getProductCartQuantity(
     cartItems,
@@ -388,13 +381,6 @@ const ProductDescription = ({
     selectedRushOption
   ) => {
 
-    console.log("TOTAL Fabrics=>>>", alterationSelected)
-    console.log("TOTAL selectedAttr=>>>", styleOptionSelected)
-
-    // if (cartItems.length === 0) {
-    // localStorage.setItem("rushOptions", JSON.stringify(product.rushOptions))
-
-
     let itemsArray = [];
 
     let comboArr = [];
@@ -495,8 +481,6 @@ const ProductDescription = ({
       delete itemsArray['rushId'];
     }
 
-    console.log("=======itemsArray==========", itemsArray)
-
     let parameters = {
       "ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
       "ordersType": "WS",
@@ -535,8 +519,26 @@ const ProductDescription = ({
         if (response.data.errorCode === "0") {
 
           let tempOrdersId = "";
+          let tempItemsId = ""
+          //getting itemsId
+          let allCartItemsIds = [];
+          cartItems.map((item, i) => {
+            allCartItemsIds.push(item.itemsId)
+          })
+          console.log("``````allCartItemsIds`````````", allCartItemsIds)
+          let responseItemsIds = [];
+          response.data.items.map((item, i) => {
+            responseItemsIds.push(item.itemsId)
+          })
+          console.log("``````responseItemsIds`````````", responseItemsIds)
 
-          let tempItemsId = response.data.items[0].itemsId;
+          if (cartItems.length === 0) {
+            tempItemsId = response.data.items[0].itemsId;
+          } else {
+            tempItemsId = responseItemsIds.filter(element => allCartItemsIds.indexOf(element) === -1)[0]
+          }
+
+          console.log("LLLLLLLLLLL", tempItemsId)
 
           if (localStorage.getItem("OrderId")) {
             tempOrdersId = localStorage.getItem("OrderId")
@@ -544,8 +546,6 @@ const ProductDescription = ({
             localStorage.setItem("OrderId", response.data.ordersId)
             tempOrdersId = response.data.ordersId;
           }
-
-          console.log("wearDate===wearDate===wearDate", wearDate)
 
           addToCart(
             product,
@@ -575,8 +575,8 @@ const ProductDescription = ({
 
           localStorage.setItem("previous_wearDate", wearDate)
 
-          addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
-          Router.push('/other/cart');
+          // addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
+          // Router.push('/other/cart');
         } else {
           addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
         }

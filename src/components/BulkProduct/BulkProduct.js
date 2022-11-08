@@ -15,8 +15,8 @@ import { getCheckoutOptions } from "../../redux/actions/checkoutOptions";
 // 	addBulkToCart
 // } from "../../redux/actions/cartActions";
 
-const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, deleteFromCart, disallowRush }) => {
-	console.log("~~~~~~~~bulkProductProps~~~~~~~~~", bulkProductProps[0])
+const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, deleteFromCart, disallowRush, cloneOrder, cartItems }) => {
+
 	let cartTotalPrice = 0;
 	let tempWearDate = localStorage.getItem("previous_wearDate")
 	// const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : new Date());
@@ -252,9 +252,6 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	}
 
 
-	console.log("<===WearDate===>", formatDate(wearDate))
-	console.log("<===ESD===>", formatDate(shipDate))
-
 	//custom
 	const alterationOptions = [];
 	bulkProductProps[0] && bulkProductProps[0].styleAlterations && bulkProductProps[0].styleAlterations.length > 0 && bulkProductProps[0].styleAlterations.map((single, i) => {
@@ -430,6 +427,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	}, [])
 
 	let itemsArray = [];
+	let cloneArray = [];
 
 	let comboArr = [];
 	let attrArr = [];
@@ -630,10 +628,29 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 					addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
 					let tempOrdersId = "";
 					let tempItemsId = "";
+					let allCartItemsIds = [];
+					let responseItemsIds = [];
+
+
 					if (bulkProductProps[0].itemsId && bulkProductProps[0].itemsId !== "") {
 						tempItemsId = bulkProductProps[0].itemsId;
 					} else {
-						tempItemsId = response.data.items[0].itemsId;
+						cartItems.map((item, i) => {
+							allCartItemsIds.push(item.itemsId)
+						})
+						console.log("``````allCartItemsIds`````````", allCartItemsIds)
+						response.data.items.map((item, i) => {
+							responseItemsIds.push(item.itemsId)
+						})
+						console.log("``````responseItemsIds`````````", responseItemsIds)
+
+						if (cartItems.length === 0) {
+							tempItemsId = response.data.items[0].itemsId;
+						} else {
+							tempItemsId = responseItemsIds.filter(element => allCartItemsIds.indexOf(element) === -1)[0]
+						}
+
+						console.log("LLLLLLLLLLL", tempItemsId)
 					}
 
 					if (localStorage.getItem("OrderId")) {
@@ -721,6 +738,172 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			setRushError(false);
 		}
 		setEditBoolean(false)
+	}
+
+	const handleCloneOrder = () => {
+		cloneArray = {
+			"itemsId": "",
+			"productTypeId": bulkProductProps[0].productTypeId,
+			"productId": bulkProductProps[0].productId,
+			"selfFabricsId": selectedFabrics,
+			"selfFabricsColorId": selectedFabricsColorId,
+			"liningFabricsId": selectedLining,
+			"liningFabricsColorId": selectedLiningFabricsColorId,
+			"combos": comboArr,
+			"sizeCategoryId": selectedSizeCategoryId,
+			"sizes": sizeArr,
+			"styleAlterations": alterationOptionsArray,
+			"styleAttributes": attrArr,
+			"styleOptions": styleOptionsArray,
+			"rushId": selectedRushOptionId,
+			"wearDate": formatDate(wearDate),
+			"estimatedShipDate": formatDate(shipDate)
+		};
+
+		if (selectedFabrics === "") {
+			delete cloneArray['selfFabricsId'];
+		}
+		if (selectedFabricsColorId === "") {
+			delete cloneArray['selfFabricsColorId'];
+		}
+		if (selectedLining === "") {
+			delete cloneArray['liningFabricsId'];
+		}
+		if (selectedLiningFabricsColorId === "") {
+			delete cloneArray['liningFabricsColorId'];
+		}
+		if (comboArr.length === 0) {
+			delete cloneArray['combos'];
+		}
+		if (sizeArr.length === 0) {
+			delete cloneArray['sizes'];
+		}
+		if (alterationOptionsArray.length === 0) {
+			delete cloneArray['styleAlterations'];
+		}
+		if (attrArr.length === 0) {
+			delete cloneArray['styleAttributes'];
+		}
+		if (styleOptionsArray.length === 0) {
+			delete cloneArray['styleOptions'];
+		}
+		if (selectedRushOptionId === "") {
+			delete cloneArray['rushId'];
+		}
+
+		let parameters = {
+			"ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
+			"ordersType": "WS",
+			"ordersSubType": "F",
+			"billingCompany": billingCompany,
+			"billingStreet": billingStreetOne,
+			"billingStreet2": billingStreetTwo,
+			"billingCity": billingCity,
+			"billingZipCode": billingZipCode,
+			"billingState": selectedBillingStateId,
+			"billingCountry": billingCountryId,
+			"shippingToName": shippingToName,
+			"shippingPhoneNumber": shippingPhoneNumber ? shippingPhoneNumber : "",
+			"shippingCompany": shippingCompany,
+			"shippingStreet": shippingStreetOne,
+			"shippingStreet2": shippingStreetTwo,
+			"shippingCity": shippingCity,
+			"shippingZipCode": shippingZipCode,
+			"shippingState": selectedShippingStateId,
+			"shippingCountry": shippingCountryId,
+			"finalized": "False",
+			"items": [cloneArray]
+		}
+
+
+		const tokenInStorage = localStorage.getItem('accessToken')
+
+		const formData = {
+			"feaMethod": "upsertOrder",
+			"accessToken": tokenInStorage,
+			"parameters": JSON.stringify(parameters)
+		}
+
+		// itemsArray = {
+		// 	"itemsId": "",
+		// 	"productTypeId": bulkProductProps[0].productTypeId,
+		// 	"productId": bulkProductProps[0].productId,
+		// 	"selfFabricsId": selectedFabrics,
+		// 	"selfFabricsColorId": selectedFabricsColorId,
+		// 	"liningFabricsId": selectedLining,
+		// 	"liningFabricsColorId": selectedLiningFabricsColorId,
+		// 	"combos": comboArr,
+		// 	"sizeCategoryId": selectedSizeCategoryId,
+		// 	"sizes": sizeArr,
+		// 	"styleAlterations": alterationOptionsArray,
+		// 	"styleAttributes": attrArr,
+		// 	"styleOptions": styleOptionsArray,
+		// 	"rushId": selectedRushOptionId,
+		// 	"wearDate": formatDate(wearDate),
+		// 	"estimatedShipDate": formatDate(shipDate)
+		// };
+
+		// const formDataPrice = {
+		// 	"feaMethod": "getPrice",
+		// 	"accessToken": tokenInStorage,
+		// 	"parameters": JSON.stringify(itemsArray)
+		// }
+
+		API.post('/', new URLSearchParams(formData))
+			.then(response => {
+				console.log("============BulkResponse===========", response)
+				if (response.data.errorCode === "0") {
+					addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
+					let tempOrdersId = "";
+					let tempItemsId = "";
+					let allCartItemsIds = [];
+					let responseItemsIds = [];
+
+
+					cartItems.map((item, i) => {
+						allCartItemsIds.push(item.itemsId)
+					})
+					console.log("``````allCartItemsIds`````````", allCartItemsIds)
+					response.data.items.map((item, i) => {
+						responseItemsIds.push(item.itemsId)
+					})
+					console.log("``````responseItemsIds`````````", responseItemsIds)
+
+					if (cartItems.length === 0) {
+						tempItemsId = response.data.items[0].itemsId;
+					} else {
+						tempItemsId = responseItemsIds.filter(element => allCartItemsIds.indexOf(element) === -1)[0]
+					}
+
+					console.log("LLLLLLLLLLL", tempItemsId)
+
+					if (localStorage.getItem("OrderId")) {
+						tempOrdersId = localStorage.getItem("OrderId")
+					} else {
+						localStorage.setItem("OrderId", response.data.ordersId)
+						tempOrdersId = response.data.ordersId;
+					}
+
+					setEditBoolean(true)
+
+					let cloneData = {
+						cloningItemsId: bulkProductProps[0].itemsId,
+						selfItemsId: tempItemsId
+					}
+
+					cloneOrder(cloneData)
+
+					localStorage.setItem("previous_wearDate", wearDate)
+
+					// Router.push('/other/cart');
+				} else {
+					addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+				}
+			})
+			.catch(error => {
+				console.log('error', error);
+			});
+
 	}
 
 	const removeOrder = () => {
@@ -1415,9 +1598,17 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 					</div>
 					<Col lg={6} style={{ padding: "0px", marginBottom: "20px" }}>
 						{editBoolean ? (
-							<Col lg={12} style={{ display: "flex", marginTop: "20px", justifyContent: "center", padding: "0px" }}>
+							<Col lg={12} style={{ display: "flex", marginTop: "20px", justifyContent: "center", padding: "0px", gap: "10px" }}>
 								{bulkProductProps[0].selectedFabrics ? (
 									<>
+										<button
+											className="lezada-button lezada-button--medium"
+											onClick={() =>
+												handleCloneOrder()
+											}
+										>
+											Clone Item
+										</button>
 										<button
 											className="lezada-button lezada-button--medium"
 											onClick={() =>
@@ -1427,7 +1618,6 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 											Edit Item
 										</button>
 										<button
-											style={{ marginLeft: "20px" }}
 											className="lezada-button lezada-button--medium"
 											onClick={() =>
 												removeOrder()

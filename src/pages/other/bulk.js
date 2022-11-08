@@ -9,7 +9,7 @@ import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { BulkProduct } from "../../components/BulkProduct";
 import { LayoutTwo } from "../../components/Layout";
 import {
-  addBulkToCart, deleteAllFromCart, deleteFromCart
+  addBulkToCart, cloneBulkOrder, deleteAllFromCart, deleteFromCart
 } from "../../redux/actions/cartActions";
 
 const Bulk = ({
@@ -18,7 +18,8 @@ const Bulk = ({
   // decreaseQuantity,
   addBulkToCart,
   deleteFromCart,
-  deleteAllFromCart
+  deleteAllFromCart,
+  cloneBulkOrder
 }) => {
 
   const { addToast } = useToasts();
@@ -170,11 +171,11 @@ const Bulk = ({
                     </button>
                   </div>
                   {newBulkProduct && newBulkProduct.length >= 1 ? (
-                    <BulkProduct bulkProductProps={newBulkProduct} addBulkToCart={handleAddBulkToCart} addToast={addToast} disallowRush={disallowRush}></BulkProduct>
+                    <BulkProduct bulkProductProps={newBulkProduct} addBulkToCart={handleAddBulkToCart} addToast={addToast} disallowRush={disallowRush} cloneOrder={cloneBulkOrder} cartItems={cartItems}></BulkProduct>
                   ) : ''}
                   {bulkOrders && bulkOrders.length > 0 ? bulkOrders.map((order, i) => {
                     return (
-                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart} addToast={addToast} disallowRush={disallowRush}></BulkProduct>
+                      <BulkProduct bulkProductProps={[order]} deleteFromCart={deleteFromCart} addBulkToCart={addBulkToCart} addToast={addToast} disallowRush={disallowRush} cloneOrder={cloneBulkOrder} cartItems={cartItems}></BulkProduct>
                     )
                   }) : ''}
                 </div>
@@ -286,7 +287,11 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteAllFromCart: (addToast) => {
       dispatch(deleteAllFromCart(addToast));
+    },
+    cloneBulkOrder: (productId) => {
+      dispatch(cloneBulkOrder(productId))
     }
+
   };
 };
 
