@@ -25,8 +25,8 @@ const Cart = ({
   let extraPayPrice = 0;
   let totalAmount = 0;
   cartItems.map((item, i) => {
-    mainPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
-    extraPayPrice += item.extraPrice;
+    mainPrice += item.totalItems ? item.totalItems * parseInt(item.mainPrice) : item.quantity * parseInt(item.mainPrice)
+    extraPayPrice += parseInt(item.extraPrice);
     totalAmount += item.totalItems ? item.totalItems : item.quantity
   })
 
@@ -76,6 +76,8 @@ const Cart = ({
       addToast("Please Order the products and add to cart!", { appearance: "error", autoDismiss: true });
     }
   }
+
+  console.log("mainPrice,mainPrice,mainPrice", mainPrice)
 
   return (
     <LayoutTwo>
@@ -157,7 +159,7 @@ const Cart = ({
                       <tr>
                         <th>EXTRA COST</th>
                         <td className="subtotal">
-                          ${(extraPayPrice * totalAmount).toFixed(2)}
+                          ${(extraPayPrice).toFixed(2)}
                         </td>
                       </tr>
                       <tr>
@@ -168,7 +170,7 @@ const Cart = ({
                       </tr>
                       <tr>
                         <th>TOTAL</th>
-                        <td className="total">${(extraPayPrice * totalAmount + mainPrice).toFixed(2)}</td>
+                        <td className="total">${(parseInt(extraPayPrice) + parseInt(mainPrice)).toFixed(2)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -244,12 +246,13 @@ const mapDispatchToProps = (dispatch) => {
       selectedCategorySizeValueId,
       alterationSelected,
       styleOptionSelected,
-      extraPrice,
+      extraCost,
       wearDate,
       shipDate,
       selectedRushOption,
       itemsId,
-      ordersId
+      ordersId,
+      price
     ) => {
       dispatch(addToCart(
         item,
@@ -269,12 +272,13 @@ const mapDispatchToProps = (dispatch) => {
         selectedCategorySizeValueId,
         alterationSelected,
         styleOptionSelected,
-        extraPrice,
+        extraCost,
         wearDate,
         shipDate,
         selectedRushOption,
         itemsId,
-        ordersId
+        ordersId,
+        price
       ));
     },
     decreaseQuantity: (item, addToast) => {

@@ -201,12 +201,13 @@ const mapDispatchToProps = (dispatch) => {
       selectedCategorySizeValueId,
       alterationSelected,
       styleOptionSelected,
-      extraPrice,
+      extraCost,
       wearDate,
       shipDate,
       selectedRushOption,
       itemsId,
-      ordersId
+      ordersId,
+      price
     ) => {
       dispatch(
         addToCart(
@@ -227,12 +228,13 @@ const mapDispatchToProps = (dispatch) => {
           selectedCategorySizeValueId,
           alterationSelected,
           styleOptionSelected,
-          extraPrice,
+          extraCost,
           wearDate,
           shipDate,
           selectedRushOption,
           itemsId,
-          ordersId
+          ordersId,
+          price
         )
       );
     },

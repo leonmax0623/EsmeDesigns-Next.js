@@ -39,6 +39,10 @@ const ProductDescription = ({
 
   const [rushError, setRushError] = useState(true)
   const [comboArray, setComboArray] = useState([])
+
+  const [totalCost, setTotalCost] = useState("")
+  const [extraCost, setExtraCost] = useState("")
+  const [price, setPrice] = useState("")
   //custom 
   const [selectedLining, setSelectedLining] = useState("");
   const [selectedRushOptionId, setSelectedRushOptionId] = useState(product.rushOptions ? product.rushOptions[0].rushId : "");
@@ -357,6 +361,197 @@ const ProductDescription = ({
 
   }, [])
 
+  let itemsArray = [];
+
+  let comboArr = [];
+  let attrArr = [];
+
+  selectedAttr.map((attr, i) => {
+    let temp = {};
+    temp.styleAttrybutesId = attr.attrId;
+    temp.styleAttrybutesValueId = attr.valueId;
+
+    attrArr = [...attrArr, temp]
+
+    return attrArr
+  })
+
+  comboArray.map((data, i) => {
+    let temp = {};
+
+    temp.combosId = data.comboId
+    temp.combosfabricsId = data.fabric.fabric_id
+    temp.combosfabricsColorId = data.fabric.color.color_id;
+    comboArr = [...comboArr, temp];
+
+    return comboArr;
+  })
+
+  let alterationOptionsArray = [];
+
+  if (alterationSelected.length > 0) {
+    alterationSelected.map((item, i) => {
+      let temp = {
+        styleAlterationId: item.id
+      }
+      alterationOptionsArray = [...alterationOptionsArray, temp]
+    })
+  }
+
+  let styleOptionsArray = [];
+
+  if (styleOptionSelected.length > 0) {
+    styleOptionSelected.map((item, i) => {
+      let temp = {
+        styleOptionId: item.id
+      }
+      styleOptionsArray = [...styleOptionsArray, temp]
+    })
+  }
+
+  itemsArray = {
+    "itemsId": "",
+    "productTypeId": product.productTypeId,
+    "productId": product.productId,
+    "selfFabricsId": selectedFabrics,
+    "selfFabricsColorId": selectedFabricsColorId,
+    "liningFabricsId": selectedLining,
+    "liningFabricsColorId": selectedLiningFabricsColorId,
+    "combos": comboArr,
+    "sizeCategoryId": selectedSizeCategoryId,
+    "sizes": [
+      {
+        "sizeId": selectedCategorySizeValueId,
+        "amount": quantityCount
+      }
+    ],
+    "styleAlterations": alterationOptionsArray,
+    "styleAttributes": attrArr,
+    "styleOptions": styleOptionsArray,
+    "rushId": selectedRushOptionId,
+    "wearDate": formatDate(wearDate),
+    "estimatedShipDate": formatDate(shipDate)
+  };
+
+  if (selectedFabrics === "") {
+    delete itemsArray['selfFabricsId'];
+  }
+  if (selectedFabricsColorId === "") {
+    delete itemsArray['selfFabricsColorId'];
+  }
+  if (selectedLining === "") {
+    delete itemsArray['liningFabricsId'];
+  }
+  if (selectedLiningFabricsColorId === "") {
+    delete itemsArray['liningFabricsColorId'];
+  }
+  if (comboArr.length === 0) {
+    delete itemsArray['combos'];
+  }
+  if (alterationOptionsArray.length === 0) {
+    delete itemsArray['styleAlterations'];
+  }
+  if (attrArr.length === 0) {
+    delete itemsArray['styleAttributes'];
+  }
+  if (styleOptionsArray.length === 0) {
+    delete itemsArray['styleOptions'];
+  }
+  if (selectedRushOptionId === "") {
+    delete itemsArray['rushId'];
+  }
+
+  let parameters = {
+    "ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
+    "ordersType": "WS",
+    "ordersSubType": "F",
+    "billingCompany": billingCompany,
+    "billingStreet": billingStreetOne,
+    "billingStreet2": billingStreetTwo,
+    "billingCity": billingCity,
+    "billingZipCode": billingZipCode,
+    "billingState": selectedBillingStateId,
+    "billingCountry": billingCountryId,
+    "shippingToName": shippingToName,
+    "shippingPhoneNumber": shippingPhoneNumber ? shippingPhoneNumber : "",
+    "shippingCompany": shippingCompany,
+    "shippingStreet": shippingStreetOne,
+    "shippingStreet2": shippingStreetTwo,
+    "shippingCity": shippingCity,
+    "shippingZipCode": shippingZipCode,
+    "shippingState": selectedShippingStateId,
+    "shippingCountry": shippingCountryId,
+    "finalized": "False",
+    "items": [itemsArray]
+  }
+
+  useEffect(() => {
+    console.log("===>CHAGNIE<===")
+    const tokenInStorage = localStorage.getItem('accessToken')
+
+    const priceJson = {
+      "productTypeId": product.productTypeId,
+      "productId": product.productId,
+      "selfFabricsId": selectedFabrics,
+      "selfFabricsColorId": selectedFabricsColorId,
+      "liningFabricsId": selectedLining,
+      "liningFabricsColorId": selectedLiningFabricsColorId,
+      "combos": comboArr,
+      "sizeCategoryId": selectedSizeCategoryId,
+      "sizes": [
+        {
+          "sizeId": selectedCategorySizeValueId,
+          "amount": quantityCount
+        }
+      ],
+      "styleAlterations": alterationOptionsArray,
+      "styleAttributes": attrArr,
+      "styleOptions": styleOptionsArray,
+      "estimatedShipDate": shipDate
+    }
+
+    const formData = {
+      "feaMethod": "getPrice",
+      "accessToken": tokenInStorage,
+      "parameters": JSON.stringify(priceJson)
+    }
+
+    API.post('/', new URLSearchParams(formData))
+      .then(response => {
+        console.log('====DescriptionResponse====', response);
+        if (response.data.errorCoed === "0") {
+          setTotalCost(response.data.total)
+          setExtraCost(response.data.extra)
+          setExtraPrice(response.data.price)
+        } else {
+          addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+        }
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
+
+  }, [
+    quantityCount,
+    selectedFabrics,
+    selectedFabricsColor,
+    selectedFabricsColorId,
+    selectedLining,
+    selectedLiningFabricsColor,
+    selectedLiningFabricsColorId,
+    comboArray,
+    selectedAttr,
+    selectedSizeCategory,
+    selectedSizeCategoryId,
+    selectedCategorySizeValue,
+    selectedCategorySizeValueId,
+    alterationSelected,
+    styleOptionSelected,
+    extraCost,
+    shipDate,
+    selectedRushOption
+  ])
+
   const handleAddToCart = (
     product,
     addToast,
@@ -375,135 +570,14 @@ const ProductDescription = ({
     selectedCategorySizeValueId,
     alterationSelected,
     styleOptionSelected,
-    extraPrice,
+    extraCost,
     wearDate,
     shipDate,
-    selectedRushOption
+    selectedRushOption,
+    price
   ) => {
 
-    let itemsArray = [];
 
-    let comboArr = [];
-    let attrArr = [];
-
-    selectedAttr.map((attr, i) => {
-      let temp = {};
-      temp.styleAttrybutesId = attr.attrId;
-      temp.styleAttrybutesValueId = attr.valueId;
-
-      attrArr = [...attrArr, temp]
-
-      return attrArr
-    })
-
-    comboArray.map((data, i) => {
-      let temp = {};
-
-      temp.combosId = data.comboId
-      temp.combosfabricsId = data.fabric.fabric_id
-      temp.combosfabricsColorId = data.fabric.color.color_id;
-      comboArr = [...comboArr, temp];
-
-      return comboArr;
-    })
-
-    let alterationOptionsArray = [];
-
-    if (alterationSelected.length > 0) {
-      alterationSelected.map((item, i) => {
-        let temp = {
-          styleAlterationId: item.id
-        }
-        alterationOptionsArray = [...alterationOptionsArray, temp]
-      })
-    }
-
-    let styleOptionsArray = [];
-
-    if (styleOptionSelected.length > 0) {
-      styleOptionSelected.map((item, i) => {
-        let temp = {
-          styleOptionId: item.id
-        }
-        styleOptionsArray = [...styleOptionsArray, temp]
-      })
-    }
-
-    itemsArray = {
-      "itemsId": "",
-      "productTypeId": product.productTypeId,
-      "productId": product.productId,
-      "selfFabricsId": selectedFabrics,
-      "selfFabricsColorId": selectedFabricsColorId,
-      "liningFabricsId": selectedLining,
-      "liningFabricsColorId": selectedLiningFabricsColorId,
-      "combos": comboArr,
-      "sizeCategoryId": selectedSizeCategoryId,
-      "sizes": [
-        {
-          "sizeId": selectedCategorySizeValueId,
-          "amount": quantityCount
-        }
-      ],
-      "styleAlterations": alterationOptionsArray,
-      "styleAttributes": attrArr,
-      "styleOptions": styleOptionsArray,
-      "rushId": selectedRushOptionId,
-      "wearDate": wearDate,
-      "estimatedShipDate": shipDate
-    };
-
-    if (selectedFabrics === "") {
-      delete itemsArray['selfFabricsId'];
-    }
-    if (selectedFabricsColorId === "") {
-      delete itemsArray['selfFabricsColorId'];
-    }
-    if (selectedLining === "") {
-      delete itemsArray['liningFabricsId'];
-    }
-    if (selectedLiningFabricsColorId === "") {
-      delete itemsArray['liningFabricsColorId'];
-    }
-    if (comboArr.length === 0) {
-      delete itemsArray['combos'];
-    }
-    if (alterationOptionsArray.length === 0) {
-      delete itemsArray['styleAlterations'];
-    }
-    if (attrArr.length === 0) {
-      delete itemsArray['styleAttributes'];
-    }
-    if (styleOptionsArray.length === 0) {
-      delete itemsArray['styleOptions'];
-    }
-    if (selectedRushOptionId === "") {
-      delete itemsArray['rushId'];
-    }
-
-    let parameters = {
-      "ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
-      "ordersType": "WS",
-      "ordersSubType": "F",
-      "billingCompany": billingCompany,
-      "billingStreet": billingStreetOne,
-      "billingStreet2": billingStreetTwo,
-      "billingCity": billingCity,
-      "billingZipCode": billingZipCode,
-      "billingState": selectedBillingStateId,
-      "billingCountry": billingCountryId,
-      "shippingToName": shippingToName,
-      "shippingPhoneNumber": shippingPhoneNumber ? shippingPhoneNumber : "",
-      "shippingCompany": shippingCompany,
-      "shippingStreet": shippingStreetOne,
-      "shippingStreet2": shippingStreetTwo,
-      "shippingCity": shippingCity,
-      "shippingZipCode": shippingZipCode,
-      "shippingState": selectedShippingStateId,
-      "shippingCountry": shippingCountryId,
-      "finalized": "False",
-      "items": [itemsArray]
-    }
 
     const tokenInStorage = localStorage.getItem('accessToken')
 
@@ -513,9 +587,12 @@ const ProductDescription = ({
       "parameters": JSON.stringify(parameters)
     }
 
+    console.log("~~~~~~~~~wearDate~~~~~~~~", wearDate)
+    console.log("~~~~~~~~~shipDate~~~~~~~~", shipDate)
+
     API.post('/', new URLSearchParams(formData))
       .then(response => {
-        console.log('====DescriptionResponse====', response);
+        console.log('====ddd====', response);
         if (response.data.errorCode === "0") {
 
           let tempOrdersId = "";
@@ -525,20 +602,16 @@ const ProductDescription = ({
           cartItems.map((item, i) => {
             allCartItemsIds.push(item.itemsId)
           })
-          console.log("``````allCartItemsIds`````````", allCartItemsIds)
           let responseItemsIds = [];
           response.data.items.map((item, i) => {
             responseItemsIds.push(item.itemsId)
           })
-          console.log("``````responseItemsIds`````````", responseItemsIds)
 
           if (cartItems.length === 0) {
             tempItemsId = response.data.items[0].itemsId;
           } else {
             tempItemsId = responseItemsIds.filter(element => allCartItemsIds.indexOf(element) === -1)[0]
           }
-
-          console.log("LLLLLLLLLLL", tempItemsId)
 
           if (localStorage.getItem("OrderId")) {
             tempOrdersId = localStorage.getItem("OrderId")
@@ -565,12 +638,13 @@ const ProductDescription = ({
             selectedCategorySizeValueId,
             alterationSelected,
             styleOptionSelected,
-            extraPrice,
+            extraCost,
             wearDate,
             shipDate,
             selectedRushOption,
             tempItemsId,
-            tempOrdersId
+            tempOrdersId,
+            price
           )
 
           localStorage.setItem("previous_wearDate", wearDate)
@@ -1128,8 +1202,11 @@ const ProductDescription = ({
         <div className="price-table descTableMob" style={{ padding: "10px 0px", border: "1px solid", marginBottom: "20px" }}>
           <div style={{ display: "flex", marginBottom: "10px" }}>
             <Col lg={3}><div className="product-content__size__title">Price: </div></Col>
-            <Col lg={3}><div className="product-content__size__content">
+            {/* <Col lg={3}><div className="product-content__size__content">
               <span>${parseInt(product.discountedPrice).toFixed(2)}</span>
+            </div></Col> */}
+            <Col lg={3}><div className="product-content__size__content">
+              <span>${price}</span>
             </div></Col>
           </div>
           <div style={{ display: "flex", marginBottom: "10px" }}>
@@ -1140,14 +1217,20 @@ const ProductDescription = ({
           </div>
           <div style={{ display: "flex", marginBottom: "10px" }}>
             <Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
-            <Col lg={3}><div className="product-content__size__content">
+            {/* <Col lg={3}><div className="product-content__size__content">
               <span>${(extraPrice * quantityCount).toFixed(2)}</span>
+            </div></Col> */}
+            <Col lg={3}><div className="product-content__size__content">
+              <span>${extraCost}</span>
             </div></Col>
           </div>
           <div style={{ display: "flex" }}>
             <Col lg={3}><div className="product-content__size__title">Total: </div></Col>
-            <Col lg={3}><div className="product-content__size__content">
+            {/* <Col lg={3}><div className="product-content__size__content">
               <span>${parseInt(product.discountedPrice) * quantityCount + (extraPrice * quantityCount).toFixed(2)}</span>
+            </div></Col> */}
+            <Col lg={3}><div className="product-content__size__content">
+              <span>${totalCost}</span>
             </div></Col>
           </div>
         </div>
@@ -1190,10 +1273,14 @@ const ProductDescription = ({
           </thead>
           <tbody>
             <tr style={{ textAlign: "center" }}>
-              <td style={{ paddingLeft: "10px 0px" }}>${parseInt(product.discountedPrice).toFixed(2)}</td>
+              {/* <td style={{ paddingLeft: "10px 0px" }}>${parseInt(product.discountedPrice).toFixed(2)}</td> */}
+              <td style={{ paddingLeft: "10px 0px" }}>${price}</td>
               <td style={{ paddingLeft: "10px 0px" }}>{quantityCount}</td>
-              <td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * quantityCount).toFixed(2)}</td>
-              <td style={{ paddingLeft: "10px 0px" }}>${(parseInt(product.discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</td>
+              {/* <td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * quantityCount).toFixed(2)}</td> */}
+              <td style={{ paddingLeft: "10px 0px" }}>${extraCost}</td>
+              {/* <td style={{ paddingLeft: "10px 0px" }}>${(parseInt(product.discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</td> */}
+              <td style={{ paddingLeft: "10px 0px" }}>${totalCost}</td>
+
             </tr>
           </tbody>
         </table>
@@ -1223,7 +1310,8 @@ const ProductDescription = ({
                 extraPrice,
                 formatDate(wearDate),
                 formatDate(shipDate),
-                selectedRushOption
+                selectedRushOption,
+                price
               )
             }
             className="lezada-button lezada-button--medium product-content__cart space-mr--10"

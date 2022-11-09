@@ -25,12 +25,13 @@ const Bulk = ({
   const { addToast } = useToasts();
 
   const bulkOrders = cartItems.filter((item, i) => item.totalItems !== undefined && bulkProduct[0].productId === item.productId).reverse();
+  console.log("+++++++bulkOrders++++", bulkOrders)
   let mainPrice = 0;
   let extraPayPrice = 0;
   let totalAmount = 0;
   bulkOrders.map((item, i) => {
-    mainPrice += item.totalItems ? item.totalItems * parseInt(item.discountedPrice) : item.quantity * parseInt(item.discountedPrice)
-    extraPayPrice += item.extraPrice;
+    mainPrice += item.totalItems ? item.totalItems * parseInt(item.mainPrice) : item.quantity * parseInt(item.mainPrice)
+    extraPayPrice += parseInt(item.extraPrice);
     totalAmount += item.totalItems
   })
 
@@ -102,15 +103,14 @@ const Bulk = ({
     alterationSelected,
     styleOptionSelected,
     totalItems,
-    extraPrice,
+    extraCost,
     wearDate,
     shipDate,
     selectedRushOption,
     itemsId,
-    ordersId
+    ordersId,
+    price
   ) => {
-    console.log("РАДа", itemsId)
-    console.log("РАДа", ordersId)
     addBulkToCart(
       bulkProduct,
       addToast,
@@ -126,12 +126,13 @@ const Bulk = ({
       alterationSelected,
       styleOptionSelected,
       totalItems,
-      extraPrice,
+      extraCost,
       wearDate,
       shipDate,
       selectedRushOption,
       itemsId,
-      ordersId
+      ordersId,
+      price
     )
     setNewBulkProduct([])
   }
@@ -211,7 +212,7 @@ const Bulk = ({
                       <tr>
                         <th>EXTRA COST</th>
                         <td className="subtotal">
-                          ${(extraPayPrice * totalAmount).toFixed(2)}
+                          ${(extraPayPrice).toFixed(2)}
                         </td>
                       </tr>
                       <tr>
@@ -222,7 +223,7 @@ const Bulk = ({
                       </tr>
                       <tr>
                         <th>TOTAL</th>
-                        <td className="total">${(extraPayPrice * totalAmount + mainPrice).toFixed(2)}</td>
+                        <td className="total">${(parseInt(extraPayPrice) + parseInt(mainPrice)).toFixed(2)}</td>
                       </tr>
                     </tbody>
                   </table>
