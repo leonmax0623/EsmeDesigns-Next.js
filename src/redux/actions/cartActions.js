@@ -23,12 +23,13 @@ export const addToCart = (
   selectedCategorySizeValueId,
   alterationSelected,
   styleOptionSelected,
-  extraPrice,
+  extraCost,
   wearDate,
   shipDate,
   selectedRushOption,
   itemsId,
-  ordersId
+  ordersId,
+  price
 ) => {
 
   const formatDate = (date) => {
@@ -70,13 +71,14 @@ export const addToCart = (
         selectedSizeId: selectedCategorySizeValueId,
         selectedAlteration: alterationSelected,
         selectedStyleOption: styleOptionSelected,
-        extraPrice: extraPrice,
+        extraPrice: extraCost,
         wearDate: formatDate(wearDate),
         shipDate: formatDate(shipDate),
         selectedRushOption: selectedRushOption,
         itemsId: itemsId,
         ordersId: ordersId,
-        regularOrder: true
+        regularOrder: true,
+        mainPrice: price
       }
     });
   };
@@ -120,12 +122,13 @@ export const addBulkToCart = (data) => {
         selectedStyleOption: data.styleOptionSelected,
         selectedAttr: data.selectedAttr,
         comboArray: data.comboArray,
-        extraPrice: data.extraPrice,
+        extraPrice: data.extraCost,
         wearDate: formatDate(data.wearDate),
         shipDate: formatDate(data.shipDate),
         selectedRushOption: data.selectedRushOption,
         itemsId: data.tempItemsId,
-        ordersId: data.tempOrdersId
+        ordersId: data.tempOrdersId,
+        mainPrice: data.price
       }
     });
   };

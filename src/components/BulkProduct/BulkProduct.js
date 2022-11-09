@@ -77,6 +77,10 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [shippingToName, setShippingToName] = useState("");
 	const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
 
+	const [totalCost, setTotalCost] = useState("")
+	const [extraCost, setExtraCost] = useState("")
+	const [price, setPrice] = useState("")
+
 
 	const [shipDate, setShipDate] = useState(new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000));
 	const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : "");
@@ -553,10 +557,6 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	const handleBulkOrder = () => {
 
-		console.log("TOTAL TESTING=>>>", selectedFabrics)
-		console.log("TOTAL TESTING=>>>", selectedFabricsColor)
-		console.log("TOTAL TESTING=>>>", selectedFabricsColorId)
-
 		let parameters = {
 			"ordersId": localStorage.getItem("OrderId") ? localStorage.getItem("OrderId") : "",
 			"ordersType": "WS",
@@ -638,11 +638,9 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 						cartItems.map((item, i) => {
 							allCartItemsIds.push(item.itemsId)
 						})
-						console.log("``````allCartItemsIds`````````", allCartItemsIds)
 						response.data.items.map((item, i) => {
 							responseItemsIds.push(item.itemsId)
 						})
-						console.log("``````responseItemsIds`````````", responseItemsIds)
 
 						if (cartItems.length === 0) {
 							tempItemsId = response.data.items[0].itemsId;
@@ -681,12 +679,13 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 							alterationSelected,
 							styleOptionSelected,
 							totalItems,
-							extraPrice,
+							extraCost,
 							wearDate,
 							shipDate,
 							selectedRushOption,
 							tempItemsId,
-							tempOrdersId
+							tempOrdersId,
+							price
 						})
 					} else {
 						addToCart(
@@ -707,12 +706,13 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 							selectedCategorySizeValueId,
 							alterationSelected,
 							styleOptionSelected,
-							extraPrice,
+							extraCost,
 							wearDate,
 							shipDate,
 							selectedRushOption,
 							tempItemsId,
-							tempOrdersId
+							tempOrdersId,
+							price
 						)
 					}
 
@@ -824,31 +824,6 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			"parameters": JSON.stringify(parameters)
 		}
 
-		// itemsArray = {
-		// 	"itemsId": "",
-		// 	"productTypeId": bulkProductProps[0].productTypeId,
-		// 	"productId": bulkProductProps[0].productId,
-		// 	"selfFabricsId": selectedFabrics,
-		// 	"selfFabricsColorId": selectedFabricsColorId,
-		// 	"liningFabricsId": selectedLining,
-		// 	"liningFabricsColorId": selectedLiningFabricsColorId,
-		// 	"combos": comboArr,
-		// 	"sizeCategoryId": selectedSizeCategoryId,
-		// 	"sizes": sizeArr,
-		// 	"styleAlterations": alterationOptionsArray,
-		// 	"styleAttributes": attrArr,
-		// 	"styleOptions": styleOptionsArray,
-		// 	"rushId": selectedRushOptionId,
-		// 	"wearDate": formatDate(wearDate),
-		// 	"estimatedShipDate": formatDate(shipDate)
-		// };
-
-		// const formDataPrice = {
-		// 	"feaMethod": "getPrice",
-		// 	"accessToken": tokenInStorage,
-		// 	"parameters": JSON.stringify(itemsArray)
-		// }
-
 		API.post('/', new URLSearchParams(formData))
 			.then(response => {
 				console.log("============BulkResponse===========", response)
@@ -859,23 +834,18 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 					let allCartItemsIds = [];
 					let responseItemsIds = [];
 
-
 					cartItems.map((item, i) => {
 						allCartItemsIds.push(item.itemsId)
 					})
-					console.log("``````allCartItemsIds`````````", allCartItemsIds)
 					response.data.items.map((item, i) => {
 						responseItemsIds.push(item.itemsId)
 					})
-					console.log("``````responseItemsIds`````````", responseItemsIds)
 
 					if (cartItems.length === 0) {
 						tempItemsId = response.data.items[0].itemsId;
 					} else {
 						tempItemsId = responseItemsIds.filter(element => allCartItemsIds.indexOf(element) === -1)[0]
 					}
-
-					console.log("LLLLLLLLLLL", tempItemsId)
 
 					if (localStorage.getItem("OrderId")) {
 						tempOrdersId = localStorage.getItem("OrderId")
@@ -994,6 +964,66 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const sumExtraPrices = (arr) => {
 		return arr.reduce((a, b) => { return a + parseInt(b.price) }, 0);
 	}
+
+	useEffect(() => {
+		console.log("===>CHAGNIE<===")
+		const tokenInStorage = localStorage.getItem('accessToken')
+
+		const priceJson = {
+			"productTypeId": bulkProductProps[0].productTypeId,
+			"productId": bulkProductProps[0].productId,
+			"selfFabricsId": selectedFabrics,
+			"selfFabricsColorId": selectedFabricsColorId,
+			"liningFabricsId": selectedLining,
+			"liningFabricsColorId": selectedLiningFabricsColorId,
+			"combos": comboArr,
+			"sizeCategoryId": selectedSizeCategoryId,
+			"sizes": sizeArr,
+			"styleAlterations": alterationOptionsArray,
+			"styleAttributes": attrArr,
+			"styleOptions": styleOptionsArray,
+			"estimatedShipDate": formatDate(shipDate)
+		}
+
+		const formData = {
+			"feaMethod": "getPrice",
+			"accessToken": tokenInStorage,
+			"parameters": JSON.stringify(priceJson)
+		}
+
+		API.post('/', new URLSearchParams(formData))
+			.then(response => {
+				console.log('====DescriptionResponse====', response);
+				if (response.data.errorCoed === "0") {
+					setTotalCost(response.data.total)
+					setExtraCost(response.data.extra)
+					setPrice(response.data.price)
+				}
+			})
+			.catch(error => {
+				console.log('error', error);
+			});
+
+	}, [
+		selectedFabrics,
+		selectedFabricsColor,
+		selectedFabricsColorId,
+		selectedLining,
+		selectedLiningFabricsColor,
+		selectedLiningFabricsColorId,
+		comboArray,
+		selectedAttr,
+		selectedSizeCategory,
+		selectedSizeCategoryId,
+		regularSizeArray,
+		alterationSelected,
+		styleOptionSelected,
+		totalItems,
+		shipDate,
+		selectedRushOption,
+		quantityCount,
+		selectedCategorySizeValueId
+	])
 
 	return (
 		<div className="bulk-container">
@@ -1573,8 +1603,11 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 					<div className="price-table" style={{ padding: "10px 0px", border: "1px solid", marginTop: "20px" }}>
 						<div style={{ display: "flex", marginBottom: "10px" }}>
 							<Col lg={3}><div className="product-content__size__title">Price: </div></Col>
-							<Col lg={3}><div className="product-content__size__content">
+							{/* <Col lg={3}><div className="product-content__size__content">
 								<span>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</span>
+							</div></Col> */}
+							<Col lg={3}><div className="product-content__size__content">
+								<span>${price}</span>
 							</div></Col>
 						</div>
 						<div style={{ display: "flex", marginBottom: "10px" }}>
@@ -1585,14 +1618,20 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 						</div>
 						<div style={{ display: "flex", marginBottom: "10px" }}>
 							<Col lg={3}><div className="product-content__size__title">Extras: </div></Col>
-							<Col lg={3}><div className="product-content__size__content">
+							{/* <Col lg={3}><div className="product-content__size__content">
 								<span>${(extraPrice * (!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</span>
+							</div></Col> */}
+							<Col lg={3}><div className="product-content__size__content">
+								<span>${extraCost}</span>
 							</div></Col>
 						</div>
 						<div style={{ display: "flex", marginBottom: "10px" }}>
 							<Col lg={3}><div className="product-content__size__title">Total: </div></Col>
-							<Col lg={3}><div className="product-content__size__content">
+							{/* <Col lg={3}><div className="product-content__size__content">
 								<span>${(!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</span>
+							</div></Col> */}
+							<Col lg={3}><div className="product-content__size__content">
+								<span>${totalCost}</span>
 							</div></Col>
 						</div>
 					</div>
@@ -1701,10 +1740,13 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 							</thead>
 							<tbody>
 								<tr style={{ textAlign: "center" }}>
-									<td style={{ paddingLeft: "10px 0px" }}>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</td>
+									{/* <td style={{ paddingLeft: "10px 0px" }}>${parseInt(bulkProductProps[0].discountedPrice).toFixed(2)}</td> */}
+									<td style={{ paddingLeft: "10px 0px" }}>${price}</td>
 									<td style={{ paddingLeft: "10px 0px" }}>{!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? totalItems : quantityCount}</td>
-									<td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * (!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</td>
-									<td style={{ paddingLeft: "10px 0px" }}>${(!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</td>
+									{/* <td style={{ paddingLeft: "10px 0px" }}>${(extraPrice * (!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? totalItems : quantityCount)).toFixed(2)}</td> */}
+									<td style={{ paddingLeft: "10px 0px" }}>${extraCost}</td>
+									{/* <td style={{ paddingLeft: "10px 0px" }}>${(!bulkProductProps[0].regularOrder && bulkProductProps[0].totalItems || !bulkProductProps[0].regularOrder && !bulkProductProps[0].totalItems ? parseInt(bulkProductProps[0].discountedPrice) * totalItems + (extraPrice * totalItems) : parseInt(bulkProductProps[0].discountedPrice) * quantityCount + (extraPrice * quantityCount)).toFixed(2)}</td> */}
+									<td style={{ paddingLeft: "10px 0px" }}>${totalCost}</td>
 								</tr>
 							</tbody>
 						</table>

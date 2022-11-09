@@ -627,14 +627,14 @@ const Checkout = ({ cartItems, deleteAllFromCart }) => {
                               <ul>
                                 {cartItems.map((product, i) => {
                                   product.totalItems ? cartTotalPrice +=
-                                    parseInt(product.discountedPrice) * product.totalItems :
+                                    parseInt(product.mainPrice) * product.totalItems :
                                     cartTotalPrice +=
-                                    parseInt(product.discountedPrice) * product.quantity;
-                                  extraPayPrice += (product.totalItems ? product.totalItems : product.quantity) * product.extraPrice;
+                                    parseInt(product.mainPrice) * product.quantity;
+                                  extraPayPrice += parseInt(product.extraPrice);
                                   return (
                                     <li key={i}>
                                       {product.productName} X {product.totalItems ? product.totalItems : product.quantity}{" "}
-                                      <span>${(parseInt(product.discountedPrice) * (product.totalItems ? product.totalItems : product.quantity)).toFixed(2)}</span>
+                                      <span>${(parseInt(product.mainPrice) * (product.totalItems ? product.totalItems : product.quantity)).toFixed(2)}</span>
                                     </li>
                                   );
                                 })}
