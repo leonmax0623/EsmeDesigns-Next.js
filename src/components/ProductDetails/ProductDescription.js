@@ -15,8 +15,6 @@ import { ProductRating } from "../Product";
 
 const ProductDescription = ({
   product,
-  productPrice,
-  discountedPrice,
   cartItems,
   wishlistItem,
   // compareItem,
@@ -32,6 +30,7 @@ const ProductDescription = ({
   disallowRush,
   showRating
 }) => {
+  console.log("1111", product)
   const router = useRouter()
   const dispatch = useDispatch();
 
@@ -40,9 +39,9 @@ const ProductDescription = ({
   const [rushError, setRushError] = useState(true)
   const [comboArray, setComboArray] = useState([])
 
-  const [totalCost, setTotalCost] = useState("")
-  const [extraCost, setExtraCost] = useState("")
-  const [price, setPrice] = useState("")
+  const [totalCost, setTotalCost] = useState("0.00")
+  const [extraCost, setExtraCost] = useState("0.00")
+  const [price, setPrice] = useState("0.00")
   //custom 
   const [selectedLining, setSelectedLining] = useState("");
   const [selectedRushOptionId, setSelectedRushOptionId] = useState(product.rushOptions ? product.rushOptions[0].rushId : "");
@@ -519,7 +518,7 @@ const ProductDescription = ({
     API.post('/', new URLSearchParams(formData))
       .then(response => {
         console.log('====DescriptionResponse====', response);
-        if (response.data.errorCoed === "0") {
+        if (response.data.errorCode === "0") {
           setTotalCost(response.data.total)
           setExtraCost(response.data.extra)
           setPrice(response.data.price)
@@ -649,7 +648,7 @@ const ProductDescription = ({
 
           localStorage.setItem("previous_wearDate", wearDate)
 
-          // addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
+          addToast("Order was successfully saved!", { appearance: "success", autoDismiss: true });
           // Router.push('/other/cart');
         } else {
           addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
@@ -676,14 +675,14 @@ const ProductDescription = ({
       )}
       <h2 className="product-content__title space-mb--20">{product.productName}</h2>
       <div className="product-content__price space-mb--20">
-        {parseInt(product.discountedPrice) > 0 && parseInt(product.standardPrice) > parseInt(product.discountedPrice) ? (
+        {/* {parseInt(product.discountedPrice) > 0 && parseInt(product.standardPrice) > parseInt(product.discountedPrice) ? (
           <Fragment>
             <span className="main-price discounted">${productPrice}</span>
             <span className="main-price">${discountedPrice}</span>
           </Fragment>
-        ) : (
-          <span className="main-price">${productPrice} </span>
-        )}
+        ) : ( */}
+        <span className="main-price">${price} </span>
+        {/* )} */}
       </div>
       {product.productCode && (
         <div className="product-content__size-color">

@@ -87,7 +87,7 @@ const CartOverlay = ({
                 <CustomScroll allowOuterScroll={true}>
                   {cartItems.map((product, i) => {
 
-                    mainPrice += product.totalItems ? product.totalItems * parseInt(product.discountedPrice) : product.quantity * parseInt(product.discountedPrice)
+                    mainPrice += product.totalItems ? product.totalItems * parseInt(product.mainPrice) : product.quantity * parseInt(product.mainPrice)
                     extraPayPrice += product.extraPrice;
                     totalAmount += product.totalItems ? product.totalItems : product.quantity
                     return (
@@ -133,7 +133,7 @@ const CartOverlay = ({
                               {product.totalItems ? product.totalItems : product.quantity} x{" "}
                             </span>{" "}
                             <span className="discounted-price">
-                              ${parseInt(product.discountedPrice).toFixed(2)}
+                              ${parseInt(product.mainPrice).toFixed(2)}
                             </span>
                           </p>
                         </div>
