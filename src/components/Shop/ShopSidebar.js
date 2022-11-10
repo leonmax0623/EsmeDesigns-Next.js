@@ -4,6 +4,7 @@ import { IoIosArrowForward, IoIosSearch } from "react-icons/io";
 import {
   getIndividualCategories, getProducts
 } from "../../lib/product";
+// import MobileMenuNav from "../Header/elements/MobileMenuNav";
 
 const ShopSidebar = ({ collections, products, getSortParams, searchProduct, seasonsItems }) => {
   const navCollection = localStorage.getItem('navCollection');
@@ -87,7 +88,7 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct, seas
 
   return (
     <div className="shop-sidebar">
-      <div className="single-sidebar-widget space-mb--40">
+      <div className="single-sidebar-widget__navmenu space-mb--40">
         {/* search widget */}
         <div className="search-widget">
           <div>
@@ -100,35 +101,38 @@ const ShopSidebar = ({ collections, products, getSortParams, searchProduct, seas
       </div>
 
       {/* category list */}
-      <div className="single-sidebar-widget space-mb--40">
+      <div className="single-sidebar-widget__navmenu space-mb--40">
         <h2 className="single-sidebar-widget__title space-mb--30">
           Collections
         </h2>
         {categories.length > 0 ? (
-          <div className="single-sidebar-widget space-mb--30">
-            <ul className="sub-menu sub-menu--one-column" style={{ visibility: "visible", opacity: "1", marginTop: "0px", boxShadow: "none", position: "unset", padding: "0px" }}>
-              {collections && collections.map((col, i) =>
-                <li key={i}>
-                  <a onClick={() => navigate(col.id, col.name)}>{col.name ? col.name : "Seasons"} ({col.itemsCount ? col.itemsCount : seasonsItems})</a>
-                  <IoIosArrowForward style={{ left: "75%" }} />
-                  <ul className="sub-menu--one-column sub-menu--one-column--child-menu" style={{ left: "85%", boxShadow: "-2px 2px 81px -27px rgb(0 0 0 / 150%)" }}>
-                    {col && col.fabrics && col.fabrics.map((item, j) =>
-                      <li key={j}>
-                        <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name} ({item.itemsCount})</a>
-                      </li>
-                    )}
-                    {col && !col.fabrics && col.seasons.map((item, z) => {
-                      return (
-                        <li key={z}>
-                          <a onClick={() => navigateSeason(item.id, item.name)}>{item.name} ({item.itemsCount})</a>
+          <>
+            <div className="single-sidebar-widget__navmenu space-mb--30">
+              <ul className="sub-menu sub-menu--one-column" style={{ visibility: "visible", opacity: "1", marginTop: "0px", boxShadow: "none", position: "unset", padding: "0px" }}>
+                {collections && collections.map((col, i) =>
+                  <li key={i}>
+                    <a onClick={() => navigate(col.id, col.name)}>{col.name ? col.name : "Seasons"} ({col.itemsCount ? col.itemsCount : seasonsItems})</a>
+                    <IoIosArrowForward style={{ left: "75%" }} />
+                    <ul className="sub-menu--one-column sub-menu--one-column--child-menu" style={{ left: "85%", boxShadow: "-2px 2px 81px -27px rgb(0 0 0 / 150%)" }}>
+                      {col && col.fabrics && col.fabrics.map((item, j) =>
+                        <li key={j}>
+                          <a onClick={() => navigate(col.id, col.name, item.id, item.name)}>{item.name} ({item.itemsCount})</a>
                         </li>
-                      )
-                    })}
-                  </ul>
-                </li>
-              )}
-            </ul>
-          </div>
+                      )}
+                      {col && !col.fabrics && col.seasons.map((item, z) => {
+                        return (
+                          <li key={z}>
+                            <a onClick={() => navigateSeason(item.id, item.name)}>{item.name} ({item.itemsCount})</a>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </li>
+                )}
+              </ul>
+            </div>
+            {/* <MobileMenuNav /> */}
+          </>
         ) : (
           "No collections found"
         )}
