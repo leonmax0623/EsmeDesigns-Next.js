@@ -522,7 +522,7 @@ const ProductDescription = ({
         if (response.data.errorCoed === "0") {
           setTotalCost(response.data.total)
           setExtraCost(response.data.extra)
-          setExtraPrice(response.data.price)
+          setPrice(response.data.price)
         } else {
           addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
         }
