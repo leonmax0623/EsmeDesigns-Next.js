@@ -77,9 +77,12 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [shippingToName, setShippingToName] = useState("");
 	const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
 
-	const [totalCost, setTotalCost] = useState("0.00")
-	const [extraCost, setExtraCost] = useState("0.00")
+	const [totalCost, setTotalCost] = useState(
+		bulkProductProps[0].mainPrice && bulkProductProps[0].totalItems ? (parseInt(bulkProductProps[0].mainPrice) * bulkProductProps[0].totalItems + parseInt(bulkProductProps[0].extraPrice)).toFixed(2) : "0.00"
+	)
+	const [extraCost, setExtraCost] = useState(bulkProductProps[0].mainPrice ? bulkProductProps[0].extraPrice : "0.00")
 	const [price, setPrice] = useState("0.00")
+	const [extraDesc, setExtraDesc] = useState([])
 
 
 	const [shipDate, setShipDate] = useState(new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000));
@@ -291,7 +294,6 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 
 	const handleRegularSizeArray = (e) => {
-
 		console.log("=========EmptryCheck=======", e.target.value)
 		let result = e.target.value;
 		if (result === "" || result === 0 || result === "0" || result === "000" || result === "00" || result === NaN || totalItems === NaN) {
@@ -308,22 +310,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		}
 	}
 
-	useEffect(() => {
-		let sum = 0;
-		// console.log("YOU're here!", regularSizeArray)
-		if (regularSizeArray && JSON.parse(regularSizeArray).length > 0) {
 
-			JSON.parse(regularSizeArray).map((item) => {
-				if (selectedSizeCategory === item.sizeCategoryName) {
-					item.sizes.map((size) => {
-						sum = sum + parseInt(size.sizeCode)
-					})
-					setTotalItems(sum)
-				}
-			})
-		}
-
-	}, [regularSizeArray])
 
 	const handleResetSizeArrayInput = (value) => {
 		const sizeArray = JSON.parse(regularSizeArray).map(item => {
@@ -342,7 +329,10 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	useEffect(() => {
 		document.querySelector("body").classList.remove("overflow-hidden");
+
 	});
+
+
 
 
 
@@ -359,6 +349,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			}
 		}
 		setSelectedAttr(array);
+		getPriceAPI()
 
 	}
 
@@ -922,6 +913,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		array[comboId].fabric.fabric_index = fabricId;
 
 		setComboArray(array);
+		getPriceAPI()
 	}
 
 	const handleComboFabricColorsChange = (e) => {
@@ -938,6 +930,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		console.log("========>>", bulkProductProps[0].combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorRGB)
 
 		setComboArray(array);
+		getPriceAPI()
 	}
 
 
@@ -949,6 +942,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		let alterationSum = 0;
 		if (alterationSelected.length > 0) alterationSum = sumExtraPrices(alterationSelected);
 		setExtraPrice(sum + alterationSum);
+		getPriceAPI()
 	}
 
 	const handleAlterationOption = (options) => {
@@ -958,6 +952,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		let styleOptionSum = 0;
 		if (styleOptionSelected.length > 0) styleOptionSum = sumExtraPrices(styleOptionSelected);
 		setExtraPrice(sum + styleOptionSum);
+		getPriceAPI()
 	}
 
 
@@ -965,8 +960,8 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		return arr.reduce((a, b) => { return a + parseInt(b.price) }, 0);
 	}
 
-	useEffect(() => {
-		console.log("===>CHAGNIE<===")
+	const getPriceAPI = () => {
+		console.log("===>CHAGNIE<===", selectedFabrics)
 		const tokenInStorage = localStorage.getItem('accessToken')
 
 		const priceJson = {
@@ -998,32 +993,37 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 					setTotalCost(response.data.total)
 					setExtraCost(response.data.extra)
 					setPrice(response.data.price)
+					setExtraDesc(response.data.extraDescription)
 				}
 			})
 			.catch(error => {
 				console.log('error', error);
 			});
 
-	}, [
-		selectedFabrics,
-		selectedFabricsColor,
-		selectedFabricsColorId,
-		selectedLining,
-		selectedLiningFabricsColor,
-		selectedLiningFabricsColorId,
-		comboArray,
-		selectedAttr,
-		selectedSizeCategory,
-		selectedSizeCategoryId,
-		regularSizeArray,
-		alterationSelected,
-		styleOptionSelected,
-		totalItems,
-		shipDate,
-		selectedRushOption,
-		quantityCount,
-		selectedCategorySizeValueId
-	])
+	}
+
+	// useMemo(() => {
+	// 	getPriceAPI()
+	// }, [bulkProductProps[0]])
+
+	useMemo(() => {
+		let sum = 0;
+		// console.log("YOU're here!", regularSizeArray)
+		if (regularSizeArray && JSON.parse(regularSizeArray).length > 0) {
+
+			JSON.parse(regularSizeArray).map((item) => {
+				if (selectedSizeCategory === item.sizeCategoryName) {
+					item.sizes.map((size) => {
+						sum = sum + parseInt(size.sizeCode)
+					})
+					setTotalItems(sum)
+				}
+			})
+			getPriceAPI()
+			console.log("111111111111111111111111111111111111111111")
+		}
+
+	}, [regularSizeArray])
 
 	return (
 		<div className="bulk-container">
@@ -1081,6 +1081,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 												onChange={(event) => {
 													setSelectedFabrics(event.target.value)
 													setSelectedFabricsColor(bulkProductProps[0].fabrics.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
+													getPriceAPI()
 												}}
 											>
 												{bulkProductProps[0].fabrics &&
@@ -1111,6 +1112,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 														// console.log("!!!!!!!!!", event.target.value.split("/")[1])
 														setSelectedFabricsColor(event.target.value.split("/")[1]);
 														setSelectedFabricsColorId(event.target.value.split("/")[0]);
+														getPriceAPI()
 													}}
 												>
 													{bulkProductProps[0].fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
@@ -1140,6 +1142,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 												onChange={(event) => {
 													setSelectedLining(event.target.value)
 													setSelectedLiningFabricsColor(bulkProductProps[0].lining.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
+													getPriceAPI()
 												}}
 											>
 												{bulkProductProps[0].lining &&
@@ -1169,6 +1172,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 													onChange={(event) => {
 														setSelectedLiningFabricsColor(event.target.value.split("/")[1]);
 														setSelectedLiningFabricsColorId(event.target.value.split("/")[0])
+														getPriceAPI()
 													}}
 												>
 													{bulkProductProps[0].lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
@@ -1338,6 +1342,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 													setSelectedSizeCategory(event.target.value.split("/")[1])
 													handleResetSizeArrayInput(event.target.value.split("/")[1])
 													setSelectedSizeCategoryId(event.target.value.split("/")[0])
+													getPriceAPI()
 												}}
 											>
 												{JSON.parse(regularSizeArray).length > 0 ? JSON.parse(regularSizeArray).map((category, i) => {
@@ -1383,6 +1388,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 														onChange={(event) => {
 															setSelectedSizeCategory(event.target.value.split("::")[1])
 															setSelectedSizeCategoryId(event.target.value.split("::")[0])
+															getPriceAPI()
 														}}
 														value={`${selectedSizeCategoryId}::${selectedSizeCategory}`}
 													>
@@ -1409,6 +1415,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 																		onChange={(event) => {
 																			setSelectedCategorySizeValue(event.target.value.split("::")[1]);
 																			setSelectedCategorySizeValueId(event.target.value.split("::")[0]);
+																			getPriceAPI()
 																		}}
 																		value={`${selectedCategorySizeValueId}::${selectedCategorySizeValue}`}
 																	>
@@ -1430,9 +1437,10 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 													<div className="product-content__quantity__title">Quantity</div>
 													<div className="cart-plus-minus">
 														<button
-															onClick={() =>
+															onClick={() => {
 																setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-															}
+																getPriceAPI()
+															}}
 															disabled={editBoolean}
 															className="qtybutton"
 														>
@@ -1445,9 +1453,10 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 															readOnly
 														/>
 														<button
-															onClick={() =>
+															onClick={() => {
 																setQuantityCount(quantityCount + 1)
-															}
+																getPriceAPI()
+															}}
 															disabled={editBoolean}
 															className="qtybutton"
 														>
@@ -1474,6 +1483,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 														value={sizeCategory}
 														onChange={(event) => {
 															setSizeCategory(event.target.value)
+															getPriceAPI()
 														}}
 													>
 														{bulkProductProps[0].sizeCategories &&
@@ -1502,6 +1512,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 															value={selectedCategorySizeValue}
 															onChange={(event) => {
 																setSelectedCategorySizeValue(event.target.value);
+																getPriceAPI()
 															}}
 														>
 															{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === sizeCategory ? single.sizes.map((size, i) => {
@@ -1520,9 +1531,10 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 									<div className="product-content__quantity__title">Quantity</div>
 									<div className="cart-plus-minus">
 										<button
-											onClick={() =>
+											onClick={() => {
 												setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-											}
+												getPriceAPI()
+											}}
 											disabled={editBoolean}
 											className="qtybutton"
 										>
@@ -1535,9 +1547,10 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 											readOnly
 										/>
 										<button
-											onClick={() =>
+											onClick={() => {
 												setQuantityCount(quantityCount + 1)
-											}
+												getPriceAPI()
+											}}
 											disabled={editBoolean}
 											className="qtybutton"
 										>
@@ -1571,6 +1584,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 										style={{ width: "100%", height: "37px", cursor: "pointer" }}
 										onChange={(event) => {
 											handleSelectRushOption(event.target.value)
+											getPriceAPI()
 										}}
 										value={selectedRushOptionId}
 									>
@@ -1711,14 +1725,14 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 									<th className="product-price" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>Quantity </th>
 									<th className="product-quantity" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>
 										Extras
-										{extraPrice > 0 && (
+										{extraDesc.length > 0 && (
 											<Tooltip
 												interactive
 												html={(
 													<div style={{ textAlign: "left" }}>
-														{alterationSelected.concat(styleOptionSelected).map((item, i) => {
+														{extraDesc.map((item, i) => {
 															return (
-																<p style={{ margin: "5px" }}>- {item.label}: ${item.price}</p>
+																<p style={{ margin: "5px" }}>- {item.desc}: ${item.value}</p>
 															)
 
 														})}
