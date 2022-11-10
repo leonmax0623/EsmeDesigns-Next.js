@@ -42,6 +42,7 @@ const ProductDescription = ({
   const [totalCost, setTotalCost] = useState("0.00")
   const [extraCost, setExtraCost] = useState("0.00")
   const [price, setPrice] = useState("0.00")
+  const [extraDesc, setExtraDesc] = useState([])
   //custom 
   const [selectedLining, setSelectedLining] = useState("");
   const [selectedRushOptionId, setSelectedRushOptionId] = useState(product.rushOptions ? product.rushOptions[0].rushId : "");
@@ -210,6 +211,7 @@ const ProductDescription = ({
 
 
   const handleComboFabricChange = (combo_name) => (e) => {
+    getPriceAPI()
     let array = [...comboArray];
     var index = e.target.selectedIndex;
     var optionElement = e.target.childNodes[index];
@@ -223,6 +225,7 @@ const ProductDescription = ({
   }
 
   const handleComboFabricColorsChange = (e) => {
+    getPriceAPI()
     let array = [...comboArray];
     var index = e.target.selectedIndex;
     var optionElement = e.target.childNodes[index];
@@ -238,6 +241,7 @@ const ProductDescription = ({
   }
 
   const handleComboFabricColorsRadioChange = (comboIndex, color_name, color_id, color_rgb) => (e) => {
+    getPriceAPI()
     let array = [...comboArray];
 
     array[comboIndex].fabric.color.color_name = color_name;
@@ -280,6 +284,7 @@ const ProductDescription = ({
   }
 
   const handleStyleOption = (options) => {
+    getPriceAPI()
     let testExtra = 0;
     setStyleOptionSelected(options)
     const sum = sumExtraPrices(options);
@@ -289,6 +294,7 @@ const ProductDescription = ({
   }
 
   const handleAlterationOption = (options) => {
+    getPriceAPI()
     let testExtra = 0;
     setAlterationSelected(options)
     const sum = sumExtraPrices(options);
@@ -298,6 +304,7 @@ const ProductDescription = ({
   }
 
   const handleRushDate = (e) => {
+    getPriceAPI()
     console.log("EEEEE", e)
     setWearDate(e)
   }
@@ -484,7 +491,7 @@ const ProductDescription = ({
     "items": [itemsArray]
   }
 
-  useEffect(() => {
+  const getPriceAPI = () => {
     console.log("===>CHAGNIE<===")
     const tokenInStorage = localStorage.getItem('accessToken')
 
@@ -522,34 +529,14 @@ const ProductDescription = ({
           setTotalCost(response.data.total)
           setExtraCost(response.data.extra)
           setPrice(response.data.price)
-        } else {
-          addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+          setExtraDesc(response.data.extraDescription)
         }
       })
       .catch(error => {
         console.log('error', error);
       });
 
-  }, [
-    quantityCount,
-    selectedFabrics,
-    selectedFabricsColor,
-    selectedFabricsColorId,
-    selectedLining,
-    selectedLiningFabricsColor,
-    selectedLiningFabricsColorId,
-    comboArray,
-    selectedAttr,
-    selectedSizeCategory,
-    selectedSizeCategoryId,
-    selectedCategorySizeValue,
-    selectedCategorySizeValueId,
-    alterationSelected,
-    styleOptionSelected,
-    extraCost,
-    shipDate,
-    selectedRushOption
-  ])
+  }
 
   const handleAddToCart = (
     product,
@@ -586,9 +573,6 @@ const ProductDescription = ({
       "parameters": JSON.stringify(parameters)
     }
 
-    console.log("~~~~~~~~~wearDate~~~~~~~~", wearDate)
-    console.log("~~~~~~~~~shipDate~~~~~~~~", shipDate)
-
     API.post('/', new URLSearchParams(formData))
       .then(response => {
         console.log('====ddd====', response);
@@ -618,6 +602,8 @@ const ProductDescription = ({
             localStorage.setItem("OrderId", response.data.ordersId)
             tempOrdersId = response.data.ordersId;
           }
+
+          console.log("~~~~~~~ExtraCost~~~~~~~", extraCost)
 
           addToCart(
             product,
@@ -726,6 +712,7 @@ const ProductDescription = ({
                 onChange={(event) => {
                   setSelectedFabrics(event.target.value)
                   setSelectedFabricsColor(product.fabrics.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
+                  getPriceAPI()
                 }}
               >
                 {product.fabrics &&
@@ -752,6 +739,7 @@ const ProductDescription = ({
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
                   onChange={(event) => {
                     handleFabricsChange(event.target.value)
+                    getPriceAPI()
                   }}
                 >
                   {product.fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
@@ -800,6 +788,7 @@ const ProductDescription = ({
                             setSelectedFabricsColorId(color.fabricsColorId);
                             setSelectedFabricsColor(color.fabricColorName);
                             handleChangePicture(color.fabricsColorId, color.fabricColorName)
+                            getPriceAPI()
                           }}
                         />
                         <label
@@ -825,6 +814,7 @@ const ProductDescription = ({
                 value={selectedLining}
                 onChange={(event) => {
                   setSelectedLining(event.target.value)
+                  getPriceAPI()
                   setSelectedLiningFabricsColor(product.lining.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
                 }}
               >
@@ -854,6 +844,7 @@ const ProductDescription = ({
                   onChange={(event) => {
                     setSelectedLiningFabricsColor(event.target.value.split("/")[1]);
                     setSelectedLiningFabricsColorId(event.target.value.split("/")[0]);
+                    getPriceAPI()
                   }}
                 >
                   {product.lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
@@ -900,6 +891,7 @@ const ProductDescription = ({
                             setSelectedLiningFabricsColor(color.fabricColorName);
                             setSelectedLiningFabricsColorId(color.fabricsColorId);
                             setQuantityCount(1);
+                            getPriceAPI()
                           }}
                         />
                         <label
@@ -1019,6 +1011,7 @@ const ProductDescription = ({
                     style={{ width: "100%", height: "37px", cursor: "pointer" }}
                     onChange={(event) => {
                       handleAttributeChange(event, item.styleAttrybutesName)
+                      getPriceAPI()
                     }}
                   >
                     {item.styleAttrybutesValues &&
@@ -1046,6 +1039,7 @@ const ProductDescription = ({
                 onChange={(event) => {
                   setSelectedSizeCategory(event.target.value.split("::")[1])
                   setSelectedSizeCategoryId(event.target.value.split("::")[0])
+                  getPriceAPI()
                 }}
               >
                 {product.sizeCategories &&
@@ -1073,6 +1067,7 @@ const ProductDescription = ({
                   onChange={(event) => {
                     setSelectedCategorySizeValue(event.target.value.split("::")[1]);
                     setSelectedCategorySizeValueId(event.target.value.split("::")[0]);
+                    getPriceAPI()
                   }}
                 >
                   {product.sizeCategories.map((single, j) => single.sizeCategoryName === selectedSizeCategory ? single.sizes.map((size, i) => {
@@ -1130,9 +1125,10 @@ const ProductDescription = ({
           <div className="product-content__quantity__title">Quantity</div>
           <div className="cart-plus-minus">
             <button
-              onClick={() =>
+              onClick={() => {
                 setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-              }
+                getPriceAPI()
+              }}
               className="qtybutton"
             >
               -
@@ -1144,9 +1140,10 @@ const ProductDescription = ({
               readOnly
             />
             <button
-              onClick={() =>
+              onClick={() => {
                 setQuantityCount(quantityCount + 1)
-              }
+                getPriceAPI()
+              }}
               className="qtybutton"
             >
               +
@@ -1174,6 +1171,7 @@ const ProductDescription = ({
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 onChange={(event) => {
                   handleSelectRushOption(event.target.value)
+                  getPriceAPI()
                 }}
                 selected={selectedRushOptionId}
               >
@@ -1243,14 +1241,14 @@ const ProductDescription = ({
               <th className="product-price" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>Quantity </th>
               <th className="product-quantity" style={{ fontSize: "14px", textAlign: "center", padding: "5px 12px" }}>
                 Extras
-                {extraPrice > 0 && (
+                {extraDesc.length > 0 && (
                   <Tooltip
                     interactive
                     html={(
                       <div style={{ textAlign: "left" }}>
-                        {alterationSelected.concat(styleOptionSelected).map((item, i) => {
+                        {extraDesc.map((item, i) => {
                           return (
-                            <p style={{ margin: "5px" }}>- {item.label}: ${item.price}</p>
+                            <p style={{ margin: "5px" }}>- {item.desc}: ${item.value}</p>
                           )
                         })}
                       </div>
@@ -1306,7 +1304,7 @@ const ProductDescription = ({
                 selectedCategorySizeValueId,
                 alterationSelected,
                 styleOptionSelected,
-                extraPrice,
+                extraCost,
                 formatDate(wearDate),
                 formatDate(shipDate),
                 selectedRushOption,
