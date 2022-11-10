@@ -48,7 +48,6 @@ export const addToCart = (
 
 
   return dispatch => {
-    console.log("<<==== CART ITEMS ====>>", ordersId)
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }

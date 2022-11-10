@@ -119,6 +119,18 @@
             display: none;
           }
 
+          .buttonsGroup {
+            display: "flex";
+            margin-top: "20px";
+            justify-content: "center";
+            padding: "0px";
+            gap: "10px";
+
+            @include respond(large-mobile) {
+              flex-direction: column;
+            }
+          }
+
           .cart-table {
             @include respond(extra-large-mobile) {
               display: none;

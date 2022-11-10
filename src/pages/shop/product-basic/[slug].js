@@ -72,8 +72,8 @@ const ProductBasic = ({
   // ).toFixed(2);
 
   // const productPrice = product.price.toFixed(2);
-  const discountedPrice = parseInt(product[0].discountedPrice);
-  const productPrice = parseInt(product[0].standardPrice);
+  // const discountedPrice = parseInt(product[0].discountedPrice);
+  // const productPrice = parseInt(product[0].standardPrice);
   const cartItem = cartItems.filter(
     (cartItem) => cartItem.productId === product[0].productId
   )[0];
@@ -141,8 +141,6 @@ const ProductBasic = ({
               {/* product description */}
               <ProductDescription
                 product={product[0]}
-                productPrice={productPrice}
-                discountedPrice={discountedPrice}
                 cartItems={cartItems}
                 cartItem={cartItem}
                 wishlistItem={wishlistItem}

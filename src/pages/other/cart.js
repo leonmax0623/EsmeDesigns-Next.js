@@ -62,7 +62,7 @@ const Cart = ({
           if (response.data.errorCode === "0") {
             addToast("Order was successfully removed!", { appearance: "success", autoDismiss: true });
             // Router.push('/other/cart');
-            deleteAllFromCart(addToast)
+            deleteAllFromCart(null)
             localStorage.removeItem("OrderId")
           } else {
             addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });

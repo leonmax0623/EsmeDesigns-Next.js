@@ -77,9 +77,9 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [shippingToName, setShippingToName] = useState("");
 	const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
 
-	const [totalCost, setTotalCost] = useState("")
-	const [extraCost, setExtraCost] = useState("")
-	const [price, setPrice] = useState("")
+	const [totalCost, setTotalCost] = useState("0.00")
+	const [extraCost, setExtraCost] = useState("0.00")
+	const [price, setPrice] = useState("0.00")
 
 
 	const [shipDate, setShipDate] = useState(new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000));
@@ -994,7 +994,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		API.post('/', new URLSearchParams(formData))
 			.then(response => {
 				console.log('====DescriptionResponse====', response);
-				if (response.data.errorCoed === "0") {
+				if (response.data.errorCode === "0") {
 					setTotalCost(response.data.total)
 					setExtraCost(response.data.extra)
 					setPrice(response.data.price)
@@ -1637,7 +1637,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 					</div>
 					<Col lg={6} style={{ padding: "0px", marginBottom: "20px" }}>
 						{editBoolean ? (
-							<Col lg={12} style={{ display: "flex", marginTop: "20px", justifyContent: "center", padding: "0px", gap: "10px" }}>
+							<Col lg={12} className="buttonsGroup" style={{ display: "flex", marginTop: "20px", justifyContent: "center", padding: "0px", gap: "10px" }}>
 								{bulkProductProps[0].selectedFabrics ? (
 									<>
 										<button
