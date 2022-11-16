@@ -30,7 +30,7 @@ const ProductDescription = ({
   disallowRush,
   showRating
 }) => {
-  console.log("1111", product)
+  // console.log("1111", product)
   const router = useRouter()
   const dispatch = useDispatch();
 
@@ -74,6 +74,7 @@ const ProductDescription = ({
     product.inStock ? product.inStock : 0
   );
   const [quantityCount, setQuantityCount] = useState(1);
+  const [realChange, setRealChange] = useState(false)
 
 
   const [billingCompany, setBillingCompany] = useState("");
@@ -97,58 +98,54 @@ const ProductDescription = ({
   const [shipDate, setShipDate] = useState(new Date(new Date().getTime() + parseInt(selectedRushOption[0].leadTime) * 7 * 24 * 60 * 60 * 1000));
   const [wearDate, setWearDate] = useState(tempWearDate && tempWearDate !== "" ? new Date(tempWearDate) : "");
 
+  // setRealChange(false)
 
-  useMemo(() => {
-    if (product.lining && product.lining.length > 0) {
-      setSelectedLining(product.selectedLining ? product.selectedLining : product.lining[0].fabricsId)
-      setSelectedLiningFabricsColor(selectedLiningFabricsColor ? selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricColorName)
-      // setSelectedLiningFabricsColorId(product.lining[0].fabricsColor[0].fabricsColorId)
-    }
-  }, [product.lining])
+  useEffect(() => {
+    if (!realChange) {
 
-  useMemo(() => {
-    if (product.fabrics && product.fabrics.length > 0) {
-      setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
-      setSelectedFabricsColor(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
-      // setSelectedFabricsColorId(product.fabrics[0].fabricsColor[0].fabricsColorId)
-    }
-  }, [product.fabrics])
-  useMemo(() => {
-    if (product.comboArray) {
-      setComboArray(product.comboArray);
-    } else {
-      let comboTempArray = []
-      product.combos && product.combos.map((item) => {
-        comboTempArray[comboTempArray.length] = {
-          combo: item.combosName,
-          comboId: item.combosId,
-          fabric: {
-            fabric_index: 0,
-            fabric_name: item.fabric[0].fabricsName,
-            fabric_id: item.fabric[0].fabricsId,
-            color: {
-              color_name: item.fabric[0].fabricsColor[0].fabricColorName,
-              color_id: item.fabric[0].fabricsColor[0].fabricsColorId,
-              rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB
+      if (product.lining && product.lining.length > 0) {
+        setSelectedLining(product.selectedLining ? product.selectedLining : product.lining[0].fabricsId)
+        setSelectedLiningFabricsColor(selectedLiningFabricsColor ? selectedLiningFabricsColor : product.lining[0].fabricsColor[0].fabricColorName)
+        // setSelectedLiningFabricsColorId(product.lining[0].fabricsColor[0].fabricsColorId)
+      }
+      if (product.fabrics && product.fabrics.length > 0) {
+        setSelectedFabrics(product.selectedFabrics ? product.selectedFabrics : product.fabrics[0].fabricsId)
+        setSelectedFabricsColor(selectedFabricsColor ? selectedFabricsColor : product.fabrics[0].fabricsColor[0].fabricColorName)
+        // setSelectedFabricsColorId(product.fabrics[0].fabricsColor[0].fabricsColorId)
+      }
+      if (product.comboArray) {
+        setComboArray(product.comboArray);
+      } else {
+        let comboTempArray = []
+        product.combos && product.combos.map((item) => {
+          comboTempArray[comboTempArray.length] = {
+            combo: item.combosName,
+            comboId: item.combosId,
+            fabric: {
+              fabric_index: 0,
+              fabric_name: item.fabric[0].fabricsName,
+              fabric_id: item.fabric[0].fabricsId,
+              color: {
+                color_name: item.fabric[0].fabricsColor[0].fabricColorName,
+                color_id: item.fabric[0].fabricsColor[0].fabricsColorId,
+                rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB
+              }
             }
           }
-        }
-      });
-      setComboArray(comboTempArray);
-    }
-  }, [product.comboArray])
+        });
+        let selectedAttrArray = []
+        product.styleAttributes.length > 0 && product.styleAttributes.map((item) => {
+          if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
+            selectedAttrArray[selectedAttrArray.length] = { attr: item.styleAttrybutesName, attrId: item.styleAttrybutesId, value: item.styleAttrybutesValues[0].styleAttrybutesValueName, valueId: item.styleAttrybutesValues[0].styleAttrybutesValueId }
+          }
+        });
+        setComboArray(comboTempArray);
+        setSelectedAttr(selectedAttrArray);
+        setRealChange(false)
 
-  useMemo(() => {
-
-    let selectedAttrArray = []
-    product.styleAttributes.length > 0 && product.styleAttributes.map((item) => {
-      if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
-        selectedAttrArray[selectedAttrArray.length] = { attr: item.styleAttrybutesName, attrId: item.styleAttrybutesId, value: item.styleAttrybutesValues[0].styleAttrybutesValueName, valueId: item.styleAttrybutesValues[0].styleAttrybutesValueId }
       }
-    });
-    setSelectedAttr(selectedAttrArray);
-  }, [product.selectedAttr])
-
+    }
+  }, [product])
   //custom
   const alterationOptions = [];
   product.styleAlterations && product.styleAlterations.map((single, i) => {
@@ -211,7 +208,7 @@ const ProductDescription = ({
 
 
   const handleComboFabricChange = (combo_name) => (e) => {
-    getPriceAPI()
+    setRealChange(true)
     let array = [...comboArray];
     var index = e.target.selectedIndex;
     var optionElement = e.target.childNodes[index];
@@ -225,7 +222,7 @@ const ProductDescription = ({
   }
 
   const handleComboFabricColorsChange = (e) => {
-    getPriceAPI()
+    setRealChange(true)
     let array = [...comboArray];
     var index = e.target.selectedIndex;
     var optionElement = e.target.childNodes[index];
@@ -241,7 +238,7 @@ const ProductDescription = ({
   }
 
   const handleComboFabricColorsRadioChange = (comboIndex, color_name, color_id, color_rgb) => (e) => {
-    getPriceAPI()
+    setRealChange(true)
     let array = [...comboArray];
 
     array[comboIndex].fabric.color.color_name = color_name;
@@ -272,6 +269,7 @@ const ProductDescription = ({
   );
 
   const handleFabricsChange = (value) => {
+    setRealChange(true)
     setSelectedFabricsColorId(value.split("/")[0]);
     setSelectedFabricsColor(value.split("/")[1]);
     handleChangePicture(value.split("/")[0], value.split("/")[1])
@@ -284,7 +282,7 @@ const ProductDescription = ({
   }
 
   const handleStyleOption = (options) => {
-    getPriceAPI()
+    setRealChange(true)
     let testExtra = 0;
     setStyleOptionSelected(options)
     const sum = sumExtraPrices(options);
@@ -294,7 +292,7 @@ const ProductDescription = ({
   }
 
   const handleAlterationOption = (options) => {
-    getPriceAPI()
+    setRealChange(true)
     let testExtra = 0;
     setAlterationSelected(options)
     const sum = sumExtraPrices(options);
@@ -304,7 +302,7 @@ const ProductDescription = ({
   }
 
   const handleRushDate = (e) => {
-    getPriceAPI()
+    setRealChange(true)
     console.log("EEEEE", e)
     setWearDate(e)
   }
@@ -314,6 +312,7 @@ const ProductDescription = ({
   }
 
   const handleSelectRushOption = (val) => {
+
     const selectedOption = product.rushOptions.filter((option, i) => option.rushId === val);
     const leadTime = selectedOption[0].leadTime;
     const today = new Date();
@@ -323,15 +322,18 @@ const ProductDescription = ({
     setSelectedRushOption(selectedOption);
   }
 
-  useMemo(() => {
-    if (wearDate !== "") {
 
-      if (shipDate.getTime() > wearDate.getTime()) {
-        disallowRush(true);
-        setRushError(true)
-      } else {
-        disallowRush(false);
-        setRushError(false)
+  useMemo(() => {
+    console.log("REAL CHANGE-----------", realChange)
+    if (realChange) {
+      if (wearDate !== "") {
+        if (shipDate.getTime() > wearDate.getTime()) {
+          disallowRush(true);
+          setRushError(true)
+        } else {
+          disallowRush(false);
+          setRushError(false)
+        }
       }
     }
   }, [wearDate, selectedRushOptionId])
@@ -339,31 +341,34 @@ const ProductDescription = ({
 
 
   useMemo(async () => {
+    if (!realChange) {
 
-    const response = await getCheckoutOptions();
-    if (response.data.errorText === 'accessToken expired') {
-      addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
-      Router.push('/other/login');
-    } else {
+      const response = await getCheckoutOptions();
+      if (response.data.errorText === 'accessToken expired') {
+        addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+        Router.push('/other/login');
+      } else {
 
-      setBillingCompany(response.data.billingCompany)
-      setBillingCity(response.data.billingCity)
-      setBillingCountryId(response.data.billingCountry)
-      setSelectedBillingStateId(response.data.billingState)
-      setBillingStreetOne(response.data.billingStreet)
-      setBillingStreetTwo(response.data.billingStreet2)
-      setBillingZipCode(response.data.billingZipCode)
+        setBillingCompany(response.data.billingCompany)
+        setBillingCity(response.data.billingCity)
+        setBillingCountryId(response.data.billingCountry)
+        setSelectedBillingStateId(response.data.billingState)
+        setBillingStreetOne(response.data.billingStreet)
+        setBillingStreetTwo(response.data.billingStreet2)
+        setBillingZipCode(response.data.billingZipCode)
 
-      setShippingCompany(response.data.shippingCompany)
-      setShippingCity(response.data.shippingCity)
-      setShippingCountryId(response.data.shippingCountry)
-      setSelectedShippingStateId(response.data.shippingState)
-      setShippingStreetOne(response.data.shippingStreet)
-      setShippingStreetTwo(response.data.shippingStreet2)
-      setShippingZipCode(response.data.shippingZipCode)
-      setShippingToName(response.data.shippingToName)
-      setShippingPhoneNumber(response.data.shippingPhoneNumber)
+        setShippingCompany(response.data.shippingCompany)
+        setShippingCity(response.data.shippingCity)
+        setShippingCountryId(response.data.shippingCountry)
+        setSelectedShippingStateId(response.data.shippingState)
+        setShippingStreetOne(response.data.shippingStreet)
+        setShippingStreetTwo(response.data.shippingStreet2)
+        setShippingZipCode(response.data.shippingZipCode)
+        setShippingToName(response.data.shippingToName)
+        setShippingPhoneNumber(response.data.shippingPhoneNumber)
+      }
     }
+
 
   }, [])
 
@@ -491,8 +496,13 @@ const ProductDescription = ({
     "items": [itemsArray]
   }
 
+  // let totalCost = "0.00";
+  // let extraCost = "0.00";
+  // let price = "0.00";
+  // let extraDesc = [];
+  console.log("REAL CHANGE", realChange)
+
   const getPriceAPI = () => {
-    console.log("===>CHAGNIE<===")
     const tokenInStorage = localStorage.getItem('accessToken')
 
     const priceJson = {
@@ -522,19 +532,26 @@ const ProductDescription = ({
       "parameters": JSON.stringify(priceJson)
     }
 
-    API.post('/', new URLSearchParams(formData))
-      .then(response => {
-        console.log('====DescriptionResponse====', response);
-        if (response.data.errorCode === "0") {
-          setTotalCost(response.data.total)
-          setExtraCost(response.data.extra)
-          setPrice(response.data.price)
-          setExtraDesc(response.data.extraDescription)
-        }
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+    if (realChange) {
+
+      API.post('/', new URLSearchParams(formData))
+        .then(response => {
+          if (response.data.errorCode === "0") {
+            setRealChange(false)
+            setTotalCost(response.data.total)
+            setExtraCost(response.data.extra)
+            setPrice(response.data.price)
+            setExtraDesc(response.data.extraDescription)
+            // totalCost = response.data.total;
+            // extraCost = response.data.extra;
+            // price = response.data.price;
+            // extraDesc = response.data.extraDescription;
+          }
+        })
+        .catch(error => {
+          console.log('error', error);
+        });
+    }
 
   }
 
@@ -645,6 +662,32 @@ const ProductDescription = ({
       });
   }
 
+  useMemo(() => {
+    if (realChange) {
+      console.log("GetPriceParams", comboArr)
+      // eslint-disable-next-line
+      const getData = setTimeout(() =>
+        getPriceAPI()
+        , 1000)
+      return () => clearTimeout(getData)
+    }
+  }, [
+    selectedFabrics,
+    selectedFabricsColorId,
+    selectedLining,
+    selectedLiningFabricsColorId,
+    comboArr,
+    selectedSizeCategoryId,
+    selectedCategorySizeValueId,
+    quantityCount,
+    alterationOptionsArray,
+    attrArr,
+    styleOptionsArray,
+    shipDate,
+    wearDate,
+    selectedRushOptionId
+  ])
+
   return (
     <div className="product-content">
       {showRating === "Users" && product.reviewList && product.reviewList.length > 0 ? (
@@ -712,7 +755,7 @@ const ProductDescription = ({
                 onChange={(event) => {
                   setSelectedFabrics(event.target.value)
                   setSelectedFabricsColor(product.fabrics.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
-                  getPriceAPI()
+                  setRealChange(true)
                 }}
               >
                 {product.fabrics &&
@@ -739,7 +782,7 @@ const ProductDescription = ({
                   style={{ width: "100%", height: "37px", cursor: "pointer" }}
                   onChange={(event) => {
                     handleFabricsChange(event.target.value)
-                    getPriceAPI()
+                    setRealChange(true)
                   }}
                 >
                   {product.fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
@@ -788,7 +831,7 @@ const ProductDescription = ({
                             setSelectedFabricsColorId(color.fabricsColorId);
                             setSelectedFabricsColor(color.fabricColorName);
                             handleChangePicture(color.fabricsColorId, color.fabricColorName)
-                            getPriceAPI()
+                            setRealChange(true)
                           }}
                         />
                         <label
@@ -814,7 +857,7 @@ const ProductDescription = ({
                 value={selectedLining}
                 onChange={(event) => {
                   setSelectedLining(event.target.value)
-                  getPriceAPI()
+                  setRealChange(true)
                   setSelectedLiningFabricsColor(product.lining.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
                 }}
               >
@@ -844,7 +887,7 @@ const ProductDescription = ({
                   onChange={(event) => {
                     setSelectedLiningFabricsColor(event.target.value.split("/")[1]);
                     setSelectedLiningFabricsColorId(event.target.value.split("/")[0]);
-                    getPriceAPI()
+                    setRealChange(true)
                   }}
                 >
                   {product.lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
@@ -891,7 +934,7 @@ const ProductDescription = ({
                             setSelectedLiningFabricsColor(color.fabricColorName);
                             setSelectedLiningFabricsColorId(color.fabricsColorId);
                             setQuantityCount(1);
-                            getPriceAPI()
+                            setRealChange(true)
                           }}
                         />
                         <label
@@ -1011,7 +1054,7 @@ const ProductDescription = ({
                     style={{ width: "100%", height: "37px", cursor: "pointer" }}
                     onChange={(event) => {
                       handleAttributeChange(event, item.styleAttrybutesName)
-                      getPriceAPI()
+                      setRealChange(true)
                     }}
                   >
                     {item.styleAttrybutesValues &&
@@ -1039,7 +1082,7 @@ const ProductDescription = ({
                 onChange={(event) => {
                   setSelectedSizeCategory(event.target.value.split("::")[1])
                   setSelectedSizeCategoryId(event.target.value.split("::")[0])
-                  getPriceAPI()
+                  setRealChange(true)
                 }}
               >
                 {product.sizeCategories &&
@@ -1067,7 +1110,7 @@ const ProductDescription = ({
                   onChange={(event) => {
                     setSelectedCategorySizeValue(event.target.value.split("::")[1]);
                     setSelectedCategorySizeValueId(event.target.value.split("::")[0]);
-                    getPriceAPI()
+                    setRealChange(true)
                   }}
                 >
                   {product.sizeCategories.map((single, j) => single.sizeCategoryName === selectedSizeCategory ? single.sizes.map((size, i) => {
@@ -1127,7 +1170,7 @@ const ProductDescription = ({
             <button
               onClick={() => {
                 setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-                getPriceAPI()
+                setRealChange(true)
               }}
               className="qtybutton"
             >
@@ -1142,7 +1185,7 @@ const ProductDescription = ({
             <button
               onClick={() => {
                 setQuantityCount(quantityCount + 1)
-                getPriceAPI()
+                setRealChange(true)
               }}
               className="qtybutton"
             >
@@ -1170,8 +1213,8 @@ const ProductDescription = ({
               <select
                 style={{ width: "100%", height: "37px", cursor: "pointer" }}
                 onChange={(event) => {
+                  setRealChange(true)
                   handleSelectRushOption(event.target.value)
-                  getPriceAPI()
                 }}
                 selected={selectedRushOptionId}
               >
