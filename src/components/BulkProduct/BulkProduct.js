@@ -76,11 +76,9 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	const [shippingStreetTwo, setShippingStreetTwo] = useState("");
 	const [shippingToName, setShippingToName] = useState("");
 	const [shippingPhoneNumber, setShippingPhoneNumber] = useState("");
-
-	const [totalCost, setTotalCost] = useState(
-		bulkProductProps[0].mainPrice && bulkProductProps[0].totalItems ? (parseInt(bulkProductProps[0].mainPrice) * bulkProductProps[0].totalItems + parseInt(bulkProductProps[0].extraPrice)).toFixed(2) : "0.00"
-	)
-	const [extraCost, setExtraCost] = useState(bulkProductProps[0].mainPrice ? bulkProductProps[0].extraPrice : "0.00")
+	const [realChange, setRealChange] = useState(false)
+	const [totalCost, setTotalCost] = useState("0.00")
+	const [extraCost, setExtraCost] = useState("0.00")
 	const [price, setPrice] = useState("0.00")
 	const [extraDesc, setExtraDesc] = useState([])
 
@@ -90,159 +88,266 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 
 	const [myTestValue, setMyTestValue] = useState(false);
 
-	useMemo(() => {
-		if (bulkProductProps[0].wearDate) {
-			setWearDate(new Date(bulkProductProps[0].wearDate))
-		}
-	}, [bulkProductProps[0].wearDate])
+	// let totalCost = "0.00";
+	// let extraCost = "0.00";
+	// let price = "0.00";
+	// let extraDesc = [];
 
-	useMemo(() => {
-		if (bulkProductProps[0].shipDate) {
-			setShipDate(new Date(bulkProductProps[0].shipDate))
-		}
-	}, [bulkProductProps[0].shipDate])
+	// if (bulkProductProps[0].mainPrice && bulkProductProps[0].totalItems) {
+	// 	totalCost = (parseInt(bulkProductProps[0].mainPrice) * bulkProductProps[0].totalItems + parseInt(bulkProductProps[0].extraPrice)).toFixed(2)
+	// }
 
-	useMemo(() => {
-		if (bulkProductProps[0].selectedRushOption) {
-			setSelectedRushOptionId(bulkProductProps[0].selectedRushOption[0].rushId)
-		} else {
+	// if (bulkProductProps[0].mainPrice) {
+	// 	extraCost = bulkProductProps[0].extraPrice
+	// }
 
-			setSelectedRushOptionId(bulkProductProps[0].rushOptions[0].rushId)
-			// setSelectedRushOption([bulkProductProps[0].rushOptions[0]])
-		}
+	// useMemo(() => {
+	// 	if (bulkProductProps[0].wearDate) {
+	// 		setWearDate(new Date(bulkProductProps[0].wearDate))
+	// 		setRealChange(false)
+	// 	}
+	// 	if (bulkProductProps[0].shipDate) {
+	// 		setShipDate(new Date(bulkProductProps[0].shipDate))
+	// 		setRealChange(false)
+	// 	}
+	// 	if (bulkProductProps[0].selectedRushOption) {
+	// 		setSelectedRushOptionId(bulkProductProps[0].selectedRushOption[0].rushId)
+	// 		setRealChange(false)
+	// 	} else {
 
-	}, [bulkProductProps[0].rushOptions])
+	// 		setSelectedRushOptionId(bulkProductProps[0].rushOptions[0].rushId)
+	// 		setRealChange(false)
+	// 		// setSelectedRushOption([bulkProductProps[0].rushOptions[0]])
+	// 	}
+	// }, [bulkProductProps[0]])
+
+	// useMemo(() => {
+	// 	if (bulkProductProps[0].shipDate) {
+	// 		setShipDate(new Date(bulkProductProps[0].shipDate))
+	// 		setRealChange(false)
+	// 	}
+	// }, [bulkProductProps[0].shipDate])
+
+	// useMemo(() => {
+	// 	if (bulkProductProps[0].selectedRushOption) {
+	// 		setSelectedRushOptionId(bulkProductProps[0].selectedRushOption[0].rushId)
+	// 		setRealChange(false)
+	// 	} else {
+
+	// 		setSelectedRushOptionId(bulkProductProps[0].rushOptions[0].rushId)
+	// 		setRealChange(false)
+	// 		// setSelectedRushOption([bulkProductProps[0].rushOptions[0]])
+	// 	}
+
+	// }, [bulkProductProps[0].rushOptions])
 
 
 
 	useEffect(() => {
-		if (bulkProductProps[0]) {
-			if (bulkProductProps[0].totalItems) {
-				setTotalItems(bulkProductProps[0].totalItems)
-			}
-			if (bulkProductProps[0].selectedSize) {
-				setSelectedCategorySizeValue(bulkProductProps[0].selectedSize)
-			} else {
-				setSelectedCategorySizeValue(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
-			}
-			if (bulkProductProps[0].selectedSizeId) {
-				setSelectedCategorySizeValueId(bulkProductProps[0].selectedSizeId)
-			} else {
-				setSelectedCategorySizeValueId(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeId)
-			}
-			if (bulkProductProps[0].selectedSizeCategory) {
-				setSizeCategory(bulkProductProps[0].selectedSizeCategory)
-				setSelectedSizeCategory(bulkProductProps[0].selectedSizeCategory)
-			} else {
-				setSizeCategory(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
-				setSelectedSizeCategory(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
-			}
-			if (bulkProductProps[0].selectedSizeCategoryId) {
-				setSelectedSizeCategoryId(bulkProductProps[0].selectedSizeCategoryId)
-			} else {
-				setSelectedSizeCategoryId(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryId)
-			}
+		if (!realChange) {
 
-			if (bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0) {
-				setSelectedSize(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
+
+			if (bulkProductProps[0].mainPrice && bulkProductProps[0].totalItems) {
+				setTotalCost((parseInt(bulkProductProps[0].mainPrice) * bulkProductProps[0].totalItems + parseInt(bulkProductProps[0].extraPrice)).toFixed(2))
 			}
+			if (bulkProductProps[0].mainPrice) {
+				setExtraCost(bulkProductProps[0].extraPrice)
+			}
+			if (bulkProductProps[0].wearDate) {
+				setWearDate(new Date(bulkProductProps[0].wearDate))
 
-			if (bulkProductProps[0].regularSizeArray && bulkProductProps[0].regularSizeArray.length > 0) {
-				// console.log("True!!!!!", JSON.stringify(bulkProductProps[0].regularSizeArray))
-				setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
+			}
+			if (bulkProductProps[0].shipDate) {
+				setShipDate(new Date(bulkProductProps[0].shipDate))
+
+			}
+			if (bulkProductProps[0].selectedRushOption) {
+				setSelectedRushOptionId(bulkProductProps[0].selectedRushOption[0].rushId)
+
 			} else {
-				// console.log("False!!!!!", bulkProductProps[0].sizeCategories)
-				setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories.map((each) => {
 
-					const sizes = each.sizes.map((eachSize) => {
-						return {
-							sizeId: eachSize.sizeId,
-							price: eachSize.price,
-							sizeCode: 0,
-							sizeName: eachSize.sizeName
+				setSelectedRushOptionId(bulkProductProps[0].rushOptions[0].rushId)
+
+				// setSelectedRushOption([bulkProductProps[0].rushOptions[0]])
+			}
+			// 
+			if (bulkProductProps[0]) {
+				if (bulkProductProps[0].totalItems) {
+					setTotalItems(bulkProductProps[0].totalItems)
+				}
+				if (bulkProductProps[0].selectedSize) {
+					setSelectedCategorySizeValue(bulkProductProps[0].selectedSize)
+				} else {
+					setSelectedCategorySizeValue(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
+				}
+				if (bulkProductProps[0].selectedSizeId) {
+					setSelectedCategorySizeValueId(bulkProductProps[0].selectedSizeId)
+				} else {
+					setSelectedCategorySizeValueId(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizes[0].sizeId)
+				}
+				if (bulkProductProps[0].selectedSizeCategory) {
+					setSizeCategory(bulkProductProps[0].selectedSizeCategory)
+					setSelectedSizeCategory(bulkProductProps[0].selectedSizeCategory)
+				} else {
+					setSizeCategory(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
+					setSelectedSizeCategory(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryName)
+				}
+				if (bulkProductProps[0].selectedSizeCategoryId) {
+					setSelectedSizeCategoryId(bulkProductProps[0].selectedSizeCategoryId)
+				} else {
+					setSelectedSizeCategoryId(bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories[0].sizeCategoryId)
+				}
+
+				if (bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0) {
+					setSelectedSize(bulkProductProps[0].sizeCategories[0].sizes[0].sizeName)
+				}
+
+				if (bulkProductProps[0].regularSizeArray && bulkProductProps[0].regularSizeArray.length > 0) {
+					// console.log("True!!!!!", JSON.stringify(bulkProductProps[0].regularSizeArray))
+					setRegularSizeArray(JSON.stringify(bulkProductProps[0].regularSizeArray))
+				} else {
+					// console.log("False!!!!!", bulkProductProps[0].sizeCategories)
+					setRegularSizeArray(JSON.stringify(bulkProductProps[0] && bulkProductProps[0].sizeCategories && bulkProductProps[0].sizeCategories.length > 0 && bulkProductProps[0].sizeCategories.map((each) => {
+
+						const sizes = each.sizes.map((eachSize) => {
+							return {
+								sizeId: eachSize.sizeId,
+								price: eachSize.price,
+								sizeCode: 0,
+								sizeName: eachSize.sizeName
+							}
+						})
+						each.sizes = sizes
+						return each
+					})))
+				}
+
+				if (bulkProductProps[0].selectedAlteration) {
+					setAlterationSelected(bulkProductProps[0].selectedAlteration)
+				}
+
+				if (bulkProductProps[0].selectedStyleOption) {
+					setStyleOptionSelected(bulkProductProps[0].selectedStyleOption)
+				}
+
+				if (bulkProductProps[0].selectedStyleOption && bulkProductProps[0].selectedAlteration) {
+					setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedStyleOption) + sumExtraPrices(bulkProductProps[0].selectedAlteration))
+				} else if (bulkProductProps[0].selectedStyleOption && bulkProductProps[0].selectedAlteration.length === 0) {
+					setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedStyleOption))
+				} else if (bulkProductProps[0].selectedAlteration && bulkProductProps[0].selectedStyleOption.length === 0) {
+					setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedAlteration))
+				}
+				if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
+					setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
+					setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricColorName)
+					setSelectedLiningFabricsColorId(bulkProductProps[0].selectedLiningFabricsColors ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricsColorId)
+				}
+				if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
+					setSelectedFabrics(bulkProductProps[0].selectedFabrics ? bulkProductProps[0].selectedFabrics : bulkProductProps[0].fabrics[0].fabricsId)
+					setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorName)
+					setSelectedFabricsColorId(bulkProductProps[0].selectedFabricsColorId ? bulkProductProps[0].selectedFabricsColorId : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricsColorId)
+
+				}
+				if (bulkProductProps[0].comboArray) {
+					setComboArray(bulkProductProps[0].comboArray);
+				} else {
+					let comboTempArray = []
+					bulkProductProps[0].combos && bulkProductProps[0].combos.map((item) => {
+						comboTempArray[comboTempArray.length] = {
+							combo: item.combosName,
+							comboId: item.combosId,
+							fabric: {
+								fabric_index: 0,
+								fabric_name: item.fabric[0].fabricsName,
+								fabric_id: item.fabric[0].fabricsId,
+								color: {
+									color_name: item.fabric[0].fabricsColor[0].fabricColorName,
+									color_id: item.fabric[0].fabricsColor[0].fabricsColorId,
+									rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB
+								}
+							}
 						}
-					})
-					each.sizes = sizes
-					return each
-				})))
-			}
+					});
 
-			if (bulkProductProps[0].selectedAlteration) {
-				setAlterationSelected(bulkProductProps[0].selectedAlteration)
-			}
+					setComboArray(comboTempArray);
+				}
+				if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 0) {
+					setSelectedAttr(bulkProductProps[0].selectedAttr);
+				} else {
+					let selectedAttrArray = []
+					bulkProductProps[0].styleAttributes.length > 0 && bulkProductProps[0].styleAttributes.map((item) => {
+						if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
+							selectedAttrArray[selectedAttrArray.length] = { attr: item.styleAttrybutesName, attrId: item.styleAttrybutesId, value: item.styleAttrybutesValues[0].styleAttrybutesValueName, valueId: item.styleAttrybutesValues[0].styleAttrybutesValueId }
+						}
+					});
 
-			if (bulkProductProps[0].selectedStyleOption) {
-				setStyleOptionSelected(bulkProductProps[0].selectedStyleOption)
-			}
-
-			if (bulkProductProps[0].selectedStyleOption && bulkProductProps[0].selectedAlteration) {
-				setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedStyleOption) + sumExtraPrices(bulkProductProps[0].selectedAlteration))
-			} else if (bulkProductProps[0].selectedStyleOption && bulkProductProps[0].selectedAlteration.length === 0) {
-				setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedStyleOption))
-			} else if (bulkProductProps[0].selectedAlteration && bulkProductProps[0].selectedStyleOption.length === 0) {
-				setExtraPrice(sumExtraPrices(bulkProductProps[0].selectedAlteration))
+					setSelectedAttr(selectedAttrArray);
+				}
 			}
 		}
-
 	}, [bulkProductProps]);
 
-	useMemo(() => {
-		if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
-			setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
-			setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricColorName)
-			setSelectedLiningFabricsColorId(bulkProductProps[0].selectedLiningFabricsColors ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricsColorId)
-		}
+	// useMemo(() => {
+	// 	if (bulkProductProps[0].lining && bulkProductProps[0].lining.length > 0) {
+	// 		setSelectedLining(bulkProductProps[0].selectedLining ? bulkProductProps[0].selectedLining : bulkProductProps[0].lining[0].fabricsId)
+	// 		setSelectedLiningFabricsColor(bulkProductProps[0].selectedLiningFabricsColor ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricColorName)
+	// 		setSelectedLiningFabricsColorId(bulkProductProps[0].selectedLiningFabricsColors ? bulkProductProps[0].selectedLiningFabricsColor : bulkProductProps[0].lining[0].fabricsColor[0].fabricsColorId)
+	// 	}
+	// 	setRealChange(false)
 
-	}, [bulkProductProps[0].lining])
+	// }, [bulkProductProps[0].lining])
 
-	useMemo(() => {
-		if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
-			setSelectedFabrics(bulkProductProps[0].selectedFabrics ? bulkProductProps[0].selectedFabrics : bulkProductProps[0].fabrics[0].fabricsId)
-			setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorName)
-			setSelectedFabricsColorId(bulkProductProps[0].selectedFabricsColorId ? bulkProductProps[0].selectedFabricsColorId : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricsColorId)
+	// useMemo(() => {
+	// 	if (bulkProductProps[0].fabrics && bulkProductProps[0].fabrics.length > 0) {
+	// 		setSelectedFabrics(bulkProductProps[0].selectedFabrics ? bulkProductProps[0].selectedFabrics : bulkProductProps[0].fabrics[0].fabricsId)
+	// 		setSelectedFabricsColor(bulkProductProps[0].selectedFabricsColor ? bulkProductProps[0].selectedFabricsColor : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricColorName)
+	// 		setSelectedFabricsColorId(bulkProductProps[0].selectedFabricsColorId ? bulkProductProps[0].selectedFabricsColorId : bulkProductProps[0].fabrics[0].fabricsColor[0].fabricsColorId)
 
-		}
+	// 	}
+	// 	setRealChange(false)
 
-	}, [bulkProductProps[0].fabrics])
+	// }, [bulkProductProps[0].fabrics])
 
-	useMemo(() => {
-		if (bulkProductProps[0].comboArray) {
-			setComboArray(bulkProductProps[0].comboArray);
-		} else {
-			let comboTempArray = []
-			bulkProductProps[0].combos && bulkProductProps[0].combos.map((item) => {
-				comboTempArray[comboTempArray.length] = {
-					combo: item.combosName,
-					comboId: item.combosId,
-					fabric: {
-						fabric_index: 0,
-						fabric_name: item.fabric[0].fabricsName,
-						fabric_id: item.fabric[0].fabricsId,
-						color: {
-							color_name: item.fabric[0].fabricsColor[0].fabricColorName,
-							color_id: item.fabric[0].fabricsColor[0].fabricsColorId,
-							rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB
-						}
-					}
-				}
-			});
-			setComboArray(comboTempArray);
-		}
-	}, [bulkProductProps[0].comboArray])
+	// useMemo(() => {
+	// 	if (bulkProductProps[0].comboArray) {
+	// 		setComboArray(bulkProductProps[0].comboArray);
+	// 	} else {
+	// 		let comboTempArray = []
+	// 		bulkProductProps[0].combos && bulkProductProps[0].combos.map((item) => {
+	// 			comboTempArray[comboTempArray.length] = {
+	// 				combo: item.combosName,
+	// 				comboId: item.combosId,
+	// 				fabric: {
+	// 					fabric_index: 0,
+	// 					fabric_name: item.fabric[0].fabricsName,
+	// 					fabric_id: item.fabric[0].fabricsId,
+	// 					color: {
+	// 						color_name: item.fabric[0].fabricsColor[0].fabricColorName,
+	// 						color_id: item.fabric[0].fabricsColor[0].fabricsColorId,
+	// 						rgb: item.fabric[0].fabricsColor[0].fabricsColorRGB
+	// 					}
+	// 				}
+	// 			}
+	// 		});
+	// 		setRealChange(false)
+	// 		setComboArray(comboTempArray);
+	// 	}
+	// }, [bulkProductProps[0].comboArray])
 
-	useMemo(() => {
-		if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 0) {
-			setSelectedAttr(bulkProductProps[0].selectedAttr);
-		} else {
-			let selectedAttrArray = []
-			bulkProductProps[0].styleAttributes.length > 0 && bulkProductProps[0].styleAttributes.map((item) => {
-				if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
-					selectedAttrArray[selectedAttrArray.length] = { attr: item.styleAttrybutesName, attrId: item.styleAttrybutesId, value: item.styleAttrybutesValues[0].styleAttrybutesValueName, valueId: item.styleAttrybutesValues[0].styleAttrybutesValueId }
-				}
-			});
-			setSelectedAttr(selectedAttrArray);
-		}
-	}, [bulkProductProps[0].styleAttributes])
+	// useMemo(() => {
+	// 	if (bulkProductProps[0].selectedAttr && bulkProductProps[0].selectedAttr.length > 0) {
+	// 		setSelectedAttr(bulkProductProps[0].selectedAttr);
+	// 	} else {
+	// 		let selectedAttrArray = []
+	// 		bulkProductProps[0].styleAttributes.length > 0 && bulkProductProps[0].styleAttributes.map((item) => {
+	// 			if (item.styleAttrybutesValues && item.styleAttrybutesValues.length > 0) {
+	// 				selectedAttrArray[selectedAttrArray.length] = { attr: item.styleAttrybutesName, attrId: item.styleAttrybutesId, value: item.styleAttrybutesValues[0].styleAttrybutesValueName, valueId: item.styleAttrybutesValues[0].styleAttrybutesValueId }
+	// 			}
+	// 		});
+	// 		setRealChange(false)
+	// 		setSelectedAttr(selectedAttrArray);
+	// 	}
+	// }, [bulkProductProps[0].styleAttributes])
 
 	const formatDate = (date) => {
 		var d = new Date(date),
@@ -349,7 +454,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			}
 		}
 		setSelectedAttr(array);
-		getPriceAPI()
+		setRealChange(true)
 
 	}
 
@@ -368,56 +473,60 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 	}
 
 	useEffect(() => {
-		if (!selectedRushOptionId || editBoolean) return;
-		if (bulkProductProps[0].wearDate) {
-			if (wearDate !== "") {
-				if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
-					disallowRush(true);
-					setRushError(true)
-				} else {
-					disallowRush(false);
-					setRushError(false)
+		if (realChange) {
+			if (!selectedRushOptionId || editBoolean) return;
+			if (bulkProductProps[0].wearDate) {
+				if (wearDate !== "") {
+					if (new Date(shipDate).getTime() > new Date(wearDate).getTime()) {
+						disallowRush(true);
+						setRushError(true)
+					} else {
+						disallowRush(false);
+						setRushError(false)
+					}
 				}
-			}
-		} else {
-			if (wearDate !== "") {
-				if (shipDate.getTime() > wearDate.getTime()) {
-					disallowRush(true);
-					setRushError(true)
-				} else {
-					disallowRush(false);
-					setRushError(false)
+			} else {
+				if (wearDate !== "") {
+					if (shipDate.getTime() > wearDate.getTime()) {
+						disallowRush(true);
+						setRushError(true)
+					} else {
+						disallowRush(false);
+						setRushError(false)
+					}
 				}
 			}
 		}
 	}, [selectedRushOptionId, wearDate])
 
-	useMemo(async () => {
+	useEffect(() => {
 
-		const response = await getCheckoutOptions();
-		if (response.data.errorText === 'accessToken expired') {
-			addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
-			Router.push('/other/login');
-		} else {
+		getCheckoutOptions().then(response => {
+			if (response.data.errorText === 'accessToken expired') {
+				addToast("Access Token expired, please log in again!", { appearance: "error", autoDismiss: true });
+				Router.push('/other/login');
+			} else {
 
-			setBillingCompany(response.data.billingCompany)
-			setBillingCity(response.data.billingCity)
-			setBillingCountryId(response.data.billingCountry)
-			setSelectedBillingStateId(response.data.billingState)
-			setBillingStreetOne(response.data.billingStreet)
-			setBillingStreetTwo(response.data.billingStreet2)
-			setBillingZipCode(response.data.billingZipCode)
+				setBillingCompany(response.data.billingCompany)
+				setBillingCity(response.data.billingCity)
+				setBillingCountryId(response.data.billingCountry)
+				setSelectedBillingStateId(response.data.billingState)
+				setBillingStreetOne(response.data.billingStreet)
+				setBillingStreetTwo(response.data.billingStreet2)
+				setBillingZipCode(response.data.billingZipCode)
 
-			setShippingCompany(response.data.shippingCompany)
-			setShippingCity(response.data.shippingCity)
-			setShippingCountryId(response.data.shippingCountry)
-			setSelectedShippingStateId(response.data.shippingState)
-			setShippingStreetOne(response.data.shippingStreet)
-			setShippingStreetTwo(response.data.shippingStreet2)
-			setShippingZipCode(response.data.shippingZipCode)
-			setShippingToName(response.data.shippingToName)
-			setShippingPhoneNumber(response.data.shippingPhoneNumber)
-		}
+				setShippingCompany(response.data.shippingCompany)
+				setShippingCity(response.data.shippingCity)
+				setShippingCountryId(response.data.shippingCountry)
+				setSelectedShippingStateId(response.data.shippingState)
+				setShippingStreetOne(response.data.shippingStreet)
+				setShippingStreetTwo(response.data.shippingStreet2)
+				setShippingZipCode(response.data.shippingZipCode)
+				setShippingToName(response.data.shippingToName)
+				setShippingPhoneNumber(response.data.shippingPhoneNumber)
+			}
+
+		});
 
 	}, [])
 
@@ -913,7 +1022,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		array[comboId].fabric.fabric_index = fabricId;
 
 		setComboArray(array);
-		getPriceAPI()
+		setRealChange(true)
 	}
 
 	const handleComboFabricColorsChange = (e) => {
@@ -930,7 +1039,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		console.log("========>>", bulkProductProps[0].combos[comboId].fabric[fabricId].fabricsColor[colorId].fabricsColorRGB)
 
 		setComboArray(array);
-		getPriceAPI()
+		setRealChange(true)
 	}
 
 
@@ -942,7 +1051,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		let alterationSum = 0;
 		if (alterationSelected.length > 0) alterationSum = sumExtraPrices(alterationSelected);
 		setExtraPrice(sum + alterationSum);
-		getPriceAPI()
+		setRealChange(true)
 	}
 
 	const handleAlterationOption = (options) => {
@@ -952,7 +1061,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 		let styleOptionSum = 0;
 		if (styleOptionSelected.length > 0) styleOptionSum = sumExtraPrices(styleOptionSelected);
 		setExtraPrice(sum + styleOptionSum);
-		getPriceAPI()
+		setRealChange(true)
 	}
 
 
@@ -986,25 +1095,29 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 			"parameters": JSON.stringify(priceJson)
 		}
 
-		API.post('/', new URLSearchParams(formData))
-			.then(response => {
-				console.log('====DescriptionResponse====', response);
-				if (response.data.errorCode === "0") {
-					setTotalCost(response.data.total)
-					setExtraCost(response.data.extra)
-					setPrice(response.data.price)
-					setExtraDesc(response.data.extraDescription)
-				}
-			})
-			.catch(error => {
-				console.log('error', error);
-			});
+		if (realChange) {
+
+			API.post('/', new URLSearchParams(formData))
+				.then(response => {
+					if (response.data.errorCode === "0") {
+						setRealChange(false)
+						setTotalCost(response.data.total)
+						setExtraCost(response.data.extra)
+						setPrice(response.data.price)
+						setExtraDesc(response.data.extraDescription)
+						// totalCost = response.data.total;
+						// extraCost = response.data.extra;
+						// price = response.data.price;
+						// extraDesc = response.data.extraDescription;
+					}
+				})
+				.catch(error => {
+					console.log('error', error);
+				});
+		}
 
 	}
 
-	// useMemo(() => {
-	// 	getPriceAPI()
-	// }, [bulkProductProps[0]])
 
 	useMemo(() => {
 		let sum = 0;
@@ -1019,11 +1132,33 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 					setTotalItems(sum)
 				}
 			})
-			getPriceAPI()
-			console.log("111111111111111111111111111111111111111111")
+			setRealChange(true)
 		}
 
 	}, [regularSizeArray])
+
+	useEffect(() => {
+		if (realChange) {
+			const getData = setTimeout(() =>
+				getPriceAPI()
+				, 1000)
+			return () => clearTimeout(getData)
+		}
+	}, [
+		selectedFabrics,
+		selectedFabricsColorId,
+		selectedLining,
+		selectedLiningFabricsColorId,
+		comboArr,
+		selectedSizeCategoryId,
+		sizeArr,
+		alterationOptionsArray,
+		attrArr,
+		styleOptionsArray,
+		shipDate,
+		regularSizeArray,
+		quantityCount
+	])
 
 	return (
 		<div className="bulk-container">
@@ -1081,7 +1216,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 												onChange={(event) => {
 													setSelectedFabrics(event.target.value)
 													setSelectedFabricsColor(bulkProductProps[0].fabrics.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
-													getPriceAPI()
+													setRealChange(true)
 												}}
 											>
 												{bulkProductProps[0].fabrics &&
@@ -1112,7 +1247,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 														// console.log("!!!!!!!!!", event.target.value.split("/")[1])
 														setSelectedFabricsColor(event.target.value.split("/")[1]);
 														setSelectedFabricsColorId(event.target.value.split("/")[0]);
-														getPriceAPI()
+														setRealChange(true)
 													}}
 												>
 													{bulkProductProps[0].fabrics.map((single, j) => single.fabricsId === selectedFabrics ? single.fabricsColor.map((color, i) => {
@@ -1142,7 +1277,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 												onChange={(event) => {
 													setSelectedLining(event.target.value)
 													setSelectedLiningFabricsColor(bulkProductProps[0].lining.find(x => x.fabricsId === event.target.value).fabricsColor[0].fabricColorName)
-													getPriceAPI()
+													setRealChange(true)
 												}}
 											>
 												{bulkProductProps[0].lining &&
@@ -1172,7 +1307,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 													onChange={(event) => {
 														setSelectedLiningFabricsColor(event.target.value.split("/")[1]);
 														setSelectedLiningFabricsColorId(event.target.value.split("/")[0])
-														getPriceAPI()
+														setRealChange(true)
 													}}
 												>
 													{bulkProductProps[0].lining.map((single, j) => single.fabricsId === selectedLining ? single.fabricsColor.map((color, i) => {
@@ -1342,7 +1477,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 													setSelectedSizeCategory(event.target.value.split("/")[1])
 													handleResetSizeArrayInput(event.target.value.split("/")[1])
 													setSelectedSizeCategoryId(event.target.value.split("/")[0])
-													getPriceAPI()
+													setRealChange(true)
 												}}
 											>
 												{JSON.parse(regularSizeArray).length > 0 ? JSON.parse(regularSizeArray).map((category, i) => {
@@ -1388,7 +1523,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 														onChange={(event) => {
 															setSelectedSizeCategory(event.target.value.split("::")[1])
 															setSelectedSizeCategoryId(event.target.value.split("::")[0])
-															getPriceAPI()
+															setRealChange(true)
 														}}
 														value={`${selectedSizeCategoryId}::${selectedSizeCategory}`}
 													>
@@ -1415,7 +1550,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 																		onChange={(event) => {
 																			setSelectedCategorySizeValue(event.target.value.split("::")[1]);
 																			setSelectedCategorySizeValueId(event.target.value.split("::")[0]);
-																			getPriceAPI()
+																			setRealChange(true)
 																		}}
 																		value={`${selectedCategorySizeValueId}::${selectedCategorySizeValue}`}
 																	>
@@ -1439,7 +1574,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 														<button
 															onClick={() => {
 																setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-																getPriceAPI()
+																setRealChange(true)
 															}}
 															disabled={editBoolean}
 															className="qtybutton"
@@ -1455,7 +1590,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 														<button
 															onClick={() => {
 																setQuantityCount(quantityCount + 1)
-																getPriceAPI()
+																setRealChange(true)
 															}}
 															disabled={editBoolean}
 															className="qtybutton"
@@ -1483,7 +1618,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 														value={sizeCategory}
 														onChange={(event) => {
 															setSizeCategory(event.target.value)
-															getPriceAPI()
+															setRealChange(true)
 														}}
 													>
 														{bulkProductProps[0].sizeCategories &&
@@ -1512,7 +1647,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 															value={selectedCategorySizeValue}
 															onChange={(event) => {
 																setSelectedCategorySizeValue(event.target.value);
-																getPriceAPI()
+																setRealChange(true)
 															}}
 														>
 															{bulkProductProps[0].sizeCategories.map((single, j) => single.sizeCategoryName === sizeCategory ? single.sizes.map((size, i) => {
@@ -1533,7 +1668,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 										<button
 											onClick={() => {
 												setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-												getPriceAPI()
+												setRealChange(true)
 											}}
 											disabled={editBoolean}
 											className="qtybutton"
@@ -1549,7 +1684,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 										<button
 											onClick={() => {
 												setQuantityCount(quantityCount + 1)
-												getPriceAPI()
+												setRealChange(true)
 											}}
 											disabled={editBoolean}
 											className="qtybutton"
@@ -1584,7 +1719,7 @@ const BulkProduct = ({ addToCart, addToast, addBulkToCart, bulkProductProps, del
 										style={{ width: "100%", height: "37px", cursor: "pointer" }}
 										onChange={(event) => {
 											handleSelectRushOption(event.target.value)
-											getPriceAPI()
+											setRealChange(true)
 										}}
 										value={selectedRushOptionId}
 									>

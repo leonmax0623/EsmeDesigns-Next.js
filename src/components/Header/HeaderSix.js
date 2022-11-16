@@ -7,7 +7,7 @@ import {
 } from "react-icons/io";
 import { connect } from "react-redux";
 import API from '../../api';
-import { addBulkToCart, addToCart } from "../../redux/actions/cartActions";
+import { addBulkToCart, addToCart, deleteAllFromCart } from "../../redux/actions/cartActions";
 import AboutOverlay from "./elements/AboutOverlay";
 import CartOverlay from "./elements/CartOverlay";
 import MobileMenu from "./elements/MobileMenu";
@@ -15,7 +15,7 @@ import Navigation from "./elements/Navigation";
 import SearchOverlay from "./elements/SearchOverlay";
 import WishlistOverlay from "./elements/WishlistOverlay";
 
-const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems, addToCart, addBulkToCart }) => {
+const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems, addToCart, addBulkToCart, deleteAllFromCart }) => {
   const [scroll, setScroll] = useState(0);
   const [headerTop, setHeaderTop] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -29,6 +29,7 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems, addToCart, addBulkT
 
   useMemo(() => {
     const tokenInStorage = localStorage.getItem('accessToken')
+    deleteAllFromCart()
     if (tokenInStorage) {
 
       const formData = {
@@ -524,6 +525,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         addBulkToCart(data)
       );
+    },
+    deleteAllFromCart: (addToast) => {
+      dispatch(deleteAllFromCart(addToast));
     },
     addToCart: (
       product,

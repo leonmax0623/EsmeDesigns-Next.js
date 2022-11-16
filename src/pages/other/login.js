@@ -18,6 +18,7 @@ const Login = () => {
 	const handleLogin = (event) => {
 		event.preventDefault();
 		localStorage.clear();
+		cookies.remove();
 
 		const formData = {
 			feaMethod: 'getAccessToken',
