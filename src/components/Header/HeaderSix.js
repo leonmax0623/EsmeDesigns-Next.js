@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import {
   IoIosCart, IoIosHeartEmpty, IoIosMenu, IoIosSearch,
   IoMdPerson
 } from "react-icons/io";
 import { connect } from "react-redux";
-import API from '../../api';
 import { addBulkToCart, addToCart, deleteAllFromCart } from "../../redux/actions/cartActions";
 import AboutOverlay from "./elements/AboutOverlay";
 import CartOverlay from "./elements/CartOverlay";
@@ -27,249 +26,249 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems, addToCart, addBulkT
     false
   );
 
-  useMemo(() => {
-    const tokenInStorage = localStorage.getItem('accessToken')
-    deleteAllFromCart()
-    if (tokenInStorage) {
+  // useMemo(() => {
+  //   const tokenInStorage = localStorage.getItem('accessToken')
 
-      const formData = {
-        "feaMethod": "getOrder",
-        "accessToken": tokenInStorage,
-        "orderId": -1
-      }
+  //   if (tokenInStorage) {
 
-      API.post('/', new URLSearchParams(formData))
-        .then(response => {
-          if (response.data.errorCode === "0") {
-            console.log("==========HEADER=========", response)
-            response.data.items.map((item, i) => {
-              const formData = {
-                "feaMethod": "getProduct",
-                "accessToken": tokenInStorage,
-                "productId": item.productId,
-                "productTypeId": item.productTypeId
-              }
+  //     const formData = {
+  //       "feaMethod": "getOrder",
+  //       "accessToken": tokenInStorage,
+  //       "orderId": -1
+  //     }
 
-              let totalItems = 0;
-              item.sizes.map((size, i) => {
-                totalItems += parseInt(size.quantity);
-              })
+  //     API.post('/', new URLSearchParams(formData))
+  //       .then(response => {
+  //         if (response.data.errorCode === "0") {
+  //           console.log("==========HEADER=========", response)
+  //           response.data.items.map((item, i) => {
+  //             const formData = {
+  //               "feaMethod": "getProduct",
+  //               "accessToken": tokenInStorage,
+  //               "productId": item.productId,
+  //               "productTypeId": item.productTypeId
+  //             }
 
-              let extraPrice = 0;
+  //             let totalItems = 0;
+  //             item.sizes.map((size, i) => {
+  //               totalItems += parseInt(size.quantity);
+  //             })
 
-              API.post('/', new URLSearchParams(formData))
-                .then(res => {
-                  console.log("==========Product========", res.data)
-                  localStorage.setItem("OrderId", response.data.ordersId)
+  //             let extraPrice = 0;
 
-                  const alterationSelected = [];
-                  res.data.styleAlterations.map((single, i) => {
-                    item.styleAlterations.map((each, j) => {
-                      if (single.styleAlterationId === each.styleAlterationId) {
-                        let array = {
-                          label: '',
-                          value: '',
-                          price: "",
-                          id: ''
-                        };
-                        array.label = single.styleAlterationName + ' ' + `($${single.price})`;
-                        array.value = single.styleAlterationId;
-                        array.price = single.price;
-                        array.id = single.styleAlterationId;
-                        alterationSelected.push(array)
-                      }
-                    })
-                  });
+  //             API.post('/', new URLSearchParams(formData))
+  //               .then(res => {
+  //                 console.log("==========Product========", res.data)
+  //                 localStorage.setItem("OrderId", response.data.ordersId)
 
-                  const styleOptionSelected = [];
-                  res.data.styleOptions.map((single, i) => {
-                    item.styleOptions.map((each, j) => {
-                      if (single.styleOptionId === each.styleOptionId) {
-                        let array = {
-                          label: "",
-                          value: "",
-                          price: "",
-                          id: ''
-                        };
-                        array.label = single.styleOptionName + ' ' + `($${single.price})`;
-                        array.value = single.styleOptionId;
-                        array.price = single.price;
-                        array.id = single.styleOptionId;
-                        styleOptionSelected.push(array)
-                      }
-                    })
-                  });
+  //                 const alterationSelected = [];
+  //                 res.data.styleAlterations.map((single, i) => {
+  //                   item.styleAlterations.map((each, j) => {
+  //                     if (single.styleAlterationId === each.styleAlterationId) {
+  //                       let array = {
+  //                         label: '',
+  //                         value: '',
+  //                         price: "",
+  //                         id: ''
+  //                       };
+  //                       array.label = single.styleAlterationName + ' ' + `($${single.price})`;
+  //                       array.value = single.styleAlterationId;
+  //                       array.price = single.price;
+  //                       array.id = single.styleAlterationId;
+  //                       alterationSelected.push(array)
+  //                     }
+  //                   })
+  //                 });
 
-                  console.log("-------alterationOptions---------", alterationSelected)
-                  console.log("-------styleOptions---------", styleOptionSelected)
+  //                 const styleOptionSelected = [];
+  //                 res.data.styleOptions.map((single, i) => {
+  //                   item.styleOptions.map((each, j) => {
+  //                     if (single.styleOptionId === each.styleOptionId) {
+  //                       let array = {
+  //                         label: "",
+  //                         value: "",
+  //                         price: "",
+  //                         id: ''
+  //                       };
+  //                       array.label = single.styleOptionName + ' ' + `($${single.price})`;
+  //                       array.value = single.styleOptionId;
+  //                       array.price = single.price;
+  //                       array.id = single.styleOptionId;
+  //                       styleOptionSelected.push(array)
+  //                     }
+  //                   })
+  //                 });
 
-                  item.styleAlterations.map((style, i) => {
-                    let tempPrice = res.data.styleAlterations.filter(temp => style.styleAlterationId === temp.styleAlterationId)
-                    extraPrice += parseInt(tempPrice[0].price);
-                  })
+  //                 console.log("-------alterationOptions---------", alterationSelected)
+  //                 console.log("-------styleOptions---------", styleOptionSelected)
 
-                  item.styleOptions.map((style, i) => {
-                    let tempPrice = res.data.styleOptions.filter(temp => style.styleOptionId === temp.styleOptionId)
-                    extraPrice += parseInt(tempPrice[0].price);
-                  })
+  //                 item.styleAlterations.map((style, i) => {
+  //                   let tempPrice = res.data.styleAlterations.filter(temp => style.styleAlterationId === temp.styleAlterationId)
+  //                   extraPrice += parseInt(tempPrice[0].price);
+  //                 })
 
-                  let nothing = null;
+  //                 item.styleOptions.map((style, i) => {
+  //                   let tempPrice = res.data.styleOptions.filter(temp => style.styleOptionId === temp.styleOptionId)
+  //                   extraPrice += parseInt(tempPrice[0].price);
+  //                 })
 
-                  const existedProduct = cartItems.filter((cart, i) => cart.itemsId === item.itemsId)
+  //                 let nothing = null;
 
-                  let comboArray = [];
+  //                 const existedProduct = cartItems.filter((cart, i) => cart.itemsId === item.itemsId)
 
-                  item.combos.map((combo, i) => {
-                    // console.log("<<===BugFinding===>>", res.data.combos.filter(x => x.combosId === combo.combosId)[0].fabric[0].fabricsColor.filter(g => g.fabricsColorId === combo.combosfabricsColorId)[0].fabricsColorRGB)
+  //                 let comboArray = [];
 
-                    let tempComboObject = {
-                      combo: res.data.combos.filter(x => x.combosId === combo.combosId)[0].combosName,
-                      comboId: combo.combosId,
-                      fabric: {
-                        fabric_index: 0,
-                        fabric_name: combo.combosFabricsName,
-                        fabric_id: combo.combosfabricsId,
-                        color: {
-                          color_name: combo.combosFabricsColorName,
-                          color_id: combo.combosfabricsColorId,
-                          rgb: res.data.combos.filter(x => x.combosId === combo.combosId)[0].fabric[0].fabricsColor.filter(g => g.fabricsColorId === combo.combosfabricsColorId)[0].fabricsColorRGB
-                        }
-                      }
-                    }
-                    comboArray = [...comboArray, tempComboObject]
-                  })
+  //                 item.combos.map((combo, i) => {
+  //                   // console.log("<<===BugFinding===>>", res.data.combos.filter(x => x.combosId === combo.combosId)[0].fabric[0].fabricsColor.filter(g => g.fabricsColorId === combo.combosfabricsColorId)[0].fabricsColorRGB)
 
-                  let selectedAttr = [];
-                  item.styleAttributes.map((attr, i) => {
-                    let tempAttrArray = {
-                      attr: attr.styleAttrybutesName,
-                      attrId: attr.styleAttrybutesId,
-                      value: attr.styleAttrybutesValueName,
-                      valueId: attr.styleAttrybutesValueId
-                    }
-                    selectedAttr = [...selectedAttr, tempAttrArray]
-                  })
+  //                   let tempComboObject = {
+  //                     combo: res.data.combos.filter(x => x.combosId === combo.combosId)[0].combosName,
+  //                     comboId: combo.combosId,
+  //                     fabric: {
+  //                       fabric_index: 0,
+  //                       fabric_name: combo.combosFabricsName,
+  //                       fabric_id: combo.combosfabricsId,
+  //                       color: {
+  //                         color_name: combo.combosFabricsColorName,
+  //                         color_id: combo.combosfabricsColorId,
+  //                         rgb: res.data.combos.filter(x => x.combosId === combo.combosId)[0].fabric[0].fabricsColor.filter(g => g.fabricsColorId === combo.combosfabricsColorId)[0].fabricsColorRGB
+  //                       }
+  //                     }
+  //                   }
+  //                   comboArray = [...comboArray, tempComboObject]
+  //                 })
 
-                  if (!existedProduct.length > 0) {
-                    if (item.sizes.length > 1) {
-                      const selectedFabrics = item.selfFabricsId;
-                      const selectedFabricsColor = item.selfFabricsColorName;
-                      const selectedFabricsColorId = item.selfFabricsColorId;
-                      const selectedLining = item.liningFabricsId;
-                      const selectedLiningFabricsColor = item.liningFabricsColorName;
-                      const selectedLiningFabricsColorId = item.liningFabricsColorId;
-                      const selectedSizeCategory = item.sizeCategoryName;
-                      const selectedSizeCategoryId = item.sizeCategoryId;
-                      const wearDate = item.wearDate;
-                      const shipDate = item.estimatedShipDate;
-                      const selectedRushOption = res.data.rushOptions.filter((temp, i) => temp.rushId === item.rushId);
-                      const tempItemsId = item.itemsId;
-                      const tempOrdersId = response.data.ordersId;
-                      let totalBulkQuantity = 0;
+  //                 let selectedAttr = [];
+  //                 item.styleAttributes.map((attr, i) => {
+  //                   let tempAttrArray = {
+  //                     attr: attr.styleAttrybutesName,
+  //                     attrId: attr.styleAttrybutesId,
+  //                     value: attr.styleAttrybutesValueName,
+  //                     valueId: attr.styleAttrybutesValueId
+  //                   }
+  //                   selectedAttr = [...selectedAttr, tempAttrArray]
+  //                 })
 
-                      const regularSizeArray = JSON.stringify(res.data.sizeCategories.map((each) => {
+  //                 if (!existedProduct.length > 0) {
+  //                   if (item.sizes.length > 1) {
+  //                     const selectedFabrics = item.selfFabricsId;
+  //                     const selectedFabricsColor = item.selfFabricsColorName;
+  //                     const selectedFabricsColorId = item.selfFabricsColorId;
+  //                     const selectedLining = item.liningFabricsId;
+  //                     const selectedLiningFabricsColor = item.liningFabricsColorName;
+  //                     const selectedLiningFabricsColorId = item.liningFabricsColorId;
+  //                     const selectedSizeCategory = item.sizeCategoryName;
+  //                     const selectedSizeCategoryId = item.sizeCategoryId;
+  //                     const wearDate = item.wearDate;
+  //                     const shipDate = item.estimatedShipDate;
+  //                     const selectedRushOption = res.data.rushOptions.filter((temp, i) => temp.rushId === item.rushId);
+  //                     const tempItemsId = item.itemsId;
+  //                     const tempOrdersId = response.data.ordersId;
+  //                     let totalBulkQuantity = 0;
 
-                        const sizes = each.sizes.map((eachSize) => {
-                          if (each.sizeCategoryId === item.sizeCategoryId) {
-                            let tempSizeCode = 0;
+  //                     const regularSizeArray = JSON.stringify(res.data.sizeCategories.map((each) => {
 
-                            item.sizes.map((value, i) => {
-                              if (value.sizeId === eachSize.sizeId) {
-                                tempSizeCode = value.quantity
-                                totalBulkQuantity += parseInt(value.quantity)
-                              }
-                            })
-                            return {
-                              sizeId: eachSize.sizeId,
-                              price: eachSize.price,
-                              sizeCode: tempSizeCode,
-                              sizeName: eachSize.sizeName
-                            }
-                          } else {
-                            return {
-                              sizeId: eachSize.sizeId,
-                              price: eachSize.price,
-                              sizeCode: 0,
-                              sizeName: eachSize.sizeName
-                            }
-                          }
-                        })
-                        each.sizes = sizes
-                        return each
-                      }))
+  //                       const sizes = each.sizes.map((eachSize) => {
+  //                         if (each.sizeCategoryId === item.sizeCategoryId) {
+  //                           let tempSizeCode = 0;
 
-                      totalItems = totalBulkQuantity
+  //                           item.sizes.map((value, i) => {
+  //                             if (value.sizeId === eachSize.sizeId) {
+  //                               tempSizeCode = value.quantity
+  //                               totalBulkQuantity += parseInt(value.quantity)
+  //                             }
+  //                           })
+  //                           return {
+  //                             sizeId: eachSize.sizeId,
+  //                             price: eachSize.price,
+  //                             sizeCode: tempSizeCode,
+  //                             sizeName: eachSize.sizeName
+  //                           }
+  //                         } else {
+  //                           return {
+  //                             sizeId: eachSize.sizeId,
+  //                             price: eachSize.price,
+  //                             sizeCode: 0,
+  //                             sizeName: eachSize.sizeName
+  //                           }
+  //                         }
+  //                       })
+  //                       each.sizes = sizes
+  //                       return each
+  //                     }))
 
-                      console.log("totalBulkQuantity===>", totalBulkQuantity)
+  //                     totalItems = totalBulkQuantity
 
-                      addBulkToCart({
-                        bulkProduct: res.data,
-                        nothing,
-                        selectedFabrics,
-                        selectedFabricsColor,
-                        selectedFabricsColorId,
-                        selectedLining,
-                        selectedLiningFabricsColor,
-                        selectedLiningFabricsColorId,
-                        comboArray,
-                        selectedAttr,
-                        selectedSizeCategory,
-                        selectedSizeCategoryId,
-                        regularSizeArray,
-                        alterationSelected,
-                        styleOptionSelected,
-                        totalItems,
-                        extraPrice,
-                        wearDate,
-                        shipDate,
-                        selectedRushOption,
-                        tempItemsId,
-                        tempOrdersId
-                      })
-                    } else {
-                      addToCart(
-                        res.data,
-                        nothing,
-                        totalItems,
-                        item.selfFabricsId,
-                        item.selfFabricsColorName,
-                        item.selfFabricsColorId,
-                        item.liningFabricsId,
-                        item.liningFabricsColorName,
-                        item.liningFabricsColorId,
-                        comboArray,
-                        selectedAttr,
-                        item.sizeCategoryName,
-                        item.sizeCategoryId,
-                        item.sizes[0].sizeName,
-                        item.sizes[0].sizeId,
-                        alterationSelected,
-                        styleOptionSelected,
-                        extraPrice,
-                        item.wearDate,
-                        item.estimatedShipDate,
-                        res.data.rushOptions.filter((temp, i) => temp.rushId === item.rushId),
-                        item.itemsId,
-                        response.data.ordersId
-                      )
-                    }
-                  }
-                })
-                .catch(err => {
-                  console.log("ERR", err)
-                })
-            })
+  //                     console.log("totalBulkQuantity===>", totalBulkQuantity)
+
+  //                     addBulkToCart({
+  //                       bulkProduct: res.data,
+  //                       nothing,
+  //                       selectedFabrics,
+  //                       selectedFabricsColor,
+  //                       selectedFabricsColorId,
+  //                       selectedLining,
+  //                       selectedLiningFabricsColor,
+  //                       selectedLiningFabricsColorId,
+  //                       comboArray,
+  //                       selectedAttr,
+  //                       selectedSizeCategory,
+  //                       selectedSizeCategoryId,
+  //                       regularSizeArray,
+  //                       alterationSelected,
+  //                       styleOptionSelected,
+  //                       totalItems,
+  //                       extraPrice,
+  //                       wearDate,
+  //                       shipDate,
+  //                       selectedRushOption,
+  //                       tempItemsId,
+  //                       tempOrdersId
+  //                     })
+  //                   } else {
+  //                     addToCart(
+  //                       res.data,
+  //                       nothing,
+  //                       totalItems,
+  //                       item.selfFabricsId,
+  //                       item.selfFabricsColorName,
+  //                       item.selfFabricsColorId,
+  //                       item.liningFabricsId,
+  //                       item.liningFabricsColorName,
+  //                       item.liningFabricsColorId,
+  //                       comboArray,
+  //                       selectedAttr,
+  //                       item.sizeCategoryName,
+  //                       item.sizeCategoryId,
+  //                       item.sizes[0].sizeName,
+  //                       item.sizes[0].sizeId,
+  //                       alterationSelected,
+  //                       styleOptionSelected,
+  //                       extraPrice,
+  //                       item.wearDate,
+  //                       item.estimatedShipDate,
+  //                       res.data.rushOptions.filter((temp, i) => temp.rushId === item.rushId),
+  //                       item.itemsId,
+  //                       response.data.ordersId
+  //                     )
+  //                   }
+  //                 }
+  //               })
+  //               .catch(err => {
+  //                 console.log("ERR", err)
+  //               })
+  //           })
 
 
-          } else {
-            // addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
-          }
-        })
-        .catch(error => {
-          console.log('error', error);
-        });
-    }
-  }, [])
+  //         } else {
+  //           // addToast(response.data.errorMessage, { appearance: "error", autoDismiss: true });
+  //         }
+  //       })
+  //       .catch(error => {
+  //         console.log('error', error);
+  //       });
+  //   }
+  // }, [])
 
 
   let totalOrders = 0
