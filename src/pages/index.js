@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
-import { useToasts } from "react-toast-notifications";
+// import { useToasts } from "react-toast-notifications";
 import API from '../api';
 import { HoverBannerOne } from "../components/Banner";
 import { BlogPostSlider } from "../components/Blog";
@@ -15,10 +15,12 @@ import { getRealProducts } from "../lib/product";
 import { addBulkToCart, addToCart, deleteAllFromCart } from "../redux/actions/cartActions";
 
 const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularProducts, deleteAllFromCart, saleProducts }) => {
-  const { addToast } = useToasts();
+  // const { addToast } = useToasts();
   useMemo(() => {
     const tokenInStorage = localStorage.getItem('accessToken')
-    deleteAllFromCart()
+    if (localStorage.getItem('newLogin')) {
+      deleteAllFromCart()
+    }
     if (tokenInStorage) {
 
       const formData = {
@@ -31,6 +33,7 @@ const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularPro
         .then(response => {
           if (response.data.errorCode === "0") {
             console.log("==========HEADER=========", response)
+            localStorage.removeItem("newLogin")
             response.data.items.map((item, i) => {
               const formData = {
                 "feaMethod": "getProduct",
