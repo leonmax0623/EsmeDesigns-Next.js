@@ -270,7 +270,6 @@ const HeaderSix = ({ aboutOverlay, cartItems, wishlistItems, addToCart, addBulkT
   //   }
   // }, [])
 
-
   let totalOrders = 0
 
   cartItems.map((item, i) => {
