@@ -92,9 +92,6 @@ const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularPro
                     })
                   });
 
-                  console.log("-------alterationOptions---------", alterationSelected)
-                  console.log("-------styleOptions---------", styleOptionSelected)
-
                   item.styleAlterations.map((style, i) => {
                     let tempPrice = res.data.styleAlterations.filter(temp => style.styleAlterationId === temp.styleAlterationId)
                     extraPrice += parseInt(tempPrice[0].price);
@@ -142,7 +139,7 @@ const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularPro
                     selectedAttr = [...selectedAttr, tempAttrArray]
                   })
 
-                  if (!existedProduct.length > 0) {
+                  if (existedProduct.length === 0) {
                     if (item.sizes.length > 1) {
                       const selectedFabrics = item.selfFabricsId;
                       const selectedFabricsColor = item.selfFabricsColorName;
@@ -191,8 +188,6 @@ const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularPro
                       }))
 
                       totalItems = totalBulkQuantity
-
-                      console.log("totalBulkQuantity===>", totalBulkQuantity)
 
                       addBulkToCart({
                         bulkProduct: res.data,
@@ -319,7 +314,6 @@ const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularPro
     </LayoutEight>
   );
 };
-
 const mapStateToProps = (state) => {
   const products = state.productData;
 
