@@ -31,6 +31,7 @@ export const addToCart = (
   ordersId,
   price
 ) => {
+  console.log("THIS IS JUST TEST REGULAR")
 
   const formatDate = (date) => {
     var d = new Date(date),
@@ -84,6 +85,7 @@ export const addToCart = (
 };
 
 export const addBulkToCart = (data) => {
+  console.log("THIS IS JUST TEST BULK")
   const formatDate = (date) => {
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),
