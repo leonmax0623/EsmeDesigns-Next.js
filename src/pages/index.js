@@ -16,6 +16,9 @@ import { addBulkToCart, addToCart, deleteAllFromCart } from "../redux/actions/ca
 
 const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularProducts, deleteAllFromCart, saleProducts }) => {
   // const { addToast } = useToasts();
+  window.onbeforeunload = function () {
+    localStorage.clear();
+  }
   useMemo(() => {
     const tokenInStorage = localStorage.getItem('accessToken')
     if (localStorage.getItem('newLogin')) {
@@ -140,7 +143,11 @@ const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularPro
                   })
 
                   if (existedProduct.length === 0) {
+                    console.log("-------------EXISTED BUG")
+
                     if (item.sizes.length > 1) {
+                      console.log("-------------ITEMS LENGTH BUG")
+
                       const selectedFabrics = item.selfFabricsId;
                       const selectedFabricsColor = item.selfFabricsColorName;
                       const selectedFabricsColorId = item.selfFabricsColorId;
@@ -188,7 +195,7 @@ const Perfumes = ({ newProducts, cartItems, addBulkToCart, addToCart, popularPro
                       }))
 
                       totalItems = totalBulkQuantity
-
+                      console.log("-------------CRITICAL BUG")
                       addBulkToCart({
                         bulkProduct: res.data,
                         nothing,
